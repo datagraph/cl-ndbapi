@@ -203,7 +203,7 @@
   (#.(swig-lispify "Object_getObjectId" 'function) (ff-pointer self)))
 
 
-(cl:defclass #.(swig-lispify "object-id" 'classname)(#.(swig-lispify "ndb-dictionary::-object" 'classname))
+(cl:defclass #.(swig-lispify "object-id" 'classname)(#.(swig-lispify "ndb-dictionary::object" 'classname))
   ((ff-pointer :reader ff-pointer)))
 
 (cl:defmethod initialize-instance :after ((obj #.(swig-lispify "object-id" 'class)) &key)
