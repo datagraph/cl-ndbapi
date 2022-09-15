@@ -4,5 +4,5 @@ swig3.0  -v -cpperraswarn -cffi -noswig-lisp -includeall -I/mnt/ssd/home/rondb/c
 temp="$(tempfile)"
 clos="ndbapi-clos.lisp"
 cat $clos > $temp
-echo "(in-package :libndbapi)" > $clos
+echo "(cl:in-package :libndbapi)" > $clos
 cat $temp >> $clos

@@ -10,10 +10,10 @@
 %}
 
 %insert("lisphead") %{
-(in-package :libndbapi)
+(cl:in-package :libndbapi)
 %}
 #%insert("closhead") %{
-#(in-package :libndbapi)
+#(cl:in-package :libndbapi)
 #%}
 
 %feature("intern_function", "swig-lispify");
