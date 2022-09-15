@@ -454,8 +454,8 @@
 (cl:defmethod initialize-instance :after ((obj #.(swig-lispify "table" 'class)) &key (table #.(swig-lispify "table" 'classname)))
   (setf (slot-value obj 'ff-pointer) (#.(swig-lispify "new_Table" 'function) (ff-pointer table))))
 
-(cl:shadow "=")
-(cl:defmethod #.(swig-lispify "=" 'method) ((self #.(swig-lispify "table" 'classname)) (table #.(swig-lispify "table" 'classname)))
+;;(cl:shadow "=")
+(cl:defmethod #.(swig-lispify "table=" 'method) ((self #.(swig-lispify "table" 'classname)) (table #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table___assign__" 'function) (ff-pointer self) (ff-pointer table)))
 
 (cl:defmethod #.(swig-lispify "set-name" 'method) ((self #.(swig-lispify "table" 'classname)) (name cl:string))
