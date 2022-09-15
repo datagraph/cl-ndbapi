@@ -628,14 +628,15 @@
 	(#.(swig-lispify "HashMapPartition" 'enumvalue :keyword) #.9))
 
 (cffi:defcenum #.(swig-lispify "PartitionBalance" 'enumname)
-	(#.(swig-lispify "PartitionBalance_Specific" 'enumvalue :keyword) #.~Uint32(0))
-	(#.(swig-lispify "PartitionBalance_ForRPByLDM" 'enumvalue :keyword) #.~Uint32(1))
-	(#.(swig-lispify "PartitionBalance_ForRAByLDMx2" 'enumvalue :keyword) #.~Uint32(5))
-	(#.(swig-lispify "PartitionBalance_ForRAByLDMx3" 'enumvalue :keyword) #.~Uint32(6))
-	(#.(swig-lispify "PartitionBalance_ForRAByLDMx4" 'enumvalue :keyword) #.~Uint32(7))
-	(#.(swig-lispify "PartitionBalance_ForRAByLDM" 'enumvalue :keyword) #.~Uint32(2))
-	(#.(swig-lispify "PartitionBalance_ForRPByNode" 'enumvalue :keyword) #.~Uint32(3))
-	(#.(swig-lispify "PartitionBalance_ForRAByNode" 'enumvalue :keyword) #.~Uint32(4)))
+	(#.(swig-lispify "PartitionBalance_Specific" 'enumvalue :keyword) (cl:logxor 0 #xffffffff)) ;; #.~Uint32(0))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDM" 'enumvalue :keyword) (cl:logxor 1 #xffffffff)) ;; #.~Uint32(1))
+	(#.(swig-lispify "PartitionBalance_ForRAByLDMx2" 'enumvalue :keyword) (cl:logxor 5 #xffffffff)) ;; #.~Uint32(5))
+	(#.(swig-lispify "PartitionBalance_ForRAByLDMx3" 'enumvalue :keyword) (cl:logxor 6 #xffffffff)) ;; #.~Uint32(6))
+	(#.(swig-lispify "PartitionBalance_ForRAByLDMx4" 'enumvalue :keyword) (cl:logxor 7 #xffffffff)) ;; #.~Uint32(7))
+	(#.(swig-lispify "PartitionBalance_ForRAByLDM" 'enumvalue :keyword) (cl:logxor 2 #xffffffff)) ;; #.~Uint32(2))
+	(#.(swig-lispify "PartitionBalance_ForRPByNode" 'enumvalue :keyword) (cl:logxor 3 #xffffffff)) ;; #.~Uint32(3))
+	(#.(swig-lispify "PartitionBalance_ForRAByNode" 'enumvalue :keyword) (cl:logxor 4 #xffffffff)) ;; #.~Uint32(4))
+  )
 
 (cffi:defcfun ("_wrap_new_ObjectId" #.(swig-lispify "new_ObjectId" 'function)) :pointer)
 
