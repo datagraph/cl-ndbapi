@@ -29,9 +29,9 @@
 
 (cl:defconstant #.(swig-lispify "NDB_SIZEOF_LONG_LONG" 'constant) 8)
 
-(cl:defconstant #.(swig-lispify "INT_MIN64" 'constant) ~0x7FFFFFFFFFFFFFFFLL)
+(cl:defconstant #.(swig-lispify "INT_MIN64" 'constant) (cl:lognot #x7FFFFFFFFFFFFFFF))
 
-(cl:defconstant #.(swig-lispify "INT_MAX64" 'constant) #x7FFFFFFFFFFFFFFFLL)
+(cl:defconstant #.(swig-lispify "INT_MAX64" 'constant) #x7FFFFFFFFFFFFFFF)
 
 (cl:defconstant #.(swig-lispify "NDB_TYPE_UNDEFINED" 'constant) 0)
 
