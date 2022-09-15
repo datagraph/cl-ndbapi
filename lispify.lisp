@@ -1,4 +1,5 @@
 ;;; Copyright (c) 2022 Max-Gerd Retzlaff <mgr@matroid.org>, Datagraph GmbH.
+;;; Copyright (c) 2016 Fernando Borretti <eudoxiahp@gmail.com>.
 ;;; Distributed under the terms of the GNU General Public License, Version 2.0,
 ;;; see file LICENSE in the top level directory of this repository.
 
@@ -13,13 +14,17 @@
 ;;; SWIG wrapper code starts here
 
 (cl:defmacro defanonenum (cl:&body enums)
-   "Converts anonymous enums to defconstants."
+  "Converts anonymous enums to defconstants."
   `(cl:progn ,@(cl:loop for value in enums
-                        for index = 0 then (cl:1+ index)
-                        when (cl:listp value) do (cl:setf index (cl:second value)
-                                                          value (cl:first value))
-                        collect `(cl:defconstant ,value ,index))))
+                  for index = 0 then (cl:1+ index)
+                  when (cl:listp value) do (cl:setf index (cl:second value)
+                                                    value (cl:first value))
+                    collect `(cl:defconstant ,value ,index))))
 
+;; This is the default swig-lispify but with strip-prefix added,
+;; which is used to strip the mdb_/MDB_ prefixes. (20220914 mgr)
+;; This modification was written by Fernando Borretti as part
+;; of liblmdb, available at https://github.com/antimer/liblmdb.
 (cl:eval-when (:compile-toplevel :load-toplevel)
   (cl:unless (cl:fboundp 'swig-lispify)
     (cl:defun swig-lispify (name flag cl:&optional (package cl:*package*))
@@ -35,14 +40,18 @@
                       ((cl:lower-case-p c)
                        (helper (cl:cdr lst) 'lower (cl:cons (cl:char-upcase c) rest)))
                       ((cl:digit-char-p c)
-                       (helper (cl:cdr lst) 'digit 
+                       (helper (cl:cdr lst) 'digit
                                (cl:case last
                                  ((upper lower) (cl:list* c #\- rest))
                                  (cl:t (cl:cons c rest)))))
                       ((cl:char-equal c #\_)
                        (helper (cl:cdr lst) '_ (cl:cons #\- rest)))
                       (cl:t
-                       (cl:error "Invalid character: ~A" c)))))
+                       (cl:error "Invalid character: ~A" c))))
+                  (strip-prefix (prefix string)
+                    (cl:if (cl:search prefix string)
+                           (cl:subseq string (cl:length prefix))
+                           string)))
         (cl:let ((fix (cl:case flag
                         ((constant enumvalue) "+")
                         (variable "*")
@@ -51,7 +60,10 @@
            (cl:concatenate
             'cl:string
             fix
-            (cl:nreverse (helper (cl:concatenate 'cl:list name) cl:nil cl:nil))
+            (cl:nreverse (helper (cl:concatenate 'cl:list
+                                                 (strip-prefix "mdb_"
+                                                               (strip-prefix "MDB_" name)))
+                                 cl:nil cl:nil))
             fix)
            package))))))
 
