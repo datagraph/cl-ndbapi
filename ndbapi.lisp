@@ -4877,7 +4877,7 @@
 	(#.(swig-lispify "BadSysTables" 'enumvalue) #.4720)
 	(#.(swig-lispify "HaveSysTables" 'enumvalue) #.4244)
 	(#.(swig-lispify "NoSysEvents" 'enumvalue) #.4710)
-	(#.(swig-lispify "BadSysEvents" 'enumvalue) #.BadSysTables)
+	(#.(swig-lispify "BadSysEvents" 'enumvalue) #.4720) ;; BadSysTables
 	(#.(swig-lispify "HaveSysEvents" 'enumvalue) #.746)
 	(#.(swig-lispify "MyNotAllow" 'enumvalue) #.4721)
 	(#.(swig-lispify "MyNotFound" 'enumvalue) #.4722)
