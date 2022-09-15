@@ -485,7 +485,7 @@
 	(#.(swig-lispify "mysql_code" 'slotname) :int)
 	(#.(swig-lispify "message" 'slotname) :string)
 	(#.(swig-lispify "details" 'slotname) :string)
-	(#.(swig-lispify "operator ndberror_struct" 'slotname) :pointer))
+	(#.(swig-lispify "operator_ndberror_struct" 'slotname) :pointer))
 
 (cffi:defcfun ("_wrap_new_NdbDictionary" #.(swig-lispify "new_NdbDictionary" 'function)) :pointer)
 
