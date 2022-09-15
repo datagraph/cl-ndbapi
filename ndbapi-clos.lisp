@@ -89,7 +89,7 @@
 (cl:defmethod #.(swig-lispify "collect-client-stats" 'method) ((self #.(swig-lispify "ndb-cluster-connection" 'classname)) statsArr (sz cl:integer))
   (#.(swig-lispify "Ndb_cluster_connection_collect_client_stats" 'function) (ff-pointer self) statsArr sz))
 
-(cl:defmethod #.(swig-lispify "set-error-print" 'method) ((self #.(swig-lispify "ndb-cluster-connection" 'classname)) (val t))
+(cl:defmethod #.(swig-lispify "set-error-print" 'method) ((self #.(swig-lispify "ndb-cluster-connection" 'classname)) (val cl:t))
   (#.(swig-lispify "Ndb_cluster_connection_set_error_print" 'function) (ff-pointer self) val))
 
 (cl:defmethod #.(swig-lispify "set-max-adaptive-send-time" 'method) ((self #.(swig-lispify "ndb-cluster-connection" 'classname)) (milliseconds cl:integer))
@@ -303,10 +303,10 @@
 (cl:defmethod #.(swig-lispify "set-name" 'method) ((self #.(swig-lispify "column" 'classname)) (name cl:string))
   (#.(swig-lispify "Column_setName" 'function) (ff-pointer self) name))
 
-(cl:defmethod #.(swig-lispify "set-nullable" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-nullable" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Column_setNullable" 'function) (ff-pointer self) arg1))
 
-(cl:defmethod #.(swig-lispify "set-primary-key" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-primary-key" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Column_setPrimaryKey" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "set-type" 'method) ((self #.(swig-lispify "column" 'classname)) (type cl:integer))
@@ -333,10 +333,10 @@
 (cl:defmethod #.(swig-lispify "set-stripe-size" 'method) ((self #.(swig-lispify "column" 'classname)) (size cl:integer))
   (#.(swig-lispify "Column_setStripeSize" 'function) (ff-pointer self) size))
 
-(cl:defmethod #.(swig-lispify "set-partition-key" 'method) ((self #.(swig-lispify "column" 'classname)) (enable t))
+(cl:defmethod #.(swig-lispify "set-partition-key" 'method) ((self #.(swig-lispify "column" 'classname)) (enable cl:t))
   (#.(swig-lispify "Column_setPartitionKey" 'function) (ff-pointer self) enable))
 
-(cl:defmethod #.(swig-lispify "set-distribution-key" 'method) ((self #.(swig-lispify "column" 'classname)) (enable t))
+(cl:defmethod #.(swig-lispify "set-distribution-key" 'method) ((self #.(swig-lispify "column" 'classname)) (enable cl:t))
   (#.(swig-lispify "Column_setDistributionKey" 'function) (ff-pointer self) enable))
 
 (cl:defmethod #.(swig-lispify "set-array-type" 'method) ((self #.(swig-lispify "column" 'classname)) (type cl:integer))
@@ -345,7 +345,7 @@
 (cl:defmethod #.(swig-lispify "set-storage-type" 'method) ((self #.(swig-lispify "column" 'classname)) (type cl:integer))
   (#.(swig-lispify "Column_setStorageType" 'function) (ff-pointer self) type))
 
-(cl:defmethod #.(swig-lispify "set-dynamic" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-dynamic" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Column_setDynamic" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "set-default-value" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 cl:string))
@@ -363,7 +363,7 @@
 (cl:defmethod #.(swig-lispify "get-blob-table" 'method) ((self #.(swig-lispify "column" 'classname)))
   (#.(swig-lispify "Column_getBlobTable" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-auto-increment" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-auto-increment" 'method) ((self #.(swig-lispify "column" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Column_setAutoIncrement" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "get-auto-increment" 'method) ((self #.(swig-lispify "column" 'classname)))
@@ -464,7 +464,7 @@
 (cl:defmethod #.(swig-lispify "add-column" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 #.(swig-lispify "column" 'classname)))
   (#.(swig-lispify "Table_addColumn" 'function) (ff-pointer self) arg1))
 
-(cl:defmethod #.(swig-lispify "set-logging" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-logging" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Table_setLogging" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "set-linear-flag" 'method) ((self #.(swig-lispify "table" 'classname)) (flag cl:integer))
@@ -599,19 +599,19 @@
 (cl:defmethod #.(swig-lispify "get-single-user-mode" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getSingleUserMode" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-row-gciindicator" 'method) ((self #.(swig-lispify "table" 'classname)) (value t))
+(cl:defmethod #.(swig-lispify "set-row-gciindicator" 'method) ((self #.(swig-lispify "table" 'classname)) (value cl:t))
   (#.(swig-lispify "Table_setRowGCIIndicator" 'function) (ff-pointer self) value))
 
 (cl:defmethod #.(swig-lispify "get-row-gciindicator" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getRowGCIIndicator" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-row-checksum-indicator" 'method) ((self #.(swig-lispify "table" 'classname)) (value t))
+(cl:defmethod #.(swig-lispify "set-row-checksum-indicator" 'method) ((self #.(swig-lispify "table" 'classname)) (value cl:t))
   (#.(swig-lispify "Table_setRowChecksumIndicator" 'function) (ff-pointer self) value))
 
 (cl:defmethod #.(swig-lispify "get-row-checksum-indicator" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getRowChecksumIndicator" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-read-backup-flag" 'method) ((self #.(swig-lispify "table" 'classname)) (value t))
+(cl:defmethod #.(swig-lispify "set-read-backup-flag" 'method) ((self #.(swig-lispify "table" 'classname)) (value cl:t))
   (#.(swig-lispify "Table_setReadBackupFlag" 'function) (ff-pointer self) value))
 
 (cl:defmethod #.(swig-lispify "get-read-backup-flag" 'method) ((self #.(swig-lispify "table" 'classname)))
@@ -620,7 +620,7 @@
 (cl:defmethod #.(swig-lispify "get-mysql-name" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getMysqlName" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-stored-table" 'method) ((self #.(swig-lispify "table" 'classname)) (x t))
+(cl:defmethod #.(swig-lispify "set-stored-table" 'method) ((self #.(swig-lispify "table" 'classname)) (x cl:t))
   (#.(swig-lispify "Table_setStoredTable" 'function) (ff-pointer self) x))
 
 (cl:defmethod #.(swig-lispify "get-stored-table" 'method) ((self #.(swig-lispify "table" 'classname)))
@@ -629,7 +629,7 @@
 (cl:defmethod #.(swig-lispify "get-row-size-in-bytes" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getRowSizeInBytes" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "create-table-in-db" 'method) ((self #.(swig-lispify "table" 'classname)) arg1 (existingEqualIsOk t))
+(cl:defmethod #.(swig-lispify "create-table-in-db" 'method) ((self #.(swig-lispify "table" 'classname)) arg1 (existingEqualIsOk cl:t))
   (#.(swig-lispify "Table_createTableInDb" 'function) (ff-pointer self) arg1 existingEqualIsOk))
 
 (cl:defmethod #.(swig-lispify "create-table-in-db" 'method) ((self #.(swig-lispify "table" 'classname)) arg1)
@@ -641,13 +641,13 @@
 (cl:defmethod #.(swig-lispify "get-temporary" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getTemporary" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-temporary" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-temporary" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Table_setTemporary" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "get-force-var-part" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getForceVarPart" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-force-var-part" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-force-var-part" 'method) ((self #.(swig-lispify "table" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Table_setForceVarPart" 'function) (ff-pointer self) arg1))
 
 (cl:defmethod #.(swig-lispify "check-columns" 'method) ((self #.(swig-lispify "table" 'classname)) bitmap (len_in_bytes cl:integer))
@@ -674,7 +674,7 @@
 (cl:defmethod #.(swig-lispify "get-extra-row-author-bits" 'method) ((self #.(swig-lispify "table" 'classname)))
   (#.(swig-lispify "Table_getExtraRowAuthorBits" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-fully-replicated" 'method) ((self #.(swig-lispify "table" 'classname)) (val t))
+(cl:defmethod #.(swig-lispify "set-fully-replicated" 'method) ((self #.(swig-lispify "table" 'classname)) (val cl:t))
   (#.(swig-lispify "Table_setFullyReplicated" 'function) (ff-pointer self) val))
 
 (cl:defmethod #.(swig-lispify "get-fully-replicated" 'method) ((self #.(swig-lispify "table" 'classname)))
@@ -768,10 +768,10 @@
 (cl:defmethod #.(swig-lispify "set-type" 'method) ((self #.(swig-lispify "index" 'classname)) (type cl:integer))
   (#.(swig-lispify "Index_setType" 'function) (ff-pointer self) type))
 
-(cl:defmethod #.(swig-lispify "set-logging" 'method) ((self #.(swig-lispify "index" 'classname)) (enable t))
+(cl:defmethod #.(swig-lispify "set-logging" 'method) ((self #.(swig-lispify "index" 'classname)) (enable cl:t))
   (#.(swig-lispify "Index_setLogging" 'function) (ff-pointer self) enable))
 
-(cl:defmethod #.(swig-lispify "set-stored-index" 'method) ((self #.(swig-lispify "index" 'classname)) (x t))
+(cl:defmethod #.(swig-lispify "set-stored-index" 'method) ((self #.(swig-lispify "index" 'classname)) (x cl:t))
   (#.(swig-lispify "Index_setStoredIndex" 'function) (ff-pointer self) x))
 
 (cl:defmethod #.(swig-lispify "get-stored-index" 'method) ((self #.(swig-lispify "index" 'classname)))
@@ -780,7 +780,7 @@
 (cl:defmethod #.(swig-lispify "get-temporary" 'method) ((self #.(swig-lispify "index" 'classname)))
   (#.(swig-lispify "Index_getTemporary" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-temporary" 'method) ((self #.(swig-lispify "index" 'classname)) (arg1 t))
+(cl:defmethod #.(swig-lispify "set-temporary" 'method) ((self #.(swig-lispify "index" 'classname)) (arg1 cl:t))
   (#.(swig-lispify "Index_setTemporary" 'function) (ff-pointer self) arg1))
 
 
@@ -876,7 +876,7 @@
 (cl:defmethod #.(swig-lispify "get-event-column" 'method) ((self #.(swig-lispify "event" 'classname)) (no cl:integer))
   (#.(swig-lispify "Event_getEventColumn" 'function) (ff-pointer self) no))
 
-(cl:defmethod #.(swig-lispify "merge-events" 'method) ((self #.(swig-lispify "event" 'classname)) (flag t))
+(cl:defmethod #.(swig-lispify "merge-events" 'method) ((self #.(swig-lispify "event" 'classname)) (flag cl:t))
   (#.(swig-lispify "Event_mergeEvents" 'function) (ff-pointer self) flag))
 
 (cl:defmethod #.(swig-lispify "get-object-status" 'method) ((self #.(swig-lispify "event" 'classname)))
@@ -1201,7 +1201,7 @@
 (cl:defmethod #.(swig-lispify "list-objects" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list)
   (#.(swig-lispify "Dictionary_listObjects" 'function) (ff-pointer self) list))
 
-(cl:defmethod #.(swig-lispify "list-objects" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (type cl:integer) (fullyQualified t))
+(cl:defmethod #.(swig-lispify "list-objects" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (type cl:integer) (fullyQualified cl:t))
   (#.(swig-lispify "Dictionary_listObjects" 'function) (ff-pointer self) list type fullyQualified))
 
 (cl:defmethod #.(swig-lispify "get-ndb-error" 'method) ((self #.(swig-lispify "dictionary" 'classname)))
@@ -1234,7 +1234,7 @@
 (cl:defmethod #.(swig-lispify "list-indexes" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (tableName cl:string))
   (#.(swig-lispify "Dictionary_listIndexes" 'function) (ff-pointer self) list tableName))
 
-(cl:defmethod #.(swig-lispify "list-indexes" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (tableName cl:string) (fullyQualified t))
+(cl:defmethod #.(swig-lispify "list-indexes" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (tableName cl:string) (fullyQualified cl:t))
   (#.(swig-lispify "Dictionary_listIndexes" 'function) (ff-pointer self) list tableName fullyQualified))
 
 (cl:defmethod #.(swig-lispify "list-indexes" 'method) ((self #.(swig-lispify "dictionary" 'classname)) list (table #.(swig-lispify "table" 'classname)))
@@ -1297,13 +1297,13 @@
 (cl:defmethod #.(swig-lispify "invalidate-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (indexName cl:string) (tableName cl:string))
   (#.(swig-lispify "Dictionary_invalidateIndex" 'function) (ff-pointer self) indexName tableName))
 
-(cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)) (offline t))
+(cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)) (offline cl:t))
   (#.(swig-lispify "Dictionary_createIndex" 'function) (ff-pointer self) index offline))
 
 (cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)))
   (#.(swig-lispify "Dictionary_createIndex" 'function) (ff-pointer self) index))
 
-(cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)) (table #.(swig-lispify "table" 'classname)) (offline t))
+(cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)) (table #.(swig-lispify "table" 'classname)) (offline cl:t))
   (#.(swig-lispify "Dictionary_createIndex" 'function) (ff-pointer self) index table offline))
 
 (cl:defmethod #.(swig-lispify "create-index" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (index #.(swig-lispify "index" 'classname)) (table #.(swig-lispify "table" 'classname)))
@@ -1372,10 +1372,10 @@
 (cl:defmethod #.(swig-lispify "get-tablespace" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (tablespaceId cl:integer))
   (#.(swig-lispify "Dictionary_getTablespace" 'function) (ff-pointer self) tablespaceId))
 
-(cl:defmethod #.(swig-lispify "create-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "datafile" 'classname)) (overwrite_existing t) (arg3 #.(swig-lispify "object-id" 'classname)))
+(cl:defmethod #.(swig-lispify "create-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "datafile" 'classname)) (overwrite_existing cl:t) (arg3 #.(swig-lispify "object-id" 'classname)))
   (#.(swig-lispify "Dictionary_createDatafile" 'function) (ff-pointer self) arg1 overwrite_existing arg3))
 
-(cl:defmethod #.(swig-lispify "create-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "datafile" 'classname)) (overwrite_existing t))
+(cl:defmethod #.(swig-lispify "create-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "datafile" 'classname)) (overwrite_existing cl:t))
   (#.(swig-lispify "Dictionary_createDatafile" 'function) (ff-pointer self) arg1 overwrite_existing))
 
 (cl:defmethod #.(swig-lispify "create-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "datafile" 'classname)))
@@ -1387,10 +1387,10 @@
 (cl:defmethod #.(swig-lispify "get-datafile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (node cl:integer) (path cl:string))
   (#.(swig-lispify "Dictionary_getDatafile" 'function) (ff-pointer self) node path))
 
-(cl:defmethod #.(swig-lispify "create-undofile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "undofile" 'classname)) (overwrite_existing t) (arg3 #.(swig-lispify "object-id" 'classname)))
+(cl:defmethod #.(swig-lispify "create-undofile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "undofile" 'classname)) (overwrite_existing cl:t) (arg3 #.(swig-lispify "object-id" 'classname)))
   (#.(swig-lispify "Dictionary_createUndofile" 'function) (ff-pointer self) arg1 overwrite_existing arg3))
 
-(cl:defmethod #.(swig-lispify "create-undofile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "undofile" 'classname)) (overwrite_existing t))
+(cl:defmethod #.(swig-lispify "create-undofile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "undofile" 'classname)) (overwrite_existing cl:t))
   (#.(swig-lispify "Dictionary_createUndofile" 'function) (ff-pointer self) arg1 overwrite_existing))
 
 (cl:defmethod #.(swig-lispify "create-undofile" 'method) ((self #.(swig-lispify "dictionary" 'classname)) (arg1 #.(swig-lispify "undofile" 'classname)))
@@ -1653,7 +1653,7 @@
 (cl:defmethod #.(swig-lispify "get-event-buffer-memory-usage" 'method) ((self #.(swig-lispify "ndb" 'classname)) arg1)
   (#.(swig-lispify "Ndb_get_event_buffer_memory_usage" 'function) (ff-pointer self) arg1))
 
-(cl:defmethod #.(swig-lispify "set-event-buffer-queue-empty-epoch" 'method) ((self #.(swig-lispify "ndb" 'classname)) (queue_empty_epoch t))
+(cl:defmethod #.(swig-lispify "set-event-buffer-queue-empty-epoch" 'method) ((self #.(swig-lispify "ndb" 'classname)) (queue_empty_epoch cl:t))
   (#.(swig-lispify "Ndb_setEventBufferQueueEmptyEpoch" 'function) (ff-pointer self) queue_empty_epoch))
 
 (cl:defmethod #.(swig-lispify "wait-until-ready" 'method) ((self #.(swig-lispify "ndb" 'classname)) (timeout cl:integer))
@@ -1845,13 +1845,13 @@
 (cl:defmethod #.(swig-lispify "read-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTable #.(swig-lispify "table" 'classname)) range autoValue)
   (#.(swig-lispify "Ndb_readAutoIncrementValue" 'function) (ff-pointer self) aTable range autoValue))
 
-(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTableName cl:string) autoValue (modify t))
+(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTableName cl:string) autoValue (modify cl:t))
   (#.(swig-lispify "Ndb_setAutoIncrementValue" 'function) (ff-pointer self) aTableName autoValue modify))
 
-(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTable #.(swig-lispify "table" 'classname)) autoValue (modify t))
+(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTable #.(swig-lispify "table" 'classname)) autoValue (modify cl:t))
   (#.(swig-lispify "Ndb_setAutoIncrementValue" 'function) (ff-pointer self) aTable autoValue modify))
 
-(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTable #.(swig-lispify "table" 'classname)) range autoValue (modify t))
+(cl:defmethod #.(swig-lispify "set-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) (aTable #.(swig-lispify "table" 'classname)) range autoValue (modify cl:t))
   (#.(swig-lispify "Ndb_setAutoIncrementValue" 'function) (ff-pointer self) aTable range autoValue modify))
 
 (cl:defmethod #.(swig-lispify "check-update-auto-increment-value" 'method) ((self #.(swig-lispify "ndb" 'classname)) range autoValue)
@@ -2186,40 +2186,40 @@
 (cl:defmethod #.(swig-lispify "branch-col-ne-null" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_ne_null" 'function) (ff-pointer self) ColId Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-eq" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-eq" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_eq" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-ne" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-ne" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_ne" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-lt" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-lt" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_lt" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-le" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-le" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_le" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-gt" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-gt" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_gt" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-ge" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-ge" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) val (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_ge" 'function) (ff-pointer self) ColId val len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-like" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-like" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_like" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-notlike" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-notlike" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_notlike" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-and-mask-eq-mask" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-and-mask-eq-mask" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_and_mask_eq_mask" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-and-mask-ne-mask" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-and-mask-ne-mask" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_and_mask_ne_mask" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-and-mask-eq-zero" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-and-mask-eq-zero" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_and_mask_eq_zero" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
-(cl:defmethod #.(swig-lispify "branch-col-and-mask-ne-zero" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad t) (Label cl:integer))
+(cl:defmethod #.(swig-lispify "branch-col-and-mask-ne-zero" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)) (ColId cl:integer) arg2 (len cl:integer) (nopad cl:t) (Label cl:integer))
   (#.(swig-lispify "NdbOperation_branch_col_and_mask_ne_zero" 'function) (ff-pointer self) ColId arg2 len nopad Label))
 
 (cl:defmethod #.(swig-lispify "interpret-exit-ok" 'method) ((self #.(swig-lispify "ndb-operation" 'classname)))
@@ -2340,25 +2340,25 @@
 (cl:defmethod #.(swig-lispify "set-interpreted-code" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) code)
   (#.(swig-lispify "NdbScanOperation_setInterpretedCode" 'function) (ff-pointer self) code))
 
-(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (fetchAllowed t) (forceSend t))
+(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (fetchAllowed cl:t) (forceSend cl:t))
   (#.(swig-lispify "NdbScanOperation_nextResult" 'function) (ff-pointer self) fetchAllowed forceSend))
 
-(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (fetchAllowed t))
+(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (fetchAllowed cl:t))
   (#.(swig-lispify "NdbScanOperation_nextResult" 'function) (ff-pointer self) fetchAllowed))
 
 (cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)))
   (#.(swig-lispify "NdbScanOperation_nextResult" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) out_row_ptr (fetchAllowed t) (forceSend t))
+(cl:defmethod #.(swig-lispify "next-result" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) out_row_ptr (fetchAllowed cl:t) (forceSend cl:t))
   (#.(swig-lispify "NdbScanOperation_nextResult" 'function) (ff-pointer self) out_row_ptr fetchAllowed forceSend))
 
-(cl:defmethod #.(swig-lispify "next-result-copy-out" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (buffer cl:string) (fetchAllowed t) (forceSend t))
+(cl:defmethod #.(swig-lispify "next-result-copy-out" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (buffer cl:string) (fetchAllowed cl:t) (forceSend cl:t))
   (#.(swig-lispify "NdbScanOperation_nextResultCopyOut" 'function) (ff-pointer self) buffer fetchAllowed forceSend))
 
-(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (forceSend t) (releaseOp t))
+(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (forceSend cl:t) (releaseOp cl:t))
   (#.(swig-lispify "NdbScanOperation_close" 'function) (ff-pointer self) forceSend releaseOp))
 
-(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (forceSend t))
+(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)) (forceSend cl:t))
   (#.(swig-lispify "NdbScanOperation_close" 'function) (ff-pointer self) forceSend))
 
 (cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-scan-operation" 'classname)))
@@ -2449,19 +2449,19 @@
 (cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by t) (order_desc t) (read_range_no t) (keyinfo t) (multi_range t))
+(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by cl:t) (order_desc cl:t) (read_range_no cl:t) (keyinfo cl:t) (multi_range cl:t))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self) lock_mode batch parallel order_by order_desc read_range_no keyinfo multi_range))
 
-(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by t) (order_desc t) (read_range_no t) (keyinfo t))
+(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by cl:t) (order_desc cl:t) (read_range_no cl:t) (keyinfo cl:t))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self) lock_mode batch parallel order_by order_desc read_range_no keyinfo))
 
-(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by t) (order_desc t) (read_range_no t))
+(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by cl:t) (order_desc cl:t) (read_range_no cl:t))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self) lock_mode batch parallel order_by order_desc read_range_no))
 
-(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by t) (order_desc t))
+(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by cl:t) (order_desc cl:t))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self) lock_mode batch parallel order_by order_desc))
 
-(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by t))
+(cl:defmethod #.(swig-lispify "read-tuples" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (lock_mode cl:integer) (batch cl:integer) (parallel cl:integer) (order_by cl:t))
   (#.(swig-lispify "NdbIndexScanOperation_readTuples" 'function) (ff-pointer self) lock_mode batch parallel order_by))
 
 (cl:defmethod #.(swig-lispify "set-bound" 'method) ((self #.(swig-lispify "ndb-index-scan-operation" 'classname)) (attr cl:string) (type cl:integer) value (len cl:integer))
@@ -2540,7 +2540,7 @@
 (cl:defmethod #.(swig-lispify "get-ndb-index-operation" 'method) ((self #.(swig-lispify "ndb-transaction" 'classname)) (anIndex #.(swig-lispify "index" 'classname)))
   (#.(swig-lispify "NdbTransaction_getNdbIndexOperation" 'function) (ff-pointer self) anIndex))
 
-(cl:defmethod #.(swig-lispify "set-schema-obj-owner-checks" 'method) ((self #.(swig-lispify "ndb-transaction" 'classname)) (runChecks t))
+(cl:defmethod #.(swig-lispify "set-schema-obj-owner-checks" 'method) ((self #.(swig-lispify "ndb-transaction" 'classname)) (runChecks cl:t))
   (#.(swig-lispify "NdbTransaction_setSchemaObjOwnerChecks" 'function) (ff-pointer self) runChecks))
 
 (cl:defmethod #.(swig-lispify "execute" 'method) ((self #.(swig-lispify "ndb-transaction" 'classname)) (execType cl:integer) (arg2 cl:integer) (force cl:integer))
@@ -3309,7 +3309,7 @@
 (cl:defmethod #.(swig-lispify "get-state" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)))
   (#.(swig-lispify "NdbEventOperation_getState" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "merge-events" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)) (flag t))
+(cl:defmethod #.(swig-lispify "merge-events" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)) (flag cl:t))
   (#.(swig-lispify "NdbEventOperation_mergeEvents" 'function) (ff-pointer self) flag))
 
 (cl:defmethod #.(swig-lispify "execute" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)))
@@ -3375,7 +3375,7 @@
 (cl:defmethod #.(swig-lispify "get-ndb-error" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)))
   (#.(swig-lispify "NdbEventOperation_getNdbError" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "set-allow-empty-update" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)) (allow t))
+(cl:defmethod #.(swig-lispify "set-allow-empty-update" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)) (allow cl:t))
   (#.(swig-lispify "NdbEventOperation_setAllowEmptyUpdate" 'function) (ff-pointer self) allow))
 
 (cl:defmethod #.(swig-lispify "get-allow-empty-update" 'method) ((self #.(swig-lispify "ndb-event-operation" 'classname)))
@@ -3496,7 +3496,7 @@
 (cl:defmethod #.(swig-lispify "blobs-next-blob" 'method) ((self #.(swig-lispify "ndb-blob" 'classname)))
   (#.(swig-lispify "NdbBlob_blobsNextBlob" 'function) (ff-pointer self)))
 
-(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-blob" 'classname)) (execPendingBlobOps t))
+(cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-blob" 'classname)) (execPendingBlobOps cl:t))
   (#.(swig-lispify "NdbBlob_close" 'function) (ff-pointer self) execPendingBlobOps))
 
 (cl:defmethod #.(swig-lispify "close" 'method) ((self #.(swig-lispify "ndb-blob" 'classname)))
