@@ -25,6 +25,7 @@
 ;; which is used to strip the mdb_/MDB_ prefixes. (20220914 mgr)
 ;; This modification was written by Fernando Borretti as part
 ;; of liblmdb, available at https://github.com/antimer/liblmdb.
+;; It was further modified by Max-Gerd Retzlaff to support more characters.
 (cl:eval-when (:compile-toplevel :load-toplevel)
   (cl:unless (cl:fboundp 'swig-lispify)
     (cl:defun swig-lispify (name flag cl:&optional (package cl:*package*))
@@ -45,7 +46,13 @@
                                  ((upper lower) (cl:list* c #\- rest))
                                  (cl:t (cl:cons c rest)))))
                       ((cl:char-equal c #\_)
-                       (helper (cl:cdr lst) '_ (cl:cons #\- rest)))
+                       (helper (cl:cdr lst) '() (cl:cons #\- rest)))
+                      ((cl:char-equal c #\-)
+                       (helper (cl:cdr lst) '() (cl:cons c rest)))
+                      ((cl:char-equal c #\:)
+                       (helper (cl:cdr lst) '() (cl:cons c rest)))
+                      ((cl:char-equal c #\=)
+                       (helper (cl:cdr lst) '() (cl:cons c rest)))
                       (cl:t
                        (cl:error "Invalid character: ~A" c))))
                   (strip-prefix (prefix string)
