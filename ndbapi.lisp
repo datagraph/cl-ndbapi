@@ -4228,12 +4228,12 @@
 	(#.(swig-lispify "key" 'slotname) :string))
 
 (cffi:defcenum #.(swig-lispify "AbortOption" 'enumname)
-	(#.(swig-lispify "DefaultAbortOption" 'enumvalue :keyword) #.NdbOperation::DefaultAbortOption)
-	(#.(swig-lispify "CommitIfFailFree" 'enumvalue :keyword) #.NdbOperation::AbortOnError)
-	(#.(swig-lispify "TryCommit" 'enumvalue :keyword) #.NdbOperation::AbortOnError)
-	(#.(swig-lispify "AbortOnError" 'enumvalue :keyword) #.NdbOperation::AbortOnError)
-	(#.(swig-lispify "CommitAsMuchAsPossible" 'enumvalue :keyword) #.NdbOperation::AO_IgnoreError)
-	(#.(swig-lispify "AO_IgnoreError" 'enumvalue :keyword) #.NdbOperation::AO_IgnoreError))
+	(#.(swig-lispify "DefaultAbortOption" 'enumvalue :keyword) #.-1) ;; #.NdbOperation::DefaultAbortOption
+	(#.(swig-lispify "CommitIfFailFree" 'enumvalue :keyword) #.0) ;; #.NdbOperation::AbortOnError
+	(#.(swig-lispify "TryCommit" 'enumvalue :keyword) #.0) ;; #.NdbOperation::AbortOnError
+	(#.(swig-lispify "AbortOnError" 'enumvalue :keyword) #.0) ;; #.NdbOperation::AbortOnError
+	(#.(swig-lispify "CommitAsMuchAsPossible" 'enumvalue :keyword) #.2) ;; #.NdbOperation::AO_IgnoreError
+	(#.(swig-lispify "AO_IgnoreError" 'enumvalue :keyword) #.2)) ;; #.NdbOperation::AO_IgnoreError
 
 (cffi:defcenum #.(swig-lispify "ExecType" 'enumname)
 	(#.(swig-lispify "NoExecTypeDef" 'enumvalue :keyword) #.-1)
@@ -4243,11 +4243,11 @@
 	#.(swig-lispify "Rollback" 'enumvalue :keyword))
 
 (cffi:defcenum #.(swig-lispify "ExecType" 'enumname)
-	(#.(swig-lispify "NoExecTypeDef" 'enumvalue :keyword) #.::NoExecTypeDef)
-	(#.(swig-lispify "Prepare" 'enumvalue :keyword) #.::Prepare)
-	(#.(swig-lispify "NoCommit" 'enumvalue :keyword) #.::NoCommit)
-	(#.(swig-lispify "Commit" 'enumvalue :keyword) #.::Commit)
-	(#.(swig-lispify "Rollback" 'enumvalue :keyword) #.::Rollback))
+	(#.(swig-lispify "NoExecTypeDef" 'enumvalue :keyword) #.-1)
+	(#.(swig-lispify "Prepare" 'enumvalue :keyword) #.0)
+	(#.(swig-lispify "NoCommit" 'enumvalue :keyword) #.1)
+	(#.(swig-lispify "Commit" 'enumvalue :keyword) #.2)
+	(#.(swig-lispify "Rollback" 'enumvalue :keyword) #.3))
 
 (cffi:defcfun ("_wrap_NdbTransaction_getNdb" #.(swig-lispify "NdbTransaction_getNdb" 'function)) :pointer
   (self :pointer))
