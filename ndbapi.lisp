@@ -10,9 +10,7 @@
 
 (cl:in-package :libndbapi)
 
-
-
-(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init" 'function)) :int)
+(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init0" 'function)) :int)
 
 (cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end" 'function)) :void
   (arg0 :int))
@@ -188,20 +186,20 @@
 (cffi:defcfun ("_wrap_delete_Ndb_cluster_connection_node_iter" #.(swig-lispify "delete_Ndb_cluster_connection_node_iter" 'function)) :void
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_0" #.(swig-lispify "new_Ndb_cluster_connection" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_0" #.(swig-lispify "new_Ndb_cluster_connection0" 'function)) :pointer
   (connectstring :string))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_1" #.(swig-lispify "new_Ndb_cluster_connection" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_1" #.(swig-lispify "new_Ndb_cluster_connection1" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_2" #.(swig-lispify "new_Ndb_cluster_connection" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_2" #.(swig-lispify "new_Ndb_cluster_connection2" 'function)) :pointer
   (connectstring :string)
   (force_api_nodeid :int))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_3" #.(swig-lispify "new_Ndb_cluster_connection" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_3" #.(swig-lispify "new_Ndb_cluster_connection3" 'function)) :pointer
   (connectstring :string)
   (main_connection :pointer))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_4" #.(swig-lispify "new_Ndb_cluster_connection" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_4" #.(swig-lispify "new_Ndb_cluster_connection4" 'function)) :pointer
   (connectstring :string)
   (main_connection :pointer)
   (force_api_nodeid :int))
@@ -228,32 +226,32 @@
   (self :pointer)
   (timeout_ms :int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_connect" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_connect0" 'function)) :int
   (self :pointer)
   (no_retries :int)
   (retry_delay_in_seconds :int)
   (verbose :int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_connect" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_connect1" 'function)) :int
   (self :pointer)
   (no_retries :int)
   (retry_delay_in_seconds :int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_2" #.(swig-lispify "Ndb_cluster_connection_connect" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_2" #.(swig-lispify "Ndb_cluster_connection_connect2" 'function)) :int
   (self :pointer)
   (no_retries :int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_3" #.(swig-lispify "Ndb_cluster_connection_connect" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_connect__SWIG_3" #.(swig-lispify "Ndb_cluster_connection_connect3" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_start_connect_thread__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_start_connect_thread" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_start_connect_thread__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_start_connect_thread0" 'function)) :int
   (self :pointer)
   (connect_callback :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_start_connect_thread__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_start_connect_thread" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_start_connect_thread__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_start_connect_thread1" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_wait_until_ready__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_wait_until_ready" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_wait_until_ready__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_wait_until_ready0" 'function)) :int
   (self :pointer)
   (timeout_for_first_alive :int)
   (timeout_after_first_alive :int))
@@ -311,17 +309,17 @@
   (self :pointer)
   (recv_thread_id :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_0" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu0" 'function)) :int
   (self :pointer)
   (cpuid :unsigned-short))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu1" 'function)) :int
   (self :pointer)
   (cpuid_array :pointer)
   (array_len :unsigned-int)
   (recv_thread_id :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_2" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_recv_thread_cpu__SWIG_2" #.(swig-lispify "Ndb_cluster_connection_set_recv_thread_cpu2" 'function)) :int
   (self :pointer)
   (cpuid_array :pointer)
   (array_len :unsigned-int))
@@ -398,7 +396,7 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_wait_until_ready__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_wait_until_ready" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_wait_until_ready__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_wait_until_ready1" 'function)) :int
   (self :pointer)
   (nodes :pointer)
   (cnt :int)
@@ -528,12 +526,12 @@
   (nullbit_byte_offset :pointer)
   (nullbit_bit_in_byte :pointer))
 
-(cffi:defcfun ("_wrap_NdbDictionary_getValuePtr__SWIG_0" #.(swig-lispify "NdbDictionary_getValuePtr" 'function)) :string
+(cffi:defcfun ("_wrap_NdbDictionary_getValuePtr__SWIG_0" #.(swig-lispify "NdbDictionary_getValuePtr0" 'function)) :string
   (record :pointer)
   (row :string)
   (attrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbDictionary_getValuePtr__SWIG_1" #.(swig-lispify "NdbDictionary_getValuePtr" 'function)) :string
+(cffi:defcfun ("_wrap_NdbDictionary_getValuePtr__SWIG_1" #.(swig-lispify "NdbDictionary_getValuePtr1" 'function)) :string
   (record :pointer)
   (row :string)
   (attrId :unsigned-int))
@@ -769,12 +767,12 @@
 (cffi:defcfun ("_wrap_Column_getIndexSourced" #.(swig-lispify "Column_getIndexSourced" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Column__SWIG_0" #.(swig-lispify "new_Column" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Column__SWIG_0" #.(swig-lispify "new_Column0" 'function)) :pointer
   (name :string))
 
-(cffi:defcfun ("_wrap_new_Column__SWIG_1" #.(swig-lispify "new_Column" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Column__SWIG_1" #.(swig-lispify "new_Column1" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Column__SWIG_2" #.(swig-lispify "new_Column" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Column__SWIG_2" #.(swig-lispify "new_Column2" 'function)) :pointer
   (column :pointer))
 
 (cffi:defcfun ("_wrap_delete_Column" #.(swig-lispify "delete_Column" 'function)) :void
@@ -844,20 +842,20 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Column_setDefaultValue__SWIG_0" #.(swig-lispify "Column_setDefaultValue" 'function)) :int
+(cffi:defcfun ("_wrap_Column_setDefaultValue__SWIG_0" #.(swig-lispify "Column_setDefaultValue0" 'function)) :int
   (self :pointer)
   (arg1 :string))
 
-(cffi:defcfun ("_wrap_Column_setDefaultValue__SWIG_1" #.(swig-lispify "Column_setDefaultValue" 'function)) :int
+(cffi:defcfun ("_wrap_Column_setDefaultValue__SWIG_1" #.(swig-lispify "Column_setDefaultValue1" 'function)) :int
   (self :pointer)
   (buf :pointer)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_Column_getDefaultValue__SWIG_0" #.(swig-lispify "Column_getDefaultValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_Column_getDefaultValue__SWIG_0" #.(swig-lispify "Column_getDefaultValue0" 'function)) :pointer
   (self :pointer)
   (len :pointer))
 
-(cffi:defcfun ("_wrap_Column_getDefaultValue__SWIG_1" #.(swig-lispify "Column_getDefaultValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_Column_getDefaultValue__SWIG_1" #.(swig-lispify "Column_getDefaultValue1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_Column_getBlobTable" #.(swig-lispify "Column_getBlobTable" 'function)) :pointer
@@ -959,19 +957,19 @@
 (cffi:defcfun ("_wrap_Table_getTableId" #.(swig-lispify "Table_getTableId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Table_getColumn__SWIG_0" #.(swig-lispify "Table_getColumn" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getColumn__SWIG_0" #.(swig-lispify "Table_getColumn0" 'function)) :pointer
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Table_getColumn__SWIG_1" #.(swig-lispify "Table_getColumn" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getColumn__SWIG_1" #.(swig-lispify "Table_getColumn1" 'function)) :pointer
   (self :pointer)
   (attributeId :int))
 
-(cffi:defcfun ("_wrap_Table_getColumn__SWIG_2" #.(swig-lispify "Table_getColumn" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getColumn__SWIG_2" #.(swig-lispify "Table_getColumn2" 'function)) :pointer
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Table_getColumn__SWIG_3" #.(swig-lispify "Table_getColumn" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getColumn__SWIG_3" #.(swig-lispify "Table_getColumn3" 'function)) :pointer
   (self :pointer)
   (attributeId :int))
 
@@ -1016,12 +1014,12 @@
 (cffi:defcfun ("_wrap_Table_getDefaultRecord" #.(swig-lispify "Table_getDefaultRecord" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Table__SWIG_0" #.(swig-lispify "new_Table" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Table__SWIG_0" #.(swig-lispify "new_Table0" 'function)) :pointer
   (name :string))
 
-(cffi:defcfun ("_wrap_new_Table__SWIG_1" #.(swig-lispify "new_Table" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Table__SWIG_1" #.(swig-lispify "new_Table1" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Table__SWIG_2" #.(swig-lispify "new_Table" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Table__SWIG_2" #.(swig-lispify "new_Table2" 'function)) :pointer
   (table :pointer))
 
 (cffi:defcfun ("_wrap_delete_Table" #.(swig-lispify "delete_Table" 'function)) :void
@@ -1064,16 +1062,16 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Table_getPartitionBalance__SWIG_0" #.(swig-lispify "Table_getPartitionBalance" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getPartitionBalance__SWIG_0" #.(swig-lispify "Table_getPartitionBalance0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Table_getPartitionBalance__SWIG_1" #.(swig-lispify "Table_getPartitionBalance" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getPartitionBalance__SWIG_1" #.(swig-lispify "Table_getPartitionBalance1" 'function)) :pointer
   (str :pointer))
 
-(cffi:defcfun ("_wrap_Table_getPartitionBalanceString__SWIG_0" #.(swig-lispify "Table_getPartitionBalanceString" 'function)) :string
+(cffi:defcfun ("_wrap_Table_getPartitionBalanceString__SWIG_0" #.(swig-lispify "Table_getPartitionBalanceString0" 'function)) :string
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Table_getPartitionBalanceString__SWIG_1" #.(swig-lispify "Table_getPartitionBalanceString" 'function)) :string
+(cffi:defcfun ("_wrap_Table_getPartitionBalanceString__SWIG_1" #.(swig-lispify "Table_getPartitionBalanceString1" 'function)) :string
   (partition_balance :pointer))
 
 (cffi:defcfun ("_wrap_Table_setFragmentType" #.(swig-lispify "Table_setFragmentType" 'function)) :void
@@ -1103,28 +1101,28 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_0" #.(swig-lispify "Table_getTablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_0" #.(swig-lispify "Table_getTablespace0" 'function)) :pointer
   (self :pointer)
   (id :pointer)
   (version :pointer))
 
-(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_1" #.(swig-lispify "Table_getTablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_1" #.(swig-lispify "Table_getTablespace1" 'function)) :pointer
   (self :pointer)
   (id :pointer))
 
-(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_2" #.(swig-lispify "Table_getTablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getTablespace__SWIG_2" #.(swig-lispify "Table_getTablespace2" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_0" #.(swig-lispify "Table_getHashMap" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_0" #.(swig-lispify "Table_getHashMap0" 'function)) :pointer
   (self :pointer)
   (id :pointer)
   (version :pointer))
 
-(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_1" #.(swig-lispify "Table_getHashMap" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_1" #.(swig-lispify "Table_getHashMap1" 'function)) :pointer
   (self :pointer)
   (id :pointer))
 
-(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_2" #.(swig-lispify "Table_getHashMap" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getHashMap__SWIG_2" #.(swig-lispify "Table_getHashMap2" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_Table_setHashMap" #.(swig-lispify "Table_setHashMap" 'function)) :int
@@ -1250,12 +1248,12 @@
 (cffi:defcfun ("_wrap_Table_getRowSizeInBytes" #.(swig-lispify "Table_getRowSizeInBytes" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Table_createTableInDb__SWIG_0" #.(swig-lispify "Table_createTableInDb" 'function)) :int
+(cffi:defcfun ("_wrap_Table_createTableInDb__SWIG_0" #.(swig-lispify "Table_createTableInDb0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (existingEqualIsOk :pointer))
 
-(cffi:defcfun ("_wrap_Table_createTableInDb__SWIG_1" #.(swig-lispify "Table_createTableInDb" 'function)) :int
+(cffi:defcfun ("_wrap_Table_createTableInDb__SWIG_1" #.(swig-lispify "Table_createTableInDb1" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -1378,10 +1376,10 @@
 (cffi:defcfun ("_wrap_Index_getDefaultRecord" #.(swig-lispify "Index_getDefaultRecord" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Index__SWIG_0" #.(swig-lispify "new_Index" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Index__SWIG_0" #.(swig-lispify "new_Index0" 'function)) :pointer
   (name :string))
 
-(cffi:defcfun ("_wrap_new_Index__SWIG_1" #.(swig-lispify "new_Index" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Index__SWIG_1" #.(swig-lispify "new_Index1" 'function)) :pointer)
 
 (cffi:defcfun ("_wrap_delete_Index" #.(swig-lispify "delete_Index" 'function)) :void
   (self :pointer))
@@ -1511,10 +1509,10 @@
 	(#.(swig-lispify "ER_SUBSCRIBE" 'enumvalue :keyword) #.2)
 	(#.(swig-lispify "ER_DDL" 'enumvalue :keyword) #.4))
 
-(cffi:defcfun ("_wrap_new_Event__SWIG_0" #.(swig-lispify "new_Event" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Event__SWIG_0" #.(swig-lispify "new_Event0" 'function)) :pointer
   (name :string))
 
-(cffi:defcfun ("_wrap_new_Event__SWIG_1" #.(swig-lispify "new_Event" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Event__SWIG_1" #.(swig-lispify "new_Event1" 'function)) :pointer
   (name :string)
   (table :pointer))
 
@@ -1531,15 +1529,15 @@
 (cffi:defcfun ("_wrap_Event_getTable" #.(swig-lispify "Event_getTable" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Event_setTable__SWIG_0" #.(swig-lispify "Event_setTable" 'function)) :void
+(cffi:defcfun ("_wrap_Event_setTable__SWIG_0" #.(swig-lispify "Event_setTable0" 'function)) :void
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Event_setTable__SWIG_1" #.(swig-lispify "Event_setTable" 'function)) :int
+(cffi:defcfun ("_wrap_Event_setTable__SWIG_1" #.(swig-lispify "Event_setTable1" 'function)) :int
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Event_setTable__SWIG_2" #.(swig-lispify "Event_setTable" 'function)) :int
+(cffi:defcfun ("_wrap_Event_setTable__SWIG_2" #.(swig-lispify "Event_setTable2" 'function)) :int
   (self :pointer)
   (tableName :string))
 
@@ -1572,11 +1570,11 @@
   (self :pointer)
   (c :pointer))
 
-(cffi:defcfun ("_wrap_Event_addEventColumn__SWIG_0" #.(swig-lispify "Event_addEventColumn" 'function)) :void
+(cffi:defcfun ("_wrap_Event_addEventColumn__SWIG_0" #.(swig-lispify "Event_addEventColumn0" 'function)) :void
   (self :pointer)
   (attrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Event_addEventColumn__SWIG_1" #.(swig-lispify "Event_addEventColumn" 'function)) :void
+(cffi:defcfun ("_wrap_Event_addEventColumn__SWIG_1" #.(swig-lispify "Event_addEventColumn1" 'function)) :void
   (self :pointer)
   (columnName :string))
 
@@ -1628,9 +1626,9 @@
 	(#.(swig-lispify "file_size" 'slotname) :unsigned-long-long)
 	(#.(swig-lispify "filename_pattern" 'slotname) :string))
 
-(cffi:defcfun ("_wrap_new_LogfileGroup__SWIG_0" #.(swig-lispify "new_LogfileGroup" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_LogfileGroup__SWIG_0" #.(swig-lispify "new_LogfileGroup0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_LogfileGroup__SWIG_1" #.(swig-lispify "new_LogfileGroup" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_LogfileGroup__SWIG_1" #.(swig-lispify "new_LogfileGroup1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_LogfileGroup" #.(swig-lispify "delete_LogfileGroup" 'function)) :void
@@ -1669,9 +1667,9 @@
 (cffi:defcfun ("_wrap_LogfileGroup_getObjectId" #.(swig-lispify "LogfileGroup_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Tablespace__SWIG_0" #.(swig-lispify "new_Tablespace" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Tablespace__SWIG_0" #.(swig-lispify "new_Tablespace0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Tablespace__SWIG_1" #.(swig-lispify "new_Tablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Tablespace__SWIG_1" #.(swig-lispify "new_Tablespace1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Tablespace" #.(swig-lispify "delete_Tablespace" 'function)) :void
@@ -1698,11 +1696,11 @@
 (cffi:defcfun ("_wrap_Tablespace_getAutoGrowSpecification" #.(swig-lispify "Tablespace_getAutoGrowSpecification" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Tablespace_setDefaultLogfileGroup__SWIG_0" #.(swig-lispify "Tablespace_setDefaultLogfileGroup" 'function)) :void
+(cffi:defcfun ("_wrap_Tablespace_setDefaultLogfileGroup__SWIG_0" #.(swig-lispify "Tablespace_setDefaultLogfileGroup0" 'function)) :void
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Tablespace_setDefaultLogfileGroup__SWIG_1" #.(swig-lispify "Tablespace_setDefaultLogfileGroup" 'function)) :void
+(cffi:defcfun ("_wrap_Tablespace_setDefaultLogfileGroup__SWIG_1" #.(swig-lispify "Tablespace_setDefaultLogfileGroup1" 'function)) :void
   (self :pointer)
   (arg1 :pointer))
 
@@ -1721,9 +1719,9 @@
 (cffi:defcfun ("_wrap_Tablespace_getObjectId" #.(swig-lispify "Tablespace_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Datafile__SWIG_0" #.(swig-lispify "new_Datafile" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Datafile__SWIG_0" #.(swig-lispify "new_Datafile0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Datafile__SWIG_1" #.(swig-lispify "new_Datafile" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Datafile__SWIG_1" #.(swig-lispify "new_Datafile1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Datafile" #.(swig-lispify "delete_Datafile" 'function)) :void
@@ -1746,11 +1744,11 @@
 (cffi:defcfun ("_wrap_Datafile_getFree" #.(swig-lispify "Datafile_getFree" 'function)) :unsigned-long-long
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Datafile_setTablespace__SWIG_0" #.(swig-lispify "Datafile_setTablespace" 'function)) :int
+(cffi:defcfun ("_wrap_Datafile_setTablespace__SWIG_0" #.(swig-lispify "Datafile_setTablespace0" 'function)) :int
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Datafile_setTablespace__SWIG_1" #.(swig-lispify "Datafile_setTablespace" 'function)) :int
+(cffi:defcfun ("_wrap_Datafile_setTablespace__SWIG_1" #.(swig-lispify "Datafile_setTablespace1" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -1770,9 +1768,9 @@
 (cffi:defcfun ("_wrap_Datafile_getObjectId" #.(swig-lispify "Datafile_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_Undofile__SWIG_0" #.(swig-lispify "new_Undofile" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_Undofile__SWIG_0" #.(swig-lispify "new_Undofile0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_Undofile__SWIG_1" #.(swig-lispify "new_Undofile" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Undofile__SWIG_1" #.(swig-lispify "new_Undofile1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Undofile" #.(swig-lispify "delete_Undofile" 'function)) :void
@@ -1792,11 +1790,11 @@
 (cffi:defcfun ("_wrap_Undofile_getSize" #.(swig-lispify "Undofile_getSize" 'function)) :unsigned-long-long
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Undofile_setLogfileGroup__SWIG_0" #.(swig-lispify "Undofile_setLogfileGroup" 'function)) :void
+(cffi:defcfun ("_wrap_Undofile_setLogfileGroup__SWIG_0" #.(swig-lispify "Undofile_setLogfileGroup0" 'function)) :void
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Undofile_setLogfileGroup__SWIG_1" #.(swig-lispify "Undofile_setLogfileGroup" 'function)) :void
+(cffi:defcfun ("_wrap_Undofile_setLogfileGroup__SWIG_1" #.(swig-lispify "Undofile_setLogfileGroup1" 'function)) :void
   (self :pointer)
   (arg1 :pointer))
 
@@ -1816,9 +1814,9 @@
 (cffi:defcfun ("_wrap_Undofile_getObjectId" #.(swig-lispify "Undofile_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_HashMap__SWIG_0" #.(swig-lispify "new_HashMap" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_HashMap__SWIG_0" #.(swig-lispify "new_HashMap0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_HashMap__SWIG_1" #.(swig-lispify "new_HashMap" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_HashMap__SWIG_1" #.(swig-lispify "new_HashMap1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_HashMap" #.(swig-lispify "delete_HashMap" 'function)) :void
@@ -1857,9 +1855,9 @@
 (cffi:defcfun ("_wrap_HashMap_getObjectId" #.(swig-lispify "HashMap_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_new_ForeignKey__SWIG_0" #.(swig-lispify "new_ForeignKey" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_ForeignKey__SWIG_0" #.(swig-lispify "new_ForeignKey0" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_ForeignKey__SWIG_1" #.(swig-lispify "new_ForeignKey" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_ForeignKey__SWIG_1" #.(swig-lispify "new_ForeignKey1" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_ForeignKey" #.(swig-lispify "delete_ForeignKey" 'function)) :void
@@ -1911,33 +1909,33 @@
   (self :pointer)
   (arg1 :string))
 
-(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_0" #.(swig-lispify "ForeignKey_setParent" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_0" #.(swig-lispify "ForeignKey_setParent0" 'function)) :void
   (self :pointer)
   (arg1 :pointer)
   (index :pointer)
   (cols :pointer))
 
-(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_1" #.(swig-lispify "ForeignKey_setParent" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_1" #.(swig-lispify "ForeignKey_setParent1" 'function)) :void
   (self :pointer)
   (arg1 :pointer)
   (index :pointer))
 
-(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_2" #.(swig-lispify "ForeignKey_setParent" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setParent__SWIG_2" #.(swig-lispify "ForeignKey_setParent2" 'function)) :void
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_0" #.(swig-lispify "ForeignKey_setChild" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_0" #.(swig-lispify "ForeignKey_setChild0" 'function)) :void
   (self :pointer)
   (arg1 :pointer)
   (index :pointer)
   (cols :pointer))
 
-(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_1" #.(swig-lispify "ForeignKey_setChild" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_1" #.(swig-lispify "ForeignKey_setChild1" 'function)) :void
   (self :pointer)
   (arg1 :pointer)
   (index :pointer))
 
-(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_2" #.(swig-lispify "ForeignKey_setChild" 'function)) :void
+(cffi:defcfun ("_wrap_ForeignKey_setChild__SWIG_2" #.(swig-lispify "ForeignKey_setChild2" 'function)) :void
   (self :pointer)
   (arg1 :pointer))
 
@@ -1958,25 +1956,25 @@
 (cffi:defcfun ("_wrap_ForeignKey_getObjectVersion" #.(swig-lispify "ForeignKey_getObjectVersion" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_0" #.(swig-lispify "Dictionary_listObjects" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_0" #.(swig-lispify "Dictionary_listObjects0" 'function)) :int
   (self :pointer)
   (list :pointer)
   (type :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_1" #.(swig-lispify "Dictionary_listObjects" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_1" #.(swig-lispify "Dictionary_listObjects1" 'function)) :int
   (self :pointer)
   (list :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_2" #.(swig-lispify "Dictionary_listObjects" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_2" #.(swig-lispify "Dictionary_listObjects2" 'function)) :int
   (self :pointer)
   (list :pointer)
   (type :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_3" #.(swig-lispify "Dictionary_listObjects" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_3" #.(swig-lispify "Dictionary_listObjects3" 'function)) :int
   (self :pointer)
   (list :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_4" #.(swig-lispify "Dictionary_listObjects" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listObjects__SWIG_4" #.(swig-lispify "Dictionary_listObjects4" 'function)) :int
   (self :pointer)
   (list :pointer)
   (type :pointer)
@@ -1988,16 +1986,16 @@
 (cffi:defcfun ("_wrap_Dictionary_getWarningFlags" #.(swig-lispify "Dictionary_getWarningFlags" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getTable__SWIG_0" #.(swig-lispify "Dictionary_getTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getTable__SWIG_0" #.(swig-lispify "Dictionary_getTable0" 'function)) :pointer
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_getBlobTable__SWIG_0" #.(swig-lispify "Dictionary_getBlobTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getBlobTable__SWIG_0" #.(swig-lispify "Dictionary_getBlobTable0" 'function)) :pointer
   (self :pointer)
   (arg1 :pointer)
   (col_name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_getBlobTable__SWIG_1" #.(swig-lispify "Dictionary_getBlobTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getBlobTable__SWIG_1" #.(swig-lispify "Dictionary_getBlobTable1" 'function)) :pointer
   (self :pointer)
   (arg1 :pointer)
   (col_no :unsigned-int))
@@ -2006,33 +2004,33 @@
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getIndex__SWIG_0" #.(swig-lispify "Dictionary_getIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getIndex__SWIG_0" #.(swig-lispify "Dictionary_getIndex0" 'function)) :pointer
   (self :pointer)
   (indexName :string)
   (tableName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_getIndex__SWIG_1" #.(swig-lispify "Dictionary_getIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getIndex__SWIG_1" #.(swig-lispify "Dictionary_getIndex1" 'function)) :pointer
   (self :pointer)
   (indexName :string)
   (base :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_0" #.(swig-lispify "Dictionary_listIndexes" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_0" #.(swig-lispify "Dictionary_listIndexes0" 'function)) :int
   (self :pointer)
   (list :pointer)
   (tableName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_1" #.(swig-lispify "Dictionary_listIndexes" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_1" #.(swig-lispify "Dictionary_listIndexes1" 'function)) :int
   (self :pointer)
   (list :pointer)
   (tableName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_2" #.(swig-lispify "Dictionary_listIndexes" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_2" #.(swig-lispify "Dictionary_listIndexes2" 'function)) :int
   (self :pointer)
   (list :pointer)
   (tableName :string)
   (fullyQualified :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_3" #.(swig-lispify "Dictionary_listIndexes" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listIndexes__SWIG_3" #.(swig-lispify "Dictionary_listIndexes3" 'function)) :int
   (self :pointer)
   (list :pointer)
   (table :pointer))
@@ -2046,12 +2044,12 @@
   (self :pointer)
   (event :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_dropEvent__SWIG_0" #.(swig-lispify "Dictionary_dropEvent" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropEvent__SWIG_0" #.(swig-lispify "Dictionary_dropEvent0" 'function)) :int
   (self :pointer)
   (eventName :string)
   (force :int))
 
-(cffi:defcfun ("_wrap_Dictionary_dropEvent__SWIG_1" #.(swig-lispify "Dictionary_dropEvent" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropEvent__SWIG_1" #.(swig-lispify "Dictionary_dropEvent1" 'function)) :int
   (self :pointer)
   (eventName :string))
 
@@ -2059,19 +2057,19 @@
   (self :pointer)
   (eventName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_listEvents__SWIG_0" #.(swig-lispify "Dictionary_listEvents" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listEvents__SWIG_0" #.(swig-lispify "Dictionary_listEvents0" 'function)) :int
   (self :pointer)
   (list :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_listEvents__SWIG_1" #.(swig-lispify "Dictionary_listEvents" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_listEvents__SWIG_1" #.(swig-lispify "Dictionary_listEvents1" 'function)) :int
   (self :pointer)
   (list :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createTable__SWIG_0" #.(swig-lispify "Dictionary_createTable" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createTable__SWIG_0" #.(swig-lispify "Dictionary_createTable0" 'function)) :int
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createTable__SWIG_1" #.(swig-lispify "Dictionary_createTable" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createTable__SWIG_1" #.(swig-lispify "Dictionary_createTable1" 'function)) :int
   (self :pointer)
   (table :pointer)
   (objid :pointer))
@@ -2086,11 +2084,11 @@
   (ind :pointer)
   (h :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_dropTable__SWIG_0" #.(swig-lispify "Dictionary_dropTable" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropTable__SWIG_0" #.(swig-lispify "Dictionary_dropTable0" 'function)) :int
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_dropTable__SWIG_1" #.(swig-lispify "Dictionary_dropTable" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropTable__SWIG_1" #.(swig-lispify "Dictionary_dropTable1" 'function)) :int
   (self :pointer)
   (name :string))
 
@@ -2104,40 +2102,40 @@
   (f :pointer)
   (t_arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_invalidateTable__SWIG_0" #.(swig-lispify "Dictionary_invalidateTable" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_invalidateTable__SWIG_0" #.(swig-lispify "Dictionary_invalidateTable0" 'function)) :void
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_removeCachedTable__SWIG_0" #.(swig-lispify "Dictionary_removeCachedTable" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_removeCachedTable__SWIG_0" #.(swig-lispify "Dictionary_removeCachedTable0" 'function)) :void
   (self :pointer)
   (table :string))
 
-(cffi:defcfun ("_wrap_Dictionary_removeCachedIndex__SWIG_0" #.(swig-lispify "Dictionary_removeCachedIndex" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_removeCachedIndex__SWIG_0" #.(swig-lispify "Dictionary_removeCachedIndex0" 'function)) :void
   (self :pointer)
   (index :string)
   (table :string))
 
-(cffi:defcfun ("_wrap_Dictionary_invalidateIndex__SWIG_0" #.(swig-lispify "Dictionary_invalidateIndex" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_invalidateIndex__SWIG_0" #.(swig-lispify "Dictionary_invalidateIndex0" 'function)) :void
   (self :pointer)
   (indexName :string)
   (tableName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_0" #.(swig-lispify "Dictionary_createIndex" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_0" #.(swig-lispify "Dictionary_createIndex0" 'function)) :int
   (self :pointer)
   (index :pointer)
   (offline :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_1" #.(swig-lispify "Dictionary_createIndex" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_1" #.(swig-lispify "Dictionary_createIndex1" 'function)) :int
   (self :pointer)
   (index :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_2" #.(swig-lispify "Dictionary_createIndex" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_2" #.(swig-lispify "Dictionary_createIndex2" 'function)) :int
   (self :pointer)
   (index :pointer)
   (table :pointer)
   (offline :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_3" #.(swig-lispify "Dictionary_createIndex" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createIndex__SWIG_3" #.(swig-lispify "Dictionary_createIndex3" 'function)) :int
   (self :pointer)
   (index :pointer)
   (table :pointer))
@@ -2147,48 +2145,48 @@
   (indexName :string)
   (tableName :string))
 
-(cffi:defcfun ("_wrap_Dictionary_updateIndexStat__SWIG_0" #.(swig-lispify "Dictionary_updateIndexStat" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_updateIndexStat__SWIG_0" #.(swig-lispify "Dictionary_updateIndexStat0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_updateIndexStat__SWIG_1" #.(swig-lispify "Dictionary_updateIndexStat" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_updateIndexStat__SWIG_1" #.(swig-lispify "Dictionary_updateIndexStat1" 'function)) :int
   (self :pointer)
   (indexId :unsigned-int)
   (indexVersion :unsigned-int)
   (tableId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_deleteIndexStat__SWIG_0" #.(swig-lispify "Dictionary_deleteIndexStat" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_deleteIndexStat__SWIG_0" #.(swig-lispify "Dictionary_deleteIndexStat0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_deleteIndexStat__SWIG_1" #.(swig-lispify "Dictionary_deleteIndexStat" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_deleteIndexStat__SWIG_1" #.(swig-lispify "Dictionary_deleteIndexStat1" 'function)) :int
   (self :pointer)
   (indexId :unsigned-int)
   (indexVersion :unsigned-int)
   (tableId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_removeCachedTable__SWIG_1" #.(swig-lispify "Dictionary_removeCachedTable" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_removeCachedTable__SWIG_1" #.(swig-lispify "Dictionary_removeCachedTable1" 'function)) :void
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_removeCachedIndex__SWIG_1" #.(swig-lispify "Dictionary_removeCachedIndex" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_removeCachedIndex__SWIG_1" #.(swig-lispify "Dictionary_removeCachedIndex1" 'function)) :void
   (self :pointer)
   (index :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_invalidateTable__SWIG_1" #.(swig-lispify "Dictionary_invalidateTable" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_invalidateTable__SWIG_1" #.(swig-lispify "Dictionary_invalidateTable1" 'function)) :void
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_invalidateIndex__SWIG_1" #.(swig-lispify "Dictionary_invalidateIndex" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_invalidateIndex__SWIG_1" #.(swig-lispify "Dictionary_invalidateIndex1" 'function)) :void
   (self :pointer)
   (index :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_forceGCPWait__SWIG_0" #.(swig-lispify "Dictionary_forceGCPWait" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_forceGCPWait__SWIG_0" #.(swig-lispify "Dictionary_forceGCPWait0" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_forceGCPWait__SWIG_1" #.(swig-lispify "Dictionary_forceGCPWait" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_forceGCPWait__SWIG_1" #.(swig-lispify "Dictionary_forceGCPWait1" 'function)) :int
   (self :pointer)
   (type :int))
 
@@ -2203,12 +2201,12 @@
 	(#.(swig-lispify "WarnDatafileRoundDown" 'enumvalue) #.#x8)
 	(#.(swig-lispify "WarnDatafileRoundUp" 'enumvalue) #.#x10))
 
-(cffi:defcfun ("_wrap_Dictionary_createLogfileGroup__SWIG_0" #.(swig-lispify "Dictionary_createLogfileGroup" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createLogfileGroup__SWIG_0" #.(swig-lispify "Dictionary_createLogfileGroup0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createLogfileGroup__SWIG_1" #.(swig-lispify "Dictionary_createLogfileGroup" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createLogfileGroup__SWIG_1" #.(swig-lispify "Dictionary_createLogfileGroup1" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -2220,12 +2218,12 @@
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_createTablespace__SWIG_0" #.(swig-lispify "Dictionary_createTablespace" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createTablespace__SWIG_0" #.(swig-lispify "Dictionary_createTablespace0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createTablespace__SWIG_1" #.(swig-lispify "Dictionary_createTablespace" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createTablespace__SWIG_1" #.(swig-lispify "Dictionary_createTablespace1" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -2233,26 +2231,26 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getTablespace__SWIG_0" #.(swig-lispify "Dictionary_getTablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getTablespace__SWIG_0" #.(swig-lispify "Dictionary_getTablespace0" 'function)) :pointer
   (self :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_getTablespace__SWIG_1" #.(swig-lispify "Dictionary_getTablespace" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getTablespace__SWIG_1" #.(swig-lispify "Dictionary_getTablespace1" 'function)) :pointer
   (self :pointer)
   (tablespaceId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_0" #.(swig-lispify "Dictionary_createDatafile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_0" #.(swig-lispify "Dictionary_createDatafile0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (overwrite_existing :pointer)
   (arg3 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_1" #.(swig-lispify "Dictionary_createDatafile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_1" #.(swig-lispify "Dictionary_createDatafile1" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (overwrite_existing :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_2" #.(swig-lispify "Dictionary_createDatafile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createDatafile__SWIG_2" #.(swig-lispify "Dictionary_createDatafile2" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -2265,18 +2263,18 @@
   (node :unsigned-int)
   (path :string))
 
-(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_0" #.(swig-lispify "Dictionary_createUndofile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_0" #.(swig-lispify "Dictionary_createUndofile0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (overwrite_existing :pointer)
   (arg3 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_1" #.(swig-lispify "Dictionary_createUndofile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_1" #.(swig-lispify "Dictionary_createUndofile1" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (overwrite_existing :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_2" #.(swig-lispify "Dictionary_createUndofile" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createUndofile__SWIG_2" #.(swig-lispify "Dictionary_createUndofile2" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -2289,53 +2287,53 @@
   (node :unsigned-int)
   (path :string))
 
-(cffi:defcfun ("_wrap_Dictionary_createHashMap__SWIG_0" #.(swig-lispify "Dictionary_createHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createHashMap__SWIG_0" #.(swig-lispify "Dictionary_createHashMap0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createHashMap__SWIG_1" #.(swig-lispify "Dictionary_createHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createHashMap__SWIG_1" #.(swig-lispify "Dictionary_createHashMap1" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getHashMap__SWIG_0" #.(swig-lispify "Dictionary_getHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_getHashMap__SWIG_0" #.(swig-lispify "Dictionary_getHashMap0" 'function)) :int
   (self :pointer)
   (dst :pointer)
   (name :string))
 
-(cffi:defcfun ("_wrap_Dictionary_getHashMap__SWIG_1" #.(swig-lispify "Dictionary_getHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_getHashMap__SWIG_1" #.(swig-lispify "Dictionary_getHashMap1" 'function)) :int
   (self :pointer)
   (dst :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getDefaultHashMap__SWIG_0" #.(swig-lispify "Dictionary_getDefaultHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_getDefaultHashMap__SWIG_0" #.(swig-lispify "Dictionary_getDefaultHashMap0" 'function)) :int
   (self :pointer)
   (dst :pointer)
   (partitionCount :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_getDefaultHashMap__SWIG_1" #.(swig-lispify "Dictionary_getDefaultHashMap" 'function)) :int
-  (self :pointer)
-  (dst :pointer)
-  (buckets :unsigned-int)
-  (partitionCount :unsigned-int))
-
-(cffi:defcfun ("_wrap_Dictionary_initDefaultHashMap__SWIG_0" #.(swig-lispify "Dictionary_initDefaultHashMap" 'function)) :int
-  (self :pointer)
-  (dst :pointer)
-  (partitionCount :unsigned-int))
-
-(cffi:defcfun ("_wrap_Dictionary_initDefaultHashMap__SWIG_1" #.(swig-lispify "Dictionary_initDefaultHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_getDefaultHashMap__SWIG_1" #.(swig-lispify "Dictionary_getDefaultHashMap1" 'function)) :int
   (self :pointer)
   (dst :pointer)
   (buckets :unsigned-int)
   (partitionCount :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_prepareHashMap__SWIG_0" #.(swig-lispify "Dictionary_prepareHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_initDefaultHashMap__SWIG_0" #.(swig-lispify "Dictionary_initDefaultHashMap0" 'function)) :int
+  (self :pointer)
+  (dst :pointer)
+  (partitionCount :unsigned-int))
+
+(cffi:defcfun ("_wrap_Dictionary_initDefaultHashMap__SWIG_1" #.(swig-lispify "Dictionary_initDefaultHashMap1" 'function)) :int
+  (self :pointer)
+  (dst :pointer)
+  (buckets :unsigned-int)
+  (partitionCount :unsigned-int))
+
+(cffi:defcfun ("_wrap_Dictionary_prepareHashMap__SWIG_0" #.(swig-lispify "Dictionary_prepareHashMap0" 'function)) :int
   (self :pointer)
   (oldTable :pointer)
   (newTable :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_prepareHashMap__SWIG_1" #.(swig-lispify "Dictionary_prepareHashMap" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_prepareHashMap__SWIG_1" #.(swig-lispify "Dictionary_prepareHashMap1" 'function)) :int
   (self :pointer)
   (oldTable :pointer)
   (newTable :pointer)
@@ -2344,18 +2342,18 @@
 (cffi:defcenum #.(swig-lispify "CreateFKFlags" 'enumname)
 	(#.(swig-lispify "CreateFK_NoVerify" 'enumvalue :keyword) #.1))
 
-(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_0" #.(swig-lispify "Dictionary_createForeignKey" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_0" #.(swig-lispify "Dictionary_createForeignKey0" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer)
   (flags :int))
 
-(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_1" #.(swig-lispify "Dictionary_createForeignKey" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_1" #.(swig-lispify "Dictionary_createForeignKey1" 'function)) :int
   (self :pointer)
   (arg1 :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_2" #.(swig-lispify "Dictionary_createForeignKey" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_createForeignKey__SWIG_2" #.(swig-lispify "Dictionary_createForeignKey2" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
@@ -2371,11 +2369,11 @@
 (cffi:defcfun ("_wrap_Dictionary_beginSchemaTrans" #.(swig-lispify "Dictionary_beginSchemaTrans" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_endSchemaTrans__SWIG_0" #.(swig-lispify "Dictionary_endSchemaTrans" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_endSchemaTrans__SWIG_0" #.(swig-lispify "Dictionary_endSchemaTrans0" 'function)) :int
   (self :pointer)
   (flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_endSchemaTrans__SWIG_1" #.(swig-lispify "Dictionary_endSchemaTrans" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_endSchemaTrans__SWIG_1" #.(swig-lispify "Dictionary_endSchemaTrans1" 'function)) :int
   (self :pointer))
 
 (cffi:defcenum #.(swig-lispify "SchemaTransFlag" 'enumname)
@@ -2385,7 +2383,7 @@
 (cffi:defcfun ("_wrap_Dictionary_hasSchemaTrans" #.(swig-lispify "Dictionary_hasSchemaTrans" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getTable__SWIG_1" #.(swig-lispify "Dictionary_getTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getTable__SWIG_1" #.(swig-lispify "Dictionary_getTable1" 'function)) :pointer
   (self :pointer)
   (name :string)
   (data :pointer))
@@ -2394,12 +2392,12 @@
   (self :pointer)
   (sz :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_getIndexGlobal__SWIG_0" #.(swig-lispify "Dictionary_getIndexGlobal" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getIndexGlobal__SWIG_0" #.(swig-lispify "Dictionary_getIndexGlobal0" 'function)) :pointer
   (self :pointer)
   (indexName :string)
   (ndbtab :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_getIndexGlobal__SWIG_1" #.(swig-lispify "Dictionary_getIndexGlobal" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_getIndexGlobal__SWIG_1" #.(swig-lispify "Dictionary_getIndexGlobal1" 'function)) :pointer
   (self :pointer)
   (indexName :string)
   (tableName :string))
@@ -2413,7 +2411,7 @@
   (f :pointer)
   (t_arg2 :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_dropTableGlobal__SWIG_0" #.(swig-lispify "Dictionary_dropTableGlobal" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropTableGlobal__SWIG_0" #.(swig-lispify "Dictionary_dropTableGlobal0" 'function)) :int
   (self :pointer)
   (ndbtab :pointer))
 
@@ -2421,7 +2419,7 @@
 	(#.(swig-lispify "DropTableCascadeConstraints" 'enumvalue) #.#x1)
 	(#.(swig-lispify "DropTableCascadeConstraintsDropDB" 'enumvalue) #.#x2))
 
-(cffi:defcfun ("_wrap_Dictionary_dropTableGlobal__SWIG_1" #.(swig-lispify "Dictionary_dropTableGlobal" 'function)) :int
+(cffi:defcfun ("_wrap_Dictionary_dropTableGlobal__SWIG_1" #.(swig-lispify "Dictionary_dropTableGlobal1" 'function)) :int
   (self :pointer)
   (ndbtab :pointer)
   (flags :int))
@@ -2444,7 +2442,7 @@
   (self :pointer)
   (dbname :string))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_0" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_0" #.(swig-lispify "Dictionary_createRecord0" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (recSpec :pointer)
@@ -2452,14 +2450,14 @@
   (elemSize :unsigned-int)
   (flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_1" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_1" #.(swig-lispify "Dictionary_createRecord1" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (recSpec :pointer)
   (length :unsigned-int)
   (elemSize :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_2" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_2" #.(swig-lispify "Dictionary_createRecord2" 'function)) :pointer
   (self :pointer)
   (index :pointer)
   (table :pointer)
@@ -2468,7 +2466,7 @@
   (elemSize :unsigned-int)
   (flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_3" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_3" #.(swig-lispify "Dictionary_createRecord3" 'function)) :pointer
   (self :pointer)
   (index :pointer)
   (table :pointer)
@@ -2476,7 +2474,7 @@
   (length :unsigned-int)
   (elemSize :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_4" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_4" #.(swig-lispify "Dictionary_createRecord4" 'function)) :pointer
   (self :pointer)
   (index :pointer)
   (recSpec :pointer)
@@ -2484,7 +2482,7 @@
   (elemSize :unsigned-int)
   (flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_5" #.(swig-lispify "Dictionary_createRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Dictionary_createRecord__SWIG_5" #.(swig-lispify "Dictionary_createRecord5" 'function)) :pointer
   (self :pointer)
   (index :pointer)
   (recSpec :pointer)
@@ -2495,12 +2493,12 @@
   (self :pointer)
   (rec :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_print__SWIG_0" #.(swig-lispify "Dictionary_print" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_print__SWIG_0" #.(swig-lispify "Dictionary_print0" 'function)) :void
   (self :pointer)
   (out :pointer)
   (idx :pointer))
 
-(cffi:defcfun ("_wrap_Dictionary_print__SWIG_1" #.(swig-lispify "Dictionary_print" 'function)) :void
+(cffi:defcfun ("_wrap_Dictionary_print__SWIG_1" #.(swig-lispify "Dictionary_print1" 'function)) :void
   (self :pointer)
   (out :pointer)
   (tab :pointer))
@@ -2598,16 +2596,16 @@
 
 (cl:defconstant #.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant) "def")
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb0" 'function)) :pointer
   (ndb_cluster_connection :pointer)
   (aCatalogName :string)
   (aSchemaName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb1" 'function)) :pointer
   (ndb_cluster_connection :pointer)
   (aCatalogName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb2" 'function)) :pointer
   (ndb_cluster_connection :pointer))
 
 (cffi:defcfun ("_wrap_delete_Ndb" #.(swig-lispify "delete_Ndb" 'function)) :void
@@ -2655,11 +2653,11 @@
   (self :pointer)
   (t_arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_init__SWIG_0" #.(swig-lispify "Ndb_init" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_init__SWIG_0" #.(swig-lispify "Ndb_init2" 'function)) :int
   (self :pointer)
   (maxNoOfTransactions :int))
 
-(cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_Ndb_set_eventbuf_max_alloc" #.(swig-lispify "Ndb_set_eventbuf_max_alloc" 'function)) :void
@@ -2684,11 +2682,11 @@
   (self :pointer)
   (queue_empty_epoch :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_waitUntilReady__SWIG_0" #.(swig-lispify "Ndb_waitUntilReady" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_waitUntilReady__SWIG_0" #.(swig-lispify "Ndb_waitUntilReady0" 'function)) :int
   (self :pointer)
   (timeout :int))
 
-(cffi:defcfun ("_wrap_Ndb_waitUntilReady__SWIG_1" #.(swig-lispify "Ndb_waitUntilReady" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_waitUntilReady__SWIG_1" #.(swig-lispify "Ndb_waitUntilReady1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_Ndb_getDictionary" #.(swig-lispify "Ndb_getDictionary" 'function)) :pointer
@@ -2702,24 +2700,24 @@
   (self :pointer)
   (eventOp :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_pollEvents2__SWIG_0" #.(swig-lispify "Ndb_pollEvents2" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollEvents2__SWIG_0" #.(swig-lispify "Ndb_pollEvents20" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int)
   (highestQueuedEpoch :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_pollEvents2__SWIG_1" #.(swig-lispify "Ndb_pollEvents2" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollEvents2__SWIG_1" #.(swig-lispify "Ndb_pollEvents21" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int))
 
 (cffi:defcfun ("_wrap_Ndb_isExpectingHigherQueuedEpochs" #.(swig-lispify "Ndb_isExpectingHigherQueuedEpochs" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_pollEvents__SWIG_0" #.(swig-lispify "Ndb_pollEvents" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollEvents__SWIG_0" #.(swig-lispify "Ndb_pollEvents0" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int)
   (latestGCI :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_pollEvents__SWIG_1" #.(swig-lispify "Ndb_pollEvents" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollEvents__SWIG_1" #.(swig-lispify "Ndb_pollEvents1" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int))
 
@@ -2760,11 +2758,11 @@
   (self :pointer)
   (gci :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getEventOperation__SWIG_0" #.(swig-lispify "Ndb_getEventOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_getEventOperation__SWIG_0" #.(swig-lispify "Ndb_getEventOperation0" 'function)) :pointer
   (self :pointer)
   (eventOp :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_getEventOperation__SWIG_1" #.(swig-lispify "Ndb_getEventOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_getEventOperation__SWIG_1" #.(swig-lispify "Ndb_getEventOperation1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_Ndb_getLatestGCI" #.(swig-lispify "Ndb_getLatestGCI" 'function)) :unsigned-long-long
@@ -2781,78 +2779,78 @@
   (self :pointer)
   (thresh :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_0" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_0" #.(swig-lispify "Ndb_startTransaction0" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (keyData :string)
   (keyLen :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_1" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_1" #.(swig-lispify "Ndb_startTransaction1" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (keyData :string))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_2" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_2" #.(swig-lispify "Ndb_startTransaction2" 'function)) :pointer
   (self :pointer)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_3" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_3" #.(swig-lispify "Ndb_startTransaction3" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_4" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_4" #.(swig-lispify "Ndb_startTransaction4" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (keyData :pointer)
   (xfrmbuf :pointer)
   (xfrmbuflen :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_5" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_5" #.(swig-lispify "Ndb_startTransaction5" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (keyData :pointer)
   (xfrmbuf :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_6" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_6" #.(swig-lispify "Ndb_startTransaction6" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (keyData :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_7" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_7" #.(swig-lispify "Ndb_startTransaction7" 'function)) :pointer
   (self :pointer)
   (keyRec :pointer)
   (keyData :string)
   (xfrmbuf :pointer)
   (xfrmbuflen :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_8" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_8" #.(swig-lispify "Ndb_startTransaction8" 'function)) :pointer
   (self :pointer)
   (table :pointer)
   (partitionId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_9" #.(swig-lispify "Ndb_startTransaction" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_startTransaction__SWIG_9" #.(swig-lispify "Ndb_startTransaction9" 'function)) :pointer
   (self :pointer)
   (nodeId :unsigned-int)
   (instanceId :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_0" #.(swig-lispify "Ndb_computeHash" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_0" #.(swig-lispify "Ndb_computeHash0" 'function)) :int
   (hashvalueptr :pointer)
   (table :pointer)
   (keyData :pointer)
   (xfrmbuf :pointer)
   (xfrmbuflen :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_1" #.(swig-lispify "Ndb_computeHash" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_1" #.(swig-lispify "Ndb_computeHash1" 'function)) :int
   (hashvalueptr :pointer)
   (table :pointer)
   (keyData :pointer)
   (xfrmbuf :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_2" #.(swig-lispify "Ndb_computeHash" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_2" #.(swig-lispify "Ndb_computeHash2" 'function)) :int
   (hashvalueptr :pointer)
   (table :pointer)
   (keyData :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_3" #.(swig-lispify "Ndb_computeHash" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_computeHash__SWIG_3" #.(swig-lispify "Ndb_computeHash3" 'function)) :int
   (hashvalueptr :pointer)
   (keyRec :pointer)
   (keyData :string)
@@ -2863,47 +2861,47 @@
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_0" #.(swig-lispify "Ndb_pollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_0" #.(swig-lispify "Ndb_pollNdb0" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int)
   (minNoOfEventsToWakeup :int))
 
-(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_1" #.(swig-lispify "Ndb_pollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_1" #.(swig-lispify "Ndb_pollNdb1" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int))
 
-(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_2" #.(swig-lispify "Ndb_pollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_pollNdb__SWIG_2" #.(swig-lispify "Ndb_pollNdb2" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_sendPreparedTransactions__SWIG_0" #.(swig-lispify "Ndb_sendPreparedTransactions" 'function)) :void
+(cffi:defcfun ("_wrap_Ndb_sendPreparedTransactions__SWIG_0" #.(swig-lispify "Ndb_sendPreparedTransactions0" 'function)) :void
   (self :pointer)
   (forceSend :int))
 
-(cffi:defcfun ("_wrap_Ndb_sendPreparedTransactions__SWIG_1" #.(swig-lispify "Ndb_sendPreparedTransactions" 'function)) :void
+(cffi:defcfun ("_wrap_Ndb_sendPreparedTransactions__SWIG_1" #.(swig-lispify "Ndb_sendPreparedTransactions1" 'function)) :void
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_0" #.(swig-lispify "Ndb_sendPollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_0" #.(swig-lispify "Ndb_sendPollNdb0" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int)
   (minNoOfEventsToWakeup :int)
   (forceSend :int))
 
-(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_1" #.(swig-lispify "Ndb_sendPollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_1" #.(swig-lispify "Ndb_sendPollNdb1" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int)
   (minNoOfEventsToWakeup :int))
 
-(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_2" #.(swig-lispify "Ndb_sendPollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_2" #.(swig-lispify "Ndb_sendPollNdb2" 'function)) :int
   (self :pointer)
   (aMillisecondNumber :int))
 
-(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_3" #.(swig-lispify "Ndb_sendPollNdb" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_sendPollNdb__SWIG_3" #.(swig-lispify "Ndb_sendPollNdb3" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_getNdbError__SWIG_0" #.(swig-lispify "Ndb_getNdbError" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_getNdbError__SWIG_0" #.(swig-lispify "Ndb_getNdbError0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_getNdbError__SWIG_1" #.(swig-lispify "Ndb_getNdbError" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_getNdbError__SWIG_1" #.(swig-lispify "Ndb_getNdbError1" 'function)) :pointer
   (self :pointer)
   (errorCode :int))
 
@@ -2929,7 +2927,7 @@
 (cffi:defcfun ("_wrap_Ndb_initAutoIncrement" #.(swig-lispify "Ndb_initAutoIncrement" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_getAutoIncrementValue0" 'function)) :int
   (self :pointer)
   (aTableName :string)
   (autoValue :pointer)
@@ -2937,20 +2935,20 @@
   (step :unsigned-long-long)
   (start :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_getAutoIncrementValue1" 'function)) :int
   (self :pointer)
   (aTableName :string)
   (autoValue :pointer)
   (cacheSize :unsigned-int)
   (step :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_getAutoIncrementValue2" 'function)) :int
   (self :pointer)
   (aTableName :string)
   (autoValue :pointer)
   (cacheSize :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_3" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_3" #.(swig-lispify "Ndb_getAutoIncrementValue3" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (autoValue :pointer)
@@ -2958,20 +2956,20 @@
   (step :unsigned-long-long)
   (start :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_4" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_4" #.(swig-lispify "Ndb_getAutoIncrementValue4" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (autoValue :pointer)
   (cacheSize :unsigned-int)
   (step :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_5" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_5" #.(swig-lispify "Ndb_getAutoIncrementValue5" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (autoValue :pointer)
   (cacheSize :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_6" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_6" #.(swig-lispify "Ndb_getAutoIncrementValue6" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (range :pointer)
@@ -2980,7 +2978,7 @@
   (step :unsigned-long-long)
   (start :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_7" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_7" #.(swig-lispify "Ndb_getAutoIncrementValue7" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (range :pointer)
@@ -2988,42 +2986,42 @@
   (cacheSize :unsigned-int)
   (step :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_8" #.(swig-lispify "Ndb_getAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_getAutoIncrementValue__SWIG_8" #.(swig-lispify "Ndb_getAutoIncrementValue8" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (range :pointer)
   (autoValue :pointer)
   (cacheSize :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_readAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_readAutoIncrementValue0" 'function)) :int
   (self :pointer)
   (aTableName :string)
   (autoValue :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_readAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_readAutoIncrementValue1" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (autoValue :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_readAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_readAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_readAutoIncrementValue2" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (range :pointer)
   (autoValue :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_setAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_0" #.(swig-lispify "Ndb_setAutoIncrementValue0" 'function)) :int
   (self :pointer)
   (aTableName :string)
   (autoValue :unsigned-long-long)
   (modify :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_setAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_1" #.(swig-lispify "Ndb_setAutoIncrementValue1" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (autoValue :unsigned-long-long)
   (modify :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_setAutoIncrementValue" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_setAutoIncrementValue__SWIG_2" #.(swig-lispify "Ndb_setAutoIncrementValue2" 'function)) :int
   (self :pointer)
   (aTable :pointer)
   (range :pointer)
@@ -3179,11 +3177,11 @@
 (cffi:defcfun ("_wrap_NdbReceiver_getMagicNumberFromObject" #.(swig-lispify "NdbReceiver_getMagicNumberFromObject" 'function)) :unsigned-int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbReceiver_next__SWIG_0" #.(swig-lispify "NdbReceiver_next" 'function)) :void
+(cffi:defcfun ("_wrap_NdbReceiver_next__SWIG_0" #.(swig-lispify "NdbReceiver_next0" 'function)) :void
   (self :pointer)
   (next_arg :pointer))
 
-(cffi:defcfun ("_wrap_NdbReceiver_next__SWIG_1" #.(swig-lispify "NdbReceiver_next" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbReceiver_next__SWIG_1" #.(swig-lispify "NdbReceiver_next1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbReceiver_setErrorCode" #.(swig-lispify "NdbReceiver_setErrorCode" 'function)) :void
@@ -3229,11 +3227,11 @@
 (cffi:defcfun ("_wrap_NdbOperation_deleteTuple" #.(swig-lispify "NdbOperation_deleteTuple" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_readTuple__SWIG_0" #.(swig-lispify "NdbOperation_readTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_readTuple__SWIG_0" #.(swig-lispify "NdbOperation_readTuple0" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_readTuple__SWIG_1" #.(swig-lispify "NdbOperation_readTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_readTuple__SWIG_1" #.(swig-lispify "NdbOperation_readTuple1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_readTupleExclusive" #.(swig-lispify "NdbOperation_readTupleExclusive" 'function)) :int
@@ -3260,132 +3258,132 @@
 (cffi:defcfun ("_wrap_NdbOperation_interpretedDeleteTuple" #.(swig-lispify "NdbOperation_interpretedDeleteTuple" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_0" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_0" #.(swig-lispify "NdbOperation_equal0" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :string)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_1" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_1" #.(swig-lispify "NdbOperation_equal1" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_2" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_2" #.(swig-lispify "NdbOperation_equal2" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_3" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_3" #.(swig-lispify "NdbOperation_equal3" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_4" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_4" #.(swig-lispify "NdbOperation_equal4" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_5" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_5" #.(swig-lispify "NdbOperation_equal5" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_6" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_6" #.(swig-lispify "NdbOperation_equal6" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :string)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_7" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_7" #.(swig-lispify "NdbOperation_equal7" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_8" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_8" #.(swig-lispify "NdbOperation_equal8" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_9" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_9" #.(swig-lispify "NdbOperation_equal9" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_10" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_10" #.(swig-lispify "NdbOperation_equal10" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_11" #.(swig-lispify "NdbOperation_equal" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_equal__SWIG_11" #.(swig-lispify "NdbOperation_equal11" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_0" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_0" #.(swig-lispify "NdbOperation_getValue0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_1" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_1" #.(swig-lispify "NdbOperation_getValue1" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_2" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_2" #.(swig-lispify "NdbOperation_getValue2" 'function)) :pointer
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_3" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_3" #.(swig-lispify "NdbOperation_getValue3" 'function)) :pointer
   (self :pointer)
   (anAttrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_4" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_4" #.(swig-lispify "NdbOperation_getValue4" 'function)) :pointer
   (self :pointer)
   (arg1 :pointer)
   (val :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_5" #.(swig-lispify "NdbOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_5" #.(swig-lispify "NdbOperation_getValue5" 'function)) :pointer
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_0" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_0" #.(swig-lispify "NdbOperation_setValue0" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :string)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_1" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_1" #.(swig-lispify "NdbOperation_setValue1" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_2" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_2" #.(swig-lispify "NdbOperation_setValue2" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_3" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_3" #.(swig-lispify "NdbOperation_setValue3" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_4" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_4" #.(swig-lispify "NdbOperation_setValue4" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_5" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_5" #.(swig-lispify "NdbOperation_setValue5" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_6" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_6" #.(swig-lispify "NdbOperation_setValue6" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :float))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_7" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_7" #.(swig-lispify "NdbOperation_setValue7" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :double))
@@ -3398,99 +3396,99 @@
   (self :pointer)
   (options :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_8" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_8" #.(swig-lispify "NdbOperation_setValue8" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :string)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_9" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_9" #.(swig-lispify "NdbOperation_setValue9" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_10" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_10" #.(swig-lispify "NdbOperation_setValue10" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_11" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_11" #.(swig-lispify "NdbOperation_setValue11" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_12" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_12" #.(swig-lispify "NdbOperation_setValue12" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_13" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_13" #.(swig-lispify "NdbOperation_setValue13" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_14" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_14" #.(swig-lispify "NdbOperation_setValue14" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :float))
 
-(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_15" #.(swig-lispify "NdbOperation_setValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_15" #.(swig-lispify "NdbOperation_setValue15" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :double))
 
-(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_0" #.(swig-lispify "NdbOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_0" #.(swig-lispify "NdbOperation_getBlobHandle0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_1" #.(swig-lispify "NdbOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_1" #.(swig-lispify "NdbOperation_getBlobHandle1" 'function)) :pointer
   (self :pointer)
   (anAttrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_2" #.(swig-lispify "NdbOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_2" #.(swig-lispify "NdbOperation_getBlobHandle2" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
-(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_3" #.(swig-lispify "NdbOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getBlobHandle__SWIG_3" #.(swig-lispify "NdbOperation_getBlobHandle3" 'function)) :pointer
   (self :pointer)
   (anAttrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_0" #.(swig-lispify "NdbOperation_incValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_0" #.(swig-lispify "NdbOperation_incValue0" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_1" #.(swig-lispify "NdbOperation_incValue" 'function)) :int
-  (self :pointer)
-  (anAttrName :string)
-  (aValue :unsigned-long-long))
-
-(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_2" #.(swig-lispify "NdbOperation_incValue" 'function)) :int
-  (self :pointer)
-  (anAttrId :unsigned-int)
-  (aValue :unsigned-int))
-
-(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_3" #.(swig-lispify "NdbOperation_incValue" 'function)) :int
-  (self :pointer)
-  (anAttrId :unsigned-int)
-  (aValue :unsigned-long-long))
-
-(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_0" #.(swig-lispify "NdbOperation_subValue" 'function)) :int
-  (self :pointer)
-  (anAttrName :string)
-  (aValue :unsigned-int))
-
-(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_1" #.(swig-lispify "NdbOperation_subValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_1" #.(swig-lispify "NdbOperation_incValue1" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_2" #.(swig-lispify "NdbOperation_subValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_2" #.(swig-lispify "NdbOperation_incValue2" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_3" #.(swig-lispify "NdbOperation_subValue" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_incValue__SWIG_3" #.(swig-lispify "NdbOperation_incValue3" 'function)) :int
+  (self :pointer)
+  (anAttrId :unsigned-int)
+  (aValue :unsigned-long-long))
+
+(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_0" #.(swig-lispify "NdbOperation_subValue0" 'function)) :int
+  (self :pointer)
+  (anAttrName :string)
+  (aValue :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_1" #.(swig-lispify "NdbOperation_subValue1" 'function)) :int
+  (self :pointer)
+  (anAttrName :string)
+  (aValue :unsigned-long-long))
+
+(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_2" #.(swig-lispify "NdbOperation_subValue2" 'function)) :int
+  (self :pointer)
+  (anAttrId :unsigned-int)
+  (aValue :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbOperation_subValue__SWIG_3" #.(swig-lispify "NdbOperation_subValue3" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (aValue :unsigned-long-long))
@@ -3525,22 +3523,22 @@
   (self :pointer)
   (RegDest :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_read_attr__SWIG_0" #.(swig-lispify "NdbOperation_read_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_read_attr__SWIG_0" #.(swig-lispify "NdbOperation_read_attr0" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (RegDest :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_write_attr__SWIG_0" #.(swig-lispify "NdbOperation_write_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_write_attr__SWIG_0" #.(swig-lispify "NdbOperation_write_attr0" 'function)) :int
   (self :pointer)
   (anAttrName :string)
   (RegSource :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_read_attr__SWIG_1" #.(swig-lispify "NdbOperation_read_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_read_attr__SWIG_1" #.(swig-lispify "NdbOperation_read_attr1" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (RegDest :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_write_attr__SWIG_1" #.(swig-lispify "NdbOperation_write_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_write_attr__SWIG_1" #.(swig-lispify "NdbOperation_write_attr1" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (RegSource :unsigned-int))
@@ -3704,11 +3702,11 @@
 (cffi:defcfun ("_wrap_NdbOperation_interpret_exit_ok" #.(swig-lispify "NdbOperation_interpret_exit_ok" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_interpret_exit_nok__SWIG_0" #.(swig-lispify "NdbOperation_interpret_exit_nok" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_interpret_exit_nok__SWIG_0" #.(swig-lispify "NdbOperation_interpret_exit_nok0" 'function)) :int
   (self :pointer)
   (ErrorCode :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbOperation_interpret_exit_nok__SWIG_1" #.(swig-lispify "NdbOperation_interpret_exit_nok" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_interpret_exit_nok__SWIG_1" #.(swig-lispify "NdbOperation_interpret_exit_nok1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_interpret_exit_last_row" #.(swig-lispify "NdbOperation_interpret_exit_last_row" 'function)) :int
@@ -3728,10 +3726,10 @@
 (cffi:defcfun ("_wrap_NdbOperation_getNdbError" #.(swig-lispify "NdbOperation_getNdbError" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_getNdbErrorLine__SWIG_0" #.(swig-lispify "NdbOperation_getNdbErrorLine" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_getNdbErrorLine__SWIG_0" #.(swig-lispify "NdbOperation_getNdbErrorLine0" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_getNdbErrorLine__SWIG_1" #.(swig-lispify "NdbOperation_getNdbErrorLine" 'function)) :int
+(cffi:defcfun ("_wrap_NdbOperation_getNdbErrorLine__SWIG_1" #.(swig-lispify "NdbOperation_getNdbErrorLine1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_getTableName" #.(swig-lispify "NdbOperation_getTableName" 'function)) :string
@@ -3777,10 +3775,10 @@
 (cffi:defcfun ("_wrap_NdbOperation_getPartitionId" #.(swig-lispify "NdbOperation_getPartitionId" 'function)) :unsigned-int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_getLockHandle__SWIG_0" #.(swig-lispify "NdbOperation_getLockHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getLockHandle__SWIG_0" #.(swig-lispify "NdbOperation_getLockHandle0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbOperation_getLockHandle__SWIG_1" #.(swig-lispify "NdbOperation_getLockHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbOperation_getLockHandle__SWIG_1" #.(swig-lispify "NdbOperation_getLockHandle1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_set_disable_fk" #.(swig-lispify "NdbOperation_set_disable_fk" 'function)) :void
@@ -3834,47 +3832,47 @@
 	(#.(swig-lispify "SF_MultiRange" 'enumvalue :keyword) #.(cl:ash 8 24))
 	(#.(swig-lispify "SF_KeyInfo" 'enumvalue :keyword) #.1))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuples0" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int)
   (parallel :unsigned-int)
   (batch :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbScanOperation_readTuples1" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int)
   (parallel :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbScanOperation_readTuples2" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbScanOperation_readTuples3" 'function)) :int
   (self :pointer)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbScanOperation_readTuples4" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_5" #.(swig-lispify "NdbScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_5" #.(swig-lispify "NdbScanOperation_readTuples5" 'function)) :int
   (self :pointer)
   (parallell :int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuplesExclusive__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuplesExclusive" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuplesExclusive__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuplesExclusive0" 'function)) :int
   (self :pointer)
   (parallell :int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_readTuplesExclusive__SWIG_1" #.(swig-lispify "NdbScanOperation_readTuplesExclusive" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_readTuplesExclusive__SWIG_1" #.(swig-lispify "NdbScanOperation_readTuplesExclusive1" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_getBlobHandle__SWIG_0" #.(swig-lispify "NdbScanOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_getBlobHandle__SWIG_0" #.(swig-lispify "NdbScanOperation_getBlobHandle0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_getBlobHandle__SWIG_1" #.(swig-lispify "NdbScanOperation_getBlobHandle" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_getBlobHandle__SWIG_1" #.(swig-lispify "NdbScanOperation_getBlobHandle1" 'function)) :pointer
   (self :pointer)
   (anAttrId :unsigned-int))
 
@@ -3882,19 +3880,19 @@
   (self :pointer)
   (code :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_0" #.(swig-lispify "NdbScanOperation_nextResult" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_0" #.(swig-lispify "NdbScanOperation_nextResult0" 'function)) :int
   (self :pointer)
   (fetchAllowed :pointer)
   (forceSend :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_1" #.(swig-lispify "NdbScanOperation_nextResult" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_1" #.(swig-lispify "NdbScanOperation_nextResult1" 'function)) :int
   (self :pointer)
   (fetchAllowed :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_2" #.(swig-lispify "NdbScanOperation_nextResult" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_2" #.(swig-lispify "NdbScanOperation_nextResult2" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_3" #.(swig-lispify "NdbScanOperation_nextResult" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_3" #.(swig-lispify "NdbScanOperation_nextResult3" 'function)) :int
   (self :pointer)
   (out_row_ptr :pointer)
   (fetchAllowed :pointer)
@@ -3906,40 +3904,40 @@
   (fetchAllowed :pointer)
   (forceSend :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_0" #.(swig-lispify "NdbScanOperation_close" 'function)) :void
+(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_0" #.(swig-lispify "NdbScanOperation_close0" 'function)) :void
   (self :pointer)
   (forceSend :pointer)
   (releaseOp :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_1" #.(swig-lispify "NdbScanOperation_close" 'function)) :void
+(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_1" #.(swig-lispify "NdbScanOperation_close1" 'function)) :void
   (self :pointer)
   (forceSend :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_2" #.(swig-lispify "NdbScanOperation_close" 'function)) :void
+(cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_2" #.(swig-lispify "NdbScanOperation_close2" 'function)) :void
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_lockCurrentTuple0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_lockCurrentTuple1" 'function)) :pointer
   (self :pointer)
   (lockTrans :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_updateCurrentTuple0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_updateCurrentTuple1" 'function)) :pointer
   (self :pointer)
   (updateTrans :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_0" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple0" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_1" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple1" 'function)) :int
   (self :pointer)
   (takeOverTransaction :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_lockCurrentTuple2" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
@@ -3948,7 +3946,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_lockCurrentTuple3" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
@@ -3956,25 +3954,25 @@
   (result_mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_lockCurrentTuple4" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
   (result_row :string)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_lockCurrentTuple5" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
   (result_row :string))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_6" #.(swig-lispify "NdbScanOperation_lockCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_lockCurrentTuple__SWIG_6" #.(swig-lispify "NdbScanOperation_lockCurrentTuple6" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_updateCurrentTuple2" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (attr_rec :pointer)
@@ -3983,7 +3981,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_updateCurrentTuple3" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (attr_rec :pointer)
@@ -3991,20 +3989,20 @@
   (mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_updateCurrentTuple4" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (attr_rec :pointer)
   (attr_row :string)
   (mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_updateCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_updateCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_updateCurrentTuple5" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (attr_rec :pointer)
   (attr_row :string))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_2" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple2" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
@@ -4013,7 +4011,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_3" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple3" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
@@ -4021,20 +4019,20 @@
   (result_mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_4" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple4" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
   (result_row :string)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_5" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple5" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer)
   (result_row :string))
 
-(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_6" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbScanOperation_deleteCurrentTuple__SWIG_6" #.(swig-lispify "NdbScanOperation_deleteCurrentTuple6" 'function)) :pointer
   (self :pointer)
   (takeOverTrans :pointer)
   (result_rec :pointer))
@@ -4070,32 +4068,32 @@
 	(#.(swig-lispify "interpretedCode" 'slotname) :pointer)
 	(#.(swig-lispify "customData" 'slotname) :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_readTuples0" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int)
   (parallel :unsigned-int)
   (batch :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_readTuples1" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int)
   (parallel :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_readTuples2" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (scan_flags :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_readTuples3" 'function)) :int
   (self :pointer)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbIndexScanOperation_readTuples4" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_5" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_5" #.(swig-lispify "NdbIndexScanOperation_readTuples5" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (batch :unsigned-int)
@@ -4106,7 +4104,7 @@
   (keyinfo :pointer)
   (multi_range :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_6" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_6" #.(swig-lispify "NdbIndexScanOperation_readTuples6" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (batch :unsigned-int)
@@ -4116,7 +4114,7 @@
   (read_range_no :pointer)
   (keyinfo :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_7" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_7" #.(swig-lispify "NdbIndexScanOperation_readTuples7" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (batch :unsigned-int)
@@ -4125,7 +4123,7 @@
   (order_desc :pointer)
   (read_range_no :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_8" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_8" #.(swig-lispify "NdbIndexScanOperation_readTuples8" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (batch :unsigned-int)
@@ -4133,7 +4131,7 @@
   (order_by :pointer)
   (order_desc :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_9" #.(swig-lispify "NdbIndexScanOperation_readTuples" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_9" #.(swig-lispify "NdbIndexScanOperation_readTuples9" 'function)) :int
   (self :pointer)
   (lock_mode :pointer)
   (batch :unsigned-int)
@@ -4150,56 +4148,56 @@
 (defanonenum 
 	(#.(swig-lispify "MaxRangeNo" 'enumvalue) #.#xfff))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_setBound0" 'function)) :int
   (self :pointer)
   (attr :string)
   (type :int)
   (value :pointer)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_setBound1" 'function)) :int
   (self :pointer)
   (attr :string)
   (type :int)
   (value :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_setBound2" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (type :int)
   (aValue :pointer)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_setBound3" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
   (type :int)
   (aValue :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_end_of_bound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_end_of_bound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_end_of_bound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_end_of_bound0" 'function)) :int
   (self :pointer)
   (range_no :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_end_of_bound__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_end_of_bound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_end_of_bound__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_end_of_bound1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_get_range_no" #.(swig-lispify "NdbIndexScanOperation_get_range_no" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_4" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_4" #.(swig-lispify "NdbIndexScanOperation_setBound4" 'function)) :int
   (self :pointer)
   (key_record :pointer)
   (bound :pointer)
   (partInfo :pointer)
   (sizeOfPartInfo :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_5" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_5" #.(swig-lispify "NdbIndexScanOperation_setBound5" 'function)) :int
   (self :pointer)
   (key_record :pointer)
   (bound :pointer)
   (partInfo :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_6" #.(swig-lispify "NdbIndexScanOperation_setBound" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_6" #.(swig-lispify "NdbIndexScanOperation_setBound6" 'function)) :int
   (self :pointer)
   (key_record :pointer)
   (bound :pointer))
@@ -4253,47 +4251,47 @@
 (cffi:defcfun ("_wrap_NdbTransaction_getNdb" #.(swig-lispify "NdbTransaction_getNdb" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbOperation0" 'function)) :pointer
   (self :pointer)
   (aTableName :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbOperation1" 'function)) :pointer
   (self :pointer)
   (aTable :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbScanOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbScanOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbScanOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbScanOperation0" 'function)) :pointer
   (self :pointer)
   (aTableName :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbScanOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbScanOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbScanOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbScanOperation1" 'function)) :pointer
   (self :pointer)
   (aTable :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation0" 'function)) :pointer
   (self :pointer)
   (anIndexName :string)
   (aTableName :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation1" 'function)) :pointer
   (self :pointer)
   (anIndex :pointer)
   (aTable :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_2" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexScanOperation__SWIG_2" #.(swig-lispify "NdbTransaction_getNdbIndexScanOperation2" 'function)) :pointer
   (self :pointer)
   (anIndex :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbIndexOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbIndexOperation0" 'function)) :pointer
   (self :pointer)
   (anIndexName :string)
   (aTableName :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbIndexOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbIndexOperation1" 'function)) :pointer
   (self :pointer)
   (anIndex :pointer)
   (aTable :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_2" #.(swig-lispify "NdbTransaction_getNdbIndexOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbIndexOperation__SWIG_2" #.(swig-lispify "NdbTransaction_getNdbIndexOperation2" 'function)) :pointer
   (self :pointer)
   (anIndex :pointer))
 
@@ -4301,63 +4299,63 @@
   (self :pointer)
   (runChecks :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_0" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_0" #.(swig-lispify "NdbTransaction_execute0" 'function)) :int
   (self :pointer)
   (execType :pointer)
   (arg2 :pointer)
   (force :int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_1" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_1" #.(swig-lispify "NdbTransaction_execute1" 'function)) :int
   (self :pointer)
   (execType :pointer)
   (arg2 :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_2" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_2" #.(swig-lispify "NdbTransaction_execute2" 'function)) :int
   (self :pointer)
   (execType :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_3" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_3" #.(swig-lispify "NdbTransaction_execute3" 'function)) :int
   (self :pointer)
   (execType #.(swig-lispify "ExecType" 'enumname))
   (abortOption #.(swig-lispify "AbortOption" 'enumname))
   (force :int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_4" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_4" #.(swig-lispify "NdbTransaction_execute4" 'function)) :int
   (self :pointer)
   (execType #.(swig-lispify "ExecType" 'enumname))
   (abortOption #.(swig-lispify "AbortOption" 'enumname)))
 
-(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_5" #.(swig-lispify "NdbTransaction_execute" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_execute__SWIG_5" #.(swig-lispify "NdbTransaction_execute5" 'function)) :int
   (self :pointer)
   (execType #.(swig-lispify "ExecType" 'enumname)))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_0" #.(swig-lispify "NdbTransaction_executeAsynchPrepare" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_0" #.(swig-lispify "NdbTransaction_executeAsynchPrepare0" 'function)) :void
   (self :pointer)
   (execType :pointer)
   (callback :pointer)
   (anyObject :pointer)
   (arg4 :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynchPrepare" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynchPrepare1" 'function)) :void
   (self :pointer)
   (execType :pointer)
   (callback :pointer)
   (anyObject :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_2" #.(swig-lispify "NdbTransaction_executeAsynchPrepare" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_2" #.(swig-lispify "NdbTransaction_executeAsynchPrepare2" 'function)) :void
   (self :pointer)
   (execType #.(swig-lispify "ExecType" 'enumname))
   (callback :pointer)
   (anyObject :pointer)
   (ao #.(swig-lispify "AbortOption" 'enumname)))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_3" #.(swig-lispify "NdbTransaction_executeAsynchPrepare" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_3" #.(swig-lispify "NdbTransaction_executeAsynchPrepare3" 'function)) :void
   (self :pointer)
   (execType #.(swig-lispify "ExecType" 'enumname))
   (callback :pointer)
   (anyObject :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_0" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_0" #.(swig-lispify "NdbTransaction_executeAsynch0" 'function)) :void
   (self :pointer)
   (aTypeOfExec :pointer)
   (aCallback :pointer)
@@ -4365,20 +4363,20 @@
   (arg4 :pointer)
   (forceSend :int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynch1" 'function)) :void
   (self :pointer)
   (aTypeOfExec :pointer)
   (aCallback :pointer)
   (anyObject :pointer)
   (arg4 :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_2" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_2" #.(swig-lispify "NdbTransaction_executeAsynch2" 'function)) :void
   (self :pointer)
   (aTypeOfExec :pointer)
   (aCallback :pointer)
   (anyObject :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_3" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_3" #.(swig-lispify "NdbTransaction_executeAsynch3" 'function)) :void
   (self :pointer)
   (aTypeOfExec #.(swig-lispify "ExecType" 'enumname))
   (aCallback :pointer)
@@ -4386,14 +4384,14 @@
   (abortOption #.(swig-lispify "AbortOption" 'enumname))
   (forceSend :int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_4" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_4" #.(swig-lispify "NdbTransaction_executeAsynch4" 'function)) :void
   (self :pointer)
   (aTypeOfExec #.(swig-lispify "ExecType" 'enumname))
   (aCallback :pointer)
   (anyObject :pointer)
   (abortOption #.(swig-lispify "AbortOption" 'enumname)))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_5" #.(swig-lispify "NdbTransaction_executeAsynch" 'function)) :void
+(cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_5" #.(swig-lispify "NdbTransaction_executeAsynch5" 'function)) :void
   (self :pointer)
   (aTypeOfExec #.(swig-lispify "ExecType" 'enumname))
   (aCallback :pointer)
@@ -4408,11 +4406,11 @@
 (cffi:defcfun ("_wrap_NdbTransaction_restart" #.(swig-lispify "NdbTransaction_restart" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getGCI__SWIG_0" #.(swig-lispify "NdbTransaction_getGCI" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_getGCI__SWIG_0" #.(swig-lispify "NdbTransaction_getGCI0" 'function)) :int
   (self :pointer)
   (gciptr :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getGCI__SWIG_1" #.(swig-lispify "NdbTransaction_getGCI" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_getGCI__SWIG_1" #.(swig-lispify "NdbTransaction_getGCI1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_getTransactionId" #.(swig-lispify "NdbTransaction_getTransactionId" 'function)) :unsigned-long-long
@@ -4431,10 +4429,10 @@
 (cffi:defcfun ("_wrap_NdbTransaction_getNdbError" #.(swig-lispify "NdbTransaction_getNdbError" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbErrorOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbErrorOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbErrorOperation__SWIG_0" #.(swig-lispify "NdbTransaction_getNdbErrorOperation0" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_getNdbErrorOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbErrorOperation" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_getNdbErrorOperation__SWIG_1" #.(swig-lispify "NdbTransaction_getNdbErrorOperation1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_getNdbErrorLine" #.(swig-lispify "NdbTransaction_getNdbErrorLine" 'function)) :int
@@ -4450,17 +4448,17 @@
 (cffi:defcfun ("_wrap_NdbTransaction_getLastDefinedOperation" #.(swig-lispify "NdbTransaction_getLastDefinedOperation" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executePendingBlobOps__SWIG_0" #.(swig-lispify "NdbTransaction_executePendingBlobOps" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_executePendingBlobOps__SWIG_0" #.(swig-lispify "NdbTransaction_executePendingBlobOps0" 'function)) :int
   (self :pointer)
   (flags :unsigned-char))
 
-(cffi:defcfun ("_wrap_NdbTransaction_executePendingBlobOps__SWIG_1" #.(swig-lispify "NdbTransaction_executePendingBlobOps" 'function)) :int
+(cffi:defcfun ("_wrap_NdbTransaction_executePendingBlobOps__SWIG_1" #.(swig-lispify "NdbTransaction_executePendingBlobOps1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_getConnectedNodeId" #.(swig-lispify "NdbTransaction_getConnectedNodeId" 'function)) :unsigned-int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_0" #.(swig-lispify "NdbTransaction_readTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_0" #.(swig-lispify "NdbTransaction_readTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4471,7 +4469,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_1" #.(swig-lispify "NdbTransaction_readTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_1" #.(swig-lispify "NdbTransaction_readTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4481,7 +4479,7 @@
   (result_mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_2" #.(swig-lispify "NdbTransaction_readTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_2" #.(swig-lispify "NdbTransaction_readTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4490,7 +4488,7 @@
   (lock_mode :pointer)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_3" #.(swig-lispify "NdbTransaction_readTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_3" #.(swig-lispify "NdbTransaction_readTuple3" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4498,14 +4496,14 @@
   (result_row :string)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_4" #.(swig-lispify "NdbTransaction_readTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_4" #.(swig-lispify "NdbTransaction_readTuple4" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (result_rec :pointer)
   (result_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_0" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_0" #.(swig-lispify "NdbTransaction_insertTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4515,7 +4513,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_1" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_1" #.(swig-lispify "NdbTransaction_insertTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4524,7 +4522,7 @@
   (mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_2" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_2" #.(swig-lispify "NdbTransaction_insertTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4532,14 +4530,14 @@
   (attr_row :string)
   (mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_3" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_3" #.(swig-lispify "NdbTransaction_insertTuple3" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (attr_rec :pointer)
   (attr_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_4" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_4" #.(swig-lispify "NdbTransaction_insertTuple4" 'function)) :pointer
   (self :pointer)
   (combined_rec :pointer)
   (combined_row :string)
@@ -4547,25 +4545,25 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_5" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_5" #.(swig-lispify "NdbTransaction_insertTuple5" 'function)) :pointer
   (self :pointer)
   (combined_rec :pointer)
   (combined_row :string)
   (mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_6" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_6" #.(swig-lispify "NdbTransaction_insertTuple6" 'function)) :pointer
   (self :pointer)
   (combined_rec :pointer)
   (combined_row :string)
   (mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_7" #.(swig-lispify "NdbTransaction_insertTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_insertTuple__SWIG_7" #.(swig-lispify "NdbTransaction_insertTuple7" 'function)) :pointer
   (self :pointer)
   (combined_rec :pointer)
   (combined_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_0" #.(swig-lispify "NdbTransaction_updateTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_0" #.(swig-lispify "NdbTransaction_updateTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4575,7 +4573,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_1" #.(swig-lispify "NdbTransaction_updateTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_1" #.(swig-lispify "NdbTransaction_updateTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4584,7 +4582,7 @@
   (mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_2" #.(swig-lispify "NdbTransaction_updateTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_2" #.(swig-lispify "NdbTransaction_updateTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4592,14 +4590,14 @@
   (attr_row :string)
   (mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_3" #.(swig-lispify "NdbTransaction_updateTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_updateTuple__SWIG_3" #.(swig-lispify "NdbTransaction_updateTuple3" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (attr_rec :pointer)
   (attr_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_0" #.(swig-lispify "NdbTransaction_writeTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_0" #.(swig-lispify "NdbTransaction_writeTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4609,7 +4607,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_1" #.(swig-lispify "NdbTransaction_writeTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_1" #.(swig-lispify "NdbTransaction_writeTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4618,7 +4616,7 @@
   (mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_2" #.(swig-lispify "NdbTransaction_writeTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_2" #.(swig-lispify "NdbTransaction_writeTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4626,14 +4624,14 @@
   (attr_row :string)
   (mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_3" #.(swig-lispify "NdbTransaction_writeTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_writeTuple__SWIG_3" #.(swig-lispify "NdbTransaction_writeTuple3" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (attr_rec :pointer)
   (attr_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_0" #.(swig-lispify "NdbTransaction_deleteTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_0" #.(swig-lispify "NdbTransaction_deleteTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4643,7 +4641,7 @@
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_1" #.(swig-lispify "NdbTransaction_deleteTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_1" #.(swig-lispify "NdbTransaction_deleteTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4652,7 +4650,7 @@
   (result_mask :pointer)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_2" #.(swig-lispify "NdbTransaction_deleteTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_2" #.(swig-lispify "NdbTransaction_deleteTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
@@ -4660,38 +4658,38 @@
   (result_row :string)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_3" #.(swig-lispify "NdbTransaction_deleteTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_3" #.(swig-lispify "NdbTransaction_deleteTuple3" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (result_rec :pointer)
   (result_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_4" #.(swig-lispify "NdbTransaction_deleteTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_deleteTuple__SWIG_4" #.(swig-lispify "NdbTransaction_deleteTuple4" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (result_rec :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_0" #.(swig-lispify "NdbTransaction_refreshTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_0" #.(swig-lispify "NdbTransaction_refreshTuple0" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_1" #.(swig-lispify "NdbTransaction_refreshTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_1" #.(swig-lispify "NdbTransaction_refreshTuple1" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string)
   (opts :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_2" #.(swig-lispify "NdbTransaction_refreshTuple" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_refreshTuple__SWIG_2" #.(swig-lispify "NdbTransaction_refreshTuple2" 'function)) :pointer
   (self :pointer)
   (key_rec :pointer)
   (key_row :string))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_0" #.(swig-lispify "NdbTransaction_scanTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_0" #.(swig-lispify "NdbTransaction_scanTable0" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
   (lock_mode :pointer)
@@ -4699,29 +4697,29 @@
   (options :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_1" #.(swig-lispify "NdbTransaction_scanTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_1" #.(swig-lispify "NdbTransaction_scanTable1" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
   (lock_mode :pointer)
   (result_mask :pointer)
   (options :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_2" #.(swig-lispify "NdbTransaction_scanTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_2" #.(swig-lispify "NdbTransaction_scanTable2" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
   (lock_mode :pointer)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_3" #.(swig-lispify "NdbTransaction_scanTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_3" #.(swig-lispify "NdbTransaction_scanTable3" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_4" #.(swig-lispify "NdbTransaction_scanTable" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_4" #.(swig-lispify "NdbTransaction_scanTable4" 'function)) :pointer
   (self :pointer)
   (result_record :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_0" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_0" #.(swig-lispify "NdbTransaction_scanIndex0" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
@@ -4731,7 +4729,7 @@
   (options :pointer)
   (sizeOfOptions :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_1" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_1" #.(swig-lispify "NdbTransaction_scanIndex1" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
@@ -4740,7 +4738,7 @@
   (bound :pointer)
   (options :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_2" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_2" #.(swig-lispify "NdbTransaction_scanIndex2" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
@@ -4748,45 +4746,45 @@
   (result_mask :pointer)
   (bound :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_3" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_3" #.(swig-lispify "NdbTransaction_scanIndex3" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
   (lock_mode :pointer)
   (result_mask :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_4" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_4" #.(swig-lispify "NdbTransaction_scanIndex4" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_5" #.(swig-lispify "NdbTransaction_scanIndex" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_5" #.(swig-lispify "NdbTransaction_scanIndex5" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_0" #.(swig-lispify "NdbTransaction_createQuery" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_0" #.(swig-lispify "NdbTransaction_createQuery0" 'function)) :pointer
   (self :pointer)
   (query :pointer)
   (paramValue :pointer)
   (lock_mode :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_1" #.(swig-lispify "NdbTransaction_createQuery" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_1" #.(swig-lispify "NdbTransaction_createQuery1" 'function)) :pointer
   (self :pointer)
   (query :pointer)
   (paramValue :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_2" #.(swig-lispify "NdbTransaction_createQuery" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_2" #.(swig-lispify "NdbTransaction_createQuery2" 'function)) :pointer
   (self :pointer)
   (query :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_unlock__SWIG_0" #.(swig-lispify "NdbTransaction_unlock" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_unlock__SWIG_0" #.(swig-lispify "NdbTransaction_unlock00" 'function)) :pointer
   (self :pointer)
   (lockHandle :pointer)
   (ao :pointer))
 
-(cffi:defcfun ("_wrap_NdbTransaction_unlock__SWIG_1" #.(swig-lispify "NdbTransaction_unlock" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbTransaction_unlock__SWIG_1" #.(swig-lispify "NdbTransaction_unlock11" 'function)) :pointer
   (self :pointer)
   (lockHandle :pointer))
 
@@ -4811,11 +4809,11 @@
 (cffi:defcfun ("_wrap_NdbIndexOperation_insertTuple" #.(swig-lispify "NdbIndexOperation_insertTuple" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_0" #.(swig-lispify "NdbIndexOperation_readTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_0" #.(swig-lispify "NdbIndexOperation_readTuple00" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_1" #.(swig-lispify "NdbIndexOperation_readTuple" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_1" #.(swig-lispify "NdbIndexOperation_readTuple1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexOperation_readTupleExclusive" #.(swig-lispify "NdbIndexOperation_readTupleExclusive" 'function)) :int
@@ -5088,30 +5086,30 @@
 	(#.(swig-lispify "mem_alloc" 'slotname) :pointer)
 	(#.(swig-lispify "mem_free" 'slotname) :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_0" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_0" #.(swig-lispify "new_NdbInterpretedCode0" 'function)) :pointer
   (table :pointer)
   (buffer :pointer)
   (buffer_word_size :unsigned-int))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_1" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_1" #.(swig-lispify "new_NdbInterpretedCode1" 'function)) :pointer
   (table :pointer)
   (buffer :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_2" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_2" #.(swig-lispify "new_NdbInterpretedCode2" 'function)) :pointer
   (table :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_3" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_3" #.(swig-lispify "new_NdbInterpretedCode3" 'function)) :pointer)
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_4" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_4" #.(swig-lispify "new_NdbInterpretedCode4" 'function)) :pointer
   (arg0 :pointer)
   (buffer :pointer)
   (buffer_word_size :unsigned-int))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_5" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_5" #.(swig-lispify "new_NdbInterpretedCode5" 'function)) :pointer
   (arg0 :pointer)
   (buffer :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_6" #.(swig-lispify "new_NdbInterpretedCode" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_6" #.(swig-lispify "new_NdbInterpretedCode6" 'function)) :pointer
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbInterpretedCode" #.(swig-lispify "delete_NdbInterpretedCode" 'function)) :void
@@ -5139,22 +5137,22 @@
   (RegDest :unsigned-int)
   (Constant :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_read_attr__SWIG_0" #.(swig-lispify "NdbInterpretedCode_read_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_read_attr__SWIG_0" #.(swig-lispify "NdbInterpretedCode_read_attr0" 'function)) :int
   (self :pointer)
   (RegDest :unsigned-int)
   (attrId :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_read_attr__SWIG_1" #.(swig-lispify "NdbInterpretedCode_read_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_read_attr__SWIG_1" #.(swig-lispify "NdbInterpretedCode_read_attr1" 'function)) :int
   (self :pointer)
   (RegDest :unsigned-int)
   (column :pointer))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_write_attr__SWIG_0" #.(swig-lispify "NdbInterpretedCode_write_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_write_attr__SWIG_0" #.(swig-lispify "NdbInterpretedCode_write_attr0" 'function)) :int
   (self :pointer)
   (attrId :unsigned-int)
   (RegSource :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_write_attr__SWIG_1" #.(swig-lispify "NdbInterpretedCode_write_attr" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_write_attr__SWIG_1" #.(swig-lispify "NdbInterpretedCode_write_attr1" 'function)) :int
   (self :pointer)
   (column :pointer)
   (RegSource :unsigned-int))
@@ -5225,79 +5223,79 @@
   (RegLvalue :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_eq" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_eq0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ne" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ne0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_lt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_lt0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_le" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_le0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_gt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_gt0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ge" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ge0" 'function)) :int
   (self :pointer)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
   (Label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_eq" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_eq1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
   (label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_ne" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_ne1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
   (label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_lt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_lt1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
   (label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_le" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_le1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
   (label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_gt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_gt1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
   (label :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_ge" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_ge1" 'function)) :int
   (self :pointer)
   (attrId1 :unsigned-int)
   (attrId2 :unsigned-int)
@@ -5358,32 +5356,32 @@
 (cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_ok" #.(swig-lispify "NdbInterpretedCode_interpret_exit_ok" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_nok__SWIG_0" #.(swig-lispify "NdbInterpretedCode_interpret_exit_nok" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_nok__SWIG_0" #.(swig-lispify "NdbInterpretedCode_interpret_exit_nok0" 'function)) :int
   (self :pointer)
   (ErrorCode :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_nok__SWIG_1" #.(swig-lispify "NdbInterpretedCode_interpret_exit_nok" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_nok__SWIG_1" #.(swig-lispify "NdbInterpretedCode_interpret_exit_nok1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_last_row" #.(swig-lispify "NdbInterpretedCode_interpret_exit_last_row" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_add_val__SWIG_0" #.(swig-lispify "NdbInterpretedCode_add_val" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_add_val__SWIG_0" #.(swig-lispify "NdbInterpretedCode_add_val0" 'function)) :int
   (self :pointer)
   (attrId :unsigned-int)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_add_val__SWIG_1" #.(swig-lispify "NdbInterpretedCode_add_val" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_add_val__SWIG_1" #.(swig-lispify "NdbInterpretedCode_add_val1" 'function)) :int
   (self :pointer)
   (attrId :unsigned-int)
   (aValue :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_sub_val__SWIG_0" #.(swig-lispify "NdbInterpretedCode_sub_val" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_sub_val__SWIG_0" #.(swig-lispify "NdbInterpretedCode_sub_val0" 'function)) :int
   (self :pointer)
   (attrId :unsigned-int)
   (aValue :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbInterpretedCode_sub_val__SWIG_1" #.(swig-lispify "NdbInterpretedCode_sub_val" 'function)) :int
+(cffi:defcfun ("_wrap_NdbInterpretedCode_sub_val__SWIG_1" #.(swig-lispify "NdbInterpretedCode_sub_val1" 'function)) :int
   (self :pointer)
   (attrId :unsigned-int)
   (aValue :unsigned-long-long))
@@ -5415,10 +5413,10 @@
   (self :pointer)
   (src :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbScanFilter__SWIG_0" #.(swig-lispify "new_NdbScanFilter" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbScanFilter__SWIG_0" #.(swig-lispify "new_NdbScanFilter0" 'function)) :pointer
   (code :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbScanFilter__SWIG_1" #.(swig-lispify "new_NdbScanFilter" 'function)) :pointer
+(cffi:defcfun ("_wrap_new_NdbScanFilter__SWIG_1" #.(swig-lispify "new_NdbScanFilter1" 'function)) :pointer
   (op :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbScanFilter" #.(swig-lispify "delete_NdbScanFilter" 'function)) :void
@@ -5444,11 +5442,11 @@
 	(#.(swig-lispify "COND_AND_EQ_ZERO" 'enumvalue :keyword) #.10)
 	(#.(swig-lispify "COND_AND_NE_ZERO" 'enumvalue :keyword) #.11))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_begin__SWIG_0" #.(swig-lispify "NdbScanFilter_begin" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_begin__SWIG_0" #.(swig-lispify "NdbScanFilter_begin0" 'function)) :int
   (self :pointer)
   (group :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_begin__SWIG_1" #.(swig-lispify "NdbScanFilter_begin" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_begin__SWIG_1" #.(swig-lispify "NdbScanFilter_begin1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbScanFilter_end" #.(swig-lispify "NdbScanFilter_end" 'function)) :int
@@ -5463,81 +5461,81 @@
 (cffi:defcfun ("_wrap_NdbScanFilter_isfalse" #.(swig-lispify "NdbScanFilter_isfalse" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_0" #.(swig-lispify "NdbScanFilter_cmp" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_0" #.(swig-lispify "NdbScanFilter_cmp0" 'function)) :int
   (self :pointer)
   (cond :pointer)
   (ColId :int)
   (val :pointer)
   (len :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_1" #.(swig-lispify "NdbScanFilter_cmp" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_1" #.(swig-lispify "NdbScanFilter_cmp1" 'function)) :int
   (self :pointer)
   (cond :pointer)
   (ColId :int)
   (val :pointer))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_2" #.(swig-lispify "NdbScanFilter_cmp" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_cmp__SWIG_2" #.(swig-lispify "NdbScanFilter_cmp2" 'function)) :int
   (self :pointer)
   (cond :pointer)
   (ColId1 :int)
   (ColId2 :int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_eq__SWIG_0" #.(swig-lispify "NdbScanFilter_eq" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_eq__SWIG_0" #.(swig-lispify "NdbScanFilter_eq0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_ne__SWIG_0" #.(swig-lispify "NdbScanFilter_ne" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_ne__SWIG_0" #.(swig-lispify "NdbScanFilter_ne0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_lt__SWIG_0" #.(swig-lispify "NdbScanFilter_lt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_lt__SWIG_0" #.(swig-lispify "NdbScanFilter_lt0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_le__SWIG_0" #.(swig-lispify "NdbScanFilter_le" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_le__SWIG_0" #.(swig-lispify "NdbScanFilter_le0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_gt__SWIG_0" #.(swig-lispify "NdbScanFilter_gt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_gt__SWIG_0" #.(swig-lispify "NdbScanFilter_gt0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_ge__SWIG_0" #.(swig-lispify "NdbScanFilter_ge" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_ge__SWIG_0" #.(swig-lispify "NdbScanFilter_ge0" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-int))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_eq__SWIG_1" #.(swig-lispify "NdbScanFilter_eq" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_eq__SWIG_1" #.(swig-lispify "NdbScanFilter_eq1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_ne__SWIG_1" #.(swig-lispify "NdbScanFilter_ne" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_ne__SWIG_1" #.(swig-lispify "NdbScanFilter_ne1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_lt__SWIG_1" #.(swig-lispify "NdbScanFilter_lt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_lt__SWIG_1" #.(swig-lispify "NdbScanFilter_lt1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_le__SWIG_1" #.(swig-lispify "NdbScanFilter_le" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_le__SWIG_1" #.(swig-lispify "NdbScanFilter_le1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_gt__SWIG_1" #.(swig-lispify "NdbScanFilter_gt" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_gt__SWIG_1" #.(swig-lispify "NdbScanFilter_gt1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbScanFilter_ge__SWIG_1" #.(swig-lispify "NdbScanFilter_ge" 'function)) :int
+(cffi:defcfun ("_wrap_NdbScanFilter_ge__SWIG_1" #.(swig-lispify "NdbScanFilter_ge1" 'function)) :int
   (self :pointer)
   (ColId :int)
   (value :unsigned-long-long))
@@ -5654,21 +5652,21 @@
 (cffi:defcfun ("_wrap_NdbEventOperation_execute" #.(swig-lispify "NdbEventOperation_execute" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_getValue__SWIG_0" #.(swig-lispify "NdbEventOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_getValue__SWIG_0" #.(swig-lispify "NdbEventOperation_getValue0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_getValue__SWIG_1" #.(swig-lispify "NdbEventOperation_getValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_getValue__SWIG_1" #.(swig-lispify "NdbEventOperation_getValue1" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_getPreValue__SWIG_0" #.(swig-lispify "NdbEventOperation_getPreValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_getPreValue__SWIG_0" #.(swig-lispify "NdbEventOperation_getPreValue0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string)
   (aValue :string))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_getPreValue__SWIG_1" #.(swig-lispify "NdbEventOperation_getPreValue" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_getPreValue__SWIG_1" #.(swig-lispify "NdbEventOperation_getPreValue1" 'function)) :pointer
   (self :pointer)
   (anAttrName :string))
 
@@ -5732,11 +5730,11 @@
 (cffi:defcfun ("_wrap_NdbEventOperation_isEmptyEpoch" #.(swig-lispify "NdbEventOperation_isEmptyEpoch" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_isErrorEpoch__SWIG_0" #.(swig-lispify "NdbEventOperation_isErrorEpoch" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_isErrorEpoch__SWIG_0" #.(swig-lispify "NdbEventOperation_isErrorEpoch0" 'function)) :pointer
   (self :pointer)
   (error_type :pointer))
 
-(cffi:defcfun ("_wrap_NdbEventOperation_isErrorEpoch__SWIG_1" #.(swig-lispify "NdbEventOperation_isErrorEpoch" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbEventOperation_isErrorEpoch__SWIG_1" #.(swig-lispify "NdbEventOperation_isErrorEpoch1" 'function)) :pointer
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbEventOperation_getTable" #.(swig-lispify "NdbEventOperation_getTable" 'function)) :pointer
@@ -5839,11 +5837,11 @@
   (self :pointer)
   (isNull :pointer))
 
-(cffi:defcfun ("_wrap_NdbBlob_getNull__SWIG_0" #.(swig-lispify "NdbBlob_getNull" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_getNull__SWIG_0" #.(swig-lispify "NdbBlob_getNull0" 'function)) :int
   (self :pointer)
   (isNull :pointer))
 
-(cffi:defcfun ("_wrap_NdbBlob_getNull__SWIG_1" #.(swig-lispify "NdbBlob_getNull" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_getNull__SWIG_1" #.(swig-lispify "NdbBlob_getNull1" 'function)) :int
   (self :pointer)
   (isNull :pointer))
 
@@ -5854,11 +5852,11 @@
   (self :pointer)
   (length :pointer))
 
-(cffi:defcfun ("_wrap_NdbBlob_truncate__SWIG_0" #.(swig-lispify "NdbBlob_truncate" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_truncate__SWIG_0" #.(swig-lispify "NdbBlob_truncate0" 'function)) :int
   (self :pointer)
   (length :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_NdbBlob_truncate__SWIG_1" #.(swig-lispify "NdbBlob_truncate" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_truncate__SWIG_1" #.(swig-lispify "NdbBlob_truncate1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbBlob_getPos" #.(swig-lispify "NdbBlob_getPos" 'function)) :int
@@ -5906,11 +5904,11 @@
 (cffi:defcfun ("_wrap_NdbBlob_blobsNextBlob" #.(swig-lispify "NdbBlob_blobsNextBlob" 'function)) :pointer
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbBlob_close__SWIG_0" #.(swig-lispify "NdbBlob_close" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_close__SWIG_0" #.(swig-lispify "NdbBlob_close0" 'function)) :int
   (self :pointer)
   (execPendingBlobOps :pointer))
 
-(cffi:defcfun ("_wrap_NdbBlob_close__SWIG_1" #.(swig-lispify "NdbBlob_close" 'function)) :int
+(cffi:defcfun ("_wrap_NdbBlob_close__SWIG_1" #.(swig-lispify "NdbBlob_close1" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbBlob" #.(swig-lispify "delete_NdbBlob" 'function)) :void
