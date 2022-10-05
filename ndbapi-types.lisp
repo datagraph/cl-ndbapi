@@ -6,9 +6,12 @@
 
 (cl:defvar *ndbapi-verbose* cl:t)
 
-(cl:defun debug (object foreign-pointer cl:&optional (verbose *ndbapi-verbose*))
+(cl:defun debug (object foreign-pointer is-null-pinter cl:&optional (verbose *ndbapi-verbose*))
   (cl:when verbose
-    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x" object foreign-pointer)))
+    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do free~;do NOT free~])"
+               object
+               foreign-pointer
+               is-null-pinter)))
 
 
 (cffi:define-foreign-type ndb-type ()
@@ -26,6 +29,10 @@
   (cl:let ((lisp-object (cl:make-instance 'ndb :foreign-pointer foreign-pointer)))
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
-                              (debug 'ndb foreign-pointer)
-                              (delete-ndb foreign-pointer))))
+                                     (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
+                                       (debug 'ndb foreign-pointer is-null-pointer)
+                                       (cl:unless is-null-pointer
+                                         (delete-ndb foreign-pointer)
+                                         ;; to be extra careful:
+                                         (cl:setf foreign-pointer (cffi:null-pointer)))))))
     lisp-object))

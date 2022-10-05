@@ -8,6 +8,7 @@
   :depends-on (:cffi :trivial-features)
   :components ((:file "package")
                (:file "lispify" :depends-on ("package"))
-               (:file "ndbapi" :depends-on ("lispify"))
+               (:file "ndbapi-types" :depends-on ("lispify"))
+               (:file "ndbapi" :depends-on ("ndbapi-types"))
                #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
                (:file "ndbapi-load" :depends-on ("package"))))
