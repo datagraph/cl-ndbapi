@@ -50,7 +50,7 @@
         ()
         "Create new NDB object failed")
 
-(assert (zerop (libndbapi::ndb-init/swig-1 (libndbapi::foreign-pointer *ndb*)))
+(assert (zerop (libndbapi::ndb-init/swig-1 *ndb*))
         ()
         "Ndb.init() failed: ~a"
         (get-ndb-error (libndbapi::foreign-pointer *ndb*) #'libndbapi::ndb-get-ndb-error/swig-0))

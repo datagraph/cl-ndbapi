@@ -2660,7 +2660,7 @@
   (maxNoOfTransactions :int))
 
 (cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init/SWIG-1" 'function)) :int
-  (self :pointer))
+  (self %make-ndb-type))
 
 (overload-function #.(swig-lispify "Ndb_init" 'function))
 
