@@ -10,7 +10,8 @@
 
 (cl:in-package :libndbapi)
 
-(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init0" 'function)) :int)
+;; ndb_init is not really part of the other ndb_init methods but fits
+(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init/SWIG-0" 'function)) :int)
 
 (cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end" 'function)) :void
   (arg0 :int))
