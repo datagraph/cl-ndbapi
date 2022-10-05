@@ -11,8 +11,8 @@
 
 (defvar *ndb*)
 
-(defun %get-ndb-error (*ndb*)
-  (cffi:mem-aref (libndbapi::ndb-get-ndb-error/swig-0 *ndb*)
+(defun %get-ndb-error (object &optional (getter #'libndbapi::ndb-get-ndb-error/swig-0))
+  (cffi:mem-aref (funcall getter object)
                  '(:struct libndbapi::ndberror-struct)))
 
 (defun error-string (error-plist)
@@ -20,16 +20,21 @@
           (getf error-plist 'libndbapi::code)
           (getf error-plist 'libndbapi::message)))
 
-(defun get-ndb-error (*ndb*)
-  (error-string (%get-ndb-error *ndb*)))
+(defun get-ndb-error (object &optional (getter #'libndbapi::ndb-get-ndb-error/swig-0))
+  (error-string (%get-ndb-error object getter)))
 
 
 (assert (zerop (libndbapi::ndb-init/swig-0))
-        () "ndb-init failed")
+        ()
+        "ndb-init failed")
 
 (defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 "nl3:1186,nl3:1187"))
 
-(assert (zerop (libndbapi::ndb-cluster-connection-connect/swig-0 *conn* 4 5 1))
+(assert (zerop (libndbapi::ndb-cluster-connection-connect/swig-0 *conn*
+                                                                 4 ;; retries
+                                                                 5 ;; delay between retries
+                                                                 1 ;; verbose
+                                                                 ))
         ()
         "Cluster management server was not ready within 30 secs")
 
@@ -41,53 +46,54 @@
 (defparameter *table-name* "test")
 
 (defparameter *ndb* (libndbapi::new-ndb/swig-1 *conn* *database-name*))
-(assert (not (cffi:null-pointer-p *ndb*))
+(assert (not (cffi:null-pointer-p (libndbapi::foreign-pointer *ndb*)))
         ()
         "Create new NDB object failed")
 
-(assert (zerop (libndbapi::ndb-init-1 *ndb*))
+(assert (zerop (libndbapi::ndb-init/swig-1 (libndbapi::foreign-pointer *ndb*)))
         ()
         "Ndb.init() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error (libndbapi::foreign-pointer *ndb*) #'libndbapi::ndb-get-ndb-error/swig-0))
 
-(defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 *ndb*))
+(defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 (libndbapi::foreign-pointer *ndb*)))
 (assert (not (cffi:null-pointer-p *transaction*))
         ()
         "start-transaction() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error (libndbapi::foreign-pointer *ndb*)))
 
-(defparameter *dict* (libndbapi::ndb-get-dictionary *ndb*))
+(defparameter *dict* (libndbapi::ndb-get-dictionary (libndbapi::foreign-pointer *ndb*)))
 (assert (not (cffi:null-pointer-p *dict*))
         ()
         "get-dictionary() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error (libndbapi::foreign-pointer *ndb*)))
 
 (defparameter *test-table* (libndbapi::dictionary-get-table/swig-0 *dict* *table-name*))
 (assert (not (cffi:null-pointer-p *test-table*))
         ()
         "get-table() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error *dict* #'libndbapi::dictionary-get-ndb-error))
+
+(defparameter *index-name* "gspo")
 
 (defparameter *index* (libndbapi::dictionary-get-index/swig-0 *dict*
-                                                              "gspo"
+                                                              *index-name*
                                                               (libndbapi::table-get-name *test-table*)))
 (assert (not (cffi:null-pointer-p *index*))
         ()
         "get-index() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error *dict* #'libndbapi::dictionary-get-ndb-error))
 
 (defparameter *index-default-record* (libndbapi::index-get-default-record *index*))
 (assert (not (cffi:null-pointer-p *index-default-record*))
         ()
-        "get-default-record() of index failed: ~a"
-        (get-ndb-error *ndb*))
+        "get-default-record() of index ~a failed"
+        *index-name*)
 
 (defparameter *test-table-default-record* (libndbapi::table-get-default-record *test-table*))
 (assert (not (cffi:null-pointer-p *test-table-default-record*))
         ()
-        "get-default-record() of table ~a failed: ~a"
-        *table-name*
-        (get-ndb-error *ndb*))
+        "get-default-record() of table ~a failed"
+        *table-name*)
 
 (defparameter *scan* (libndbapi::ndb-transaction-scan-index/swig-5 *transaction*
                                                                    *INDEX-DEFAULT-RECORD*
@@ -95,12 +101,12 @@
 (assert (not (cffi:null-pointer-p *scan*))
         ()
         "transaction-scan-index() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error))
 
 (assert (zerop (libndbapi::ndb-transaction-execute/swig-5 *transaction* :+NO-COMMIT+))
         ()
         "transactino-execute() failed: ~a"
-        (get-ndb-error *ndb*))
+        (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error))
 
 ;;   // Check rc anyway
 
@@ -122,11 +128,14 @@
       finally (assert (= rc 1)
                       ()
                       "scan-operation-next-result() failed: ~a"
-                      (get-ndb-error *ndb*)))
+                      (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error)))
 
 ;;   if (rc != 1)  APIERROR(myTransaction->getNdbError());
 
 (cffi:foreign-free *row-data*)
+(setf *row-data* nil)
 
 (libndbapi::ndb-scan-operation-close/swig-1 *scan* *true-val*) ;; no value
 (libndbapi::ndb-end 0) ;; no value
+
+(setf *ndb* nil)
