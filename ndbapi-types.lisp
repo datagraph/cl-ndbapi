@@ -51,7 +51,6 @@
       (cl:format cl:*trace-output* "~&translate ~a to ~a"
                  (cl:class-name (cl:class-of foreign-type))
                  class))
-    (cl:break "~a" foreign-type)
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
                                      (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
@@ -62,9 +61,26 @@
                                          (cl:setf foreign-pointer (cffi:null-pointer)))))))
     lisp-object))
 
+;; macro
+
+(cl:defmacro make-concrete-foreign-type (type class delete-fn)
+  `(cl:progn
+     (cffi:define-foreign-type ,type (garbage-collected-type)
+       ((lisp-class :initform ',class :allocation :class))
+       (:simple-parser ,type))
+
+     (cl:defclass ,class (garbage-collected-class)
+       ())
+
+     (cl:defmethod delete-foreign-object ((class (cl:eql ',class)) pointer)
+       (,delete-fn pointer))))
+
+(make-concrete-foreign-type ndb-type ndb delete-ndb)
+
 
 ;; ndb
 
+#|
 (cffi:define-foreign-type ndb-type (garbage-collected-type)
   ((lisp-class :initform 'ndb :allocation :class))
   (:simple-parser ndb-type))
@@ -74,3 +90,6 @@
 
 (cl:defmethod delete-foreign-object ((class (cl:eql 'ndb)) pointer)
   (delete-ndb pointer))
+|#
+
+(make-concrete-foreign-type ndb-type ndb delete-ndb)
