@@ -9,4 +9,5 @@
   :components ((:file "package")
                (:file "lispify" :depends-on ("package"))
                (:file "ndbapi" :depends-on ("lispify"))
-               #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))))
+               #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
+               (:file "ndbapi-load" :depends-on ("package"))))
