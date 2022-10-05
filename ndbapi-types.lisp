@@ -17,7 +17,7 @@
 (cffi:define-foreign-type ndb-type ()
   ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect))
   (:actual-type :pointer)
-  (:simple-parser %make-ndb-type))
+  (:simple-parser ndb-type))
 
 (cl:defclass ndb ()
   ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)))

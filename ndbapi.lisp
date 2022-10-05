@@ -2598,16 +2598,16 @@
 
 (cl:defconstant #.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant) "def")
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb/SWIG-0" 'function)) (%make-ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb/SWIG-0" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection :pointer)
   (aCatalogName :string)
   (aSchemaName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb/SWIG-1" 'function)) (%make-ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb/SWIG-1" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection :pointer)
   (aCatalogName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb/SWIG-2" 'function)) (%make-ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb/SWIG-2" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection :pointer))
 
 (cffi:defcfun ("_wrap_delete_Ndb" #.(swig-lispify "delete_Ndb" 'function)) :void
@@ -2660,7 +2660,7 @@
   (maxNoOfTransactions :int))
 
 (cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init/SWIG-1" 'function)) :int
-  (self %make-ndb-type))
+  (self ndb-type))
 
 (overload-function #.(swig-lispify "Ndb_init" 'function))
 
