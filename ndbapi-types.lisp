@@ -19,15 +19,10 @@
    (lisp-class :allocation :class :reader lisp-class))
   (:actual-type :pointer))
 
-(cffi:define-foreign-type ndb-type (garbage-collected-type)
-  ((lisp-class :initform 'ndb))
-  (:simple-parser ndb-type))
 
 (cl:defclass garbage-collected-class ()
   ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)))
 
-(cl:defclass ndb (garbage-collected-class)
-  ())
 
 (cl:defgeneric delete-foreign-object (class pointer))
 
@@ -40,9 +35,6 @@
                class
                pointer)
     (cl:force-output cl:*trace-output*)))
-
-(cl:defmethod delete-foreign-object ((class (cl:eql 'ndb)) pointer)
-  (delete-ndb pointer))
 
 (cl:defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
                                          (foreign-type garbage-collected-type))
@@ -59,6 +51,7 @@
       (cl:format cl:*trace-output* "~&translate ~a to ~a"
                  (cl:class-name (cl:class-of foreign-type))
                  class))
+    (cl:break "~a" foreign-type)
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
                                      (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
@@ -68,3 +61,16 @@
                                          ;; to be extra careful:
                                          (cl:setf foreign-pointer (cffi:null-pointer)))))))
     lisp-object))
+
+
+;; ndb
+
+(cffi:define-foreign-type ndb-type (garbage-collected-type)
+  ((lisp-class :initform 'ndb :allocation :class))
+  (:simple-parser ndb-type))
+
+(cl:defclass ndb (garbage-collected-class)
+  ())
+
+(cl:defmethod delete-foreign-object ((class (cl:eql 'ndb)) pointer)
+  (delete-ndb pointer))
