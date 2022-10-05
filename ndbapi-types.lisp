@@ -11,28 +11,60 @@
     (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do free~;do NOT free~])"
                object
                foreign-pointer
-               is-null-pinter)))
+               is-null-pinter)
+    (cl:force-output cl:*trace-output*)))
 
+(cffi:define-foreign-type garbage-collected-type ()
+  ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect)
+   (lisp-class :allocation :class :reader lisp-class))
+  (:actual-type :pointer))
 
-(cffi:define-foreign-type ndb-type ()
-  ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect))
-  (:actual-type :pointer)
+(cffi:define-foreign-type ndb-type (garbage-collected-type)
+  ((lisp-class :initform 'ndb))
   (:simple-parser ndb-type))
 
-(cl:defclass ndb ()
+(cl:defclass garbage-collected-class ()
   ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)))
 
-(cl:defmethod cffi:translate-to-foreign ((lisp-object ndb) (foreign-type ndb-type))
+(cl:defclass ndb (garbage-collected-class)
+  ())
+
+(cl:defgeneric delete-foreign-object (class pointer))
+
+(cl:defmethod delete-foreign-object (class pointer)
+  (cl:error "Do not how to delete ~a object on pointer: ~8,'0x" class pointer))
+
+(cl:defmethod delete-foreign-object :before (class pointer)
+  (cl:when *ndbapi-verbose*
+    (cl:format cl:*trace-output* "~&calling DELETE for ~a object on pointer: ~8,'0x"
+               class
+               pointer)
+    (cl:force-output cl:*trace-output*)))
+
+(cl:defmethod delete-foreign-object ((class (cl:eql 'ndb)) pointer)
+  (delete-ndb pointer))
+
+(cl:defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
+                                         (foreign-type garbage-collected-type))
+  (cl:when *ndbapi-verbose*
+    (cl:format cl:*trace-output* "~&translate ~a to ~a"
+               (cl:class-name (cl:class-of lisp-object))
+               (cl:class-name (cl:class-of foreign-type))))
   (foreign-pointer lisp-object))
 
-(cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type ndb-type))
-  (cl:let ((lisp-object (cl:make-instance 'ndb :foreign-pointer foreign-pointer)))
+(cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
+  (cl:let* ((class (lisp-class foreign-type))
+            (lisp-object (cl:make-instance class :foreign-pointer foreign-pointer)))
+    (cl:when *ndbapi-verbose*
+      (cl:format cl:*trace-output* "~&translate ~a to ~a"
+                 (cl:class-name (cl:class-of foreign-type))
+                 class))
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
                                      (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
-                                       (debug 'ndb foreign-pointer is-null-pointer)
+                                       (debug class foreign-pointer is-null-pointer)
                                        (cl:unless is-null-pointer
-                                         (delete-ndb foreign-pointer)
+                                         (delete-foreign-object class foreign-pointer)
                                          ;; to be extra careful:
                                          (cl:setf foreign-pointer (cffi:null-pointer)))))))
     lisp-object))
