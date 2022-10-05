@@ -75,3 +75,11 @@
            package))))))
 
 ;;; SWIG wrapper code ends here
+
+(cl:defmacro overload-function (name)
+  "simple dispatch on number of arguments"
+  `(cl:defun ,name (cl:&rest args)
+     (cl:apply (cl:symbol-function
+                (cl:find-symbol (cl:format cl:nil "~a-~a" ',name (cl:length args))
+                                :libndbapi))
+               args)))
