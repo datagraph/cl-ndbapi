@@ -737,7 +737,7 @@ EXPORT Uint32 _wrap_Ndb_cluster_connection_get_max_adaptive_send_time (Ndb_clust
   }
 }
 
-
+/*
 EXPORT int _wrap_Ndb_cluster_connection_set_num_recv_threads (Ndb_cluster_connection *larg1, Uint32 larg2) {
   int lresult = (int)0 ;
   Ndb_cluster_connection *arg1 = (Ndb_cluster_connection *) 0 ;
@@ -770,7 +770,7 @@ EXPORT int _wrap_Ndb_cluster_connection_get_num_recv_threads (Ndb_cluster_connec
     return (int)0;
   }
 }
-
+*/
 
 EXPORT int _wrap_Ndb_cluster_connection_unset_recv_thread_cpu (Ndb_cluster_connection *larg1, Uint32 larg2) {
   int lresult = (int)0 ;
@@ -10145,7 +10145,7 @@ EXPORT Uint64 *_wrap_Ndb_getLatestGCI (Ndb *larg1) {
   }
 }
 
-
+/*
 EXPORT void _wrap_Ndb_forceGCP (Ndb *larg1) {
   Ndb *arg1 = (Ndb *) 0 ;
   
@@ -10157,7 +10157,7 @@ EXPORT void _wrap_Ndb_forceGCP (Ndb *larg1) {
     
   }
 }
-
+*/
 
 EXPORT void _wrap_Ndb_setReportThreshEventGCISlip (Ndb *larg1, unsigned int larg2) {
   Ndb *arg1 = (Ndb *) 0 ;
