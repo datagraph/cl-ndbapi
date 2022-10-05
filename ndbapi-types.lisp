@@ -6,6 +6,11 @@
 
 (cl:defvar *ndbapi-verbose* cl:t)
 
+(cl:defun debug (object foreign-pointer cl:&optional (verbose *ndbapi-verbose*))
+  (cl:when verbose
+    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x" object foreign-pointer)))
+
+
 (cffi:define-foreign-type ndb-type ()
   ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect))
   (:actual-type :pointer)
@@ -18,14 +23,9 @@
   (foreign-pointer lisp-object))
 
 (cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type ndb-type))
-  (cl:let ((wrap  (cl:make-instance 'ndb :foreign-pointer foreign-pointer)))
+  (cl:let ((lisp-object (cl:make-instance 'ndb :foreign-pointer foreign-pointer)))
     (cl:when (garbage-collect foreign-type)
-      (sb-ext:finalize wrap (cl:lambda ()
-                              (cl:when *ndbapi-verbose*
-                                (cl:format cl:*trace-output* "~&NDB destructor called for: ~8,'0x" foreign-pointer))
+      (sb-ext:finalize lisp-object (cl:lambda ()
+                              (debug 'ndb foreign-pointer)
                               (delete-ndb foreign-pointer))))
-    wrap))
-
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb1_wrap" 'function)) (%make-ndb-type :garbage-collect t)
-  (ndb_cluster_connection :pointer)
-  (aCatalogName :string))
+    lisp-object))
