@@ -2618,7 +2618,7 @@
   (cl:unless (cl:boundp '#.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant))
     (cl:defconstant #.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant) "def")))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb/SWIG-0" 'function)) (ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb/SWIG-0%" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection ndb-cluster-connection-type)
   (aCatalogName :string)
   (aSchemaName :string))
@@ -2627,7 +2627,7 @@
   (ndb_cluster_connection ndb-cluster-connection-type)
   (aCatalogName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb/SWIG-2" 'function)) (ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_2" #.(swig-lispify "new_Ndb/SWIG-2%" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection ndb-cluster-connection-type))
 
 (cffi:defcfun ("_wrap_delete_Ndb" #.(swig-lispify "delete_Ndb" 'function)) :void
@@ -5945,5 +5945,3 @@
 	(#.(swig-lispify "pkid" 'slotname) :unsigned-int)
 	(#.(swig-lispify "length" 'slotname) :unsigned-long-long)
 	(#.(swig-lispify "headsize" 'slotname) :unsigned-int))
-
-

@@ -142,30 +142,33 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Tablespace" 'class))
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Undofile" 'class))
 
-#+nil
-(cl:defclass ndb (garbage-collected-class)
-  ((ndb-cluster-connection :reader ndb-cluster-connection)))
-
-#+(or) ;; stores the foreign pointer but not the wrapping lisp object
-(cl:defmethod cl:initialize-instance :after ((ndb ndb) cl:&key)
-  (cl:setf (cl:slot-value ndb 'ndb-cluster-connection)
-           (ndb-get-ndb-cluster-connection ndb)))
-
-#+nil ;; doesn't work as lisp is not just reference counting
-(cl:defun libndbapi::new-ndb/swig-1 (connection database-name)
-  (cl:let ((ndb (libndbapi::new-ndb/swig-1% connection database-name)))
-    (cl:setf (cl:slot-value ndb 'ndb-cluster-connection)
-             connection)
-    ndb))
+(cl:defun debug-free-connection (connection)
+  (cl:when *ndbapi-verbose*
+    (cl:format cl:*trace-output* "~&Freing connection ~a: ~8,'0x"
+               connection
+               (foreign-pointer connection))
+    (cl:force-output cl:*trace-output*)))
 
 (cl:defun libndbapi::new-ndb/swig-1 (connection database-name)
   (cl:let ((ndb (libndbapi::new-ndb/swig-1% connection database-name)))
     ;; SBCL's implementation for finalize says: Multiple finalizers are invoked in the order added.
     (sb-ext:finalize ndb (cl:lambda ()
-                           (cl:when *ndbapi-verbose*
-                             (cl:format cl:*trace-output* "~&Freing connection ~a: ~8,'0x"
-                                        ;; HACK: this reference to connection keeps the instance from being GC'ed
-                                        connection
-                                        (foreign-pointer connection))
-                             (cl:force-output cl:*trace-output*))))
+                           ;; HACK: this reference to connection keeps the instance from being GC'ed
+                           (debug-free-connection connection)))
+    ndb))
+
+(cl:defun libndbapi::new-ndb/swig-0 (connection database-name schema-name)
+  (cl:let ((ndb (libndbapi::new-ndb/swig-0% connection database-name schema-name)))
+    ;; SBCL's implementation for finalize says: Multiple finalizers are invoked in the order added.
+    (sb-ext:finalize ndb (cl:lambda ()
+                           ;; HACK: this reference to connection keeps the instance from being GC'ed
+                           (debug-free-connection connection)))
+    ndb))
+
+(cl:defun libndbapi::new-ndb/swig-2 (connection)
+  (cl:let ((ndb (libndbapi::new-ndb/swig-2% connection)))
+    ;; SBCL's implementation for finalize says: Multiple finalizers are invoked in the order added.
+    (sb-ext:finalize ndb (cl:lambda ()
+                           ;; HACK: this reference to connection keeps the instance from being GC'ed
+                           (debug-free-connection connection)))
     ndb))
