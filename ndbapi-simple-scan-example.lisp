@@ -33,12 +33,12 @@
                      object)))
     (not (cffi:null-pointer-p pointer))))
 
-(defvar *ndb-initialized*
-  (progn
-    (assert (zerop (libndbapi::ndb-init/swig-0))
-            ()
-            "ndb-init failed")
-    t))
+(defvar *ndb-initialized* nil)
+(unless *ndb-initialized*
+  (assert (zerop (libndbapi::ndb-init/swig-0))
+          ()
+          "ndb-init failed")
+  (setf *ndb-initialized* t))
 
 (defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 "nl3:1186,nl3:1187"))
 
@@ -148,4 +148,4 @@
 (setf *conn* nil)
 
 #+cl:nil ;; ndb-end only at the very end when all objections are freed
-(libndbapi::ndb-end 0) ;; no value
+(setf *ndb-initialized* (libndbapi::ndb-end 0)) ;; no value
