@@ -12,8 +12,11 @@
 (defvar *ndb*)
 
 (defun %get-ndb-error (object &optional (getter #'libndbapi::ndb-get-ndb-error/swig-0))
-  (cffi:mem-aref (funcall getter object)
-                 '(:struct libndbapi::ndberror-struct)))
+  (let ((pointer (if (typep  object 'libndbapi::garbage-collected-class)
+                     (libndbapi::foreign-pointer object)
+                     object)))
+    (cffi:mem-aref (funcall getter pointer)
+                   '(:struct libndbapi::ndberror-struct))))
 
 (defun error-string (error-plist)
   (format nil "Error with code ~a: ~a"
@@ -53,19 +56,19 @@
 (assert (zerop (libndbapi::ndb-init/swig-1 *ndb*))
         ()
         "Ndb.init() failed: ~a"
-        (get-ndb-error (libndbapi::foreign-pointer *ndb*) #'libndbapi::ndb-get-ndb-error/swig-0))
+        (get-ndb-error *ndb* #'libndbapi::ndb-get-ndb-error/swig-0))
 
 (defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 *ndb*))
 (assert (not (cffi:null-pointer-p *transaction*))
         ()
         "start-transaction() failed: ~a"
-        (get-ndb-error (libndbapi::foreign-pointer *ndb*)))
+        (get-ndb-error *ndb*))
 
 (defparameter *dict* (libndbapi::ndb-get-dictionary *ndb*))
 (assert (not (cffi:null-pointer-p *dict*))
         ()
         "get-dictionary() failed: ~a"
-        (get-ndb-error (libndbapi::foreign-pointer *ndb*)))
+        (get-ndb-error *ndb*))
 
 (defparameter *test-table* (libndbapi::dictionary-get-table/swig-0 *dict* *table-name*))
 (assert (not (cffi:null-pointer-p *test-table*))
