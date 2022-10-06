@@ -11,4 +11,5 @@
                (:file "ndbapi-types" :depends-on ("lispify"))
                (:file "ndbapi" :depends-on ("ndbapi-types"))
                #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
+               (:file "ndbapi-wrappers" :depends-on ("ndbapi"))
                (:file "ndbapi-load" :depends-on ("package"))))
