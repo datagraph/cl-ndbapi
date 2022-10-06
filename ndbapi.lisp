@@ -130,19 +130,33 @@
 
 (cl:defconstant #.(swig-lispify "NDB_BACKUP_SEQUENCE" 'constant) #x1F000000)
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_DB" 'constant) "mysql")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_DB" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_DB" 'constant) "mysql")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SCHEMA" 'constant) "def")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_SCHEMA" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SCHEMA" 'constant) "def")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_HEAD_TABLE" 'constant) "ndb_index_stat_head")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_HEAD_TABLE" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_HEAD_TABLE" 'constant) "ndb_index_stat_head")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SAMPLE_TABLE" 'constant) "ndb_index_stat_sample")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_SAMPLE_TABLE" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SAMPLE_TABLE" 'constant) "ndb_index_stat_sample")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SAMPLE_INDEX1" 'constant) "ndb_index_stat_sample_x1")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_SAMPLE_INDEX1" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_SAMPLE_INDEX1" 'constant) "ndb_index_stat_sample_x1")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_HEAD_EVENT" 'constant) "ndb_index_stat_head_event")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_HEAD_EVENT" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_HEAD_EVENT" 'constant) "ndb_index_stat_head_event")))
 
-(cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_PREFIX" 'constant) "ndb_index_stat")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_INDEX_STAT_PREFIX" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_INDEX_STAT_PREFIX" 'constant) "ndb_index_stat")))
 
 (cl:defconstant #.(swig-lispify "NDB_INFO_OP_UNKNOWN" 'constant) 0)
 
@@ -2596,9 +2610,13 @@
 
 (cl:defconstant #.(swig-lispify "WAITFOR_RESPONSE_TIMEOUT" 'constant) 120000)
 
-(cl:defconstant #.(swig-lispify "NDB_SYSTEM_DATABASE" 'constant) "sys")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_SYSTEM_DATABASE" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_SYSTEM_DATABASE" 'constant) "sys")))
 
-(cl:defconstant #.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant) "def")
+(cl:eval-when (:compile-toplevel :load-toplevel)
+  (cl:unless (cl:boundp '#.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant))
+    (cl:defconstant #.(swig-lispify "NDB_SYSTEM_SCHEMA" 'constant) "def")))
 
 (cffi:defcfun ("_wrap_new_Ndb__SWIG_0" #.(swig-lispify "new_Ndb/SWIG-0" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection ndb-cluster-connection-type)
