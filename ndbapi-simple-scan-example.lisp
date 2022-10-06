@@ -122,12 +122,9 @@
 
 ;;   // Check rc anyway
 
-(defvar *true-val* (cffi:make-pointer 1))
-(defvar *false-val* (cffi:null-pointer))
-
 (defparameter *row-data* (cffi:foreign-alloc :pointer))
 
-(loop for rc = (libndbapi::ndb-scan-operation-next-result/swig-3 *scan* *row-data* *true-val* *false-val*)
+(loop for rc = (libndbapi::ndb-scan-operation-next-result/swig-3 *scan* *row-data* t nil)
       for j from 0
       while (zerop rc)
       do (format t "~&row ~5d: " j)
@@ -145,7 +142,7 @@
 (cffi:foreign-free *row-data*)
 (setf *row-data* nil)
 
-(libndbapi::ndb-scan-operation-close/swig-1 *scan* *true-val*) ;; no value
+(libndbapi::ndb-scan-operation-close/swig-1 *scan* t) ;; no value
 
 (setf *ndb* nil)
 (setf *conn* nil)

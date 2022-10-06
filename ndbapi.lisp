@@ -3907,12 +3907,12 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_0" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-0" 'function)) :int
   (self :pointer)
-  (fetchAllowed :pointer)
-  (forceSend :pointer))
+  (fetchAllowed :boolean)
+  (forceSend :boolean))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_1" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-1" 'function)) :int
   (self :pointer)
-  (fetchAllowed :pointer))
+  (fetchAllowed :boolean))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_2" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-2" 'function)) :int
   (self :pointer))
@@ -3920,8 +3920,8 @@
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_3" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-3" 'function)) :int
   (self :pointer)
   (out_row_ptr :pointer)
-  (fetchAllowed :pointer)
-  (forceSend :pointer))
+  (fetchAllowed :boolean)
+  (forceSend :boolean))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResultCopyOut" #.(swig-lispify "NdbScanOperation_nextResultCopyOut" 'function)) :int
   (self :pointer)
@@ -3931,12 +3931,12 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_0" #.(swig-lispify "NdbScanOperation_close/SWIG-0" 'function)) :void
   (self :pointer)
-  (forceSend :pointer)
-  (releaseOp :pointer))
+  (forceSend :boolean)
+  (releaseOp :boolean))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_1" #.(swig-lispify "NdbScanOperation_close/SWIG-1" 'function)) :void
   (self :pointer)
-  (forceSend :pointer))
+  (forceSend :boolean))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_2" #.(swig-lispify "NdbScanOperation_close/SWIG-2" 'function)) :void
   (self :pointer))
