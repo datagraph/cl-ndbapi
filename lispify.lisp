@@ -55,6 +55,8 @@
                        (helper (cl:cdr lst) '() (cl:cons c rest)))
                       ((cl:char-equal c #\/)
                        (helper (cl:cdr lst) '() (cl:cons c rest)))
+                      ((cl:char-equal c #\%)
+                       (helper (cl:cdr lst) '() (cl:cons c rest)))
                       (cl:t
                        (cl:error "Invalid character: ~A" c))))
                   (strip-prefix (prefix string)

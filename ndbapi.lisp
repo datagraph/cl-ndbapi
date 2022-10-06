@@ -2623,7 +2623,7 @@
   (aCatalogName :string)
   (aSchemaName :string))
 
-(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb/SWIG-1" 'function)) (ndb-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb__SWIG_1" #.(swig-lispify "new_Ndb/SWIG-1%" 'function)) (ndb-type :garbage-collect t)
   (ndb_cluster_connection ndb-cluster-connection-type)
   (aCatalogName :string))
 

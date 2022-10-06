@@ -141,3 +141,46 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Table" 'class))
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Tablespace" 'class))
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Undofile" 'class))
+
+#+nil
+(cl:defclass ndb (garbage-collected-class)
+  ((ndb-cluster-connection :reader ndb-cluster-connection)))
+
+#+(or) ;; stores the foreign pointer but not the wrapping lisp object
+(cl:defmethod cl:initialize-instance :after ((ndb ndb) cl:&key)
+  (cl:setf (cl:slot-value ndb 'ndb-cluster-connection)
+           (ndb-get-ndb-cluster-connection ndb)))
+
+#+nil ;; doesn't work as lisp is not just reference counting
+(cl:defun libndbapi::new-ndb/swig-1 (connection database-name)
+  (cl:let ((ndb (libndbapi::new-ndb/swig-1% connection database-name)))
+    (cl:setf (cl:slot-value ndb 'ndb-cluster-connection)
+             connection)
+    ndb))
+
+(cl:defvar *references-hash* (cl:make-hash-table))
+
+(cl:defun incf-reference (reference cl:&optional (hash *references-hash*))
+  (cl:let ((value (cl:gethash reference hash)))
+    (cl:if value
+        (cl:incf (cl:gethash reference hash))
+        (cl:setf (cl:gethash reference hash) 1))))
+
+(cl:defun decf-reference (reference cl:&optional (hash *references-hash*))
+  (cl:let ((value (cl:gethash reference hash)))
+    (cl:when value
+      (cl:if (cl:> value 1)
+             (cl:decf (cl:gethash reference hash))
+             (cl:remhash reference hash)))))
+
+(cl:defun libndbapi::new-ndb/swig-1 (connection database-name)
+  (cl:let ((ndb (libndbapi::new-ndb/swig-1% connection database-name)))
+    (incf-reference connection)
+    (sb-ext:finalize ndb (cl:lambda ()
+                           (cl:when *ndbapi-verbose*
+                             (cl:format cl:*trace-output* "~&Freing connection ~a: ~8,'0x"
+                                        connection
+                                        (foreign-pointer connection))
+                             (cl:force-output cl:*trace-output*))
+                           (decf-reference connection)))
+    ndb))
