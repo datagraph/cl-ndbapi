@@ -158,29 +158,14 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
              connection)
     ndb))
 
-(cl:defvar *references-hash* (cl:make-hash-table))
-
-(cl:defun incf-reference (reference cl:&optional (hash *references-hash*))
-  (cl:let ((value (cl:gethash reference hash)))
-    (cl:if value
-        (cl:incf (cl:gethash reference hash))
-        (cl:setf (cl:gethash reference hash) 1))))
-
-(cl:defun decf-reference (reference cl:&optional (hash *references-hash*))
-  (cl:let ((value (cl:gethash reference hash)))
-    (cl:when value
-      (cl:if (cl:> value 1)
-             (cl:decf (cl:gethash reference hash))
-             (cl:remhash reference hash)))))
-
 (cl:defun libndbapi::new-ndb/swig-1 (connection database-name)
   (cl:let ((ndb (libndbapi::new-ndb/swig-1% connection database-name)))
-    (incf-reference connection)
+    ;; SBCL's implementation for finalize says: Multiple finalizers are invoked in the order added.
     (sb-ext:finalize ndb (cl:lambda ()
                            (cl:when *ndbapi-verbose*
                              (cl:format cl:*trace-output* "~&Freing connection ~a: ~8,'0x"
+                                        ;; HACK: this reference to connection keeps the instance from being GC'ed
                                         connection
                                         (foreign-pointer connection))
-                             (cl:force-output cl:*trace-output*))
-                           (decf-reference connection)))
+                             (cl:force-output cl:*trace-output*))))
     ndb))
