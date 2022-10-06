@@ -55,13 +55,13 @@
         "Ndb.init() failed: ~a"
         (get-ndb-error (libndbapi::foreign-pointer *ndb*) #'libndbapi::ndb-get-ndb-error/swig-0))
 
-(defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 (libndbapi::foreign-pointer *ndb*)))
+(defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 *ndb*))
 (assert (not (cffi:null-pointer-p *transaction*))
         ()
         "start-transaction() failed: ~a"
         (get-ndb-error (libndbapi::foreign-pointer *ndb*)))
 
-(defparameter *dict* (libndbapi::ndb-get-dictionary (libndbapi::foreign-pointer *ndb*)))
+(defparameter *dict* (libndbapi::ndb-get-dictionary *ndb*))
 (assert (not (cffi:null-pointer-p *dict*))
         ()
         "get-dictionary() failed: ~a"
@@ -139,3 +139,4 @@
 (libndbapi::ndb-end 0) ;; no value
 
 (setf *ndb* nil)
+(setf *conn* nil)
