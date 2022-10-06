@@ -26,6 +26,11 @@
 (defun get-ndb-error (object &optional (getter #'libndbapi::ndb-get-ndb-error/swig-0))
   (error-string (%get-ndb-error object getter)))
 
+(defun is-not-null (object)
+  (let ((pointer (if (typep  object 'libndbapi::garbage-collected-class)
+                     (libndbapi::foreign-pointer object)
+                     object)))
+    (not (cffi:null-pointer-p pointer))))
 
 (assert (zerop (libndbapi::ndb-init/swig-0))
         ()
@@ -49,7 +54,7 @@
 (defparameter *table-name* "test")
 
 (defparameter *ndb* (libndbapi::new-ndb/swig-1 *conn* *database-name*))
-(assert (not (cffi:null-pointer-p (libndbapi::foreign-pointer *ndb*)))
+(assert (is-not-null *ndb*)
         ()
         "Create new NDB object failed")
 
@@ -59,19 +64,19 @@
         (get-ndb-error *ndb* #'libndbapi::ndb-get-ndb-error/swig-0))
 
 (defparameter *transaction* (libndbapi::ndb-start-transaction/swig-3 *ndb*))
-(assert (not (cffi:null-pointer-p *transaction*))
+(assert (is-not-null *transaction*)
         ()
         "start-transaction() failed: ~a"
         (get-ndb-error *ndb*))
 
 (defparameter *dict* (libndbapi::ndb-get-dictionary *ndb*))
-(assert (not (cffi:null-pointer-p *dict*))
+(assert (is-not-null *dict*)
         ()
         "get-dictionary() failed: ~a"
         (get-ndb-error *ndb*))
 
 (defparameter *test-table* (libndbapi::dictionary-get-table/swig-0 *dict* *table-name*))
-(assert (not (cffi:null-pointer-p *test-table*))
+(assert (is-not-null *test-table*)
         ()
         "get-table() failed: ~a"
         (get-ndb-error *dict* #'libndbapi::dictionary-get-ndb-error))
@@ -81,19 +86,19 @@
 (defparameter *index* (libndbapi::dictionary-get-index/swig-0 *dict*
                                                               *index-name*
                                                               (libndbapi::table-get-name *test-table*)))
-(assert (not (cffi:null-pointer-p *index*))
+(assert (is-not-null *index*)
         ()
         "get-index() failed: ~a"
         (get-ndb-error *dict* #'libndbapi::dictionary-get-ndb-error))
 
 (defparameter *index-default-record* (libndbapi::index-get-default-record *index*))
-(assert (not (cffi:null-pointer-p *index-default-record*))
+(assert (is-not-null *index-default-record*)
         ()
         "get-default-record() of index ~a failed"
         *index-name*)
 
 (defparameter *test-table-default-record* (libndbapi::table-get-default-record *test-table*))
-(assert (not (cffi:null-pointer-p *test-table-default-record*))
+(assert (is-not-null *test-table-default-record*)
         ()
         "get-default-record() of table ~a failed"
         *table-name*)
@@ -101,7 +106,7 @@
 (defparameter *scan* (libndbapi::ndb-transaction-scan-index/swig-5 *transaction*
                                                                    *INDEX-DEFAULT-RECORD*
                                                                    *test-table-default-record*))
-(assert (not (cffi:null-pointer-p *scan*))
+(assert (is-not-null *scan*)
         ()
         "transaction-scan-index() failed: ~a"
         (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error))
