@@ -7,6 +7,7 @@
 ;; translation of the example ndbapi_simple_scan that I created
 ;; on the basis of my ndbapi_simple_scan example (in c++)
 
+#+(cl:or)
 (asdf:oos 'asdf:load-op :libndbapi)
 
 (defvar *ndb*)
@@ -32,9 +33,12 @@
                      object)))
     (not (cffi:null-pointer-p pointer))))
 
-(assert (zerop (libndbapi::ndb-init/swig-0))
-        ()
-        "ndb-init failed")
+(defvar *ndb-initialized*
+  (progn
+    (assert (zerop (libndbapi::ndb-init/swig-0))
+            ()
+            "ndb-init failed")
+    t))
 
 (defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 "nl3:1186,nl3:1187"))
 
@@ -144,7 +148,9 @@
 (setf *row-data* nil)
 
 (libndbapi::ndb-scan-operation-close/swig-1 *scan* *true-val*) ;; no value
-(libndbapi::ndb-end 0) ;; no value
 
 (setf *ndb* nil)
 (setf *conn* nil)
+
+#+cl:nil ;; ndb-end only at the very end when all objections are freed
+(libndbapi::ndb-end 0) ;; no value
