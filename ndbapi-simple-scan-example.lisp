@@ -122,10 +122,8 @@
 
 ;;   // Check rc anyway
 
-(defparameter *true-val* (cffi::foreign-alloc :int :initial-element 1))
-;; probably rather: (cffi:make-pointer 1)
-(defparameter *false-val* (cffi::foreign-alloc :int :initial-element 0))
-;; probably rather: (cffi:null-pointer)
+(defvar *true-val* (cffi:make-pointer 1))
+(defvar *false-val* (cffi:null-pointer))
 
 (defparameter *row-data* (cffi:foreign-alloc :pointer))
 
