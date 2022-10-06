@@ -7,7 +7,7 @@
 ;; translation of the example ndbapi_simple_scan that I created
 ;; on the basis of my ndbapi_simple_scan example (in c++)
 
-#+(cl:or)
+#+(or)
 (asdf:oos 'asdf:load-op :libndbapi)
 
 (defvar *ndb*)
@@ -137,8 +137,6 @@
                       "scan-operation-next-result() failed: ~a"
                       (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error)))
 
-;;   if (rc != 1)  APIERROR(myTransaction->getNdbError());
-
 (cffi:foreign-free *row-data*)
 (setf *row-data* nil)
 
@@ -147,5 +145,5 @@
 (setf *ndb* nil)
 (setf *conn* nil)
 
-#+cl:nil ;; ndb-end only at the very end when all objections are freed
+#+(or) ;; ndb-end only at the very end when all objections are freed
 (setf *ndb-initialized* (libndbapi::ndb-end 0)) ;; no value
