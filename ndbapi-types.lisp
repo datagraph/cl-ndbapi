@@ -63,7 +63,7 @@
 
 ;; macro
 
-(cl:defmacro make-concrete-foreign-type (type class delete-fn)
+(cl:defmacro make-concrete-foreign-type* (type class delete-fn)
   `(cl:progn
      (cffi:define-foreign-type ,type (garbage-collected-type)
        ((lisp-class :initform ',class :allocation :class))
@@ -75,9 +75,15 @@
      (cl:defmethod delete-foreign-object ((class (cl:eql ',class)) pointer)
        (,delete-fn pointer))))
 
-(make-concrete-foreign-type ndb-type ndb delete-ndb)
+;; (make-concrete-foreign-type ndb-type ndb delete-ndb)
 
+(cl:defmacro make-concrete-foreign-type (name)
+  (cl:let ((type (cl:intern (cl:concatenate 'cl:string  (cl:symbol-name name) "-" "TYPE")))
+           (class name)
+           (delete (cl:intern (cl:concatenate 'cl:string "DELETE" "-" (cl:symbol-name name)))))
+    `(make-concrete-foreign-type* ,type ,class ,delete)))
 
+;; (make-concrete-foreign-type ndb)
 ;; ndb
 
 #|
@@ -92,4 +98,46 @@
   (delete-ndb pointer))
 |#
 
-(make-concrete-foreign-type ndb-type ndb delete-ndb)
+;; example
+
+#|
+(libndbapi::new-ndb/swig-1 *conn* *database-name*)
+translate NDB-TYPE to NDB
+#<LIBNDBAPI::NDB {1006CE1393}>
+
+(libndbapi::foreign-pointer *)
+#.(SB-SYS:INT-SAP #X7FD1CC0011E0)
+
+(cffi:convert-to-foreign ** 'libndbapi::NDB-TYPE)
+translate NDB to NDB-TYPE
+#.(SB-SYS:INT-SAP #X7FD1CC0011E0)
+
+Destructor called for NDB object: #.(SB-SYS:INT-SAP #X7FD1CC0011E0) (do free)
+calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
+|#
+
+;; grep new_ ndbapi.lisp |awk '{print $4}'|sed 's/\/.*//g'|sed 's/"new_//g'| sed 's/"//g' |sed 's/_/-/g' | sort|uniq
+
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Column" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Datafile" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Event" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "ForeignKey" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "HashMap" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Index" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "LogfileGroup" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb_cluster_connection" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb_cluster_connection_node_iter" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbDataPrintFormat" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbDictionary" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbIndexStat" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbInterpretedCode" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbReceiver" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbRecordPrintFormat" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbScanFilter" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "ObjectId" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "OptimizeIndexHandle" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "OptimizeTableHandle" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Table" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Tablespace" 'class))
+(make-concrete-foreign-type #.(libndbapi::swig-lispify "Undofile" 'class))
