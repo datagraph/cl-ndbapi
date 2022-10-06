@@ -199,7 +199,7 @@
 (cffi:defcfun ("_wrap_new_Ndb_cluster_connection_node_iter" #.(swig-lispify "new_Ndb_cluster_connection_node_iter" 'function)) (ndb-cluster-connection-node-iter-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_Ndb_cluster_connection_node_iter" #.(swig-lispify "delete_Ndb_cluster_connection_node_iter" 'function)) :void
-  (self :pointer))
+  (self ndb-cluster-connection-node-iter-type))
 
 (cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_0" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-0" 'function)) (ndb-cluster-connection-type :garbage-collect t)
   (connectstring :string))
@@ -220,7 +220,7 @@
   (force_api_nodeid :int))
 
 (cffi:defcfun ("_wrap_delete_Ndb_cluster_connection" #.(swig-lispify "delete_Ndb_cluster_connection" 'function)) :void
-  (self :pointer))
+  (self ndb-cluster-connection-type))
 
 (cffi:defcfun ("_wrap_Ndb_cluster_connection_set_data_node_neighbour" #.(swig-lispify "Ndb_cluster_connection_set_data_node_neighbour" 'function)) :void
   (self ndb-cluster-connection-type)
@@ -574,7 +574,7 @@
   (val :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbDictionary" #.(swig-lispify "delete_NdbDictionary" 'function)) :void
-  (self :pointer))
+  (self ndb-dictionary-type))
 
 ;; where is the constructor _wrap_new_Object?! Same as ObjectId? strange...
 
@@ -658,7 +658,7 @@
 (cffi:defcfun ("_wrap_new_ObjectId" #.(swig-lispify "new_ObjectId" 'function)) (object-id-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_ObjectId" #.(swig-lispify "delete_ObjectId" 'function)) :void
-  (self :pointer))
+  (self object-id-type))
 
 (cffi:defcfun ("_wrap_ObjectId_getObjectStatus" #.(swig-lispify "ObjectId_getObjectStatus" 'function)) :pointer
   (self :pointer))
@@ -794,7 +794,7 @@
   (column :pointer))
 
 (cffi:defcfun ("_wrap_delete_Column" #.(swig-lispify "delete_Column" 'function)) :void
-  (self :pointer))
+  (self column-type))
 
 (cffi:defcfun ("_wrap_Column_setName" #.(swig-lispify "Column_setName" 'function)) :int
   (self column-type)
@@ -1041,7 +1041,7 @@
   (table :pointer))
 
 (cffi:defcfun ("_wrap_delete_Table" #.(swig-lispify "delete_Table" 'function)) :void
-  (self :pointer))
+  (self table-type))
 
 (cffi:defcfun ("_wrap_Table___assign__" #.(swig-lispify "Table___assign__" 'function)) :pointer
   (self table-type)
@@ -1400,7 +1400,7 @@
 (cffi:defcfun ("_wrap_new_Index__SWIG_1" #.(swig-lispify "new_Index/SWIG-1" 'function)) (index-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_Index" #.(swig-lispify "delete_Index" 'function)) :void
-  (self :pointer))
+  (self index-type))
 
 (cffi:defcfun ("_wrap_Index_setName" #.(swig-lispify "Index_setName" 'function)) :int
   (self index-type)
@@ -1457,7 +1457,7 @@
 (cffi:defcfun ("_wrap_new_OptimizeTableHandle" #.(swig-lispify "new_OptimizeTableHandle" 'function)) (optimize-table-handle-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_OptimizeTableHandle" #.(swig-lispify "delete_OptimizeTableHandle" 'function)) :void
-  (self :pointer))
+  (self optimize-table-handle-type))
 
 (cffi:defcfun ("_wrap_OptimizeTableHandle_next" #.(swig-lispify "OptimizeTableHandle_next" 'function)) :int
   (self optimize-table-handle-type))
@@ -1468,7 +1468,7 @@
 (cffi:defcfun ("_wrap_new_OptimizeIndexHandle" #.(swig-lispify "new_OptimizeIndexHandle" 'function)) (optimize-index-handle-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_OptimizeIndexHandle" #.(swig-lispify "delete_OptimizeIndexHandle" 'function)) :void
-  (self :pointer))
+  (self optimize-index-handle-type))
 
 (cffi:defcfun ("_wrap_OptimizeIndexHandle_next" #.(swig-lispify "OptimizeIndexHandle_next" 'function)) :int
   (self optimize-index-handle-type))
@@ -1535,7 +1535,7 @@
   (table :pointer))
 
 (cffi:defcfun ("_wrap_delete_Event" #.(swig-lispify "delete_Event" 'function)) :void
-  (self :pointer))
+  (self event-type))
 
 (cffi:defcfun ("_wrap_Event_setName" #.(swig-lispify "Event_setName" 'function)) :int
   (self event-type)
@@ -1650,7 +1650,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_LogfileGroup" #.(swig-lispify "delete_LogfileGroup" 'function)) :void
-  (self :pointer))
+  (self logfile-group-type))
 
 (cffi:defcfun ("_wrap_LogfileGroup_setName" #.(swig-lispify "LogfileGroup_setName" 'function)) :void
   (self logfile-group-type)
@@ -1691,7 +1691,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Tablespace" #.(swig-lispify "delete_Tablespace" 'function)) :void
-  (self :pointer))
+  (self tablespace-type))
 
 (cffi:defcfun ("_wrap_Tablespace_setName" #.(swig-lispify "Tablespace_setName" 'function)) :void
   (self tablespace-type)
@@ -1743,7 +1743,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Datafile" #.(swig-lispify "delete_Datafile" 'function)) :void
-  (self :pointer))
+  (self datafile-type))
 
 (cffi:defcfun ("_wrap_Datafile_setPath" #.(swig-lispify "Datafile_setPath" 'function)) :void
   (self datafile-type)
@@ -1792,7 +1792,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_Undofile" #.(swig-lispify "delete_Undofile" 'function)) :void
-  (self :pointer))
+  (self undofile-type))
 
 (cffi:defcfun ("_wrap_Undofile_setPath" #.(swig-lispify "Undofile_setPath" 'function)) :void
   (self undofile-type)
@@ -1838,7 +1838,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_HashMap" #.(swig-lispify "delete_HashMap" 'function)) :void
-  (self :pointer))
+  (self hash-map-type))
 
 (cffi:defcfun ("_wrap_HashMap_setName" #.(swig-lispify "HashMap_setName" 'function)) :void
   (self hash-map-type)
@@ -1879,7 +1879,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_ForeignKey" #.(swig-lispify "delete_ForeignKey" 'function)) :void
-  (self :pointer))
+  (self foreign-key-type))
 
 (cffi:defcenum #.(swig-lispify "FkAction" 'enumname)
 	(#.(swig-lispify "NoAction" 'enumvalue :keyword) #.0)
@@ -2524,7 +2524,7 @@
 (cffi:defcfun ("_wrap_new_NdbDataPrintFormat" #.(swig-lispify "new_NdbDataPrintFormat" 'function)) (ndb-data-print-format-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_NdbDataPrintFormat" #.(swig-lispify "delete_NdbDataPrintFormat" 'function)) :void
-  (self :pointer))
+  (self ndb-data-print-format-type))
 
 (cffi:defcfun ("_wrap_NdbDataPrintFormat_lines_terminated_by_set" #.(swig-lispify "NdbDataPrintFormat_lines_terminated_by_set" 'function)) :void
   (self ndb-data-print-format-type)
@@ -2631,7 +2631,7 @@
   (ndb_cluster_connection ndb-cluster-connection-type))
 
 (cffi:defcfun ("_wrap_delete_Ndb" #.(swig-lispify "delete_Ndb" 'function)) :void
-  (self :pointer))
+  (self ndb-type))
 
 (cffi:defcfun ("_wrap_Ndb_get_ndb_cluster_connection" #.(swig-lispify "Ndb_get_ndb_cluster_connection" 'function)) :pointer
   (self ndb-type))
@@ -3178,7 +3178,7 @@
   (self ndb-receiver-type))
 
 (cffi:defcfun ("_wrap_delete_NdbReceiver" #.(swig-lispify "delete_NdbReceiver" 'function)) :void
-  (self :pointer))
+  (self ndb-receiver-type))
 
 (cffi:defcfun ("_wrap_NdbReceiver_getId" #.(swig-lispify "NdbReceiver_getId" 'function)) :unsigned-int
   (self ndb-receiver-type))
@@ -4874,7 +4874,7 @@
 (cffi:defcfun ("_wrap_new_NdbIndexStat" #.(swig-lispify "new_NdbIndexStat" 'function)) (ndb-index-stat-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_NdbIndexStat" #.(swig-lispify "delete_NdbIndexStat" 'function)) :void
-  (self :pointer))
+  (self ndb-index-stat-type))
 
 (cffi:defcfun ("_wrap_NdbIndexStat_getNdbError" #.(swig-lispify "NdbIndexStat_getNdbError" 'function)) :pointer
   (self ndb-index-stat-type))
@@ -5138,7 +5138,7 @@
   (arg0 :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbInterpretedCode" #.(swig-lispify "delete_NdbInterpretedCode" 'function)) :void
-  (self :pointer))
+  (self ndb-interpreted-code-type))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_reset" #.(swig-lispify "NdbInterpretedCode_reset" 'function)) :void
   (self ndb-interpreted-code-type))
@@ -5445,7 +5445,7 @@
   (op :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbScanFilter" #.(swig-lispify "delete_NdbScanFilter" 'function)) :void
-  (self :pointer))
+  (self ndb-scan-filter-type))
 
 (cffi:defcenum #.(swig-lispify "Group" 'enumname)
 	(#.(swig-lispify "AND" 'enumvalue :keyword) #.1)
@@ -5654,7 +5654,7 @@
 (cffi:defcfun ("_wrap_new_NdbRecordPrintFormat" #.(swig-lispify "new_NdbRecordPrintFormat" 'function)) (ndb-record-print-format-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_delete_NdbRecordPrintFormat" #.(swig-lispify "delete_NdbRecordPrintFormat" 'function)) :void
-  (self :pointer))
+  (self ndb-record-print-format-type))
 
 (cffi:defcfun ("_wrap_ndbrecattr_print_formatted" #.(swig-lispify "ndbrecattr_print_formatted" 'function)) :pointer
   (out :pointer)
