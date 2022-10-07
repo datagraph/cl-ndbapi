@@ -33,15 +33,15 @@
                      object)))
     (not (cffi:null-pointer-p pointer))))
 
-(defvar *ndb-initialized* nil)
-(unless *ndb-initialized*
+(defvar *ndb-init* nil)
+(unless *ndb-init*
   (let ((ndb-init (libndbapi::ndb-init)))
     (assert (libndbapi::initialized ndb-init)
             ()
             "ndb-init failed")
-    (setf *ndb-initialized* ndb-init)))
+    (setf *ndb-init* ndb-init)))
 
-(defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 "nl3:1186,nl3:1187"))
+(defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 *ndb-init* "nl3:1186,nl3:1187"))
 
 (assert (zerop (libndbapi::ndb-cluster-connection-connect/swig-0 *conn*
                                                                  4 ;; retries
@@ -187,5 +187,8 @@
 (setf *ndb* nil)
 (setf *conn* nil)
 
-#+(or) ;; ndb-end only at the very end when all objects are freed by GC
-(setf *ndb-initialized* nil)
+;; only call ndb-end at the very end when all objects are freed by GC
+;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
+;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
+;;   end-end call, that reduces ndb_init_called to 0, actually cleans up.
+(setf *ndb-init* nil)

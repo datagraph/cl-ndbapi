@@ -6,12 +6,12 @@
 
 (cl:defvar *ndbapi-verbose* cl:t)
 
-(cl:defun debug (object foreign-pointer is-null-pinter cl:&optional (verbose *ndbapi-verbose*))
+(cl:defun debug (object foreign-pointer is-null-pointer cl:&optional (verbose *ndbapi-verbose*))
   (cl:when verbose
     (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do free~;do NOT free~])"
                object
                foreign-pointer
-               is-null-pinter)
+               is-null-pointer)
     (cl:force-output cl:*trace-output*)))
 
 (cffi:define-foreign-type garbage-collected-type ()
@@ -147,7 +147,8 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (cffi:define-foreign-type ndb-init-type ()
   ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect)
    (lisp-class :allocation :class :reader lisp-class :initform 'ndb-init))
-  (:actual-type :int))
+  (:actual-type :int)
+  (:simple-parser ndb-init-type))
 
 (cl:defclass ndb-init ()
   ((initialized :reader initialized :initarg :initialized)))
@@ -171,7 +172,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
                  initialized))
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
-                                     (debug class exit-code initialized)
+                                     (debug class exit-code (cl:not initialized))
                                      (cl:when initialized
                                        (cl:when *ndbapi-verbose*
                                          (cl:format cl:*trace-output* "~&call NDB-END")

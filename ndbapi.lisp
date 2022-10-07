@@ -201,20 +201,20 @@
 (cffi:defcfun ("_wrap_delete_Ndb_cluster_connection_node_iter" #.(swig-lispify "delete_Ndb_cluster_connection_node_iter" 'function)) :void
   (self ndb-cluster-connection-node-iter-type))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_0" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-0" 'function)) (ndb-cluster-connection-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_0" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-0%" 'function)) (ndb-cluster-connection-type :garbage-collect t)
   (connectstring :string))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_1" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-1" 'function)) (ndb-cluster-connection-type :garbage-collect t))
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_1" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-1%" 'function)) (ndb-cluster-connection-type :garbage-collect t))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_2" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-2" 'function)) (ndb-cluster-connection-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_2" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-2%" 'function)) (ndb-cluster-connection-type :garbage-collect t)
   (connectstring :string)
   (force_api_nodeid :int))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_3" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-3" 'function)) (ndb-cluster-connection-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_3" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-3%" 'function)) (ndb-cluster-connection-type :garbage-collect t)
   (connectstring :string)
   (main_connection :pointer))
 
-(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_4" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-4" 'function)) (ndb-cluster-connection-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_Ndb_cluster_connection__SWIG_4" #.(swig-lispify "new_Ndb_cluster_connection/SWIG-4%" 'function)) (ndb-cluster-connection-type :garbage-collect t)
   (connectstring :string)
   (main_connection :pointer)
   (force_api_nodeid :int))
