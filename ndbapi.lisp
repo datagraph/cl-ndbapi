@@ -4239,10 +4239,10 @@
 (cffi:defcstruct #.(swig-lispify "IndexBound" 'classname)
 	(#.(swig-lispify "low_key" 'slotname) :string)
 	(#.(swig-lispify "low_key_count" 'slotname) :unsigned-int)
-	(#.(swig-lispify "low_inclusive" 'slotname) :pointer)
+	(#.(swig-lispify "low_inclusive" 'slotname) :boolean)
 	(#.(swig-lispify "high_key" 'slotname) :string)
 	(#.(swig-lispify "high_key_count" 'slotname) :unsigned-int)
-	(#.(swig-lispify "high_inclusive" 'slotname) :pointer)
+	(#.(swig-lispify "high_inclusive" 'slotname) :boolean)
 	(#.(swig-lispify "range_no" 'slotname) :unsigned-int))
 
 (cffi:defcstruct #.(swig-lispify "OldApiBoundInfo" 'classname)

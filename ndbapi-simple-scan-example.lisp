@@ -115,10 +115,28 @@
         "transaction-scan-index() failed: ~a"
         (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error))
 
-(assert (zerop (libndbapi::ndb-transaction-execute/swig-5 *transaction* :+NO-COMMIT+))
+(libndbapi::with-foreign-struct (low (list 'libndbapi::s 662743 'libndbapi::p 2000000) '(:struct libndbapi::tuple))
+  (libndbapi::with-foreign-struct (high (list 'libndbapi::s 662743 'libndbapi::p 2200000) '(:struct libndbapi::tuple))
+    (libndbapi::with-foreign-struct (bound (list 'libndbapi::low-key low
+                                                 'libndbapi::low-key-count libndbapi::+tuple-count+
+                                                 'libndbapi::low-inclusive t
+                                                 'libndbapi::high-key high
+                                                 'libndbapi::high-key-count libndbapi::+tuple-count+
+                                                 'libndbapi::high-inclusive t
+                                                 'libndbapi::range-no 0)
+                                           '(:struct libndbapi::index-bound))
+      ;;(cffi:foreign-slot-value bound '(:struct libndbapi::index-bound) 'libndbapi::low-inclusive)
+
+      (assert (zerop (libndbapi::ndb-index-scan-operation-set-bound/swig-6 *scan* *index-default-record* bound))
         ()
-        "transactino-execute() failed: ~a"
+        "set-bound() failed: ~a"
         (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error))
+
+      (assert (zerop (libndbapi::ndb-transaction-execute/swig-5 *transaction* :+NO-COMMIT+))
+              ()
+              "transactino-execute() failed: ~a"
+              (get-ndb-error *transaction* #'libndbapi::ndb-transaction-get-ndb-error)))))
+
 
 ;;   // Check rc anyway
 
