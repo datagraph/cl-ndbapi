@@ -6,7 +6,7 @@
 
 (cl:defun debug-free-thing (type instance)
   (cl:when *ndbapi-verbose*
-    (cl:format cl:*trace-output* "~&Freing ~a ~a: ~8,'0x"
+    (cl:format cl:*trace-output* "~&Remove reference to ~a: ~a (~8,'0x)"
                type
                instance
                (cl:cond

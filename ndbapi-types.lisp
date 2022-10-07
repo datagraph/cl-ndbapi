@@ -44,6 +44,22 @@
                (cl:class-name (cl:class-of foreign-type))))
   (foreign-pointer lisp-object))
 
+(cl:defun free-foreign-object% (class foreign-pointer)
+  (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
+    (debug class foreign-pointer is-null-pointer)
+    (cl:values (cl:unless is-null-pointer
+                 (delete-foreign-object class foreign-pointer))
+               is-null-pointer)))
+
+#+(cl:or) ;; THIS IS WRONG the finalizer has no access to the slot so it will free again!
+(cl:defun free-foreign-object (object)
+  (cl:multiple-value-bind (first-value is-null-pointer)
+      (free-foreign-object% (cl:class-name (cl:class-of object))
+                            (foreign-pointer object))
+    (cl:unless is-null-pointer
+      (cl:setf (cl:slot-value object 'foreign-pointer) (cffi:null-pointer)))
+    first-value))
+
 (cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
   (cl:let* ((class (lisp-class foreign-type))
             (lisp-object (cl:make-instance class :foreign-pointer foreign-pointer)))
@@ -52,11 +68,7 @@
                  (cl:class-name (cl:class-of foreign-type))
                  class))
     (cl:when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (cl:lambda ()
-                                     (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
-                                       (debug class foreign-pointer is-null-pointer)
-                                       (cl:unless is-null-pointer
-                                         (delete-foreign-object class foreign-pointer))))))
+      (sb-ext:finalize lisp-object (cl:lambda () (free-foreign-object% class foreign-pointer))))
     lisp-object))
 
 ;; macro
