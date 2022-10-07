@@ -56,9 +56,7 @@
                                      (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
                                        (debug class foreign-pointer is-null-pointer)
                                        (cl:unless is-null-pointer
-                                         (delete-foreign-object class foreign-pointer)
-                                         ;; to be extra careful:
-                                         (cl:setf foreign-pointer (cffi:null-pointer)))))))
+                                         (delete-foreign-object class foreign-pointer))))))
     lisp-object))
 
 ;; macro
