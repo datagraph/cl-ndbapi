@@ -171,11 +171,8 @@
 (loop for rc = (libndbapi::ndb-scan-operation-next-result/swig-3 *scan* *row-data* t nil)
       for j from 0
       while (zerop rc)
-      do (format t "~&row ~5d: " j)
-         (dotimes (i 4)
-           (format t "~12d" (cffi::mem-aref (cffi:mem-aref *row-data* :pointer) :uint32 i))
-           (when (< i 3)
-             (format t ", ")))
+      for row = (cffi:convert-from-foreign (cffi:mem-aref *row-data* :pointer) '(:struct libndbapi::quad))
+      do (format t "~&row ~5d: ~{~12d~^, ~}" j (libndbapi::quad-to-list row))
       finally (assert (= rc 1)
                       ()
                       "scan-operation-next-result() failed: ~a"
