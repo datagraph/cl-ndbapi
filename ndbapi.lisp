@@ -11,7 +11,7 @@
 (cl:in-package :libndbapi)
 
 ;; ndb_init is not really part of the other ndb_init methods but fits
-(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init/SWIG-0" 'function)) :int)
+(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init" 'function)) (ndb-init-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end" 'function)) :void
   (arg0 :int))
@@ -2675,14 +2675,14 @@
   (self ndb-type)
   (t_arg1 :pointer))
 
-(cffi:defcfun ("_wrap_Ndb_init__SWIG_0" #.(swig-lispify "Ndb_init/SWIG-2" 'function)) :int
+(cffi:defcfun ("_wrap_Ndb_init__SWIG_0" #.(swig-lispify "Ndb_init/SWIG-0" 'function)) :int
   (self ndb-type)
   (maxNoOfTransactions :int))
 
 (cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init/SWIG-1" 'function)) :int
   (self ndb-type))
 
-(overload-function #.(swig-lispify "Ndb_init" 'function))
+;;(overload-function #.(swig-lispify "Ndb_init" 'function))
 
 (cffi:defcfun ("_wrap_Ndb_set_eventbuf_max_alloc" #.(swig-lispify "Ndb_set_eventbuf_max_alloc" 'function)) :void
   (self ndb-type)

@@ -63,7 +63,7 @@
 
 ;; macro
 
-(cl:defmacro make-concrete-foreign-type* (type class delete-fn)
+(cl:defmacro make-concrete-foreign-type% (type class delete-fn)
   `(cl:progn
      (cffi:define-foreign-type ,type (garbage-collected-type)
        ((lisp-class :initform ',class :allocation :class))
@@ -75,13 +75,13 @@
      (cl:defmethod delete-foreign-object ((class (cl:eql ',class)) pointer)
        (,delete-fn pointer))))
 
-;; (make-concrete-foreign-type ndb-type ndb delete-ndb)
+;; (make-concrete-foreign-type% ndb-type ndb delete-ndb)
 
 (cl:defmacro make-concrete-foreign-type (name)
   (cl:let ((type (cl:intern (cl:concatenate 'cl:string  (cl:symbol-name name) "-" "TYPE")))
            (class name)
            (delete (cl:intern (cl:concatenate 'cl:string "DELETE" "-" (cl:symbol-name name)))))
-    `(make-concrete-foreign-type* ,type ,class ,delete)))
+    `(make-concrete-foreign-type% ,type ,class ,delete)))
 
 ;; (make-concrete-foreign-type ndb)
 ;; ndb
@@ -141,3 +141,40 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Table" 'class))
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Tablespace" 'class))
 (make-concrete-foreign-type #.(libndbapi::swig-lispify "Undofile" 'class))
+
+;; special translation for ndb-end
+
+(cffi:define-foreign-type ndb-init-type ()
+  ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect)
+   (lisp-class :allocation :class :reader lisp-class :initform 'ndb-init))
+  (:actual-type :int))
+
+(cl:defclass ndb-init ()
+  ((initialized :reader initialized :initarg :initialized)))
+
+(cl:defmethod cffi:translate-to-foreign ((lisp-object ndb-init)
+                                         (foreign-type ndb-init-type))
+  (cl:when *ndbapi-verbose*
+    (cl:format cl:*trace-output* "~&translate ~a to ~a"
+               (cl:class-name (cl:class-of lisp-object))
+               (cl:class-name (cl:class-of foreign-type))))
+  (initialized lisp-object))
+
+(cl:defmethod cffi:translate-from-foreign (exit-code (foreign-type ndb-init-type))
+  (cl:let* ((class (lisp-class foreign-type))
+            (initialized (cl:zerop exit-code))
+            (lisp-object (cl:make-instance class :initialized initialized)))
+    (cl:when *ndbapi-verbose*
+      (cl:format cl:*trace-output* "~&translate ~a to ~a: ~a"
+                 (cl:class-name (cl:class-of foreign-type))
+                 class
+                 initialized))
+    (cl:when (garbage-collect foreign-type)
+      (sb-ext:finalize lisp-object (cl:lambda ()
+                                     (debug class exit-code initialized)
+                                     (cl:when initialized
+                                       (cl:when *ndbapi-verbose*
+                                         (cl:format cl:*trace-output* "~&call NDB-END")
+                                         (cl:force-output cl:*trace-output*))
+                                       (ndb-end 0)))))
+    lisp-object))

@@ -28,17 +28,18 @@
   (error-string (%get-ndb-error object getter)))
 
 (defun valid-p (object)
-  (let ((pointer (if (typep  object 'libndbapi::garbage-collected-class)
+  (let ((pointer (if (typep object 'libndbapi::garbage-collected-class)
                      (libndbapi::foreign-pointer object)
                      object)))
     (not (cffi:null-pointer-p pointer))))
 
 (defvar *ndb-initialized* nil)
 (unless *ndb-initialized*
-  (assert (zerop (libndbapi::ndb-init/swig-0))
-          ()
-          "ndb-init failed")
-  (setf *ndb-initialized* t))
+  (let ((ndb-init (libndbapi::ndb-init)))
+    (assert (libndbapi::initialized ndb-init)
+            ()
+            "ndb-init failed")
+    (setf *ndb-initialized* ndb-init)))
 
 (defparameter *conn* (libndbapi::new-ndb-cluster-connection/swig-0 "nl3:1186,nl3:1187"))
 
@@ -187,4 +188,4 @@
 (setf *conn* nil)
 
 #+(or) ;; ndb-end only at the very end when all objects are freed by GC
-(setf *ndb-initialized* (libndbapi::ndb-end 0)) ;; no value
+(setf *ndb-initialized* nil)
