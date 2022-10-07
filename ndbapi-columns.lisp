@@ -5,22 +5,22 @@
 (cl:in-package :libndbapi)
 
 (cffi:defcstruct quad
-  (s :unsigned-int)
-  (p :unsigned-int)
-  (o :unsigned-int)
-  (g :unsigned-int))
+  (:s :unsigned-int)
+  (:p :unsigned-int)
+  (:o :unsigned-int)
+  (:g :unsigned-int))
 
 (cffi:defcstruct triple
-  (s :unsigned-int)
-  (p :unsigned-int)
-  (o :unsigned-int))
+  (:s :unsigned-int)
+  (:p :unsigned-int)
+  (:o :unsigned-int))
 
 (cffi:defcstruct tuple
-  (s :unsigned-int)
-  (p :unsigned-int))
+  (:s :unsigned-int)
+  (:p :unsigned-int))
 
 (cffi:defcstruct single
-  (s :unsigned-int))
+  (:s :unsigned-int))
 
 (cl:defconstant +quad-size+ (cffi:foreign-type-size '(:struct libndbapi::quad)))
 (cl:defconstant +triple-size+ (cffi:foreign-type-size '(:struct libndbapi::triple)))
@@ -59,3 +59,8 @@
   (cl:list
    (cffi::mem-aref low :uint32 0)
    (cffi::mem-aref low :uint32 1)))
+
+(cl:defun quad-to-list (quad)
+  "deconstruct quad and return as spog list"
+  (cl:destructuring-bind (cl:&key s p o g) quad
+    (cl:list s p o g)))
