@@ -184,6 +184,12 @@
 
 (libndbapi::ndb-scan-operation-close/swig-1 *scan* t) ;; no value
 
+;; explit freeing (in correct order!)
+(libndbapi::free-foreign-object *ndb*)
+(libndbapi::free-foreign-object *conn*)
+;; explicit free of *ndb-init* not implemented yet
+;; (and not that important as it does not bind any remote resources)
+
 (setf *ndb* nil)
 (setf *conn* nil)
 
