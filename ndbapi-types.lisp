@@ -6,12 +6,12 @@
 
 (cl:defvar *ndbapi-verbose* cl:t)
 
-(cl:defun debug (object foreign-pointer is-null-pointer cl:&optional (verbose *ndbapi-verbose*))
+(cl:defun debug (object foreign-pointer do-free cl:&optional (verbose *ndbapi-verbose*))
   (cl:when verbose
-    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do free~;do NOT free~])"
+    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do NOT free~;do free~])"
                object
                foreign-pointer
-               is-null-pointer)
+               do-free)
     (cl:force-output cl:*trace-output*)))
 
 (cffi:define-foreign-type garbage-collected-type ()
@@ -21,7 +21,8 @@
 
 
 (cl:defclass garbage-collected-class ()
-  ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)))
+  ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)
+   (valid-cons :reader valid-cons :initarg :valid-cons)))
 
 
 (cl:defgeneric delete-foreign-object (class pointer))
@@ -44,31 +45,36 @@
                (cl:class-name (cl:class-of foreign-type))))
   (foreign-pointer lisp-object))
 
-(cl:defun free-foreign-object% (class foreign-pointer)
-  (cl:let ((is-null-pointer (cffi:null-pointer-p foreign-pointer)))
-    (debug class foreign-pointer is-null-pointer)
-    (cl:values (cl:unless is-null-pointer
+(cl:defun free-foreign-object% (class foreign-pointer valid-cons)
+  (cl:let ((do-free (cl:and (cl:not (cffi:null-pointer-p foreign-pointer))
+                             (cl:car valid-cons))))
+    (debug class foreign-pointer do-free)
+    (cl:values (cl:when do-free
+                 (cl:setf (cl:car valid-cons) cl:nil) ;; prevent double-free
                  (delete-foreign-object class foreign-pointer))
-               is-null-pointer)))
+               do-free)))
 
-#+(cl:or) ;; THIS IS WRONG the finalizer has no access to the slot so it will free again!
 (cl:defun free-foreign-object (object)
-  (cl:multiple-value-bind (first-value is-null-pointer)
+  (cl:multiple-value-bind (first-value do-free)
       (free-foreign-object% (cl:class-name (cl:class-of object))
-                            (foreign-pointer object))
-    (cl:unless is-null-pointer
+                            (foreign-pointer object)
+                            (valid-cons object))
+    (cl:when do-free
       (cl:setf (cl:slot-value object 'foreign-pointer) (cffi:null-pointer)))
     first-value))
 
 (cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
   (cl:let* ((class (lisp-class foreign-type))
-            (lisp-object (cl:make-instance class :foreign-pointer foreign-pointer)))
+            (valid-cons (cl:list cl:t)) ;; hack: store validity of pointer in a cons cell
+                                        ;; that can be accessed from the finalizer
+            (lisp-object (cl:make-instance class :foreign-pointer foreign-pointer
+                                                 :valid-cons valid-cons)))
     (cl:when *ndbapi-verbose*
       (cl:format cl:*trace-output* "~&translate ~a to ~a"
                  (cl:class-name (cl:class-of foreign-type))
                  class))
     (cl:when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (cl:lambda () (free-foreign-object% class foreign-pointer))))
+      (sb-ext:finalize lisp-object (cl:lambda () (free-foreign-object% class foreign-pointer valid-cons))))
     lisp-object))
 
 ;; macro
@@ -182,7 +188,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
                  initialized))
     (cl:when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (cl:lambda ()
-                                     (debug class exit-code (cl:not initialized))
+                                     (debug class exit-code initialized)
                                      (cl:when initialized
                                        (cl:when *ndbapi-verbose*
                                          (cl:format cl:*trace-output* "~&call NDB-END")
