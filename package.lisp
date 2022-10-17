@@ -13,8 +13,17 @@
   (:export :ndb-end)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
+(defpackage :ndbapi.implementation
+  (:use :cl)
+  (:documentation "A higher level NDB API interface (for RonDB)."))
+
 (defpackage :ndbapi
   (:use :cl)
+  (:import-from :ndbapi.implementation
+                :get-ndb-error
+                :valid-object-p)
+  (:export :get-ndb-error
+           :valid-object-p)
   (:documentation "A higher level NDB API interface (for RonDB)."))
 
 (defpackage :ndb.quads

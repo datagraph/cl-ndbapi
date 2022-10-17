@@ -12,27 +12,6 @@
 
 (defvar *ndb*)
 
-(defun %get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
-  (let ((pointer (if (typep  object 'ndbapi.types::garbage-collected-class)
-                     (ndbapi.types::foreign-pointer object)
-                     object)))
-    (cffi:mem-aref (funcall getter pointer)
-                   '(:struct ndbapi.ffi::ndberror-struct))))
-
-(defun error-string (error-plist)
-  (format nil "Error with code ~a: ~a"
-          (getf error-plist 'ndbapi.ffi::code)
-          (getf error-plist 'ndbapi.ffi::message)))
-
-(defun get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
-  (error-string (%get-ndb-error object getter)))
-
-(defun valid-p (object)
-  (let ((pointer (if (typep object 'ndbapi.types::garbage-collected-class)
-                     (ndbapi.types::foreign-pointer object)
-                     object)))
-    (not (cffi:null-pointer-p pointer))))
-
 #|
  create table as:
    create table test
@@ -71,51 +50,51 @@
 (defparameter *table-name* "test")
 
 (defparameter *ndb* (ndbapi.ffi::new-ndb/swig-1 *conn* *database-name*))
-(assert (valid-p *ndb*)
+(assert (ndbapi:valid-object-p *ndb*)
         ()
         "Create new NDB object failed")
 
 (assert (zerop (ndbapi.ffi::ndb-init/swig-1 *ndb*))
         ()
         "Ndb.init() failed: ~a"
-        (get-ndb-error *ndb* #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
+        (ndbapi:get-ndb-error *ndb* #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
 
 (defparameter *transaction* (ndbapi.ffi::ndb-start-transaction/swig-3 *ndb*))
-(assert (valid-p *transaction*)
+(assert (ndbapi:valid-object-p *transaction*)
         ()
         "start-transaction() failed: ~a"
-        (get-ndb-error *ndb*))
+        (ndbapi:get-ndb-error *ndb*))
 
 (defparameter *dict* (ndbapi.ffi::ndb-get-dictionary *ndb*))
-(assert (valid-p *dict*)
+(assert (ndbapi:valid-object-p *dict*)
         ()
         "get-dictionary() failed: ~a"
-        (get-ndb-error *ndb*))
+        (ndbapi:get-ndb-error *ndb*))
 
 (defparameter *test-table* (ndbapi.ffi::dictionary-get-table/swig-0 *dict* *table-name*))
-(assert (valid-p *test-table*)
+(assert (ndbapi:valid-object-p *test-table*)
         ()
         "get-table() failed: ~a"
-        (get-ndb-error *dict* #'ndbapi.ffi::dictionary-get-ndb-error))
+        (ndbapi:get-ndb-error *dict* #'ndbapi.ffi::dictionary-get-ndb-error))
 
 (defparameter *index-name* "gspo")
 
 (defparameter *index* (ndbapi.ffi::dictionary-get-index/swig-0 *dict*
                                                               *index-name*
                                                               (ndbapi.ffi::table-get-name *test-table*)))
-(assert (valid-p *index*)
+(assert (ndbapi:valid-object-p *index*)
         ()
         "get-index() failed: ~a"
-        (get-ndb-error *dict* #'ndbapi.ffi::dictionary-get-ndb-error))
+        (ndbapi:get-ndb-error *dict* #'ndbapi.ffi::dictionary-get-ndb-error))
 
 (defparameter *index-default-record* (ndbapi.ffi::index-get-default-record *index*))
-(assert (valid-p *index-default-record*)
+(assert (ndbapi:valid-object-p *index-default-record*)
         ()
         "get-default-record() of index ~a failed"
         *index-name*)
 
 (defparameter *test-table-default-record* (ndbapi.ffi::table-get-default-record *test-table*))
-(assert (valid-p *test-table-default-record*)
+(assert (ndbapi:valid-object-p *test-table-default-record*)
         ()
         "get-default-record() of table ~a failed"
         *table-name*)
@@ -123,10 +102,10 @@
 (defparameter *scan* (ndbapi.ffi::ndb-transaction-scan-index/swig-5 *transaction*
                                                                    *INDEX-DEFAULT-RECORD*
                                                                    *test-table-default-record*))
-(assert (valid-p *scan*)
+(assert (ndbapi:valid-object-p *scan*)
         ()
         "transaction-scan-index() failed: ~a"
-        (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
+        (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
 
 #+nil
 (ndbapi.types::with-foreign-struct (low (list :s 662743 :p 2000000) '(:struct ndb.quads::tuple))
@@ -144,12 +123,12 @@
       (assert (zerop (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-6 *scan* *index-default-record* bound))
         ()
         "set-bound() failed: ~a"
-        (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
+        (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
 
       (assert (zerop (ndbapi.ffi::ndb-transaction-execute/swig-5 *transaction* :+NO-COMMIT+))
               ()
               "transactino-execute() failed: ~a"
-              (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))))
+              (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))))
 
 (ndbapi.types::with-foreign-struct (low (list :s 1106 :p 1105 :o 1105 :g 638)
                                      '(:struct ndb.quads::quad))
@@ -168,12 +147,12 @@
       (assert (zerop (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-6 *scan* *index-default-record* bound))
         ()
         "set-bound() failed: ~a"
-        (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
+        (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error))
 
       (assert (zerop (ndbapi.ffi::ndb-transaction-execute/swig-5 *transaction* :+NO-COMMIT+))
               ()
               "transactino-execute() failed: ~a"
-              (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))))
+              (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))))
 
 
 
@@ -189,7 +168,7 @@
       finally (assert (= rc 1)
                       ()
                       "scan-operation-next-result() failed: ~a"
-                      (get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))
+                      (ndbapi:get-ndb-error *transaction* #'ndbapi.ffi::ndb-transaction-get-ndb-error)))
 
 (cffi:foreign-free *row-data*)
 (setf *row-data* nil)
