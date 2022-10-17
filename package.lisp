@@ -15,19 +15,20 @@
 
 (defpackage :ndbapi.implementation
   (:use :cl)
+  (:nicknames :ndbapi.i)
   (:documentation "A higher level NDB API interface (for RonDB)."))
 
-(defpackage :ndbapi
-  (:use :cl)
-  (:import-from :ndbapi.implementation
-                :get-ndb-error
-                :valid-object-p)
-  (:export :get-ndb-error
-           :valid-object-p)
-  (:documentation "A higher level NDB API interface (for RonDB)."))
+;; defpackage :ndbapi in file ndbapi-interface.lisp
+;; as it needs the implementation files to be loaded
+;; while those files need the other package definitions already...
 
 (defpackage :ndb.quads
   (:use :cl)
+  (:export :quad :triple :tuple :single
+           :+quad-size+ :+tuple-size+ :+tuple-size+ :+single-size+
+           :+quad-count+ :+triple-count+ :+tuple-count+ :+single-count+
+           :quad-to-list ;; better simplify with more direct interface
+           )
   (:documentation "Definitions to access quads in tables"))
 
 (defpackage :ndb.simple-scan

@@ -13,8 +13,9 @@
                #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
                (:file "ndbapi-constructors" :depends-on ("ndbapi"))
                (:file "ndbapi-implementation" :depends-on ("ndbapi-constructors"))
+               (:file "ndbapi-interface" :depends-on ("ndbapi-implementation"))
                (:file "ndbapi-load-library" :depends-on ("package"))
                ;; examples
                (:file "ndb-quads" :depends-on ("package"))
                #+(or)
-               (:file "ndbapi-simple-scan-example" :depends-on ("ndb-quads" "ndbapi-implementation"))))
+               (:file "ndbapi-simple-scan-example" :depends-on ("ndb-quads" "ndbapi-interface"))))
