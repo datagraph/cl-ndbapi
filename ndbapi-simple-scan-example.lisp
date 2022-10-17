@@ -108,8 +108,8 @@
         (ndbapi:get-ndb-error *transaction* #'ndbapi:ndb-transaction-get-ndb-error))
 
 #+nil
-(ndbapi:with-foreign-struct (low (list :s 662743 :p 2000000) '(:struct ndb.quads:tuple))
-  (ndbapi:with-foreign-struct (high (list :s 662743 :p 2200000) '(:struct ndb.quads:tuple))
+(ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))
+  (ndb.quads:with-foreign-quad (high (list :s 662743 :p 2200000))
     (ndbapi:with-foreign-struct (bound (list :low-key low
                                                  :low-key-count ndb.quads:+tuple-count+
                                                  :low-inclusive t
@@ -130,18 +130,16 @@
               "transactino-execute() failed: ~a"
               (ndbapi:get-ndb-error *transaction* #'ndbapi:ndb-transaction-get-ndb-error)))))
 
-(ndbapi:with-foreign-struct (low (list :s 1106 :p 1105 :o 1105 :g 638)
-                                     '(:struct ndb.quads:quad))
-  (ndbapi:with-foreign-struct (high (list :s 1109 :p 1105 :o 1106 :g 1108)
-                                     '(:struct ndb.quads:quad))
+(ndb.quads:with-foreign-quad (low (ndb.quads:list-to-quad* 1106 1105 1105 638))
+  (ndb.quads:with-foreign-quad (high (ndb.quads:list-to-quad* 1109 1105 1106 1108))
     (ndbapi:with-foreign-struct (bound (list :low-key low
-                                                 :low-key-count ndb.quads:+quad-count+
-                                                 :low-inclusive t
-                                                 :high-key high
-                                                 :high-key-count ndb.quads:+quad-count+
-                                                 :high-inclusive t
-                                                 :range-no 0)
-                                           '(:struct ndbapi:index-bound))
+                                             :low-key-count ndb.quads:+quad-count+
+                                             :low-inclusive t
+                                             :high-key high
+                                             :high-key-count ndb.quads:+quad-count+
+                                             :high-inclusive t
+                                             :range-no 0)
+                                       '(:struct ndbapi:index-bound))
       ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
       (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound *scan* *index-default-record* bound))
@@ -154,15 +152,13 @@
               "transactino-execute() failed: ~a"
               (ndbapi:get-ndb-error *transaction* #'ndbapi:ndb-transaction-get-ndb-error)))))
 
-
-
 ;;   // Check rc anyway
 
 (cffi:with-foreign-pointer (row-data 1)
   (loop for rc = (ndbapi:ndb-scan-operation-next-result *scan* row-data t nil)
         for j from 0
         while (zerop rc)
-        for row = (cffi:convert-from-foreign (cffi:mem-aref row-data :pointer) '(:struct ndb.quads:quad))
+        for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
         do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
         finally (assert (= rc 1)
                         ()

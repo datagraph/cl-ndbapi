@@ -67,7 +67,28 @@
 (:G 1108 :O 1106 :P 1105 :S 1109)
 |#
 
+(defmacro with-foreign-quad ((var initform &optional alloc-params) &body body)
+  `(ndbapi:with-foreign-struct (,var
+                                ,initform
+                                '(:struct ndb.quads:quad)
+                                ,alloc-params)
+    ,@body))
+
+(defun list-to-quad (list)
+  "take spog list and return as quad (given as property list)"
+  (destructuring-bind (s p o g) list
+    (list :s s :p p :o o :g g)))
+
+(defun list-to-quad* (&rest list)
+  (list-to-quad list))
+
 (defun quad-to-list (quad)
-  "deconstruct quad and return as spog list"
+  "deconstruct quad (given as property list) and return as spog list"
   (destructuring-bind (&key s p o g) quad
     (list s p o g)))
+
+(defun quad-to-list* (&rest quad)
+  (quad-to-list quad))
+
+(defun convert-foreign-quad (sap)
+  (cffi:convert-from-foreign sap '(:struct ndb.quads:quad)))
