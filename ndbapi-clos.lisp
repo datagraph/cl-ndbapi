@@ -2,7 +2,7 @@
 ;;; Distributed under the terms of the GNU General Public License, Version 2.0,
 ;;; see file LICENSE in the top level directory of this repository.
 
-(cl:in-package :libndbapi)
+(cl:in-package :ndbapi.ffi)
 
 (cl:defclass #.(swig-lispify "ndb-cluster-connection-node-iter" 'classname)()
   ((ff-pointer :reader ff-pointer)))

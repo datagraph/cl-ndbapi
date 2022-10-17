@@ -8,7 +8,7 @@
 ;;; Do not make changes to this file unless you know what you are doing--modify
 ;;; the SWIG interface file instead.
 
-(cl:in-package :libndbapi)
+(cl:in-package :ndbapi.ffi)
 
 ;; ndb_init is not really part of the other ndb_init methods but fits
 (cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init" 'function)) (ndb-init-type :garbage-collect t))

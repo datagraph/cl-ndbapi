@@ -2,101 +2,101 @@
 ;;; Distributed under the terms of the GNU General Public License, Version 2.0,
 ;;; see file LICENSE in the top level directory of this repository.
 
-(cl:in-package :libndbapi)
+(in-package :ndbapi.types)
 
-(cl:defvar *ndbapi-verbose* cl:t)
+(defvar *ndbapi-verbose* t)
 
-(cl:defun debug (object foreign-pointer do-free cl:&optional (verbose *ndbapi-verbose*))
-  (cl:when verbose
-    (cl:format cl:*trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do NOT free~;do free~])"
+(defun debug-print (object foreign-pointer do-free &optional (verbose *ndbapi-verbose*))
+  (when verbose
+    (format *trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do NOT free~;do free~])"
                object
                foreign-pointer
                do-free)
-    (cl:force-output cl:*trace-output*)))
+    (force-output *trace-output*)))
 
 (cffi:define-foreign-type garbage-collected-type ()
-  ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect)
+  ((garbage-collect :reader garbage-collect :initform nil :initarg :garbage-collect)
    (lisp-class :allocation :class :reader lisp-class))
   (:actual-type :pointer))
 
 
-(cl:defclass garbage-collected-class ()
+(defclass garbage-collected-class ()
   ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)
    (valid-cons :reader valid-cons :initarg :valid-cons)))
 
 
-(cl:defgeneric delete-foreign-object (class pointer))
+(defgeneric delete-foreign-object (class pointer))
 
-(cl:defmethod delete-foreign-object (class pointer)
-  (cl:error "Do not how to delete ~a object on pointer: ~8,'0x" class pointer))
+(defmethod delete-foreign-object (class pointer)
+  (error "Do not how to delete ~a object on pointer: ~8,'0x" class pointer))
 
-(cl:defmethod delete-foreign-object :before (class pointer)
-  (cl:when *ndbapi-verbose*
-    (cl:format cl:*trace-output* "~&calling DELETE for ~a object on pointer: ~8,'0x"
+(defmethod delete-foreign-object :before (class pointer)
+  (when *ndbapi-verbose*
+    (format *trace-output* "~&calling DELETE for ~a object on pointer: ~8,'0x"
                class
                pointer)
-    (cl:force-output cl:*trace-output*)))
+    (force-output *trace-output*)))
 
-(cl:defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
+(defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
                                          (foreign-type garbage-collected-type))
-  (cl:when *ndbapi-verbose*
-    (cl:format cl:*trace-output* "~&translate ~a to ~a"
-               (cl:class-name (cl:class-of lisp-object))
-               (cl:class-name (cl:class-of foreign-type))))
+  (when *ndbapi-verbose*
+    (format *trace-output* "~&translate ~a to ~a"
+               (class-name (class-of lisp-object))
+               (class-name (class-of foreign-type))))
   (foreign-pointer lisp-object))
 
-(cl:defun free-foreign-object% (class foreign-pointer valid-cons)
-  (cl:let ((do-free (cl:and (cl:not (cffi:null-pointer-p foreign-pointer))
-                             (cl:car valid-cons))))
-    (debug class foreign-pointer do-free)
-    (cl:values (cl:when do-free
-                 (cl:setf (cl:car valid-cons) cl:nil) ;; prevent double-free
+(defun free-foreign-object% (class foreign-pointer valid-cons)
+  (let ((do-free (and (not (cffi:null-pointer-p foreign-pointer))
+                             (car valid-cons))))
+    (debug-print class foreign-pointer do-free)
+    (values (when do-free
+                 (setf (car valid-cons) nil) ;; prevent double-free
                  (delete-foreign-object class foreign-pointer))
                do-free)))
 
-(cl:defun free-foreign-object (object)
-  (cl:multiple-value-bind (first-value do-free)
-      (free-foreign-object% (cl:class-name (cl:class-of object))
+(defun free-foreign-object (object)
+  (multiple-value-bind (first-value do-free)
+      (free-foreign-object% (class-name (class-of object))
                             (foreign-pointer object)
                             (valid-cons object))
-    (cl:when do-free
-      (cl:setf (cl:slot-value object 'foreign-pointer) (cffi:null-pointer)))
+    (when do-free
+      (setf (slot-value object 'foreign-pointer) (cffi:null-pointer)))
     first-value))
 
-(cl:defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
-  (cl:let* ((class (lisp-class foreign-type))
-            (valid-cons (cl:list cl:t)) ;; hack: store validity of pointer in a cons cell
+(defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
+  (let* ((class (lisp-class foreign-type))
+            (valid-cons (list t)) ;; hack: store validity of pointer in a cons cell
                                         ;; that can be accessed from the finalizer
-            (lisp-object (cl:make-instance class :foreign-pointer foreign-pointer
+            (lisp-object (make-instance class :foreign-pointer foreign-pointer
                                                  :valid-cons valid-cons)))
-    (cl:when *ndbapi-verbose*
-      (cl:format cl:*trace-output* "~&translate ~a to ~a"
-                 (cl:class-name (cl:class-of foreign-type))
+    (when *ndbapi-verbose*
+      (format *trace-output* "~&translate ~a to ~a"
+                 (class-name (class-of foreign-type))
                  class))
-    (cl:when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (cl:lambda () (free-foreign-object% class foreign-pointer valid-cons))))
+    (when (garbage-collect foreign-type)
+      (sb-ext:finalize lisp-object (lambda () (free-foreign-object% class foreign-pointer valid-cons))))
     lisp-object))
 
 ;; macro
 
-(cl:defmacro make-concrete-foreign-type% (type class delete-fn)
-  `(cl:progn
+(defmacro make-concrete-foreign-type% (type class delete-fn)
+  `(progn
      (cffi:define-foreign-type ,type (garbage-collected-type)
        ((lisp-class :initform ',class :allocation :class))
        (:simple-parser ,type))
 
-     (cl:defclass ,class (garbage-collected-class)
+     (defclass ,class (garbage-collected-class)
        ())
 
-     (cl:defmethod delete-foreign-object ((class (cl:eql ',class)) pointer)
+     (defmethod delete-foreign-object ((class (eql ',class)) pointer)
        (,delete-fn pointer))))
 
 ;; (make-concrete-foreign-type% ndb-type ndb delete-ndb)
 
-(cl:defmacro make-concrete-foreign-type (name)
-  (cl:let ((type (cl:intern (cl:concatenate 'cl:string  (cl:symbol-name name) "-" "TYPE")))
-           (class name)
-           (delete (cl:intern (cl:concatenate 'cl:string "DELETE" "-" (cl:symbol-name name)))))
+(defmacro make-concrete-foreign-type (name)
+  (let ((type (intern (concatenate 'string  (symbol-name name) "-" "TYPE") :ndbapi.ffi))
+        (class name)
+        (delete (intern (concatenate 'string "DELETE" "-" (symbol-name name)) :ndbapi.ffi)))
     `(make-concrete-foreign-type% ,type ,class ,delete)))
 
 ;; (make-concrete-foreign-type ndb)
@@ -107,24 +107,24 @@
   ((lisp-class :initform 'ndb :allocation :class))
   (:simple-parser ndb-type))
 
-(cl:defclass ndb (garbage-collected-class)
+(defclass ndb (garbage-collected-class)
   ())
 
-(cl:defmethod delete-foreign-object ((class (cl:eql 'ndb)) pointer)
+(defmethod delete-foreign-object ((class (eql 'ndb)) pointer)
   (delete-ndb pointer))
 |#
 
 ;; example
 
 #|
-(libndbapi::new-ndb/swig-1 *conn* *database-name*)
+(ndbapi.ffi::new-ndb/swig-1 *conn* *database-name*)
 translate NDB-TYPE to NDB
-#<LIBNDBAPI::NDB {1006CE1393}>
+#<NDBAPI.FFI::NDB {1006CE1393}>
 
-(libndbapi::foreign-pointer *)
+(ndbapi.ffi::foreign-pointer *)
 #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 
-(cffi:convert-to-foreign ** 'libndbapi::NDB-TYPE)
+(cffi:convert-to-foreign ** 'ndbapi.ffi::NDB-TYPE)
 translate NDB to NDB-TYPE
 #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 
@@ -134,64 +134,78 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 
 ;; grep new_ ndbapi.lisp |awk '{print $4}'|sed 's/\/.*//g'|sed 's/"new_//g'| sed 's/"//g' |sed 's/_/-/g' | sort|uniq
 
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Column" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Datafile" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Event" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "ForeignKey" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "HashMap" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Index" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "LogfileGroup" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb_cluster_connection" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Ndb_cluster_connection_node_iter" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbDataPrintFormat" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbDictionary" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbIndexStat" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbInterpretedCode" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbReceiver" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbRecordPrintFormat" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "NdbScanFilter" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "ObjectId" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "OptimizeIndexHandle" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "OptimizeTableHandle" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Table" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Tablespace" 'class))
-(make-concrete-foreign-type #.(libndbapi::swig-lispify "Undofile" 'class))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Column" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Datafile" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Event" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "ForeignKey" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "HashMap" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Index" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "LogfileGroup" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Ndb" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Ndb_cluster_connection" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Ndb_cluster_connection_node_iter" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbDataPrintFormat" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbDictionary" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbIndexStat" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbInterpretedCode" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbReceiver" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbRecordPrintFormat" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "NdbScanFilter" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "ObjectId" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "OptimizeIndexHandle" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "OptimizeTableHandle" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Table" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Tablespace" 'class :ndbapi.ffi))
+(make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Undofile" 'class :ndbapi.ffi))
 
 ;; special translation for ndb-end
 
-(cffi:define-foreign-type ndb-init-type ()
-  ((garbage-collect :reader garbage-collect :initform cl:nil :initarg :garbage-collect)
-   (lisp-class :allocation :class :reader lisp-class :initform 'ndb-init))
+(cffi:define-foreign-type ndbapi.ffi::ndb-init-type ()
+  ((garbage-collect :reader garbage-collect :initform nil :initarg :garbage-collect)
+   (lisp-class :allocation :class :reader lisp-class :initform 'ndbapi.ffi::ndb-init))
   (:actual-type :int)
-  (:simple-parser ndb-init-type))
+  (:simple-parser ndbapi.ffi::ndb-init-type))
 
-(cl:defclass ndb-init ()
+(defclass ndbapi.ffi::ndb-init ()
   ((initialized :reader initialized :initarg :initialized)))
 
-(cl:defmethod cffi:translate-to-foreign ((lisp-object ndb-init)
-                                         (foreign-type ndb-init-type))
-  (cl:when *ndbapi-verbose*
-    (cl:format cl:*trace-output* "~&translate ~a to ~a"
-               (cl:class-name (cl:class-of lisp-object))
-               (cl:class-name (cl:class-of foreign-type))))
+(defmethod cffi:translate-to-foreign ((lisp-object ndbapi.ffi::ndb-init)
+                                      (foreign-type ndbapi.ffi::ndb-init-type))
+  (when *ndbapi-verbose*
+    (format *trace-output* "~&translate ~a to ~a"
+               (class-name (class-of lisp-object))
+               (class-name (class-of foreign-type))))
   (initialized lisp-object))
 
-(cl:defmethod cffi:translate-from-foreign (exit-code (foreign-type ndb-init-type))
-  (cl:let* ((class (lisp-class foreign-type))
-            (initialized (cl:zerop exit-code))
-            (lisp-object (cl:make-instance class :initialized initialized)))
-    (cl:when *ndbapi-verbose*
-      (cl:format cl:*trace-output* "~&translate ~a to ~a: ~a"
-                 (cl:class-name (cl:class-of foreign-type))
+(defmethod cffi:translate-from-foreign (exit-code (foreign-type ndbapi.ffi::ndb-init-type))
+  (let* ((class (lisp-class foreign-type))
+         (initialized (zerop exit-code))
+         (lisp-object (make-instance class :initialized initialized)))
+    (when *ndbapi-verbose*
+      (format *trace-output* "~&translate ~a to ~a: ~a"
+                 (class-name (class-of foreign-type))
                  class
                  initialized))
-    (cl:when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (cl:lambda ()
-                                     (debug class exit-code initialized)
-                                     (cl:when initialized
-                                       (cl:when *ndbapi-verbose*
-                                         (cl:format cl:*trace-output* "~&call NDB-END")
-                                         (cl:force-output cl:*trace-output*))
-                                       (ndb-end 0)))))
+    (when (garbage-collect foreign-type)
+      (sb-ext:finalize lisp-object (lambda ()
+                                     (debug-print class exit-code initialized)
+                                     (when initialized
+                                       (when *ndbapi-verbose*
+                                         (format *trace-output* "~&call NDB-END")
+                                         (force-output *trace-output*))
+                                       (ndbapi.ffi:ndb-end 0)))))
     lisp-object))
+
+;; foreign structs
+
+(defmacro with-foreign-struct ((var initform type &optional alloc-params) &body body)
+  `(let ((,var (cffi:convert-to-foreign ,initform ,type)))
+     (unwind-protect
+          (progn ,@body)
+       (cffi:free-converted-object ,var ,type ,alloc-params))))
+
+#+(or)
+(ndbapi.types::with-foreign-struct (low (list :s 32 :p 42) '(:struct ndb.quads::tuple))
+  (list
+   (cffi::mem-aref low :uint32 0)
+   (cffi::mem-aref low :uint32 1)))

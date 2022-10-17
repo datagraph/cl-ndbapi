@@ -2,8 +2,8 @@
 ;;; Distributed under the terms of the GNU General Public License, Version 2.0,
 ;;; see file LICENSE in the top level directory of this repository.
 
-(asdf:defsystem :libndbapi
-  :description "The low-level C++ NDB API interface (for RonDB)."
+(asdf:defsystem :ndbapi
+  :description "A high level and a low-level C++ NDB API interface (for RonDB)."
   :author "Max-Gerd Retzlaff <mgr@matroid.org>"
   :depends-on (:cffi :trivial-features)
   :components ((:file "package")
@@ -11,6 +11,9 @@
                (:file "ndbapi-types" :depends-on ("lispify"))
                (:file "ndbapi" :depends-on ("ndbapi-types"))
                #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
-               (:file "ndbapi-wrappers" :depends-on ("ndbapi"))
-               (:file "ndbapi-columns" :depends-on ("ndbapi-wrappers"))
-               (:file "ndbapi-load" :depends-on ("package"))))
+               (:file "ndbapi-constructors" :depends-on ("ndbapi"))
+               (:file "ndbapi-load-library" :depends-on ("package"))
+               ;; examples
+               (:file "ndb-quads" :depends-on ("ndbapi-constructors"))
+               #+(or)
+               (:file "ndbapi-simple-scan-example" :depends-on ("ndb-quads"))))

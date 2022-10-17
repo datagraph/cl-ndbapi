@@ -9,7 +9,7 @@
 ;;; Do not make changes to this file unless you know what you are doing--modify
 ;;; the SWIG interface file instead.
 
-(cl:in-package :libndbapi)
+(cl:in-package :ndbapi.ffi)
 
 ;;; SWIG wrapper code starts here
 
@@ -85,5 +85,5 @@
   `(cl:defun ,name (cl:&rest args)
      (cl:apply (cl:symbol-function
                 (cl:find-symbol (cl:format cl:nil "~a-~a" ',name (cl:length args))
-                                :libndbapi))
+                                :ndbapi.ffi))
                args)))
