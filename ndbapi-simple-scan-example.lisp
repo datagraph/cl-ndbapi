@@ -158,20 +158,16 @@
 
 ;;   // Check rc anyway
 
-(defparameter *row-data* (cffi:foreign-alloc :pointer)) ;; better use: cffi:with-foreign-pointer
-
-(loop for rc = (ndbapi:ndb-scan-operation-next-result *scan* *row-data* t nil)
-      for j from 0
-      while (zerop rc)
-      for row = (cffi:convert-from-foreign (cffi:mem-aref *row-data* :pointer) '(:struct ndb.quads:quad))
-      do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
-      finally (assert (= rc 1)
-                      ()
-                      "scan-operation-next-result() failed: ~a"
-                      (ndbapi:get-ndb-error *transaction* #'ndbapi:ndb-transaction-get-ndb-error)))
-
-(cffi:foreign-free *row-data*)
-(setf *row-data* nil)
+(cffi:with-foreign-pointer (row-data 1)
+  (loop for rc = (ndbapi:ndb-scan-operation-next-result *scan* row-data t nil)
+        for j from 0
+        while (zerop rc)
+        for row = (cffi:convert-from-foreign (cffi:mem-aref row-data :pointer) '(:struct ndb.quads:quad))
+        do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
+        finally (assert (= rc 1)
+                        ()
+                        "scan-operation-next-result() failed: ~a"
+                        (ndbapi:get-ndb-error *transaction* #'ndbapi:ndb-transaction-get-ndb-error))))
 
 (ndbapi:ndb-scan-operation-close *scan* t) ;; no value
 
