@@ -6,7 +6,7 @@
   :description "Examples for NDB API interface (for RonDB)."
   :author "Max-Gerd Retzlaff <mgr@matroid.org>"
   :depends-on (:cffi :ndbapi)
-  :components ((:module :examples
+  :components ((:module "examples"
                 :components ((:file "package")
                              (:file "ndb-quads" :depends-on ("package"))
                              (:file "ndbapi-simple-scan" :depends-on ("ndb-quads"))))))

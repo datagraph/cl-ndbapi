@@ -6,12 +6,13 @@
   :description "A high level and a low-level C++ NDB API interface (for RonDB)."
   :author "Max-Gerd Retzlaff <mgr@matroid.org>"
   :depends-on (:cffi)
-  :components ((:file "package")
-               (:file "lispify" :depends-on ("package"))
-               (:file "ndbapi-types" :depends-on ("lispify"))
-               (:file "ndbapi" :depends-on ("ndbapi-types"))
-               #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
-               (:file "ndbapi-constructors" :depends-on ("ndbapi"))
-               (:file "ndbapi-implementation" :depends-on ("ndbapi-constructors"))
-               (:file "ndbapi-interface" :depends-on ("ndbapi-implementation"))
-               (:file "ndbapi-load-library" :depends-on ("package"))))
+  :components ((:module "src"
+                :components ((:file "package")
+                             (:file "lispify" :depends-on ("package"))
+                             (:file "types" :depends-on ("lispify"))
+                             (:file "ndbapi" :depends-on ("types"))
+                             #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
+                             (:file "constructors" :depends-on ("ndbapi"))
+                             (:file "implementation" :depends-on ("constructors"))
+                             (:file "interface" :depends-on ("implementation"))
+                             (:file "load-library" :depends-on ("package"))))))
