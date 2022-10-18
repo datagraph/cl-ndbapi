@@ -33,6 +33,7 @@
                 :ndb-transaction-get-ndb-error
                 :index-bound)
   (:import-from :ndbapi.types
+                :*ndbapi-verbose*
                 :initialized
                 :with-foreign-struct
                 :free-foreign-object)
@@ -63,6 +64,7 @@
            :ndb-transaction-get-ndb-error
            :index-bound
            ;; from :ndbapi.types
+           :*ndbapi-verbose*
            :initialized
            :with-foreign-struct
            :free-foreign-object)
