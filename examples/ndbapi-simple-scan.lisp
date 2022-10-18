@@ -33,159 +33,161 @@
         index-default-record
         table-default-record
         scan)
+    (unwind-protect
+         (progn
+           (setf ndb-init (ndbapi:ndb-init))
+           (assert (ndbapi:initialized ndb-init)
+                   ()
+                   "ndb-init failed")
 
-    (setf ndb-init (ndbapi:ndb-init))
-    (assert (ndbapi:initialized ndb-init)
-            ()
-            "ndb-init failed")
+           (setf cluster-connection (ndbapi:new-ndb-cluster-connection ndb-init connection-string))
 
-    (setf cluster-connection (ndbapi:new-ndb-cluster-connection ndb-init connection-string))
+           (assert (zerop (ndbapi:ndb-cluster-connection-connect cluster-connection
+                                                                 4 ;; retries
+                                                                 5 ;; delay between retries
+                                                                 1 ;; verbose
+                                                                 ))
+                   ()
+                   "Cluster management server was not ready within 30 secs")
 
-    (assert (zerop (ndbapi:ndb-cluster-connection-connect cluster-connection
-                                                      4 ;; retries
-                                                      5 ;; delay between retries
-                                                      1 ;; verbose
-                                                      ))
-        ()
-        "Cluster management server was not ready within 30 secs")
+           (assert (zerop (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0))
+                   ()
+                   "Cluster was not ready within 30 secs.")
 
-    (assert (zerop (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0))
-            ()
-            "Cluster was not ready within 30 secs.")
+           (setf ndb (ndbapi:new-ndb cluster-connection database-name))
+           (assert (ndbapi:valid-object-p ndb)
+                   ()
+                   "Create new NDB object failed")
 
-    (setf ndb (ndbapi:new-ndb cluster-connection database-name))
-    (assert (ndbapi:valid-object-p ndb)
-            ()
-            "Create new NDB object failed")
+           (assert (zerop (ndbapi:ndb-init-ndb ndb))
+                   ()
+                   "Ndb.init() failed: ~a"
+                   (ndbapi:get-ndb-error ndb #'ndbapi:ndb-get-ndb-error))
 
-    (assert (zerop (ndbapi:ndb-init-ndb ndb))
-            ()
-            "Ndb.init() failed: ~a"
-            (ndbapi:get-ndb-error ndb #'ndbapi:ndb-get-ndb-error))
+           (setf transaction (ndbapi:ndb-start-transaction ndb))
+           (assert (ndbapi:valid-object-p transaction)
+                   ()
+                   "start-transaction() failed: ~a"
+                   (ndbapi:get-ndb-error ndb))
 
-    (setf transaction (ndbapi:ndb-start-transaction ndb))
-    (assert (ndbapi:valid-object-p transaction)
-            ()
-            "start-transaction() failed: ~a"
-            (ndbapi:get-ndb-error ndb))
+           (setf dict (ndbapi:ndb-get-dictionary ndb))
+           (assert (ndbapi:valid-object-p dict)
+                   ()
+                   "get-dictionary() failed: ~a"
+                   (ndbapi:get-ndb-error ndb))
 
-    (setf dict (ndbapi:ndb-get-dictionary ndb))
-    (assert (ndbapi:valid-object-p dict)
-            ()
-            "get-dictionary() failed: ~a"
-            (ndbapi:get-ndb-error ndb))
+           (setf table (ndbapi:dictionary-get-table dict table-name))
+           (assert (ndbapi:valid-object-p table)
+                   ()
+                   "get-table() failed: ~a"
+                   (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
 
-    (setf table (ndbapi:dictionary-get-table dict table-name))
-    (assert (ndbapi:valid-object-p table)
-            ()
-            "get-table() failed: ~a"
-            (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
+           (setf index (ndbapi:dictionary-get-index dict
+                                                    index-name
+                                                    (ndbapi:table-get-name table)))
+           (assert (ndbapi:valid-object-p index)
+                   ()
+                   "get-index() failed: ~a"
+                   (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
 
-    (setf index (ndbapi:dictionary-get-index dict
-                                             index-name
-                                             (ndbapi:table-get-name table)))
-    (assert (ndbapi:valid-object-p index)
-            ()
-            "get-index() failed: ~a"
-            (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
+           (setf index-default-record (ndbapi:index-get-default-record index))
+           (assert (ndbapi:valid-object-p index-default-record)
+                   ()
+                   "get-default-record() of index ~a failed"
+                   index-name)
 
-    (setf index-default-record (ndbapi:index-get-default-record index))
-    (assert (ndbapi:valid-object-p index-default-record)
-            ()
-            "get-default-record() of index ~a failed"
-            index-name)
+           (setf table-default-record (ndbapi:table-get-default-record table))
+           (assert (ndbapi:valid-object-p table-default-record)
+                   ()
+                   "get-default-record() of table ~a failed"
+                   table-name)
 
-    (setf table-default-record (ndbapi:table-get-default-record table))
-    (assert (ndbapi:valid-object-p table-default-record)
-            ()
-            "get-default-record() of table ~a failed"
-            table-name)
+           (setf scan (ndbapi:ndb-transaction-scan-index transaction
+                                                         index-default-record
+                                                         table-default-record))
+           (assert (ndbapi:valid-object-p scan)
+                   ()
+                   "transaction-scan-index() failed: ~a"
+                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
 
-    (setf scan (ndbapi:ndb-transaction-scan-index transaction
-                                                  index-default-record
-                                                  table-default-record))
-    (assert (ndbapi:valid-object-p scan)
-            ()
-            "transaction-scan-index() failed: ~a"
-            (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
+           #+nil
+           (ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))
+             (ndb.quads:with-foreign-quad (high (list :s 662743 :p 2200000))
+               (ndbapi:with-foreign-struct (bound (list :low-key low
+                                                        :low-key-count ndb.quads:+tuple-count+
+                                                        :low-inclusive t
+                                                        :high-key high
+                                                        :high-key-count ndb.quads:+tuple-count+
+                                                        :high-inclusive t
+                                                        :range-no 0)
+                                                  '(:struct ndbapi:index-bound))
+                 ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
-    #+nil
-    (ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))
-      (ndb.quads:with-foreign-quad (high (list :s 662743 :p 2200000))
-        (ndbapi:with-foreign-struct (bound (list :low-key low
-                                                 :low-key-count ndb.quads:+tuple-count+
-                                                 :low-inclusive t
-                                                 :high-key high
-                                                 :high-key-count ndb.quads:+tuple-count+
-                                                 :high-inclusive t
-                                                 :range-no 0)
-                                           '(:struct ndbapi:index-bound))
-          ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
+                 (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
+                         ()
+                         "set-bound() failed: ~a"
+                         (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
 
-          (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
-                  ()
-                  "set-bound() failed: ~a"
-                  (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
+                 (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
+                         ()
+                         "transactino-execute() failed: ~a"
+                         (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
 
-          (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
-                  ()
-                  "transactino-execute() failed: ~a"
-                  (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
+           (ndb.quads:with-foreign-quad (low (ndb.quads:list-to-quad* 1106 1105 1105 638))
+             (ndb.quads:with-foreign-quad (high (ndb.quads:list-to-quad* 1109 1105 1106 1108))
+               (ndbapi:with-foreign-struct (bound (list :low-key low
+                                                        :low-key-count ndb.quads:+quad-count+
+                                                        :low-inclusive t
+                                                        :high-key high
+                                                        :high-key-count ndb.quads:+quad-count+
+                                                        :high-inclusive t
+                                                        :range-no 0)
+                                                  '(:struct ndbapi:index-bound))
+                 ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
-    (ndb.quads:with-foreign-quad (low (ndb.quads:list-to-quad* 1106 1105 1105 638))
-      (ndb.quads:with-foreign-quad (high (ndb.quads:list-to-quad* 1109 1105 1106 1108))
-        (ndbapi:with-foreign-struct (bound (list :low-key low
-                                                 :low-key-count ndb.quads:+quad-count+
-                                                 :low-inclusive t
-                                                 :high-key high
-                                                 :high-key-count ndb.quads:+quad-count+
-                                                 :high-inclusive t
-                                                 :range-no 0)
-                                           '(:struct ndbapi:index-bound))
-          ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
+                 (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
+                         ()
+                         "set-bound() failed: ~a"
+                         (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
 
-          (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
-                  ()
-                  "set-bound() failed: ~a"
-                  (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
+                 (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
+                         ()
+                         "transactino-execute() failed: ~a"
+                         (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
 
-          (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
-                  ()
-                  "transactino-execute() failed: ~a"
-                  (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
+           ;;   // Check rc anyway
 
-    ;;   // Check rc anyway
+           (format t "~&table: ~a" table-name)
+           (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
+           (cffi:with-foreign-pointer (row-data 1)
+             (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
+                   for j from 0
+                   while (zerop rc)
+                   for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
+                   do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
+                   finally (assert (= rc 1)
+                                   ()
+                                   "scan-operation-next-result() failed: ~a"
+                                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
 
-    (format t "~&table: ~a" table-name)
-    (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
-    (cffi:with-foreign-pointer (row-data 1)
-      (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
-            for j from 0
-            while (zerop rc)
-            for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
-            do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
-            finally (assert (= rc 1)
-                            ()
-                            "scan-operation-next-result() failed: ~a"
-                            (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
+           (ndbapi:ndb-scan-operation-close scan t)) ;; no value
 
-    (ndbapi:ndb-scan-operation-close scan t) ;; no value
-
-    ;; explit freeing (in correct order!)
-    (ndbapi:free-foreign-object ndb)
-    (ndbapi:free-foreign-object cluster-connection)
-    ;; explicit free of ndb-init possible but also not that important.
-    ;; (freeing of ndb-init not that important as it does not bind any remote resources)
-    ;; freeing the ndb-init will call ndb-end.
-    ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
-    ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
-    ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
-    ;; if you free it, you should make a new object in each of your tasks,
-    ;; as only that prevents that there ndb is still initialized as long as you use it.
-    (ndbapi:free-foreign-object ndb-init)))
+      ;; explit freeing (in correct order!)
+      (ndbapi:free-foreign-object ndb)
+      (ndbapi:free-foreign-object cluster-connection)
+      ;; explicit free of ndb-init possible but also not that important.
+      ;; (freeing of ndb-init not that important as it does not bind any remote resources)
+      ;; freeing the ndb-init will call ndb-end.
+      ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
+      ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
+      ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
+      ;; if you free it, you should make a new object in each of your tasks,
+      ;; as only that prevents that there ndb is still initialized as long as you use it.
+      (ndbapi:free-foreign-object ndb-init))))
 
 #+(or)
 (ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
                               :database-name "mgr"
                               :table-name "test"
                               :index-name "gspo")
+           

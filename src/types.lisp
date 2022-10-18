@@ -58,6 +58,12 @@
 
 (defgeneric free-foreign-object (object))
 
+(defmethod free-foreign-object ((object null))
+  #+(or)
+  (when *ndbapi-verbose*
+      (format *trace-output* "~&Nothing to free for class ~a"
+              (class-name (class-of object)))))
+
 (defmethod free-foreign-object ((object garbage-collected-class))
   (multiple-value-bind (first-value do-free)
       (free-foreign-object% (class-name (class-of object))
