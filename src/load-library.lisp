@@ -4,8 +4,10 @@
 
 (in-package :cl-user)
 
+;; load libndbapi / libndbclient library
+
 ;;(push #p"/mnt/ssd/home/rondb/local/rondb/lib/" cffi:*foreign-library-directories*)
-(push #p"/mnt/ssd/home/rondb/code/rondb/prod_build/lib/" cffi:*foreign-library-directories*)
+(pushnew #p"/mnt/ssd/home/rondb/code/rondb/prod_build/lib/" cffi:*foreign-library-directories*)
 
 (cffi:define-foreign-library :libndbapi
   (:unix  (:or "libndbclient.so" "libndbclient.so.6.1.0"))
@@ -13,7 +15,11 @@
 
 (cffi:use-foreign-library :libndbapi)
 
-(push #p"/development/source/library/com/github/lisp/ndbapi/" cffi:*foreign-library-directories*)
+
+;; load ndbapi wrapper library
+
+;;(pushnew #p"/development/source/library/com/github/lisp/ndbapi/" cffi:*foreign-library-directories*)
+(pushnew ndbapi:*ndbapi-directory* cffi:*foreign-library-directories*)
 
 (cffi:define-foreign-library :ndbapi-wrap
   (:unix  (:or "ndbapi_wrap.so"))

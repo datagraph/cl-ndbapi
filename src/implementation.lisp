@@ -4,6 +4,14 @@
 
 (in-package :ndbapi.implementation)
 
+(eval-when (:compile-toplevel)
+  (let ((pathname *compile-file-pathname*))
+    (defparameter *ndbapi-directory* (make-pathname :name nil :type nil :version nil
+                                                    ;; pop the "src" part of the pathname
+                                                    :directory (butlast (pathname-directory *compile-file-pathname*))
+                                                    ;; still specify :defaults for :host, :device, and :case
+                                                    :defaults pathname))))
+
 ;; errors
 
 (defun %get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))

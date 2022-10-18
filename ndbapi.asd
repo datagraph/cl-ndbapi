@@ -15,4 +15,4 @@
                              (:file "constructors" :depends-on ("ndbapi"))
                              (:file "implementation" :depends-on ("constructors"))
                              (:file "interface" :depends-on ("implementation"))
-                             (:file "load-library" :depends-on ("package"))))))
+                             (:file "load-library" :depends-on ("package" "interface"))))))
