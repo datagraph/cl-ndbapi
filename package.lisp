@@ -21,17 +21,3 @@
 ;; defpackage :ndbapi in file ndbapi-interface.lisp
 ;; as it needs the implementation files to be loaded
 ;; while those files need the other package definitions already...
-
-(defpackage :ndb.quads
-  (:use :cl)
-  (:export :quad :triple :tuple :single
-           :+quad-size+ :+tuple-size+ :+tuple-size+ :+single-size+
-           :+quad-count+ :+triple-count+ :+tuple-count+ :+single-count+
-           :with-foreign-quad :convert-foreign-quad
-           :list-to-quad :list-to-quad*
-           :quad-to-list :quad-to-list*)
-  (:documentation "Definitions to access quads in tables"))
-
-(defpackage :ndb.simple-scan
-  (:use :cl)
-  (:documentation "Definitions to access quads in tables"))

@@ -5,7 +5,7 @@
 (asdf:defsystem :ndbapi
   :description "A high level and a low-level C++ NDB API interface (for RonDB)."
   :author "Max-Gerd Retzlaff <mgr@matroid.org>"
-  :depends-on (:cffi :trivial-features)
+  :depends-on (:cffi)
   :components ((:file "package")
                (:file "lispify" :depends-on ("package"))
                (:file "ndbapi-types" :depends-on ("lispify"))
@@ -14,8 +14,4 @@
                (:file "ndbapi-constructors" :depends-on ("ndbapi"))
                (:file "ndbapi-implementation" :depends-on ("ndbapi-constructors"))
                (:file "ndbapi-interface" :depends-on ("ndbapi-implementation"))
-               (:file "ndbapi-load-library" :depends-on ("package"))
-               ;; examples
-               (:file "ndb-quads" :depends-on ("package"))
-               #+(or)
-               (:file "ndbapi-simple-scan-example" :depends-on ("ndb-quads" "ndbapi-interface"))))
+               (:file "ndbapi-load-library" :depends-on ("package"))))
