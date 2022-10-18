@@ -170,8 +170,9 @@
 ;; explit freeing (in correct order!)
 (ndbapi:free-foreign-object *ndb*)
 (ndbapi:free-foreign-object *conn*)
-;; explicit free of *ndb-init* not implemented yet
-;; (and not that important as it does not bind any remote resources)
+;; explicit free of *ndb-init* dangerous, only do it when no other cluster connection is using ndb!
+;; (and freeing of ndb-init not that important as it does not bind any remote resources)
+#+(or) (ndbapi:free-foreign-object *ndb-init*)
 
 (setf *ndb* nil)
 (setf *conn* nil)

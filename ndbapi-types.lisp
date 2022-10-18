@@ -32,29 +32,33 @@
 
 (defmethod delete-foreign-object :before (class pointer)
   (when *ndbapi-verbose*
-    (format *trace-output* "~&calling DELETE for ~a object on pointer: ~8,'0x"
+    (format *trace-output* "~&Calling DELETE for ~a object on pointer: ~8,'0x"
                class
                pointer)
     (force-output *trace-output*)))
 
 (defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
-                                         (foreign-type garbage-collected-type))
+                                      (foreign-type garbage-collected-type))
   (when *ndbapi-verbose*
     (format *trace-output* "~&translate ~a to ~a"
                (class-name (class-of lisp-object))
                (class-name (class-of foreign-type))))
   (foreign-pointer lisp-object))
 
-(defun free-foreign-object% (class foreign-pointer valid-cons)
+(defgeneric delete-foreign-object% (class pointer valid-cons))
+
+(defmethod free-foreign-object% ((class t) foreign-pointer valid-cons)
   (let ((do-free (and (not (cffi:null-pointer-p foreign-pointer))
-                             (car valid-cons))))
+                      (car valid-cons))))
     (debug-print class foreign-pointer do-free)
     (values (when do-free
                  (setf (car valid-cons) nil) ;; prevent double-free
                  (delete-foreign-object class foreign-pointer))
-               do-free)))
+            do-free)))
 
-(defun free-foreign-object (object)
+(defgeneric free-foreign-object (object))
+
+(defmethod free-foreign-object ((object garbage-collected-class))
   (multiple-value-bind (first-value do-free)
       (free-foreign-object% (class-name (class-of object))
                             (foreign-pointer object)
@@ -65,14 +69,15 @@
 
 (defmethod cffi:translate-from-foreign (foreign-pointer (foreign-type garbage-collected-type))
   (let* ((class (lisp-class foreign-type))
-            (valid-cons (list t)) ;; hack: store validity of pointer in a cons cell
-                                        ;; that can be accessed from the finalizer
-            (lisp-object (make-instance class :foreign-pointer foreign-pointer
-                                                 :valid-cons valid-cons)))
+         (valid-cons (list t)) ;; hack: store validity of pointer in a cons cell
+                               ;; that can be accessed from the finalizer
+         (lisp-object (make-instance class :foreign-pointer foreign-pointer
+                                           :valid-cons valid-cons)))
     (when *ndbapi-verbose*
-      (format *trace-output* "~&translate ~a to ~a"
+      (format *trace-output* "~&translate ~a to ~a: ~8,'0x"
                  (class-name (class-of foreign-type))
-                 class))
+                 class
+                 foreign-pointer))
     (when (garbage-collect foreign-type)
       (sb-ext:finalize lisp-object (lambda () (free-foreign-object% class foreign-pointer valid-cons))))
     lisp-object))
@@ -82,13 +87,16 @@
 (defmacro make-concrete-foreign-type% (type class delete-fn)
   `(progn
      (cffi:define-foreign-type ,type (garbage-collected-type)
-       ((lisp-class :initform ',class :allocation :class))
+       ((lisp-class :allocation :class :initform ',class))
        (:simple-parser ,type))
 
      (defclass ,class (garbage-collected-class)
        ())
 
      (defmethod delete-foreign-object ((class (eql ',class)) pointer)
+       (when *ndbapi-verbose*
+         (format *trace-output* "~&Calling ~a" ',delete-fn)
+         (force-output *trace-output*))
        (,delete-fn pointer))))
 
 ;; (make-concrete-foreign-type% ndb-type ndb delete-ndb)
@@ -158,16 +166,43 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Tablespace" 'class :ndbapi.ffi))
 (make-concrete-foreign-type #.(ndbapi.ffi::swig-lispify "Undofile" 'class :ndbapi.ffi))
 
-;; special translation for ndb-end
+;; special translation for ndb-end, which is similar but does not return an object
+;; as a pointer but ndb_init and ndb_end are just c functions. ndb_init returns nothing
+;; and ndb_init either 0 (= success) or 1 (= failed).
 
-(cffi:define-foreign-type ndbapi.ffi::ndb-init-type ()
-  ((garbage-collect :reader garbage-collect :initform nil :initarg :garbage-collect)
-   (lisp-class :allocation :class :reader lisp-class :initform 'ndbapi.ffi::ndb-init))
+(cffi:define-foreign-type ndbapi.ffi::ndb-init-type (garbage-collected-type)
+  ((lisp-class :allocation :class :initform 'ndbapi.ffi::ndb-init))
   (:actual-type :int)
   (:simple-parser ndbapi.ffi::ndb-init-type))
 
 (defclass ndbapi.ffi::ndb-init ()
-  ((initialized :reader initialized :initarg :initialized)))
+  ((initialized :reader initialized :initarg :initialized)
+   (valid-cons :reader valid-cons :initarg :valid-cons)))
+
+(defmethod delete-foreign-object ((class (eql 'ndbapi.ffi::ndb-init)) initialized)
+  (declare (ignore initialized))
+  (when *ndbapi-verbose*
+    (format *trace-output* "~&Calling ~a" 'ndbapi.ffi::ndb-end)
+    (force-output *trace-output*))
+  (ndbapi.ffi:ndb-end 0))
+
+(defmethod free-foreign-object% ((class (eql 'ndbapi.ffi::ndb-init)) initialized valid-cons)
+  (let ((do-free (and initialized
+                      (car valid-cons))))
+    (debug-print class initialized do-free)
+    (values (when do-free
+                 (setf (car valid-cons) nil) ;; prevent double-free
+                 (delete-foreign-object class initialized))
+            do-free)))
+
+(defmethod free-foreign-object ((object ndbapi.ffi::ndb-init))
+  (multiple-value-bind (first-value do-free)
+      (free-foreign-object% (class-name (class-of object))
+                            (initialized object)
+                            (valid-cons object))
+    (when do-free
+      (setf (slot-value object 'initialized) nil))
+    first-value))
 
 (defmethod cffi:translate-to-foreign ((lisp-object ndbapi.ffi::ndb-init)
                                       (foreign-type ndbapi.ffi::ndb-init-type))
@@ -175,25 +210,25 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
     (format *trace-output* "~&translate ~a to ~a"
                (class-name (class-of lisp-object))
                (class-name (class-of foreign-type))))
-  (initialized lisp-object))
+  ;; translate boolean to exit code
+  (if (initialized lisp-object)
+      0
+      1))
 
 (defmethod cffi:translate-from-foreign (exit-code (foreign-type ndbapi.ffi::ndb-init-type))
   (let* ((class (lisp-class foreign-type))
-         (initialized (zerop exit-code))
-         (lisp-object (make-instance class :initialized initialized)))
+         (initialized (zerop exit-code)) ;; translate exit code to boolean
+         (valid-cons (list t)) ;; hack: store validity of pointer in a cons cell
+                               ;; that can be accessed from the finalizer
+         (lisp-object (make-instance class :initialized initialized
+                                           :valid-cons valid-cons)))
     (when *ndbapi-verbose*
       (format *trace-output* "~&translate ~a to ~a: ~a"
                  (class-name (class-of foreign-type))
                  class
                  initialized))
     (when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (lambda ()
-                                     (debug-print class exit-code initialized)
-                                     (when initialized
-                                       (when *ndbapi-verbose*
-                                         (format *trace-output* "~&call NDB-END")
-                                         (force-output *trace-output*))
-                                       (ndbapi.ffi:ndb-end 0)))))
+      (sb-ext:finalize lisp-object (lambda () (free-foreign-object% class initialized valid-cons))))
     lisp-object))
 
 ;; foreign structs
