@@ -170,15 +170,17 @@
 ;; explit freeing (in correct order!)
 (ndbapi:free-foreign-object *ndb*)
 (ndbapi:free-foreign-object *conn*)
-;; explicit free of *ndb-init* dangerous, only do it when no other cluster connection is using ndb!
-;; (and freeing of ndb-init not that important as it does not bind any remote resources)
-#+(or) (ndbapi:free-foreign-object *ndb-init*)
+;; explicit free of *ndb-init* possible but also not that important.
+;; (freeing of ndb-init not that important as it does not bind any remote resources)
+;; freeing the ndb-init will call ndb-end.
+;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
+;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
+;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
+;; if you free it, you should make a new object in each of your tasks,
+;; as only that prevents that there ndb is still initialized as long as you use it.
+(ndbapi:free-foreign-object *ndb-init*)
 
 (setf *ndb* nil)
 (setf *conn* nil)
-
 ;; only call ndb-end at the very end when all objects are freed by GC
-;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
-;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
-;;   end-end call, that reduces ndb_init_called to 0, actually cleans up.
 (setf *ndb-init* nil)
