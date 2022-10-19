@@ -6,7 +6,8 @@
 
 (defpackage :ndbapi.types
   (:use :cl)
-  (:export :initialized)
+  (:export :initialized
+           :free-foreign-object)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.ffi
@@ -17,7 +18,9 @@
            :ndb-transaction-get-ndb-error
            :index-bound
            :index-get-name
-           :ndb-scan-operation-get-ndb-transaction)
+           :ndb-scan-operation-get-ndb-transaction
+           :ndb-close-transaction
+           :ndb-transaction-get-ndb)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.implementation

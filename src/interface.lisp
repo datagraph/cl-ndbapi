@@ -26,7 +26,12 @@
                 :ndb-init
                 :ndb-get-dictionary
                 :index-get-default-record
-                :table-get-default-record)
+                :table-get-default-record
+                :with-ndb-init
+                :with-ndb-cluster-connection
+                :with-ndb
+                :with-ndb-transaction
+                :with-ndb-transaction-scan-index)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -57,6 +62,11 @@
            :ndb-transaction-execute
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
+           :with-ndb-init
+           :with-ndb-cluster-connection
+           :with-ndb
+           :with-ndb-transaction
+           :with-ndb-transaction-scan-index
            ;; from :ndbapi.ffi
            :ndb-init
            :ndb-get-dictionary

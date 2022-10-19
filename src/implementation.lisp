@@ -141,3 +141,77 @@
 (make-interface-function ndb-scan-operation-close
                          ;; returns void
                          (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
+
+;; with- macros
+
+(defmacro with-ndb-init ((var &rest args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-init #',op ,@args))))
+
+(defun call-with-ndb-init (op &rest args)
+  (declare (dynamic-extent args))
+  (let ((value (apply #'ndb-init args)))
+    (unwind-protect (funcall op value)
+      ;; explicit free of ndb-init possible but also not that important.
+      ;; (freeing of ndb-init not that important as it does not bind any remote resources)
+      ;; freeing the ndb-init will call ndb-end.
+      ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
+      ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
+      ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
+      ;; if you free it, you should make a new object in each of your tasks,
+      ;; as only that prevents that there ndb is still initialized as long as you use it.
+      (ndbapi.types:free-foreign-object value))))
+
+(defmacro with-ndb-cluster-connection ((var &rest args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-cluster-connection #',op ,@args))))
+
+(defun call-with-ndb-cluster-connection (op &rest args)
+  (declare (dynamic-extent args))
+  (let ((value (apply #'new-ndb-cluster-connection args)))
+    (unwind-protect (funcall op value)
+      (ndbapi.types:free-foreign-object value))))
+
+(defmacro with-ndb ((var &rest args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb #',op ,@args))))
+
+(defun call-with-ndb (op &rest args)
+  (declare (dynamic-extent args))
+  (let ((value (apply #'new-ndb args)))
+    (unwind-protect (funcall op value)
+      (ndbapi.types:free-foreign-object value))))
+
+(defmacro with-ndb-transaction ((var &rest args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-transaction #',op ,@args))))
+
+(defun call-with-ndb-transaction (op &rest args)
+  (declare (dynamic-extent args))
+  (let ((value (apply #'ndb-start-transaction args)))
+    (unwind-protect (funcall op value)
+      ;; returns no value
+      (ndbapi.ffi:ndb-close-transaction (ndbapi.ffi:ndb-transaction-get-ndb value) value))))
+
+(defmacro with-ndb-transaction-scan-index ((var &rest args) (&rest close-args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-transaction-scan-index #',op
+                                             :open-args (list ,@args)
+                                             :close-args (list ,@close-args)))))
+
+(defun call-with-ndb-transaction-scan-index (op &key open-args close-args)
+  (declare (dynamic-extent open-args close-args))
+  (let ((value (apply #'ndb-transaction-scan-index open-args)))
+    (unwind-protect (funcall op value)
+      ;; returns no value
+      (apply #'ndb-scan-operation-close value close-args))))
