@@ -32,43 +32,6 @@
 
 ;; interface
 
-#|
-(setf (fdefinition 'ndb-init) #'ndbapi.ffi::ndb-init%)
-(setf (fdefinition 'new-ndb-cluster-connection) #'ndbapi.ffi::new-ndb-cluster-connection/swig-0)
-(setf (fdefinition 'ndb-cluster-connection-connect) #'ndbapi.ffi::ndb-cluster-connection-connect/swig-0)
-(setf (fdefinition 'ndb-cluster-connection-wait-until-ready) #'ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0)
-(setf (fdefinition 'new-ndb) #'ndbapi.ffi::new-ndb/swig-1)
-(setf (fdefinition 'ndb-init-ndb) #'ndbapi.ffi::ndb-init/swig-1) ;; renamed to avoid conflict
-(setf (fdefinition 'ndb-get-ndb-error) #'ndbapi.ffi::ndb-get-ndb-error/swig-0)
-(setf (fdefinition 'ndb-start-transaction) #'ndbapi.ffi::ndb-start-transaction/swig-3)
-(setf (fdefinition 'ndb-get-dictionary) #'ndbapi.ffi::ndb-get-dictionary%)
-(setf (fdefinition 'dictionary-get-table) #'ndbapi.ffi::dictionary-get-table/swig-0)
-(setf (fdefinition 'dictionary-get-index) #'ndbapi.ffi::dictionary-get-index/swig-0)
-(setf (fdefinition 'index-get-default-record) #'ndbapi.ffi::index-get-default-record%)
-(setf (fdefinition 'table-get-default-record) #'ndbapi.ffi::table-get-default-record%)
-(setf (fdefinition 'ndb-transaction-scan-index) #'ndbapi.ffi::ndb-transaction-scan-index/swig-5)
-(setf (fdefinition 'ndb-index-scan-operation-set-bound) #'ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-6)
-(setf (fdefinition 'ndb-transaction-execute) #'ndbapi.ffi::ndb-transaction-execute/swig-5)
-(setf (fdefinition 'ndb-scan-operation-next-result) #'ndbapi.ffi::ndb-scan-operation-next-result/swig-3)
-(setf (fdefinition 'ndb-scan-operation-close) #'ndbapi.ffi::ndb-scan-operation-close/swig-1)
-|#
-
-#+(or)
-(defun new-ndb-cluster-connection (ndb-init connectstring)
-  (let ((value (ndbapi.ffi::new-ndb-cluster-connection/swig-0 ndb-init connectstring)))
-    (assert (valid-object-p value)
-            ()
-            "Create new ndb-cluster-connection object failed")
-    value))
-
-#+(or)
-(defun ndb-cluster-connection-connect (self no_retries retry_delay_in_seconds verbose)
-  (let ((value (ndbapi.ffi::ndb-cluster-connection-connect/swig-0 self no_retries retry_delay_in_seconds verbose)))
-    (assert (zerop value)
-            ()
-            "Cluster management server was not ready within 30 secs")
-    value))
-
 (defmacro make-interface-function (name call &optional test datum &rest arguments)
   `(defun ,name ,(cdr call)
      ,(if test
