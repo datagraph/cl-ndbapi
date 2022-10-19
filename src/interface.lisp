@@ -33,7 +33,8 @@
                 :ndb-transaction-get-ndb-error
                 :index-bound
                 :index-get-name
-                :ndb-scan-operation-get-ndb-transaction)
+                :ndb-scan-operation-get-ndb-transaction
+                :ndb-close-transaction)
   (:import-from :ndbapi.types
                 :*ndbapi-verbose*
                 :initialized
@@ -67,6 +68,7 @@
            :index-bound
            :index-get-name
            :ndb-scan-operation-get-ndb-transaction
+           :ndb-close-transaction
            ;; from :ndbapi.types
            :*ndbapi-verbose*
            :initialized

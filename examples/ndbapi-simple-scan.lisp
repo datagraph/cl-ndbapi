@@ -129,7 +129,9 @@
                                    "scan-operation-next-result() failed: ~a"
                                    (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
 
-           (ndbapi:ndb-scan-operation-close scan t)) ;; no value
+           (ndbapi:ndb-scan-operation-close scan t) ;; returns no value
+
+           (ndbapi:ndb-close-transaction ndb transaction)) ;; returns no value
 
       ;; explit freeing (in correct order!)
       (ndbapi:free-foreign-object ndb)
