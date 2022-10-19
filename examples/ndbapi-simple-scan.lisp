@@ -46,10 +46,10 @@
                                                             (ndbapi:table-get-name table)))
                         (index-default-record (ndbapi:index-get-default-record index))
                         (table-default-record (ndbapi:table-get-default-record table)))
-                   (ndbapi:with-ndb-transaction-scan-index (scan transaction
-                                                                 index-default-record
-                                                                 table-default-record)
-                                                           (t)
+                   (ndbapi:with-ndb-transaction-scan-index (scan (transaction
+                                                                  index-default-record
+                                                                  table-default-record)
+                                                                 (t))
 
                      #+nil
                      (ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))

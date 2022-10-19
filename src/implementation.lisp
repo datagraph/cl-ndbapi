@@ -201,12 +201,12 @@
       ;; returns no value
       (ndbapi.ffi:ndb-close-transaction (ndbapi.ffi:ndb-transaction-get-ndb value) value))))
 
-(defmacro with-ndb-transaction-scan-index ((var &rest args) (&rest close-args) &body body)
+(defmacro with-ndb-transaction-scan-index ((var (&rest open-args) (&rest close-args)) &body body)
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
        (call-with-ndb-transaction-scan-index #',op
-                                             :open-args (list ,@args)
+                                             :open-args (list ,@open-args)
                                              :close-args (list ,@close-args)))))
 
 (defun call-with-ndb-transaction-scan-index (op &key open-args close-args)
