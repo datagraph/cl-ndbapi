@@ -33,29 +33,19 @@
                                              ;; verbose:
                                              1)
       (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0)
-      (let ((dict)
-            (table)
-            (index)
-            (index-default-record)
-            (table-default-record))
-        (unwind-protect
-             (progn
-               (ndbapi:with-ndb (ndb cluster-connection database-name)
-                 (ndbapi:ndb-init-ndb ndb)
+      (unwind-protect
+           (progn
+             (ndbapi:with-ndb (ndb cluster-connection database-name)
+               (ndbapi:ndb-init-ndb ndb)
 
-                 (ndbapi:with-ndb-transaction (transaction ndb)
-                   (setf dict (ndbapi:ndb-get-dictionary ndb))
-
-                   (setf table (ndbapi:dictionary-get-table dict table-name))
-
-                   (setf index (ndbapi:dictionary-get-index dict
+               (ndbapi:with-ndb-transaction (transaction ndb)
+                 (let* ((dict (ndbapi:ndb-get-dictionary ndb))
+                        (table (ndbapi:dictionary-get-table dict table-name))
+                        (index (ndbapi:dictionary-get-index dict
                                                             index-name
                                                             (ndbapi:table-get-name table)))
-
-                   (setf index-default-record (ndbapi:index-get-default-record index))
-
-                   (setf table-default-record (ndbapi:table-get-default-record table))
-
+                        (index-default-record (ndbapi:index-get-default-record index))
+                        (table-default-record (ndbapi:table-get-default-record table)))
                    (ndbapi:with-ndb-transaction-scan-index (scan transaction
                                                                  index-default-record
                                                                  table-default-record)
