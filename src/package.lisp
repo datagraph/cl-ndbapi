@@ -6,11 +6,18 @@
 
 (defpackage :ndbapi.types
   (:use :cl)
+  (:export :initialized)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.ffi
   (:use #| :cl |#)
-  (:export :ndb-end)
+  (:export :ndb-end
+           :dictionary-get-ndb-error
+           :table-get-name
+           :ndb-transaction-get-ndb-error
+           :index-bound
+           :index-get-name
+           :ndb-scan-operation-get-ndb-transaction)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.implementation
