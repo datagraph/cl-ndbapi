@@ -32,7 +32,11 @@
                                              5
                                              ;; verbose:
                                              1)
-      (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0)
+      (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection
+                                                      ;; timeout for first alive:
+                                                      30
+                                                      ;; timeout after first alive:
+                                                      0)
       (unwind-protect
            (progn
              (ndbapi:with-ndb (ndb cluster-connection database-name)
