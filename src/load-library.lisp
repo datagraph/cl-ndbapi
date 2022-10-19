@@ -6,13 +6,13 @@
 
 ;; remember original/compile-time path of source code
 
-(eval-when (:compile-toplevel)
-  (let ((pathname *compile-file-pathname*))
-    (defparameter *ndbapi-directory* (make-pathname :name nil :type nil :version nil
-                                                    ;; pop the "src" part of the pathname
-                                                    :directory (butlast (pathname-directory *compile-file-pathname*))
-                                                    ;; still specify :defaults for :host, :device, and :case
-                                                    :defaults pathname))))
+(defvar *ndbapi-directory* (let ((pathname (or #.*compile-file-pathname* *load-pathname*)))
+                             (make-pathname :name nil :type nil :version nil
+                                            ;; pop the "src" part of the pathname
+                                            :directory (butlast (pathname-directory pathname))
+                                            ;; still specify :defaults for :host, :device, and :case
+                                            :defaults pathname)))
+;; could also use: (asdf:component-pathname (asdf:find-system :ndbapi))
 
 ;; load libndbapi / libndbclient library
 
