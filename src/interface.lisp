@@ -22,16 +22,18 @@
                 :ndb-index-scan-operation-set-bound
                 :ndb-transaction-execute
                 :ndb-scan-operation-next-result
-                :ndb-scan-operation-close)
-  (:import-from :ndbapi.ffi
+                :ndb-scan-operation-close
                 :ndb-init
                 :ndb-get-dictionary
+                :index-get-default-record
+                :table-get-default-record)
+  (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
-                :index-get-default-record
-                :table-get-default-record
                 :ndb-transaction-get-ndb-error
-                :index-bound)
+                :index-bound
+                :index-get-name
+                :ndb-scan-operation-get-ndb-transaction)
   (:import-from :ndbapi.types
                 :*ndbapi-verbose*
                 :initialized
@@ -63,6 +65,8 @@
            :table-get-default-record
            :ndb-transaction-get-ndb-error
            :index-bound
+           :index-get-name
+           :ndb-scan-operation-get-ndb-transaction
            ;; from :ndbapi.types
            :*ndbapi-verbose*
            :initialized

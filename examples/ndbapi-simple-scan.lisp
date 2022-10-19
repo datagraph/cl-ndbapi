@@ -36,79 +36,38 @@
     (unwind-protect
          (progn
            (setf ndb-init (ndbapi:ndb-init))
-           (assert (ndbapi:initialized ndb-init)
-                   ()
-                   "ndb-init failed")
 
            (setf cluster-connection (ndbapi:new-ndb-cluster-connection ndb-init connection-string))
 
-           (assert (zerop (ndbapi:ndb-cluster-connection-connect cluster-connection
-                                                                 4 ;; retries
-                                                                 5 ;; delay between retries
-                                                                 1 ;; verbose
-                                                                 ))
-                   ()
-                   "Cluster management server was not ready within 30 secs")
+           (ndbapi:ndb-cluster-connection-connect cluster-connection
+                                                  4 ;; retries
+                                                  5 ;; delay between retries
+                                                  1 ;; verbose
+                                                  )
 
-           (assert (zerop (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0))
-                   ()
-                   "Cluster was not ready within 30 secs.")
+           (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection 30 0)
 
            (setf ndb (ndbapi:new-ndb cluster-connection database-name))
-           (assert (ndbapi:valid-object-p ndb)
-                   ()
-                   "Create new NDB object failed")
 
-           (assert (zerop (ndbapi:ndb-init-ndb ndb))
-                   ()
-                   "Ndb.init() failed: ~a"
-                   (ndbapi:get-ndb-error ndb #'ndbapi:ndb-get-ndb-error))
+           (ndbapi:ndb-init-ndb ndb)
 
            (setf transaction (ndbapi:ndb-start-transaction ndb))
-           (assert (ndbapi:valid-object-p transaction)
-                   ()
-                   "start-transaction() failed: ~a"
-                   (ndbapi:get-ndb-error ndb))
 
            (setf dict (ndbapi:ndb-get-dictionary ndb))
-           (assert (ndbapi:valid-object-p dict)
-                   ()
-                   "get-dictionary() failed: ~a"
-                   (ndbapi:get-ndb-error ndb))
 
            (setf table (ndbapi:dictionary-get-table dict table-name))
-           (assert (ndbapi:valid-object-p table)
-                   ()
-                   "get-table() failed: ~a"
-                   (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
 
            (setf index (ndbapi:dictionary-get-index dict
                                                     index-name
                                                     (ndbapi:table-get-name table)))
-           (assert (ndbapi:valid-object-p index)
-                   ()
-                   "get-index() failed: ~a"
-                   (ndbapi:get-ndb-error dict #'ndbapi:dictionary-get-ndb-error))
 
            (setf index-default-record (ndbapi:index-get-default-record index))
-           (assert (ndbapi:valid-object-p index-default-record)
-                   ()
-                   "get-default-record() of index ~a failed"
-                   index-name)
 
            (setf table-default-record (ndbapi:table-get-default-record table))
-           (assert (ndbapi:valid-object-p table-default-record)
-                   ()
-                   "get-default-record() of table ~a failed"
-                   table-name)
 
            (setf scan (ndbapi:ndb-transaction-scan-index transaction
                                                          index-default-record
                                                          table-default-record))
-           (assert (ndbapi:valid-object-p scan)
-                   ()
-                   "transaction-scan-index() failed: ~a"
-                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
 
            #+nil
            (ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))

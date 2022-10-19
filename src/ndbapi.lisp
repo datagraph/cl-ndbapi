@@ -11,7 +11,7 @@
 (cl:in-package :ndbapi.ffi)
 
 ;; ndb_init is not really part of the other ndb_init methods but fits
-(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init" 'function)) (ndb-init-type :garbage-collect t))
+(cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init%" 'function)) (ndb-init-type :garbage-collect t))
 
 (cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end" 'function)) :void
   (arg0 :int))
@@ -1029,7 +1029,7 @@
 (cffi:defcfun ("_wrap_Table_getFrmLength" #.(swig-lispify "Table_getFrmLength" 'function)) :unsigned-int
   (self table-type))
 
-(cffi:defcfun ("_wrap_Table_getDefaultRecord" #.(swig-lispify "Table_getDefaultRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Table_getDefaultRecord" #.(swig-lispify "Table_getDefaultRecord%" 'function)) :pointer
   (self table-type))
 
 (cffi:defcfun ("_wrap_new_Table__SWIG_0" #.(swig-lispify "new_Table/SWIG-0" 'function)) (table-type :garbage-collect t)
@@ -1391,7 +1391,7 @@
 (cffi:defcfun ("_wrap_Index_getObjectId" #.(swig-lispify "Index_getObjectId" 'function)) :int
   (self index-type))
 
-(cffi:defcfun ("_wrap_Index_getDefaultRecord" #.(swig-lispify "Index_getDefaultRecord" 'function)) :pointer
+(cffi:defcfun ("_wrap_Index_getDefaultRecord" #.(swig-lispify "Index_getDefaultRecord%" 'function)) :pointer
   (self index-type))
 
 (cffi:defcfun ("_wrap_new_Index__SWIG_0" #.(swig-lispify "new_Index/SWIG-0" 'function)) (index-type :garbage-collect t)
@@ -2713,7 +2713,7 @@
 (cffi:defcfun ("_wrap_Ndb_waitUntilReady__SWIG_1" #.(swig-lispify "Ndb_waitUntilReady/SWIG-1" 'function)) :int
   (self ndb-type))
 
-(cffi:defcfun ("_wrap_Ndb_getDictionary" #.(swig-lispify "Ndb_getDictionary" 'function)) :pointer
+(cffi:defcfun ("_wrap_Ndb_getDictionary" #.(swig-lispify "Ndb_getDictionary%" 'function)) :pointer
   (self ndb-type))
 
 (cffi:defcfun ("_wrap_Ndb_createEventOperation" #.(swig-lispify "Ndb_createEventOperation" 'function)) :pointer

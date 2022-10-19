@@ -40,7 +40,7 @@
 (defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
                                       (foreign-type garbage-collected-type))
   (when *ndbapi-verbose*
-    (format *trace-output* "~&translate ~a to ~a"
+    (format *trace-output* "~&Translate ~a to ~a"
                (class-name (class-of lisp-object))
                (class-name (class-of foreign-type))))
   (foreign-pointer lisp-object))
@@ -59,7 +59,6 @@
 (defgeneric free-foreign-object (object))
 
 (defmethod free-foreign-object ((object null))
-  #+(or)
   (when *ndbapi-verbose*
       (format *trace-output* "~&Nothing to free for class ~a"
               (class-name (class-of object)))))
@@ -80,7 +79,7 @@
          (lisp-object (make-instance class :foreign-pointer foreign-pointer
                                            :valid-cons valid-cons)))
     (when *ndbapi-verbose*
-      (format *trace-output* "~&translate ~a to ~a: ~8,'0x"
+      (format *trace-output* "~&Translate ~a to ~a: ~8,'0x"
                  (class-name (class-of foreign-type))
                  class
                  foreign-pointer))
@@ -213,7 +212,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (defmethod cffi:translate-to-foreign ((lisp-object ndbapi.ffi::ndb-init)
                                       (foreign-type ndbapi.ffi::ndb-init-type))
   (when *ndbapi-verbose*
-    (format *trace-output* "~&translate ~a to ~a"
+    (format *trace-output* "~&Translate ~a to ~a"
                (class-name (class-of lisp-object))
                (class-name (class-of foreign-type))))
   ;; translate boolean to exit code
@@ -228,8 +227,11 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
                                ;; that can be accessed from the finalizer
          (lisp-object (make-instance class :initialized initialized
                                            :valid-cons valid-cons)))
+    (assert initialized
+            ()
+            "ndb-init failed")
     (when *ndbapi-verbose*
-      (format *trace-output* "~&translate ~a to ~a: ~a"
+      (format *trace-output* "~&Translate ~a to ~a: ~a"
                  (class-name (class-of foreign-type))
                  class
                  initialized))
