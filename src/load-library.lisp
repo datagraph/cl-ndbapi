@@ -4,20 +4,15 @@
 
 (in-package :ndbapi.implementation)
 
-;; remember original/compile-time path of source code
+;; Push the directory of the ndbapi.asd to cffi's load path.
+;; The ndbapi_wrap.so library will be created in that directory and
+;; I also put a link to "libndbclient.so.6.1.0" there so that that
+;; library is found easily as well.
+(pushnew (asdf:system-source-directory (asdf:find-system :ndbapi))
+         cffi:*foreign-library-directories*)
 
-(defvar *ndbapi-directory* (let ((pathname (or #.*compile-file-pathname* *load-pathname*)))
-                             (make-pathname :name nil :type nil :version nil
-                                            ;; pop the "src" part of the pathname
-                                            :directory (butlast (pathname-directory pathname))
-                                            ;; still specify :defaults for :host, :device, and :case
-                                            :defaults pathname)))
-;; could also use: (asdf:component-pathname (asdf:find-system :ndbapi))
 
 ;; load libndbapi / libndbclient library
-
-;;(push #p"/mnt/ssd/home/rondb/local/rondb/lib/" cffi:*foreign-library-directories*)
-(pushnew #p"/mnt/ssd/home/rondb/code/rondb/prod_build/lib/" cffi:*foreign-library-directories*)
 
 (cffi:define-foreign-library :libndbapi
   (:unix  (:or "libndbclient.so" "libndbclient.so.6.1.0"))
@@ -27,9 +22,6 @@
 
 
 ;; load ndbapi wrapper library
-
-;;(pushnew #p"/development/source/library/com/github/lisp/ndbapi/" cffi:*foreign-library-directories*)
-(pushnew *ndbapi-directory* cffi:*foreign-library-directories*)
 
 (cffi:define-foreign-library :ndbapi-wrap
   (:unix  (:or "ndbapi_wrap.so"))
