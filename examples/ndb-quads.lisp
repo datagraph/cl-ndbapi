@@ -76,7 +76,7 @@
 
 (defun list-to-quad (list)
   "take spog list and return as quad (given as property list)"
-  (destructuring-bind (s p o g) list
+  (destructuring-bind (&optional (s 0) (p 0) (o 0) (g 0)) list
     (list :s s :p p :o o :g g)))
 
 (defun list-to-quad* (&rest list)
@@ -84,7 +84,7 @@
 
 (defun quad-to-list (quad)
   "deconstruct quad (given as property list) and return as spog list"
-  (destructuring-bind (&key s p o g) quad
+  (destructuring-bind (&key (s 0) (p 0) (o 0) (g 0)) quad
     (list s p o g)))
 
 (defun quad-to-list* (&rest quad)
