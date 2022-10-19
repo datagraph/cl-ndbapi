@@ -64,15 +64,9 @@
                                                             '(:struct ndbapi:index-bound))
                            ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
-                           (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
-                                   ()
-                                   "set-bound() failed: ~a"
-                                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
+                           (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
 
-                           (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
-                                   ()
-                                   "transactino-execute() failed: ~a"
-                                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
+                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
 
                      (ndb.quads:with-foreign-quad (low (ndb.quads:list-to-quad* 1106 1105 1105 638))
                        (ndb.quads:with-foreign-quad (high (ndb.quads:list-to-quad* 1109 1105 1106 1108))
@@ -86,15 +80,8 @@
                                                             '(:struct ndbapi:index-bound))
                            ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
-                           (assert (zerop (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))
-                                   ()
-                                   "set-bound() failed: ~a"
-                                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))
-
-                           (assert (zerop (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))
-                                   ()
-                                   "transactino-execute() failed: ~a"
-                                   (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))
+                           (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
+                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
 
                      ;;   // Check rc anyway
 
