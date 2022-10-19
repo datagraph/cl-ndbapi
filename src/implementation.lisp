@@ -69,14 +69,16 @@
             "Cluster management server was not ready within 30 secs")
     value))
 
-(defmacro make-interface-function (name call test datum &rest arguments)
+(defmacro make-interface-function (name call &optional test datum &rest arguments)
   `(defun ,name ,(cdr call)
-     (let ((value ,call))
-       (assert (funcall ,test value)
-               ()
-               ,datum
-               ,@arguments)
-    value)))
+     ,(if test
+          `(let ((value ,call))
+             (assert (funcall ,test value)
+                     ()
+                     ,datum
+                     ,@arguments)
+             value)
+          call)))
 
 (make-interface-function ndb-init
                          (ndbapi.ffi::ndb-init%)
@@ -103,15 +105,9 @@
                          #'valid-object-p
                          "Create new NDB object failed")
 
-#+(or)
 (make-interface-function ndb-get-ndb-error
-                         (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb)
-                         (lambda (value) ;; no error handling
-                           (declare (ignore value))
-                           t)
-                         nil)
-
-(setf (fdefinition 'ndb-get-ndb-error) #'ndbapi.ffi::ndb-get-ndb-error/swig-0)
+                         ;; no error handling
+                         (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb))
 
 (make-interface-function ndb-init-ndb ;; renamed to avoid conflict
                          (ndbapi.ffi::ndb-init/swig-1 ndb)
@@ -179,12 +175,6 @@
                          "scan-operation-next-result() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
-#+(or)
 (make-interface-function ndb-scan-operation-close
-                               (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send) ;; returns void
-                               (lambda (value) ;; no error handling
-                                 (declare (ignore value))
-                                 t)
-                               nil)
-
-(setf (fdefinition 'ndb-scan-operation-close) #'ndbapi.ffi::ndb-scan-operation-close/swig-1)
+                         ;; returns void
+                         (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
