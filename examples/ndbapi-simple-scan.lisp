@@ -22,7 +22,9 @@
     load data infile '/path/to/data.tsv' into table test;
 |#
 
-(defun simple-scan (&key connection-string database-name table-name index-name)
+(defun simple-scan (&key connection-string database-name table-name index-name
+                         low (low-inclusive t)
+                         high (high-inclusive t))
   (ndbapi:with-ndb-init (ndb-init)
     (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
       (ndbapi:ndb-cluster-connection-connect cluster-connection
@@ -55,31 +57,15 @@
                                                                   table-default-record)
                                                                  (t))
 
-                     #+nil
-                     (ndb.quads:with-foreign-quad (low (list :s 662743 :p 2000000))
-                       (ndb.quads:with-foreign-quad (high (list :s 662743 :p 2200000))
-                         (ndbapi:with-foreign-struct (bound (list :low-key low
-                                                                  :low-key-count ndb.quads:+tuple-count+
-                                                                  :low-inclusive t
-                                                                  :high-key high
-                                                                  :high-key-count ndb.quads:+tuple-count+
-                                                                  :high-inclusive t
-                                                                  :range-no 0)
-                                                            '(:struct ndbapi:index-bound))
-                           ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
-
-                           (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
-
-                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
-
-                     (ndb.quads:with-foreign-quad (low (ndb.quads:list-to-quad* 1106 1105 1105 638))
-                       (ndb.quads:with-foreign-quad (high (ndb.quads:list-to-quad* 1109 1105 1106 1108))
-                         (ndbapi:with-foreign-struct (bound (list :low-key low
-                                                                  :low-key-count ndb.quads:+quad-count+
-                                                                  :low-inclusive t
-                                                                  :high-key high
-                                                                  :high-key-count ndb.quads:+quad-count+
-                                                                  :high-inclusive t
+                     ;; set bounds for scan
+                     (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
+                       (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
+                         (ndbapi:with-foreign-struct (bound (list :low-key low-quad
+                                                                  :low-key-count (length low)
+                                                                  :low-inclusive low-inclusive
+                                                                  :high-key high-quad
+                                                                  :high-key-count (length high)
+                                                                  :high-inclusive high-inclusive
                                                                   :range-no 0)
                                                             '(:struct ndbapi:index-bound))
                            ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
@@ -87,8 +73,9 @@
                            (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
                            (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
 
-                     ;;   // Check rc anyway
+                     ;; // Check rc anyway
 
+                     ;; do scan and print
                      (format t "~&table: ~a" table-name)
                      (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
                      (cffi:with-foreign-pointer (row-data 1)
@@ -108,3 +95,17 @@
                               :table-name "test"
                               :index-name "gspo")
            
+#+(or)
+(ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
+                              :database-name "mgr"
+                              :table-name "test"
+                              :index-name "gspo"
+                              :low (list 1106 1105 1105 638) :low-inclusive t
+                              :high (list 1109 1105 1106 1108) :high-inclusive t)
+#+(or)
+(ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
+                              :database-name "mgr"
+                              :table-name "test"
+                              :index-name "gspo"
+                              :low (list 662743 2000000) :low-inclusive t
+                              :high (list 662743 2200000) :high-inclusive t)
