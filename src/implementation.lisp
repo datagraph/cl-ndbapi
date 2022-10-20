@@ -142,6 +142,12 @@
                          ;; returns void
                          (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
 
+(make-interface-function ndb-index-scan-operation-read-tuples
+                         (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
+                         #'zerop
+                         "transaction-scan-index() failed: ~a"
+                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
 ;; with- macros
 
 (defmacro with-ndb-init ((var &rest args) &body body)

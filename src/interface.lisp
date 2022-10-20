@@ -31,7 +31,8 @@
                 :with-ndb-cluster-connection
                 :with-ndb
                 :with-ndb-transaction
-                :with-ndb-transaction-scan-index)
+                :with-ndb-transaction-scan-index
+                :ndb-index-scan-operation-read-tuples)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -67,6 +68,7 @@
            :with-ndb
            :with-ndb-transaction
            :with-ndb-transaction-scan-index
+           :ndb-index-scan-operation-read-tuples
            ;; from :ndbapi.ffi
            :ndb-init
            :ndb-get-dictionary
