@@ -126,6 +126,15 @@
                          "set-bound() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+;; cannot use in our usage pattern as it leads to:
+;; ndb-index-scan-operation-read-tuples() failed: Error with code 4284: Cannot mix NdbRecAttr and NdbRecord methods in one operation
+#+(or)
+(make-interface-function ndb-index-scan-operation-read-tuples
+                         (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
+                         #'zerop
+                         "transaction-scan-index() failed: ~a"
+                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
 (make-interface-function ndb-transaction-execute
                          (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
                          #'zerop
@@ -141,12 +150,6 @@
 (make-interface-function ndb-scan-operation-close
                          ;; returns void
                          (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
-
-(make-interface-function ndb-index-scan-operation-read-tuples
-                         (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
-                         #'zerop
-                         "transaction-scan-index() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
 ;; with- macros
 

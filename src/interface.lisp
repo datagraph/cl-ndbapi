@@ -20,6 +20,7 @@
                 :dictionary-get-index
                 :ndb-transaction-scan-index
                 :ndb-index-scan-operation-set-bound
+                ;; :ndb-index-scan-operation-read-tuples
                 :ndb-transaction-execute
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
@@ -31,8 +32,7 @@
                 :with-ndb-cluster-connection
                 :with-ndb
                 :with-ndb-transaction
-                :with-ndb-transaction-scan-index
-                :ndb-index-scan-operation-read-tuples)
+                :with-ndb-transaction-scan-index)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -60,6 +60,7 @@
            :dictionary-get-index
            :ndb-transaction-scan-index
            :ndb-index-scan-operation-set-bound
+           ;; :ndb-index-scan-operation-read-tuples
            :ndb-transaction-execute
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
@@ -68,7 +69,6 @@
            :with-ndb
            :with-ndb-transaction
            :with-ndb-transaction-scan-index
-           :ndb-index-scan-operation-read-tuples
            ;; from :ndbapi.ffi
            :ndb-init
            :ndb-get-dictionary

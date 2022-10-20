@@ -54,8 +54,6 @@
                                                               index-default-record
                                                               table-default-record)
                                                      (t))
-              (ndbapi:ndb-index-scan-operation-read-tuples scan :+LM-READ+ :+SF-ORDER-BY+)
-              ;; results in: ndb-index-scan-operation-read-tuples() failed: Error with code 4284: Cannot mix NdbRecAttr and NdbRecord methods in one operation
 
               ;; set bounds for scan
               (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
