@@ -3859,25 +3859,25 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-0" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (scan_flags :unsigned-int)
   (parallel :unsigned-int)
   (batch :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-1" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (scan_flags :unsigned-int)
   (parallel :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-2" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (scan_flags :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-3" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-4" 'function)) :int
   (self :pointer))
@@ -4095,32 +4095,32 @@
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-0" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (scan_flags :unsigned-int)
   (parallel :unsigned-int)
   (batch :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-1" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
-  (scan_flags :unsigned-int)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
+  (scan_flags #.(swig-lispify "ScanFlag" 'enumname))
   (parallel :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-2" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
-  (scan_flags :unsigned-int))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
+  (scan_flags #.(swig-lispify "ScanFlag" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-3" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_4" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-4" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_5" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-5" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (batch :unsigned-int)
   (parallel :unsigned-int)
   (order_by :pointer)
@@ -4131,7 +4131,7 @@
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_6" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-6" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (batch :unsigned-int)
   (parallel :unsigned-int)
   (order_by :pointer)
@@ -4141,7 +4141,7 @@
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_7" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-7" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (batch :unsigned-int)
   (parallel :unsigned-int)
   (order_by :pointer)
@@ -4150,7 +4150,7 @@
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_8" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-8" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (batch :unsigned-int)
   (parallel :unsigned-int)
   (order_by :pointer)
@@ -4158,7 +4158,7 @@
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_readTuples__SWIG_9" #.(swig-lispify "NdbIndexScanOperation_readTuples/SWIG-9" 'function)) :int
   (self :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (batch :unsigned-int)
   (parallel :unsigned-int)
   (order_by :pointer))
@@ -4489,7 +4489,7 @@
   (key_row :string)
   (result_rec :pointer)
   (result_row :string)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (opts :pointer)
   (sizeOfOptions :unsigned-int))
@@ -4500,7 +4500,7 @@
   (key_row :string)
   (result_rec :pointer)
   (result_row :string)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (opts :pointer))
 
@@ -4510,7 +4510,7 @@
   (key_row :string)
   (result_rec :pointer)
   (result_row :string)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_3" #.(swig-lispify "NdbTransaction_readTuple/SWIG-3" 'function)) :pointer
@@ -4519,7 +4519,7 @@
   (key_row :string)
   (result_rec :pointer)
   (result_row :string)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbTransaction_readTuple__SWIG_4" #.(swig-lispify "NdbTransaction_readTuple/SWIG-4" 'function)) :pointer
   (self :pointer)
@@ -4717,7 +4717,7 @@
 (cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_0" #.(swig-lispify "NdbTransaction_scanTable/SWIG-0" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (options :pointer)
   (sizeOfOptions :unsigned-int))
@@ -4725,20 +4725,20 @@
 (cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_1" #.(swig-lispify "NdbTransaction_scanTable/SWIG-1" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (options :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_2" #.(swig-lispify "NdbTransaction_scanTable/SWIG-2" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_3" #.(swig-lispify "NdbTransaction_scanTable/SWIG-3" 'function)) :pointer
   (self :pointer)
   (result_record :pointer)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbTransaction_scanTable__SWIG_4" #.(swig-lispify "NdbTransaction_scanTable/SWIG-4" 'function)) :pointer
   (self :pointer)
@@ -4748,7 +4748,7 @@
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (bound :pointer)
   (options :pointer)
@@ -4758,7 +4758,7 @@
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (bound :pointer)
   (options :pointer))
@@ -4767,7 +4767,7 @@
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer)
   (bound :pointer))
 
@@ -4775,14 +4775,14 @@
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
-  (lock_mode :pointer)
+  (lock_mode #.(swig-lispify "LockMode" 'enumname))
   (result_mask :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_4" #.(swig-lispify "NdbTransaction_scanIndex/SWIG-4" 'function)) :pointer
   (self :pointer)
   (key_record :pointer)
   (result_record :pointer)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbTransaction_scanIndex__SWIG_5" #.(swig-lispify "NdbTransaction_scanIndex/SWIG-5" 'function)) :pointer
   (self :pointer)
@@ -4793,7 +4793,7 @@
   (self :pointer)
   (query :pointer)
   (paramValue :pointer)
-  (lock_mode :pointer))
+  (lock_mode #.(swig-lispify "LockMode" 'enumname)))
 
 (cffi:defcfun ("_wrap_NdbTransaction_createQuery__SWIG_1" #.(swig-lispify "NdbTransaction_createQuery/SWIG-1" 'function)) :pointer
   (self :pointer)
@@ -4834,7 +4834,7 @@
 (cffi:defcfun ("_wrap_NdbIndexOperation_insertTuple" #.(swig-lispify "NdbIndexOperation_insertTuple" 'function)) :int
   (self :pointer))
 
-(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_0" #.(swig-lispify "NdbIndexOperation_readTuple0/SWIG-0" 'function)) :int
+(cffi:defcfun ("_wrap_NdbIndexOperation_readTuple__SWIG_0" #.(swig-lispify "NdbIndexOperation_readTuple/SWIG-0" 'function)) :int
   (self :pointer)
   (arg1 :pointer))
 
