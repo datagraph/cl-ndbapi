@@ -54,8 +54,18 @@
                  #+(or)
                  (scan-flags (logior (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-ORDER-BY+)
                                      (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-MULTI-RANGE+))))
-            (ndbapi:with-foreign-struct (scan-options (list :options-present :+SO-SCANFLAGS+
-                                                            :scan-flags scan-flags)
+            (ndbapi:with-foreign-struct (scan-options (list :size (cffi:callback ndbapi.i::scan-options-size)
+                                                            :options-present :+SO-SCANFLAGS+
+                                                            :scan-flags scan-flags
+                                                            :parallel 0
+                                                            :batch 0
+                                                            :extra-get-values (cffi:null-pointer)
+                                                            :num-extra-get-values 0
+                                                            :partition-id 0
+                                                            :interpreted-code (cffi:null-pointer)
+                                                            :custom-data (cffi:null-pointer)
+                                                            :partition-info (cffi:null-pointer)
+                                                            :size-of-part-info 0)
                                                       '(:struct ndbapi:scan-options))
               ;;(break "~a" (cffi:convert-from-foreign scan-options '(:struct ndbapi:scan-options)))
               (ndbapi:with-ndb-transaction-scan-index (scan (transaction

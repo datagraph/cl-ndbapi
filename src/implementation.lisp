@@ -228,3 +228,10 @@
     (unwind-protect (funcall op value)
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
+
+
+;; callback for :size slot of (:struct ndbapi:scan-options)
+
+(cffi:defcallback scan-options-size :unsigned-int ()
+  (cffi:foreign-type-size
+   '(:struct ndbapi.ffi::scan-options)))
