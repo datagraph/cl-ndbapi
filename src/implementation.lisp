@@ -33,29 +33,6 @@
 ;; interface
 
 (defmacro make-interface-function (name call &optional test datum &rest arguments)
-  `(defun ,name ,(cdr call)
-     ,(if test
-          `(let ((value ,call))
-             (assert (funcall ,test value)
-                     ()
-                     ,datum
-                     ,@arguments)
-             value)
-          call)))
-
-#+(or)
-(defmacro make-interface-function% (name function &optional test datum &rest arguments)
-  `(defun ,name (&rest args)
-     ,(if test
-          `(let ((value (apply #',function args)))
-             (assert (funcall ,test value)
-                     ()
-                     ,datum
-                     ,@arguments)
-             value)
-          `(apply #',function args))))
-
-(defmacro make-interface-function (name call &optional test datum &rest arguments)
   (let ((translated-call (if (find '&rest call)
                              (cons 'apply (cons `(symbol-function ',(car call)) (cdr (remove '&rest call))))
                              call)))
@@ -143,13 +120,6 @@
 
 (make-interface-function ndb-transaction-scan-index
                          (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
-                         #'valid-object-p
-                         "transaction-scan-index() failed: ~a"
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
-
-#+(or)
-(make-interface-function% ndb-transaction-scan-index
-                         ndbapi.ffi.o::ndb-transaction-scan-index
                          #'valid-object-p
                          "transaction-scan-index() failed: ~a"
                          (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
