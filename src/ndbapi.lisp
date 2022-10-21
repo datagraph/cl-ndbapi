@@ -3906,12 +3906,12 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_0" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-0" 'function)) :int
   (self :pointer)
-  (fetchAllowed :boolean)
-  (forceSend :boolean))
+  (fetchAllowed :bool)
+  (forceSend :bool))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_1" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-1" 'function)) :int
   (self :pointer)
-  (fetchAllowed :boolean))
+  (fetchAllowed :bool))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_2" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-2" 'function)) :int
   (self :pointer))
@@ -3919,8 +3919,8 @@
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_3" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-3" 'function)) :int
   (self :pointer)
   (out_row_ptr :pointer)
-  (fetchAllowed :boolean)
-  (forceSend :boolean))
+  (fetchAllowed :bool)
+  (forceSend :bool))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResultCopyOut" #.(swig-lispify "NdbScanOperation_nextResultCopyOut" 'function)) :int
   (self :pointer)
@@ -3930,12 +3930,12 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_0" #.(swig-lispify "NdbScanOperation_close/SWIG-0" 'function)) :void
   (self :pointer)
-  (forceSend :boolean)
-  (releaseOp :boolean))
+  (forceSend :bool)
+  (releaseOp :bool))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_1" #.(swig-lispify "NdbScanOperation_close/SWIG-1" 'function)) :void
   (self :pointer)
-  (forceSend :boolean))
+  (forceSend :bool))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_close__SWIG_2" #.(swig-lispify "NdbScanOperation_close/SWIG-2" 'function)) :void
   (self :pointer))
@@ -4252,10 +4252,10 @@
 (cffi:defcstruct #.(swig-lispify "IndexBound" 'classname)
 	(#.(swig-lispify "low_key" 'slotname :keyword) :string)
 	(#.(swig-lispify "low_key_count" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "low_inclusive" 'slotname :keyword) (:boolean :unsigned-int))
+	(#.(swig-lispify "low_inclusive" 'slotname :keyword) :bool)
 	(#.(swig-lispify "high_key" 'slotname :keyword) :string)
 	(#.(swig-lispify "high_key_count" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "high_inclusive" 'slotname :keyword) (:boolean :unsigned-int))
+	(#.(swig-lispify "high_inclusive" 'slotname :keyword) :bool)
 	(#.(swig-lispify "range_no" 'slotname :keyword) :unsigned-int))
 
 (cffi:defcstruct #.(swig-lispify "OldApiBoundInfo" 'classname)
