@@ -54,7 +54,7 @@
                  #+(or)
                  (scan-flags (logior (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-ORDER-BY+)
                                      (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-MULTI-RANGE+))))
-            (ndbapi:with-foreign-struct (scan-options (list :size (cffi:callback ndbapi.i::scan-options-size)
+            (ndbapi:with-foreign-struct (scan-options (list ;;:size (cffi:callback ndbapi.i::scan-options-size)
                                                             :options-present :+SO-SCANFLAGS+
                                                             :scan-flags scan-flags
                                                             :parallel 0

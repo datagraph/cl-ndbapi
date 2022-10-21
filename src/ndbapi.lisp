@@ -4080,7 +4080,8 @@
         (#.(swig-lispify "SO_NoScanOptions" 'enumvalue :keyword) #.0))
 
 (cffi:defcstruct #.(swig-lispify "ScanOptions" 'classname)
-        (#.(swig-lispify "size" 'slotname :keyword) :pointer)
+        ;; the size() function is static and actually not part of the struct
+        ;; (#.(swig-lispify "size" 'slotname :keyword) :pointer)
 	(#.(swig-lispify "optionsPresent" 'slotname :keyword) #.(swig-lispify "ScanOptionsFlags" 'enumname))
 	(#.(swig-lispify "scan_flags" 'slotname :keyword) #.(swig-lispify "ScanFlag" 'enumname))
 	(#.(swig-lispify "parallel" 'slotname :keyword) :unsigned-int)
