@@ -4248,13 +4248,14 @@
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_getDescending" #.(swig-lispify "NdbIndexScanOperation_getDescending" 'function)) :pointer
   (self :pointer))
 
+
 (cffi:defcstruct #.(swig-lispify "IndexBound" 'classname)
 	(#.(swig-lispify "low_key" 'slotname :keyword) :string)
 	(#.(swig-lispify "low_key_count" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "low_inclusive" 'slotname :keyword) :boolean)
+	(#.(swig-lispify "low_inclusive" 'slotname :keyword) (:boolean :unsigned-int))
 	(#.(swig-lispify "high_key" 'slotname :keyword) :string)
 	(#.(swig-lispify "high_key_count" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "high_inclusive" 'slotname :keyword) :boolean)
+	(#.(swig-lispify "high_inclusive" 'slotname :keyword) (:boolean :unsigned-int))
 	(#.(swig-lispify "range_no" 'slotname :keyword) :unsigned-int))
 
 (cffi:defcstruct #.(swig-lispify "OldApiBoundInfo" 'classname)
