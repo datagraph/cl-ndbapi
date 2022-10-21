@@ -119,6 +119,7 @@
                          (ndbapi.ffi:table-get-name table))
 
 (make-interface-function ndb-transaction-scan-index
+                          ;; all variants have the named three parameters
                          (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
                          #'valid-object-p
                          "transaction-scan-index() failed: ~a"
@@ -228,10 +229,3 @@
     (unwind-protect (funcall op value)
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
-
-
-;; callback for :size slot of (:struct ndbapi:scan-options)
-
-(cffi:defcallback scan-options-size :unsigned-int ()
-  (cffi:foreign-type-size
-   '(:struct ndbapi.ffi::scan-options)))
