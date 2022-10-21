@@ -56,24 +56,18 @@
           `(apply #',function args))))
 
 (defmacro make-interface-function (name call &optional test datum &rest arguments)
-  `(defun ,name ,(cdr call)
-     ,(if test
-          `(let ((value ,(if (find '&rest call)
+  (let ((translated-call (if (find '&rest call)
                              (cons 'apply (cons `(symbol-function ',(car call)) (cdr (remove '&rest call))))
                              call)))
-             (assert (funcall ,test value)
-                     ()
-                     ,datum
-                     ,@arguments)
-             value)
-          call)))
-
-#+nil
-(make-interface-function ndb-transaction-scan-index
-                         (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
-                         #'valid-object-p
-                         "transaction-scan-index() failed: ~a"
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    `(defun ,name ,(cdr call)
+       ,(if test
+            `(let ((value ,translated-call))
+               (assert (funcall ,test value)
+                       ()
+                       ,datum
+                       ,@arguments)
+               value)
+            translated-call))))
 
 (make-interface-function ndb-begin ;; rename ndb-init to ndb-begin to avoid conflict
                                    ;; also this fits to the complimentary function ndb-end
