@@ -4068,7 +4068,7 @@
   (self :pointer))
 
 
-(cffi:defcenum #.(swig-lispify "ScanOptionsFlags" 'enumname)
+(cffi:defcenum (#.(swig-lispify "ScanOptionsFlags" 'enumname) :unsigned-long-long)
         (#.(swig-lispify "SO_SCANFLAGS" 'enumvalue :keyword) #.#x01)
         (#.(swig-lispify "SO_PARALLEL" 'enumvalue :keyword) #.#x02)
         (#.(swig-lispify "SO_BATCH" 'enumvalue :keyword) #.#x04)
