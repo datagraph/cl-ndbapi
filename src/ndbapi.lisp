@@ -3853,7 +3853,8 @@
 	(#.(swig-lispify "SF_Descending" 'enumvalue :keyword) #.(cl:ash 2 24))
 	(#.(swig-lispify "SF_ReadRangeNo" 'enumvalue :keyword) #.(cl:ash 4 24))
 	(#.(swig-lispify "SF_MultiRange" 'enumvalue :keyword) #.(cl:ash 8 24))
-	(#.(swig-lispify "SF_KeyInfo" 'enumvalue :keyword) #.1))
+	(#.(swig-lispify "SF_KeyInfo" 'enumvalue :keyword) #.1)
+	(#.(swig-lispify "SF_NoScanFlag" 'enumvalue :keyword) #.0))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-0" 'function)) :int
   (self :pointer)
@@ -4066,10 +4067,22 @@
 (cffi:defcfun ("_wrap_NdbScanOperation_getPruned" #.(swig-lispify "NdbScanOperation_getPruned" 'function)) :pointer
   (self :pointer))
 
+
+(cffi:defcenum #.(swig-lispify "ScanOptionsFlags" 'enumname)
+        (#.(swig-lispify "SO_SCANFLAGS" 'enumvalue :keyword) #.#x01)
+        (#.(swig-lispify "SO_PARALLEL" 'enumvalue :keyword) #.#x02)
+        (#.(swig-lispify "SO_BATCH" 'enumvalue :keyword) #.#x04)
+        (#.(swig-lispify "SO_GETVALUE" 'enumvalue :keyword) #.#x08)
+        (#.(swig-lispify "SO_PARTITION_ID" 'enumvalue :keyword) #.#x10)
+        (#.(swig-lispify "SO_INTERPRETED" 'enumvalue :keyword) #.#x20)
+        (#.(swig-lispify "SO_CUSTOMDATA" 'enumvalue :keyword) #.#x40)
+        (#.(swig-lispify "SO_PART_INFO" 'enumvalue :keyword) #.#x80)
+        (#.(swig-lispify "SO_NoScanOptions" 'enumvalue :keyword) #.0))
+
 (cffi:defcstruct #.(swig-lispify "ScanOptions" 'classname)
-	(#.(swig-lispify "size" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "optionsPresent" 'slotname :keyword) :unsigned-long-long)
-	(#.(swig-lispify "scan_flags" 'slotname :keyword) :unsigned-int)
+        (#.(swig-lispify "size" 'slotname :keyword) :pointer)
+	(#.(swig-lispify "optionsPresent" 'slotname :keyword) #.(swig-lispify "ScanOptionsFlags" 'enumname))
+	(#.(swig-lispify "scan_flags" 'slotname :keyword) #.(swig-lispify "ScanFlag" 'enumname))
 	(#.(swig-lispify "parallel" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "batch" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "extraGetValues" 'slotname :keyword) :pointer)
@@ -4081,8 +4094,8 @@
 	(#.(swig-lispify "sizeOfPartInfo" 'slotname :keyword) :unsigned-int))
 
 (cffi:defcstruct #.(swig-lispify "ScanOptions_v1" 'classname)
-	(#.(swig-lispify "optionsPresent" 'slotname :keyword) :unsigned-long-long)
-	(#.(swig-lispify "scan_flags" 'slotname :keyword) :unsigned-int)
+	(#.(swig-lispify "optionsPresent" 'slotname :keyword) #.(swig-lispify "ScanOptionsFlags" 'enumname))
+	(#.(swig-lispify "scan_flags" 'slotname :keyword) #.(swig-lispify "ScanFlag" 'enumname))
 	(#.(swig-lispify "parallel" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "batch" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "extraGetValues" 'slotname :keyword) :pointer)
