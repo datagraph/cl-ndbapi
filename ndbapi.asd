@@ -13,6 +13,7 @@
                              (:file "ndbapi" :depends-on ("types"))
                              #+(or)(:file "ndbapi-clos" :depends-on ("ndbapi" #| really? or just "lispfy"? |#))
                              (:file "constructors" :depends-on ("ndbapi"))
-                             (:file "implementation" :depends-on ("constructors"))
+                             (:file "overloading" :depends-on ("constructors"))
+                             (:file "implementation" :depends-on ("overloading"))
                              (:file "interface" :depends-on ("implementation"))
                              (:file "load-library" :depends-on ("package"))))))

@@ -40,7 +40,7 @@
                                                       ;; timeout after first alive:
                                                       0)
       (ndbapi:with-ndb (ndb cluster-connection database-name)
-        (ndbapi:ndb-init-ndb ndb)
+        (ndbapi:ndb-init ndb)
 
         (ndbapi:with-ndb-transaction (transaction ndb)
           (let* ((dict (ndbapi:ndb-get-dictionary ndb))

@@ -13,7 +13,7 @@
                 :ndb-cluster-connection-connect
                 :ndb-cluster-connection-wait-until-ready
                 :new-ndb
-                :ndb-init-ndb ;; renamed to avoid conflict
+                :ndb-init ;; renamed to avoid conflict
                 :ndb-get-ndb-error
                 :ndb-start-transaction
                 :dictionary-get-table
@@ -24,7 +24,7 @@
                 :ndb-transaction-execute
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
-                :ndb-init
+                :ndb-begin
                 :ndb-get-dictionary
                 :index-get-default-record
                 :table-get-default-record
@@ -53,7 +53,8 @@
            :ndb-cluster-connection-connect
            :ndb-cluster-connection-wait-until-ready
            :new-ndb
-           :ndb-init-ndb ;; renamed to avoid conflict
+           :ndb-init ;; renamed to avoid conflict
+           :ndb-begin
            :ndb-get-ndb-error
            :ndb-start-transaction
            :dictionary-get-table
@@ -70,7 +71,6 @@
            :with-ndb-transaction
            :with-ndb-transaction-scan-index
            ;; from :ndbapi.ffi
-           :ndb-init
            :ndb-get-dictionary
            :dictionary-get-ndb-error
            :table-get-name

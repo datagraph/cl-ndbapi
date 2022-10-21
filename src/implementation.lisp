@@ -43,7 +43,40 @@
              value)
           call)))
 
-(make-interface-function ndb-init
+#+(or)
+(defmacro make-interface-function% (name function &optional test datum &rest arguments)
+  `(defun ,name (&rest args)
+     ,(if test
+          `(let ((value (apply #',function args)))
+             (assert (funcall ,test value)
+                     ()
+                     ,datum
+                     ,@arguments)
+             value)
+          `(apply #',function args))))
+
+(defmacro make-interface-function (name call &optional test datum &rest arguments)
+  `(defun ,name ,(cdr call)
+     ,(if test
+          `(let ((value ,(if (find '&rest call)
+                             (cons 'apply (cons `(symbol-function ',(car call)) (cdr (remove '&rest call))))
+                             call)))
+             (assert (funcall ,test value)
+                     ()
+                     ,datum
+                     ,@arguments)
+             value)
+          call)))
+
+#+nil
+(make-interface-function ndb-transaction-scan-index
+                         (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
+                         #'valid-object-p
+                         "transaction-scan-index() failed: ~a"
+                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
+(make-interface-function ndb-begin ;; rename ndb-init to ndb-begin to avoid conflict
+                                   ;; also this fits to the complimentary function ndb-end
                          (ndbapi.ffi::ndb-init%)
                          #'ndbapi.types:initialized
                          "ndb-init failed")
@@ -72,8 +105,8 @@
                          ;; no error handling
                          (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb))
 
-(make-interface-function ndb-init-ndb ;; renamed to avoid conflict
-                         (ndbapi.ffi::ndb-init/swig-1 ndb)
+(make-interface-function ndb-init ;; other ndb-init already renamed to ndb-begin to avoid conflict
+                         (ndbapi.ffi.o::ndb-init ndb)
                          #'zerop
                          "Ndb.init() failed: ~a"
                          (get-ndb-error ndb #'ndb-get-ndb-error))
@@ -115,7 +148,14 @@
                          (ndbapi.ffi:table-get-name table))
 
 (make-interface-function ndb-transaction-scan-index
-                         (ndbapi.ffi::ndb-transaction-scan-index/swig-5 transaction key-record result-record)
+                         (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
+                         #'valid-object-p
+                         "transaction-scan-index() failed: ~a"
+                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
+#+(or)
+(make-interface-function% ndb-transaction-scan-index
+                         ndbapi.ffi.o::ndb-transaction-scan-index
                          #'valid-object-p
                          "transaction-scan-index() failed: ~a"
                          (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
@@ -161,7 +201,7 @@
 
 (defun call-with-ndb-init (op &rest args)
   (declare (dynamic-extent args))
-  (let ((value (apply #'ndb-init args)))
+  (let ((value (apply #'ndb-begin args)))
     (unwind-protect (funcall op value)
       ;; explicit free of ndb-init possible but also not that important.
       ;; (freeing of ndb-init not that important as it does not bind any remote resources)

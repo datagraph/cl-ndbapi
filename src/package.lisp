@@ -23,6 +23,10 @@
            :ndb-transaction-get-ndb)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
+(defpackage :ndbapi.ffi.overloading
+  (:use :cl)
+  (:nicknames :ndbapi.ffi.o))
+
 (defpackage :ndbapi.implementation
   (:use :cl)
   (:nicknames :ndbapi.i)

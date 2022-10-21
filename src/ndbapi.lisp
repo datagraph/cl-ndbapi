@@ -2682,8 +2682,6 @@
 (cffi:defcfun ("_wrap_Ndb_init__SWIG_1" #.(swig-lispify "Ndb_init/SWIG-1" 'function)) :int
   (self ndb-type))
 
-;;(overload-function #.(swig-lispify "Ndb_init" 'function))
-
 (cffi:defcfun ("_wrap_Ndb_set_eventbuf_max_alloc" #.(swig-lispify "Ndb_set_eventbuf_max_alloc" 'function)) :void
   (self ndb-type)
   (sz :unsigned-int))
