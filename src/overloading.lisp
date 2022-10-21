@@ -35,8 +35,9 @@ WARNING: this only works when there are no multiple functions with the same arit
        (assert fn
                (fn)
                "no variant of function ~a with arity ~a: ~a" ',name arity args)
-       (format *trace-output* "~&Calling ~a with arity ~a: ~a" ',name arity fn)
+       (when *ndbapi-verbose*
+         (format *trace-output* "~&Calling ~a with arity ~a: ~a" ',name arity fn))
        (apply (symbol-function fn) args))))
 
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "Ndb_init" 'function))
-(overload-function-by-arity ndb-transaction-scan-index)
+(overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_scanIndex" 'function))

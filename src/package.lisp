@@ -7,7 +7,8 @@
 (defpackage :ndbapi.types
   (:use :cl)
   (:export :initialized
-           :free-foreign-object)
+           :free-foreign-object
+           :*ndbapi-verbose*)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.ffi
@@ -25,6 +26,8 @@
 
 (defpackage :ndbapi.ffi.overloading
   (:use :cl)
+  (:import-from :ndbapi.types
+                :*ndbapi-verbose*)
   (:nicknames :ndbapi.ffi.o))
 
 (defpackage :ndbapi.implementation
