@@ -79,8 +79,6 @@
                                                              :high-inclusive high-inclusive
                                                              :range-no 0)
                                                        '(:struct ndbapi:index-bound))
-                      ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
-
                       (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
                       (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
 
