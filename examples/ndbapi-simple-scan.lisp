@@ -49,12 +49,10 @@
                                                      index-name
                                                      (ndbapi:table-get-name table)))
                  (index-default-record (ndbapi:index-get-default-record index))
-                 (table-default-record (ndbapi:table-get-default-record table))
-                 #+(or)(scan-flags :+SF-ORDER-BY+)
-                 (scan-flags (logior (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-ORDER-BY+)
-                                     (cffi:foreign-enum-value 'ndbapi.ffi::scan-flag :+SF-MULTI-RANGE+))))
+                 (table-default-record (ndbapi:table-get-default-record table)))
             (ndbapi:with-foreign-struct (scan-options (list :options-present :+SO-SCANFLAGS+
-                                                            :scan-flags scan-flags)
+                                                            :scan-flags '(:+SF-ORDER-BY+
+                                                                          :+SF-MULTI-RANGE+))
                                                       '(:struct ndbapi:scan-options))
               ;;(break "~a" (cffi:convert-from-foreign scan-options '(:struct ndbapi:scan-options)))
               (ndbapi:with-ndb-transaction-scan-index (scan (transaction
