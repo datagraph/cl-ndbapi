@@ -411,6 +411,7 @@
   (self ndb-cluster-connection-type)
   (arg1 :pointer))
 
+;; this is actually an internal method of the NDB API
 (cffi:defcfun ("_wrap_Ndb_cluster_connection_wait_until_ready__SWIG_1" #.(swig-lispify "Ndb_cluster_connection_wait_until_ready/SWIG-1" 'function)) :int
   (self ndb-cluster-connection-type)
   (nodes :pointer)
@@ -3845,7 +3846,7 @@
 	(#.(swig-lispify "anyValue" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "customData" 'slotname :keyword) :pointer))
 
-(cffi:defcenum #.(swig-lispify "ScanFlag" 'enumname)
+(cffi:defbitfield #.(swig-lispify "ScanFlag" 'enumname)
 	(#.(swig-lispify "SF_TupScan" 'enumvalue :keyword) #.(cl:ash 1 16))
 	(#.(swig-lispify "SF_DiskScan" 'enumvalue :keyword) #.(cl:ash 2 16))
 	(#.(swig-lispify "SF_OrderBy" 'enumvalue :keyword) #.(cl:ash 1 24))
@@ -3853,8 +3854,7 @@
 	(#.(swig-lispify "SF_Descending" 'enumvalue :keyword) #.(cl:ash 2 24))
 	(#.(swig-lispify "SF_ReadRangeNo" 'enumvalue :keyword) #.(cl:ash 4 24))
 	(#.(swig-lispify "SF_MultiRange" 'enumvalue :keyword) #.(cl:ash 8 24))
-	(#.(swig-lispify "SF_KeyInfo" 'enumvalue :keyword) #.1)
-	(#.(swig-lispify "SF_NoScanFlag" 'enumvalue :keyword) #.0))
+	(#.(swig-lispify "SF_KeyInfo" 'enumvalue :keyword) #.1))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_readTuples__SWIG_0" #.(swig-lispify "NdbScanOperation_readTuples/SWIG-0" 'function)) :int
   (self :pointer)
@@ -4068,7 +4068,7 @@
   (self :pointer))
 
 
-(cffi:defcenum (#.(swig-lispify "ScanOptionsFlags" 'enumname) :unsigned-long-long)
+(cffi:defbitfield (#.(swig-lispify "ScanOptionsFlags" 'enumname) :unsigned-long-long)
         (#.(swig-lispify "SO_SCANFLAGS" 'enumvalue :keyword) #.#x01)
         (#.(swig-lispify "SO_PARALLEL" 'enumvalue :keyword) #.#x02)
         (#.(swig-lispify "SO_BATCH" 'enumvalue :keyword) #.#x04)
@@ -4076,8 +4076,7 @@
         (#.(swig-lispify "SO_PARTITION_ID" 'enumvalue :keyword) #.#x10)
         (#.(swig-lispify "SO_INTERPRETED" 'enumvalue :keyword) #.#x20)
         (#.(swig-lispify "SO_CUSTOMDATA" 'enumvalue :keyword) #.#x40)
-        (#.(swig-lispify "SO_PART_INFO" 'enumvalue :keyword) #.#x80)
-        (#.(swig-lispify "SO_NoScanOptions" 'enumvalue :keyword) #.0))
+        (#.(swig-lispify "SO_PART_INFO" 'enumvalue :keyword) #.#x80))
 
 (cffi:defcstruct #.(swig-lispify "ScanOptions" 'classname)
         ;; the size() function is static and actually not part of the struct
