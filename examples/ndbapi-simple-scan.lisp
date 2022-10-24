@@ -73,18 +73,13 @@
                   (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
                     (ndbapi:with-foreign-struct (bound (list :low-key low-quad
                                                              :low-key-count (length low)
+                                                             :low-inclusive low-inclusive
                                                              :high-key high-quad
                                                              :high-key-count (length high)
+                                                             :high-inclusive high-inclusive
                                                              :range-no 0)
                                                        '(:struct ndbapi:index-bound))
-                      ;; the :boolean slots need to be set explicitly because of double translation
-                      ;; see: cffi issue #300:
-                      ;;      Struct assignment from plist calls convert-to-foreign twice
-                      ;;      https://github.com/cffi/cffi/issues/300
-                      (setf (cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
-                            low-inclusive
-                            (cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :high-inclusive)
-                            high-inclusive)
+                      ;;(cffi:foreign-slot-value bound '(:struct ndbapi:index-bound) :low-inclusive)
 
                       (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
                       (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
