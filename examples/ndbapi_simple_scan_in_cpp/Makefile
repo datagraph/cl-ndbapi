@@ -2,10 +2,10 @@
 all: compile link run
 
 compile:
-	./build-cxx.sh
+	./compile-cxx.sh
 
 link:
 	./link-cxx.sh
 
 run:
-	./call-cxx.sh
+	./run-cxx.sh
