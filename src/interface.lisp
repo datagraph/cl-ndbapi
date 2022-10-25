@@ -28,6 +28,7 @@
                 :ndb-get-dictionary
                 :index-get-default-record
                 :table-get-default-record
+                :ndb-free-object
                 :with-ndb-init
                 :with-ndb-cluster-connection
                 :with-ndb
@@ -66,6 +67,7 @@
            :ndb-transaction-execute
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
+           :ndb-free-object
            :with-ndb-init
            :with-ndb-cluster-connection
            :with-ndb

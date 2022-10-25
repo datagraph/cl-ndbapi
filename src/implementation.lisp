@@ -156,6 +156,10 @@
                          ;; returns void
                          (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
 
+;; low-level free
+
+(setf (fdefinition 'ndb-free-object) (fdefinition 'ndbapi.types:free-foreign-object))
+
 ;; with- macros
 
 (defmacro with-ndb-init ((var &rest args) &body body)
@@ -176,7 +180,7 @@
       ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
       ;; if you free it, you should make a new object in each of your tasks,
       ;; as only that prevents that there ndb is still initialized as long as you use it.
-      (ndbapi.types:free-foreign-object value))))
+      (ndb-free-object value))))
 
 (defmacro with-ndb-cluster-connection ((var &rest args) &body body)
   (let ((op (gensym "OP-")))
@@ -188,7 +192,7 @@
   (declare (dynamic-extent args))
   (let ((value (apply #'new-ndb-cluster-connection args)))
     (unwind-protect (funcall op value)
-      (ndbapi.types:free-foreign-object value))))
+      (ndb-free-object value))))
 
 (defmacro with-ndb ((var &rest args) &body body)
   (let ((op (gensym "OP-")))
@@ -200,7 +204,7 @@
   (declare (dynamic-extent args))
   (let ((value (apply #'new-ndb args)))
     (unwind-protect (funcall op value)
-      (ndbapi.types:free-foreign-object value))))
+      (ndb-free-object value))))
 
 (defmacro with-ndb-transaction ((var &rest args) &body body)
   (let ((op (gensym "OP-")))
