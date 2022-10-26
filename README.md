@@ -1,5 +1,8 @@
 # ndbapi: Common Lisp bindings to the C++ NDB API of RonDB
 
+> **NOTE:** This is an early release and the library still evolving
+> as of 2022-10-25. MGR
+
 This library bases on a FFI binding code that was generated using
 SWIG 3.0.12. It consists of a complete low-level and a nicer
 high-level interface.
