@@ -14,7 +14,7 @@ called the [old style](https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-fin
     ln -s ../cl-ndbapi/ndbapi-examples.asd
     cd ..
 
-You might want to do it [differently](/asdf/Configuring-ASDF-to-find-your-systems.html).
+You might want to do it [differently](https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems.html).
 
 Add a symlink to the `libndbclient.so` library that you want to use:
 
