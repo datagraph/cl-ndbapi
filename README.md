@@ -42,7 +42,7 @@ in an example database observing bounds. See both files for details.
 
 # Installation
 
-The installation instructions are in the separate file [INSTALL](INSTALL).
+The installation instructions are in the separate file [INSTALL.md](INSTALL.md).
 
 
 ## Details on the generation of the FFI bindings
