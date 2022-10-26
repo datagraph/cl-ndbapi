@@ -16,4 +16,5 @@
 
 (defpackage :ndb.simple-scan
   (:use :cl)
+  (:export :simple-scan)
   (:documentation "Simple example using scan"))

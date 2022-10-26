@@ -97,22 +97,22 @@
                                         (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))))))))))
 
 #+(or)
-(ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
-                              :database-name "mgr"
-                              :table-name "test"
-                              :index-name "gspo")
+(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
+                             :database-name "mgr"
+                             :table-name "test"
+                             :index-name "gspo")
            
 #+(or)
-(ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
-                              :database-name "mgr"
-                              :table-name "test"
-                              :index-name "gspo"
-                              :low (list 1106 1105 1105 638) :low-inclusive t
-                              :high (list 1109 1105 1106 1108) :high-inclusive t)
+(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
+                             :database-name "mgr"
+                             :table-name "test"
+                             :index-name "gspo"
+                             :low (list 1106 1105 1105 638) :low-inclusive t
+                             :high (list 1109 1105 1106 1108) :high-inclusive t)
 #+(or)
-(ndb.simple-scan::simple-scan :connection-string "nl3:1186,nl3:1187"
-                              :database-name "mgr"
-                              :table-name "test"
-                              :index-name "gspo"
-                              :low (list 662743 2000000) :low-inclusive t
-                              :high (list 662743 2200000) :high-inclusive t)
+(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
+                             :database-name "mgr"
+                             :table-name "test"
+                             :index-name "gspo"
+                             :low (list 662743 2000000) :low-inclusive t
+                             :high (list 662743 2200000) :high-inclusive t)
