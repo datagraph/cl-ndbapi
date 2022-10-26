@@ -65,6 +65,6 @@ properly. You can also load the lisp version of that patch in file
 
 ## License
 
-Copyright (c) 2022 Max-Gerd Retzlaff <mgr@matroid.org>, Datagraph GmbH.
-Distributed under the terms of the GNU General Public License, Version 2.0,
+Copyright (c) 2022 Max-Gerd Retzlaff <mgr@matroid.org>, Datagraph GmbH.  
+Distributed under the terms of the GNU General Public License, Version 2.0,  
 see file LICENSE in the top level directory of this repository.
