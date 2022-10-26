@@ -1,0 +1,48 @@
+From be99fca341025dab0568d853b6e733a03c5b32a2 Mon Sep 17 00:00:00 2001
+From: Max-Gerd Retzlaff <mgr@matroid.org>
+Date: Mon, 24 Oct 2022 16:14:28 +0200
+Subject: [PATCH] explicitly reset all foreign-boolean-type slots without
+ double translation to foreign
+
+see: cffi issue #300:
+  Struct assignment from plist calls convert-to-foreign twice
+  https://github.com/cffi/cffi/issues/300"
+---
+ src/structures.lisp | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/src/structures.lisp b/src/structures.lisp
+index 315d4b6..fc9e341 100644
+--- a/src/structures.lisp
++++ b/src/structures.lisp
+@@ -38,6 +38,27 @@
+                    (let ((slot (gethash name (structure-slots type))))
+                      (convert-to-foreign value (slot-type slot)))))))
+ 
++(defmethod translate-into-foreign-memory :after ((object list)
++                                                 (type foreign-struct-type)
++                                                 p)
++  "explicitly reset all foreign-boolean-type slots without double translation to foreign;
++see: cffi issue #300:
++  Struct assignment from plist calls convert-to-foreign twice
++  https://github.com/cffi/cffi/issues/300"
++  (unless (bare-struct-type-p type)
++    (loop for (name value) on object by #'cddr
++          do (let* ((slot (gethash name (structure-slots type)))
++                    (stype (slot-type slot))
++                    (ptype (parse-type stype)))
++               ;; (break "slot ~a s: ~a p: ~a a: ~a" slot stype ptype (and (typep ptype 'enhanced-typedef) (actual-type ptype)))
++               (when (or (typep ptype 'foreign-boolean-type)
++                         ;; explictly check for :bool, where the ptype is an ENHANCED-TYPEDEF
++                         ;; and only its actual-type is the foreign-boolean-type
++                         (and (typep ptype 'enhanced-typedef)
++                              (typep (actual-type ptype) 'foreign-boolean-type)))
++                 (setf (foreign-slot-value p (unparse-type type) name)
++                       value))))))
++
+ (defmethod translate-to-foreign (value (type foreign-struct-type))
+   (let ((ptr (foreign-alloc type)))
+     (translate-into-foreign-memory value type ptr)
+-- 
+2.25.1
+

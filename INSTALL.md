@@ -56,6 +56,12 @@ Start your Lisp and try out the [ndbapi-simple-scan example](examples/ndbapi-sim
 
 Enjoy.
 
+**Note**: You might need to add
+[this patch](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.patch)
+to your CFFI so that the boolean flags `:low-inclusive` and `:high-inclusive` work
+properly. You can also load the lisp version of that patch in file
+[0001-explicitly-reset-all-foreign-boolean-type-slots.lisp](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.lisp).
+
 
 ## License
 
