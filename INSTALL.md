@@ -29,12 +29,14 @@ Create and link the C wrapping library `ndbapi_wrap.so`:
 
     make
 
-You might need to update the two scripts `compile-ndbapi-wrap-cxx.sh` and
-`link-ndbapi-wrap-cxx.sh` which are referenced by the `Makefile` and that
-do the actual work, so that `g++` finds the include files and libraries
-of your [RonDB](https://www.rondb.com/) installation.
+You might need to update the two
+scripts [`compile-ndbapi-wrap-cxx.sh`](compile-ndbapi-wrap-cxx.sh)
+and [`link-ndbapi-wrap-cxx.sh`](link-ndbapi-wrap-cxx.sh) which are
+referenced by the [`Makefile`](Makefile) and that do the actual work,
+so that `g++` finds the include files and libraries of
+your [RonDB](https://www.rondb.com/) installation.
 
-Start your Lisp and try out the example:
+Start your Lisp and try out the [ndbapi-simple-scan example](examples/ndbapi-simple-scan.lisp):
 
     sbcl
     * (require :ndbapi-examples)
