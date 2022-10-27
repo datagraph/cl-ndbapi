@@ -1,20 +1,34 @@
 # ndbapi: Common Lisp bindings to the C++ NDB API of RonDB
 
+This library allows to use the
+[NDB&nbsp;API of RonDB](https://docs.rondb.com/rondb_ndb_api/)
+in Common Lisp programs and thus write client applications that
+talk to [RonDB](https://www.rondb.com/).
+
+RonDb is a key-value store providing low latency, high throughput, and
+high availability (actually, Class 6 Availability or "six nines").
+Parallel to the key-value stores capabilities it also provides SQL
+capabilities. As RonDB is an open source distribution of NDB
+Cluster, which is distributed database system underlying
+[MySQL Cluster](https://www.mysql.com/products/cluster),
+these SQL capabilities are actually provided by
+[running MySQL Servers on top of RonDB](https://docs.rondb.com/rondb_arch/).
+
+As a consequence, you can use SQL to setup new databases, tables and
+indexes and so forth, and also to load or export data. While you can
+use the NDB&nbsp;API to efficiently retrieve data, for example, by making
+use of specialized indexes.
+
 > **NOTE:** This is an early release and the library still evolving
 > as of 2022-10-25. MGR
 
-This library bases on a FFI binding code that was generated using
-SWIG 3.0.12. It consists of a complete low-level and a nicer
+# Description of the library and the interfaces it provides
+
+The library bases on a FFI binding code that was generated using
+SWIG&nbsp;3.0.12. It consists of a complete low-level and a nicer
 high-level interface.
 
-The low-level library makes the full NDB API available. But is is hard
-to use as it includes no class hierarchy, and thus exhibits long names,
-and implements no overloading. That is, the overloaded method
-`myNdb.startTransaction()`, for example, is available as the ten separate
-Lisp functions from `_wrap_Ndb_startTransaction__SWIG_0` to
-`_wrap_Ndb_startTransaction__SWIG_9` with varying arguments.
-
-The high-level library makes just those parts of the NDB API available
+The high-level interface makes just those parts of the NDB&nbsp;API available
 that I need to implement a new database backend based on RonDB for our
 graph store but in a much nicer fashion, with scope-based macros such
 as `ndbapi:with-ndb`, `ndbapi:with-ndb-transaction` et cetera, but you
@@ -24,6 +38,13 @@ are hooked up into SBCL's garbage collector with thin Lisp wrapping
 classes so that they get properly freed by the respective destructors
 if they are not referenced anywhere anymore.
 
+The low-level interface makes the full NDB&nbsp;API available. But is is
+hard to use as it includes no class hierarchy, and thus exhibits long
+names, and implements no overloading. That is, the overloaded method
+`myNdb.startTransaction()`, for example, is available as the ten
+separate Lisp functions from `_wrap_Ndb_startTransaction__SWIG_0` to
+`_wrap_Ndb_startTransaction__SWIG_9` with varying arguments.
+
 Care has been taken that NDB is not deinitialized by NDB_END if there
 is still a cluster connection, or a cluster connection is not freed as
 long there are NDB objects that were created using it. Also double
@@ -32,7 +53,8 @@ approaches and still be sure that eventually the GC will free the
 resources when you have missed one.
 
 The exported interface is defined as the package `:ndbapi`
-in file [`src/interface.lisp`](src/interface.lisp).
+in file [`src/interface.lisp`](src/interface.lisp). The implementation
+is in the subdirectory [`src/`](src/) and examples in [`example/`](examples/).
 
 An example application is available in file
 [`examples/ndbapi-simple-scan.lisp`](examples/ndbapi-simple-scan.lisp).
@@ -51,11 +73,11 @@ The installation instructions are in the separate file [INSTALL.md](INSTALL.md).
 ## Details on the generation of the FFI bindings
 
 This library bases on a FFI binding code that was generated
-using SWIG. As CFFI support was disabled in SWIG 4.0.0 and finally
-[completely removed in SWIG 4.1.0](https://github.com/swig/swig/commit/cea25abca535fa27b89eedaf2dd978991b42e1a5),
-SWIG 3.0.12 was used, which is part of Ubuntu 20.04.2 LTS.
+using SWIG. As CFFI support was disabled in SWIG&nbsp;4.0.0 and finally
+[completely removed in SWIG&nbsp;4.1.0](https://github.com/swig/swig/commit/cea25abca535fa27b89eedaf2dd978991b42e1a5),
+SWIG&nbsp;3.0.12 was used, which is part of Ubuntu 20.04.2&nbsp;LTS.
 
-NDB API is a rather substantial C++ library and uses many things not
+NDB&nbsp;API is a rather substantial C++ library and uses many things not
 possible in C while the CFFI module of SWIG has quite a few
 limitations and cannot handle some C++ constructs. Still, SWIG
 successfully generates a complete C wrapping library (using `extern "C"`)
@@ -78,16 +100,16 @@ the same number of arguments but of different types, as, for example,
 `NdbDictionary::getValuePtr()`, the constructor of the `Column` class,
 or `Table::getColumn()`.
 
-SWIG 3.0.1 just created CFFI bindings with the same lisp name for a
+SWIG&nbsp;3.0.1 just created CFFI bindings with the same lisp name for a
 family of overloaded methods, which conflicted, of course, while the
 CLOS interface just tries to call these function, ignoring the fact
 that there is overloading supposed to be involved.
 
 In the end, after exploring other versions of SWIG (see section
 "Exploration of other SWIG versions ..." for details), the CFFI
-bindings generated by SWIG 3.0.1 were used, completely ignoring the
+bindings generated by SWIG&nbsp;3.0.1 were used, completely ignoring the
 CLOS interface in `ndbapi-clos.lisp`. This simple CFFI interface could
-be generated for the full NDB API interface and seemed complete.
+be generated for the full NDB&nbsp;API interface and seemed complete.
 Afterwards, many translation problems or errors were manually fixed.
 
 I have change the conflicting Lisp names in an automated fashion to
@@ -110,10 +132,10 @@ An attempt was made to use the enhanced variant
 ['swig-cpp-to-cffi-for-common-lisp-enhancements`](https://github.com/glycerine/swig-cpp-to-cffi-for-common-lisp-enhancements)
 of SWIG which was authored by Jason E. Aten in 2011, who spent quite
 some time to make the CFFI module for SWIG work for "a large codebase
-of C and C+". Sadly, this version choked on some parts of the NDB API,
+of C and C+". Sadly, this version choked on some parts of the NDB&nbsp;API,
 as, for example, structs with constructors, and it just exited with
 a SEGFAULT. It was possible generate a version for a smaller subset of
-the NDB API, after taking out problematic parts of it that were determined
+the NDB&nbsp;API, after taking out problematic parts of it that were determined
 by having a version of SWIG with debug logging activated and running it
 from within GDB.
 
@@ -127,7 +149,7 @@ the above mentioned `NdbDictionary::getValuePtr()`, seem to be just missing
 from the CLOS interface.
 
 In the end, this attempt was aborted, as the generated interface seemed
-to be incomplete even when only parts of the NDB API were translated.
+to be incomplete even when only parts of the NDB&nbsp;API were translated.
 
 It is noted that Nikolai Matiushev attempted to ("Revive CFFI Common Lisp support")
 in 2021](https://github.com/swig/swig/pull/1966) but this seems to
