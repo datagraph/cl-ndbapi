@@ -36,7 +36,56 @@ referenced by the [`Makefile`](Makefile) and that do the actual work,
 so that `g++` finds the include files and libraries of
 your [RonDB](https://www.rondb.com/) installation.
 
-Start your Lisp and try out the [ndbapi-simple-scan example](examples/ndbapi-simple-scan.lisp):
+**Note**: You might need to add
+[this patch](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.patch)
+to your CFFI so that the boolean flags `:low-inclusive` and `:high-inclusive` work
+properly. You can also load the lisp version of that patch in file
+[0001-explicitly-reset-all-foreign-boolean-type-slots.lisp](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.lisp).
+
+That's all.
+
+
+## Testing the library
+
+As a first test, try out the
+[ndbapi-simple-scan example](examples/ndbapi-simple-scan.lisp).
+
+To do so first, create a database and table and load
+[some example data](examples/data.tsv):
+
+    mysql --socket=/path/to/mysqld.sock --local-infile
+    mysql> create database mgr;
+    Query OK, 1 row affected (0.13 sec)
+    mysql> use mgr;
+    Database changed
+    mysql>    create table test
+        ->           (s int unsigned not null, p int unsigned not null,
+        ->            o int unsigned not null, g int unsigned not null,
+        ->            index gspo (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
+        ->            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g));
+    Query OK, 0 rows affected (0.34 sec)
+    mysql> load data infile '/path/to/data.tsv' into table test;
+    Query OK, 10 rows affected (0.01 sec)
+    Records: 10  Deleted: 0  Skipped: 0  Warnings: 0
+
+    mysql> select * from test;
+    +------+------+---------+----------+
+    | s    | p    | o       | g        |
+    +------+------+---------+----------+
+    | 1105 | 1105 | 2108201 |  2108202 |
+    | 1105 | 1106 |    1108 |     1109 |
+    | 1105 | 1106 |    1137 |     1119 |
+    | 1105 | 1106 | 2108181 |   662743 |
+    | 1105 | 1105 | 1803125 | 51483456 |
+    | 1105 | 1106 | 2108179 | 51483457 |
+    | 1105 | 1106 |  603481 |  2108178 |
+    | 1105 | 1105 |     638 |     1106 |
+    | 1105 | 1106 |       1 |     1107 |
+    | 1105 | 1106 |  106314 |   662743 |
+    +------+------+---------+----------+
+    10 rows in set (0.00 sec)
+
+Now start your Lisp and run the [ndbapi-simple-scan example](examples/ndbapi-simple-scan.lisp):
 
     sbcl
     * (require :ndbapi-examples)
@@ -54,13 +103,33 @@ Start your Lisp and try out the [ndbapi-simple-scan example](examples/ndbapi-sim
     NIL
     * (quit)
 
-Enjoy.
+Observe that the call correctly retrieved the colums observing
+the given `low` and `high` bounds, which are based on the order
+`GSPO`, that is, `Graph`, `Subject`, `Predicate`, `Object`,
+and that the result is also ordered accordingly.
 
-**Note**: You might need to add
-[this patch](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.patch)
-to your CFFI so that the boolean flags `:low-inclusive` and `:high-inclusive` work
-properly. You can also load the lisp version of that patch in file
-[0001-explicitly-reset-all-foreign-boolean-type-slots.lisp](cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.lisp).
+For comparison, you can also compile, link and run the
+[C++ version of the example](examples/ndbapi_simple_scan_in_cpp/ndbapi_simple_scan.cpp).
+All done by just executing the
+[respective Makefile](examples/ndbapi_simple_scan_in_cpp/Makefile):
+
+    cd examples/ndbapi_simple_scan_in_cpp
+    make
+
+which should output:
+
+    ./compile-cxx.sh
+    ./link-cxx.sh
+    ./run-cxx.sh
+    Start execute
+    Done executed
+    Start printing
+    1105    1105    638     1106
+    1105    1106    1       1107
+    1105    1106    1108    1109
+    Done printing
+
+Enjoy.
 
 
 ## License
