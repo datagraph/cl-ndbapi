@@ -37,9 +37,9 @@ graph store but in a much nicer fashion, with scope-based macros such
 as `ndbapi:with-ndb`, `ndbapi:with-ndb-transaction` et cetera, but you
 can also explicitly free the objects with `ndbapi:ndb-free-object` or
 just let the the GC take care of them, as the constructed C++ objects
-are hooked up into SBCL's garbage collector with thin Lisp wrapping
-classes so that they get properly freed by the respective destructors
-if they are not referenced anywhere anymore.
+are hooked up into [SBCL](http://www.sbcl.org/)'s garbage collector with
+thin Lisp wrapping classes so that they get properly freed by the respective
+destructors if they are not referenced anywhere anymore.
 
 The low-level interface makes the full NDB&nbsp;API available. But is is
 hard to use as it includes no class hierarchy, and thus exhibits long
