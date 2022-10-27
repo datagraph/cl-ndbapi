@@ -89,6 +89,8 @@ Now start your Lisp and run the [ndbapi-simple-scan example](examples/ndbapi-sim
 
     sbcl
     * (require :ndbapi-examples)
+    * ;; load the CFFI patch if it is not included in your CFFI already:
+    * ;; (load "cffi-patch/0001-explicitly-reset-all-foreign-boolean-type-slots.lisp")
     * (ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
                                    :database-name "mgr"
                                    :table-name "test"
