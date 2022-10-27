@@ -5123,31 +5123,31 @@
 	(#.(swig-lispify "mem_alloc" 'slotname :keyword) :pointer)
 	(#.(swig-lispify "mem_free" 'slotname :keyword) :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_0" #.(swig-lispify "new_NdbInterpretedCode/SWIG-0" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_0" #.(swig-lispify "new_NdbInterpretedCode/SWIG-0%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
   (table :pointer)
   (buffer :pointer)
   (buffer_word_size :unsigned-int))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_1" #.(swig-lispify "new_NdbInterpretedCode/SWIG-1" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_1" #.(swig-lispify "new_NdbInterpretedCode/SWIG-1%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
   (table :pointer)
   (buffer :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_2" #.(swig-lispify "new_NdbInterpretedCode/SWIG-2" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_2" #.(swig-lispify "new_NdbInterpretedCode/SWIG-2%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
   (table :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_3" #.(swig-lispify "new_NdbInterpretedCode/SWIG-3" 'function)) (ndb-interpreted-code-type :garbage-collect t))
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_3" #.(swig-lispify "new_NdbInterpretedCode/SWIG-3%" 'function)) (ndb-interpreted-code-type :garbage-collect t))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_4" #.(swig-lispify "new_NdbInterpretedCode/SWIG-4" 'function)) (ndb-interpreted-code-type :garbage-collect t)
-  (arg0 :pointer)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_4" #.(swig-lispify "new_NdbInterpretedCode/SWIG-4%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+  (ndb-record :pointer)
   (buffer :pointer)
   (buffer_word_size :unsigned-int))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_5" #.(swig-lispify "new_NdbInterpretedCode/SWIG-5" 'function)) (ndb-interpreted-code-type :garbage-collect t)
-  (arg0 :pointer)
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_5" #.(swig-lispify "new_NdbInterpretedCode/SWIG-5%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+  (ndb-record :pointer)
   (buffer :pointer))
 
-(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_6" #.(swig-lispify "new_NdbInterpretedCode/SWIG-6" 'function)) (ndb-interpreted-code-type :garbage-collect t)
-  (arg0 :pointer))
+(cffi:defcfun ("_wrap_new_NdbInterpretedCode__SWIG_6" #.(swig-lispify "new_NdbInterpretedCode/SWIG-6%" 'function)) (ndb-interpreted-code-type :garbage-collect t)
+  (ndb-record :pointer))
 
 (cffi:defcfun ("_wrap_delete_NdbInterpretedCode" #.(swig-lispify "delete_NdbInterpretedCode" 'function)) :void
   (self ndb-interpreted-code-type))
