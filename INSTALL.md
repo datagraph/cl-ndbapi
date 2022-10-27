@@ -4,10 +4,13 @@ Get the repository:
 
     git clone https://github.com/datagraph/cl-ndbapi
 
-Configuring ASDF to find the systems specified in [`ndbapi.asd`](ndbapi.asd) and
-[`ndbapi-examples.asd`](ndbapi-examples.asd). I still do that by adding symlinks to them
-from my systems directory, that is, what is apparently nowadays
-called the [old style](https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems-_002d_002d_002d-old-style.html):
+Configure [ASDF](https://asdf.common-lisp.dev) to find the systems
+specified in [`ndbapi.asd`](ndbapi.asd) and
+[`ndbapi-examples.asd`](ndbapi-examples.asd). I still do that by
+adding symlinks to them from my systems directory, that is, what is
+apparently nowadays called
+the
+[old style](https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems-_002d_002d_002d-old-style.html):
 
     cd systems
     ln -s ../cl-ndbapi/ndbapi.asd

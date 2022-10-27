@@ -58,8 +58,9 @@ resources when you have missed one.
 The exported interface is defined as the package `:ndbapi`
 in file [`src/interface.lisp`](src/interface.lisp). The implementation
 is in the subdirectory [`src/`](src/), the examples in [`example/`](examples/),
-and the ASDF system definitions in the top level directory in the files
-[`ndbapi.asd`](ndbapi.asd) and [`ndbapi-examples.asd`](ndbapi-examples.asd).
+and the [ASDF](https://asdf.common-lisp.dev) system definitions in the
+top level directory in the files [`ndbapi.asd`](ndbapi.asd) and
+[`ndbapi-examples.asd`](ndbapi-examples.asd).
 
 An example application is available in file
 [`examples/ndbapi-simple-scan.lisp`](examples/ndbapi-simple-scan.lisp).
