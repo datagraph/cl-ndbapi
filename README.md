@@ -4,8 +4,9 @@ This library allows to use the
 [NDB&nbsp;API of RonDB](https://docs.rondb.com/rondb_ndb_api/)
 in Common Lisp programs and thus write client applications that
 talk to [RonDB](https://www.rondb.com/).
-RonDb is a key-value store providing low latency, high throughput, and
-high availability (actually, Class 6 Availability or "six nines").
+RonDb is a key-value store providing low latency, high throughput,
+and high availability (actually,
+[Class 6 Availability or "six nines"](https://www.logicalclocks.com/blog/rondb-the-worlds-fastest-key-value-store-is-now-in-the-cloud)).
 
 Parallel to the key-value stores capabilities it also provides SQL
 capabilities. As RonDB is an open source distribution of NDB
@@ -14,10 +15,10 @@ Cluster, which is distributed database system underlying
 these SQL capabilities are actually provided by
 [running MySQL Servers on top of RonDB](https://docs.rondb.com/rondb_arch/).
 
-As a consequence, you can use SQL to setup new databases, tables and
-indexes and so forth, and also to load or export data. While you can
-use the NDB&nbsp;API to efficiently retrieve data, for example, by making
-use of specialized indexes.
+As a consequence, you can use SQL to setup new databases, tables,
+indexes and so forth, and also to load or export data, while you can
+use the NDB&nbsp;API to efficiently retrieve data, for example, by
+making use of specialized indexes.
 
 > **NOTE:** This is an early release and the library still evolving
 > as of 2022-10-25. MGR
