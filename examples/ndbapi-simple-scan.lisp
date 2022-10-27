@@ -27,6 +27,7 @@
                          high (high-inclusive t))
   (ndbapi:with-ndb-init (ndb-init)
     (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
+      (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
       (ndbapi:ndb-cluster-connection-connect cluster-connection
                                              ;; retries:
                                              4
