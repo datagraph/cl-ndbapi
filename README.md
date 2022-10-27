@@ -166,7 +166,7 @@ generated high-level interface.
 
 ## License
 
-Copyright (c) 2022 Max-Gerd Retzlaff, Datagraph GmbH.
+Copyright (c) 2022 Max-Gerd Retzlaff <mgr@matroid.org>, Datagraph GmbH.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2.0,
