@@ -4,9 +4,9 @@ This library allows to use the
 [NDB&nbsp;API of RonDB](https://docs.rondb.com/rondb_ndb_api/)
 in Common Lisp programs and thus write client applications that
 talk to [RonDB](https://www.rondb.com/).
-
 RonDb is a key-value store providing low latency, high throughput, and
 high availability (actually, Class 6 Availability or "six nines").
+
 Parallel to the key-value stores capabilities it also provides SQL
 capabilities. As RonDB is an open source distribution of NDB
 Cluster, which is distributed database system underlying
@@ -22,7 +22,7 @@ use of specialized indexes.
 > **NOTE:** This is an early release and the library still evolving
 > as of 2022-10-25. MGR
 
-# Description of the library and the interfaces it provides
+## Description of the library and the interfaces it provides
 
 The library bases on a FFI binding code that was generated using
 SWIG&nbsp;3.0.12. It consists of a complete low-level and a nicer
@@ -65,7 +65,7 @@ The example uses a secondary index as a scan index to iterate over columns
 in an example database observing bounds. See both files for details.
 
 
-# Installation
+## Installation
 
 The installation instructions are in the separate file [INSTALL.md](INSTALL.md).
 
