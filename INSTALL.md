@@ -4,8 +4,8 @@ Get the repository:
 
     git clone https://github.com/datagraph/cl-ndbapi
 
-Configuring ASDF to find the systems specified in `ndbapi.asd` and
-`ndbapi-examples.asd`. I still do that by adding symlinks to them
+Configuring ASDF to find the systems specified in [`ndbapi.asd`](ndbapi.asd) and
+[`ndbapi-examples.asd`](ndbapi-examples.asd). I still do that by adding symlinks to them
 from my systems directory, that is, what is apparently nowadays
 called the [old style](https://asdf.common-lisp.dev/asdf/Configuring-ASDF-to-find-your-systems-_002d_002d_002d-old-style.html):
 
@@ -105,7 +105,7 @@ Now start your Lisp and run the [ndbapi-simple-scan example](examples/ndbapi-sim
     NIL
     * (quit)
 
-Observe that the call correctly retrieved the colums observing
+Observe that the call correctly retrieved the columns observing
 the given `low` and `high` bounds, which are based on the order
 `GSPO`, that is, `Graph`, `Subject`, `Predicate`, `Object`,
 and that the result is also ordered accordingly.

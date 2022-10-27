@@ -8,9 +8,9 @@ RonDb is a key-value store providing low latency, high throughput,
 and high availability (actually,
 [Class 6 Availability or "six nines"](https://www.logicalclocks.com/blog/rondb-the-worlds-fastest-key-value-store-is-now-in-the-cloud)).
 
-Parallel to the key-value stores capabilities it also provides SQL
+Parallel to the key-value stores capabilities RonDB also provides SQL
 capabilities. As RonDB is an open source distribution of NDB
-Cluster, which is distributed database system underlying
+Cluster, which is the distributed database system underlying
 [MySQL Cluster](https://www.mysql.com/products/cluster),
 these SQL capabilities are actually provided by
 [running MySQL Servers on top of RonDB](https://docs.rondb.com/rondb_arch/).
@@ -57,7 +57,9 @@ resources when you have missed one.
 
 The exported interface is defined as the package `:ndbapi`
 in file [`src/interface.lisp`](src/interface.lisp). The implementation
-is in the subdirectory [`src/`](src/) and examples in [`example/`](examples/).
+is in the subdirectory [`src/`](src/), the examples in [`example/`](examples/),
+and the ASDF system definitions in the top level directory in the files
+[`ndbapi.asd`](ndbapi.asd) and [`ndbapi-examples.asd`](ndbapi-examples.asd).
 
 An example application is available in file
 [`examples/ndbapi-simple-scan.lisp`](examples/ndbapi-simple-scan.lisp).
