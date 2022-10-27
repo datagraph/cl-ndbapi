@@ -18,7 +18,9 @@ these SQL capabilities are actually provided by
 As a consequence, you can use SQL to setup new databases, tables,
 indexes and so forth, and also to load or export data, while you can
 use the NDB&nbsp;API to efficiently retrieve data, for example, by
-making use of specialized indexes.
+making use of specialized indexes. Look at the [instruction on how
+to test this library](INSTALL.md#testing-the-library) for an example
+for this.
 
 > **NOTE:** This is an early release and the library still evolving
 > as of 2022-10-25. MGR
