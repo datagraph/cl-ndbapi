@@ -20,13 +20,15 @@
                 :dictionary-get-index
                 :ndb-transaction-scan-index
                 :ndb-index-scan-operation-set-bound
-                ;; :ndb-index-scan-operation-read-tuples
+                :ndb-transaction-get-ndb-index-scan-operation
+                :ndb-index-scan-operation-read-tuples
                 :ndb-transaction-execute
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
                 :new-ndb-interpreted-code
                 :ndb-interpreted-code-interpret-exit-last-row
                 :ndb-interpreted-code-finalise
+                :ndb-scan-operation-set-interpreted-code
                 :ndb-begin
                 :ndb-get-dictionary
                 :index-get-default-record
@@ -37,6 +39,7 @@
                 :with-ndb
                 :with-ndb-transaction
                 :with-ndb-transaction-scan-index
+                :with-ndb-transaction-get-ndb-index-scan-operation
                 :with-ndb-interpreted-code)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
@@ -67,19 +70,22 @@
            :dictionary-get-index
            :ndb-transaction-scan-index
            :ndb-index-scan-operation-set-bound
-           ;; :ndb-index-scan-operation-read-tuples
+           :ndb-transaction-get-ndb-index-scan-operation
+           :ndb-index-scan-operation-read-tuples
            :ndb-transaction-execute
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
            :new-ndb-interpreted-code
            :ndb-interpreted-code-interpret-exit-last-row
            :ndb-interpreted-code-finalise
+           :ndb-scan-operation-set-interpreted-code
            :ndb-free-object
            :with-ndb-init
            :with-ndb-cluster-connection
            :with-ndb
            :with-ndb-transaction
            :with-ndb-transaction-scan-index
+           :with-ndb-transaction-get-ndb-index-scan-operation
            :with-ndb-interpreted-code
            ;; from :ndbapi.ffi
            :ndb-get-dictionary

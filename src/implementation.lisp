@@ -131,9 +131,12 @@
                          "set-bound() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
-;; cannot use in our usage pattern as it leads to:
-;; ndb-index-scan-operation-read-tuples() failed: Error with code 4284: Cannot mix NdbRecAttr and NdbRecord methods in one operation
-#+(or)
+(make-interface-function ndb-transaction-get-ndb-index-scan-operation
+                         (ndbapi.ffi::ndb-transaction-get-ndb-index-scan-operation/swig-2 transaction an-index)
+                         #'valid-object-p
+                         "transaction-get-ndb-index-scan-operation() failed: ~a"
+                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
 (make-interface-function ndb-index-scan-operation-read-tuples
                          (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
                          #'zerop
@@ -172,6 +175,12 @@
                          #'zerop
                          "finalize() failed: ~a"
                          (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error))
+
+(make-interface-function ndb-scan-operation-set-interpreted-code
+                         (ndbapi.ffi::ndb-scan-operation-set-interpreted-code scan code)
+                         #'zerop
+                         "ndb-scan-operation-set-interpreted-code() failed: ~a"
+                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
 ;; low-level free
 
@@ -247,6 +256,21 @@
 (defun call-with-ndb-transaction-scan-index (op &key open-args close-args)
   (declare (dynamic-extent open-args close-args))
   (let ((value (apply #'ndb-transaction-scan-index open-args)))
+    (unwind-protect (funcall op value)
+      ;; returns no value
+      (apply #'ndb-scan-operation-close value close-args))))
+
+(defmacro with-ndb-transaction-get-ndb-index-scan-operation ((var (&rest open-args) (&rest close-args)) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-transaction-get-ndb-index-scan-operation #',op
+                                                               :open-args (list ,@open-args)
+                                                               :close-args (list ,@close-args)))))
+
+(defun call-with-ndb-transaction-get-ndb-index-scan-operation (op &key open-args close-args)
+  (declare (dynamic-extent open-args close-args))
+  (let ((value (apply #'ndb-transaction-get-ndb-index-scan-operation open-args)))
     (unwind-protect (funcall op value)
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
