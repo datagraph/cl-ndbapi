@@ -13,7 +13,7 @@
                 :ndb-cluster-connection-connect
                 :ndb-cluster-connection-wait-until-ready
                 :new-ndb
-                :ndb-init ;; renamed to avoid conflict
+                :ndb-init ;; other ndb-init renamed to :ndb-begin to avoid conflict
                 :ndb-get-ndb-error
                 :ndb-start-transaction
                 :dictionary-get-table
@@ -29,7 +29,7 @@
                 :ndb-interpreted-code-interpret-exit-last-row
                 :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
-                :ndb-begin
+                :ndb-begin ;; this ndb-init renamed to :ndb-begin to avoid conflict
                 :ndb-get-dictionary
                 :index-get-default-record
                 :table-get-default-record
