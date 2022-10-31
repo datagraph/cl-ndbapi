@@ -18,3 +18,8 @@
   (:use :cl)
   (:export :simple-scan)
   (:documentation "Simple example using scan"))
+
+(defpackage :ndb.scan-count
+  (:use :cl)
+  (:export :scan-count)
+  (:documentation "Simple example using scan"))
