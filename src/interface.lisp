@@ -24,6 +24,9 @@
                 :ndb-transaction-execute
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
+                :new-ndb-interpreted-code
+                :ndb-interpreted-code-interpret-exit-last-row
+                :ndb-interpreted-code-finalise
                 :ndb-begin
                 :ndb-get-dictionary
                 :index-get-default-record
@@ -33,7 +36,8 @@
                 :with-ndb-cluster-connection
                 :with-ndb
                 :with-ndb-transaction
-                :with-ndb-transaction-scan-index)
+                :with-ndb-transaction-scan-index
+                :with-ndb-interpreted-code)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -67,12 +71,16 @@
            :ndb-transaction-execute
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
+           :new-ndb-interpreted-code
+           :ndb-interpreted-code-interpret-exit-last-row
+           :ndb-interpreted-code-finalise
            :ndb-free-object
            :with-ndb-init
            :with-ndb-cluster-connection
            :with-ndb
            :with-ndb-transaction
            :with-ndb-transaction-scan-index
+           :with-ndb-interpreted-code
            ;; from :ndbapi.ffi
            :ndb-get-dictionary
            :dictionary-get-ndb-error

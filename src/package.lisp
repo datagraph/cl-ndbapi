@@ -21,7 +21,8 @@
            :index-get-name
            :ndb-scan-operation-get-ndb-transaction
            :ndb-close-transaction
-           :ndb-transaction-get-ndb)
+           :ndb-transaction-get-ndb
+           :ndb-interpreted-code-get-ndb-error)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.ffi.overloading

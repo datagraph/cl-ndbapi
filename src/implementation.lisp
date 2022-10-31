@@ -143,7 +143,7 @@
 (make-interface-function ndb-transaction-execute
                          (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
                          #'zerop
-                         "transactino-execute() failed: ~a"
+                         "transaction-execute() failed: ~a"
                          (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
 (make-interface-function ndb-scan-operation-next-result
@@ -155,6 +155,23 @@
 (make-interface-function ndb-scan-operation-close
                          ;; returns void
                          (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
+
+(make-interface-function new-ndb-interpreted-code
+                         (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
+                         #'valid-object-p
+                         "Create new ndb-interpreted-code object failed")
+
+(make-interface-function ndb-interpreted-code-interpret-exit-last-row
+                         (ndbapi.ffi::ndb-interpreted-code-interpret-exit-last-row code)
+                         #'zerop
+                         "interpret-exit-last-row() failed: ~a"
+                         (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error))
+
+(make-interface-function ndb-interpreted-code-finalise
+                         (ndbapi.ffi::ndb-interpreted-code-finalise code)
+                         #'zerop
+                         "finalize() failed: ~a"
+                         (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error))
 
 ;; low-level free
 
@@ -233,3 +250,15 @@
     (unwind-protect (funcall op value)
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
+
+(defmacro with-ndb-interpreted-code ((var &rest args) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-interpreted-code #',op ,@args))))
+
+(defun call-with-ndb-interpreted-code (op &rest args)
+  (declare (dynamic-extent args))
+  (let ((value (apply #'new-ndb-interpreted-code args)))
+    (unwind-protect (funcall op value)
+      (ndb-free-object value))))
