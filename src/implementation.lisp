@@ -300,3 +300,37 @@
   (let ((value (apply #'new-ndb-interpreted-code args)))
     (unwind-protect (funcall op value)
       (ndb-free-object value))))
+
+;; pseudo columns
+
+(defmacro make-enum-accessors (enum-name &rest fields)
+  (let ((enum (find-symbol (format nil "~a" enum-name) :ndbapi.ffi)))
+    `(progn
+       ,@(loop for field in fields
+               for lisp-name = (ndbapi.ffi::swig-lispify (symbol-name field) 'enumvalue :keyword)
+               for keyword = (intern (format nil "+~a+" lisp-name) :keyword)
+               for pc-keyword = (intern (format nil "+PC-~a+" lisp-name) :keyword)
+               collect `(defun ,(intern (format nil "~a.~a" enum-name keyword)) ()
+                          (cffi:foreign-enum-value ',enum ,pc-keyword))))))
+
+(make-enum-accessors pseudo-columns
+                     FRAGMENT
+                     FRAGMENT_FIXED_MEMORY
+                     FRAGMENT_VARSIZED_MEMORY
+                     ROW_COUNT
+                     COMMIT_COUNT
+                     ROW_SIZE
+                     RANGE_NO
+                     DISK_REF
+                     RECORDS_IN_RANGE
+                     ROWID
+                     ROW_GCI
+                     ROW_GCI64nn
+                     ROW_AUTHOR
+                     ANY_VALUE
+                     COPY_ROWID
+                     LOCK_REF
+                     OP_ID
+                     OPTIMIZE
+                     FRAGMENT_EXTENT_SPACE
+                     FRAGMENT_FREE_EXTENT_SPACE)
