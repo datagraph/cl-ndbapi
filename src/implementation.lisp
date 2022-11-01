@@ -156,7 +156,7 @@
                          (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
 (make-interface-function ndb-scan-operation-next-result
-                         (ndbapi.ffi::ndb-scan-operation-next-result/swig-3 scan out-row-ptr fetch-allowed force-send)
+                         (ndbapi.ffi.o::ndb-scan-operation-next-result scan &rest args) ;; out-row-ptr fetch-allowed force-send
                          (lambda (rc) (>= rc 0)) ;; only -1 indicates error, 0, 1, and 2 are valid and indicate different situations
                          "scan-operation-next-result() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
