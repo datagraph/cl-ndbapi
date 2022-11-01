@@ -3902,7 +3902,7 @@
 
 (cffi:defcfun ("_wrap_NdbScanOperation_setInterpretedCode" #.(swig-lispify "NdbScanOperation_setInterpretedCode" 'function)) :int
   (self :pointer)
-  (code :pointer))
+  (code ndb-interpreted-code-type))
 
 (cffi:defcfun ("_wrap_NdbScanOperation_nextResult__SWIG_0" #.(swig-lispify "NdbScanOperation_nextResult/SWIG-0" 'function)) :int
   (self :pointer)
