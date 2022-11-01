@@ -41,3 +41,4 @@ WARNING: this only works when there are no multiple functions with the same arit
 
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "Ndb_init" 'function))
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_scanIndex" 'function))
+(overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbScanOperation_close" 'function))

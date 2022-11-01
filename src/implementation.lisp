@@ -157,7 +157,7 @@
 
 (make-interface-function ndb-scan-operation-close
                          ;; returns void
-                         (ndbapi.ffi::ndb-scan-operation-close/swig-1 scan force-send))
+                         (ndbapi.ffi.o::ndb-scan-operation-close scan &rest args))
 
 (make-interface-function new-ndb-interpreted-code
                          (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
