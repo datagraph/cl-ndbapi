@@ -59,57 +59,62 @@
                   (ndbapi:with-ndb-transaction-get-ndb-index-scan-operation (scan (transaction index)
                                                                              ())
                     (ndbapi:ndb-index-scan-operation-read-tuples scan :+LM-READ+ scan-flags)
-                    ;;(ndbapi:ndb-scan-operation-set-interpreted-code scan code)
+                    (ndbapi:ndb-scan-operation-set-interpreted-code scan code)
 
-                    ;; set bounds for scan
-                    (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
-                      (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
-                        ;; set lower bound with old setBound api
-                        (loop with max = (1- (length low))
-                              for i from 0 to max
-                              ;; for value in low
-                              for value-ptr = (cffi:mem-aptr low-quad :unsigned-int i)
-                              for attr = (subseq index-name i (1+ i))
-                              for type = (if (< i max)
-                                             ;; "all but possibly the last bound must be nonstrict"
-                                             :+BOUND-LE+
-                                             (if low-inclusive
-                                                 :+BOUND-LE+
-                                                 :+BOUND-LT+))
-                              do #+(or)(print (list 'low i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
-                                 (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
-                        ;; set upper bound with old setBound api
-                        (loop with max = (1- (length high))
-                              for i from 0 to max
-                              ;; for value in high
-                              for value-ptr = (cffi:mem-aptr high-quad :unsigned-int i)
-                              for attr = (subseq index-name i (1+ i))
-                              for type = (if (< i max)
-                                             ;; "all but possibly the last bound must be nonstrict"
-                                             :+BOUND-GE+
-                                             (if high-inclusive
-                                                 :+BOUND-GE+
-                                                 :+BOUND-GT+))
-                              do #+(or)(print (list 'high i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
-                                 (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
-                        (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
+                    (cffi:with-foreign-object (count-ptr :uint64)
+                      ;; set bounds for scan
+                      (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
+                        (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
+                          ;; set lower bound with old setBound api
+                          (loop with max = (1- (length low))
+                                for i from 0 to max
+                                ;; for value in low
+                                for value-ptr = (cffi:mem-aptr low-quad :unsigned-int i)
+                                for attr = (subseq index-name i (1+ i))
+                                for type = (if (< i max)
+                                               ;; "all but possibly the last bound must be nonstrict"
+                                               :+BOUND-LE+
+                                               (if low-inclusive
+                                                   :+BOUND-LE+
+                                                   :+BOUND-LT+))
+                                do #+(or)(print (list 'low i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
+                                   (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
+                          ;; set upper bound with old setBound api
+                          (loop with max = (1- (length high))
+                                for i from 0 to max
+                                ;; for value in high
+                                for value-ptr = (cffi:mem-aptr high-quad :unsigned-int i)
+                                for attr = (subseq index-name i (1+ i))
+                                for type = (if (< i max)
+                                               ;; "all but possibly the last bound must be nonstrict"
+                                               :+BOUND-GE+
+                                               (if high-inclusive
+                                                   :+BOUND-GE+
+                                                   :+BOUND-GT+))
+                                do #+(or)(print (list 'high i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
+                                   (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
 
-                    ;; // Check rc anyway
+                          ;; configure to get row count
+                          (ndbapi:ndb-operation-get-value scan (ndbapi:pseudo-columns.+row-count+) count-ptr)
+                          (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
-                    ;; do scan and print
-                    (format t "~&table: ~a" table-name)
-                    (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
-                    (cffi:with-foreign-pointer (row-data 1)
-                      (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
-                            for j from 0
-                            while (zerop rc)
-                            for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
-                            do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
-                            finally (assert (= rc 1)
-                                            ()
-                                            "scan-operation-next-result() failed: ~a"
-                                            (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))))))))
-      (sleep 10))))
+                      ;; // Check rc anyway
+
+                      ;; do scan and print
+                      (format t "~&table: ~a" table-name)
+                      (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
+                      (cffi:with-foreign-object (row-data :pointer)
+                        (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
+                              for j from 0
+                              while (zerop rc)
+                              for count = (cffi:mem-ref count-ptr :uint64)
+                              for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
+                              do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
+                                 (format t "~&count: ~8d" count)
+                              finally (assert (= rc 1)
+                                              ()
+                                              "scan-operation-next-result() failed: ~a"
+                                              (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))))))))))))
 
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
