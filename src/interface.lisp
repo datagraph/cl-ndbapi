@@ -30,6 +30,7 @@
                 :ndb-interpreted-code-interpret-exit-last-row
                 :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
+                :ndb-operation-get-value
                 :ndb-begin ;; this ndb-init renamed to :ndb-begin to avoid conflict
                 :ndb-get-dictionary
                 :index-get-default-record
@@ -49,6 +50,7 @@
                 :index-bound
                 :index-get-name
                 :ndb-scan-operation-get-ndb-transaction
+                :ndb-operation-get-ndb-transaction
                 :ndb-close-transaction
                 :scan-options)
   (:import-from :ndbapi.types
@@ -81,6 +83,7 @@
            :ndb-interpreted-code-interpret-exit-last-row
            :ndb-interpreted-code-finalise
            :ndb-scan-operation-set-interpreted-code
+           :ndb-operation-get-value
            :ndb-free-object
            :with-ndb-init
            :with-ndb-cluster-connection

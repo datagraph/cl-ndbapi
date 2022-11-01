@@ -20,6 +20,7 @@
            :index-bound
            :index-get-name
            :ndb-scan-operation-get-ndb-transaction
+           :ndb-operation-get-ndb-transaction
            :ndb-close-transaction
            :ndb-transaction-get-ndb
            :ndb-interpreted-code-get-ndb-error)

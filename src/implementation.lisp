@@ -188,6 +188,14 @@
                          "ndb-scan-operation-set-interpreted-code() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+
+(make-interface-function ndb-operation-get-value
+                         (ndbapi.ffi::ndb-operation-get-value/swig-2 ndb-operation an-attr-id a-value)
+                         #'valid-object-p
+                         "ndb-scan-operation-set-interpreted-code() failed: ~a"
+                         (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
+
 ;; low-level free
 
 (setf (fdefinition 'ndb-free-object) (fdefinition 'ndbapi.types:free-foreign-object))
