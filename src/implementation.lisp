@@ -131,6 +131,12 @@
                          "set-bound() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+(make-interface-function ndb-index-scan-operation-set-bound/recattr
+                         (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-1 index-scan attr type value)
+                         #'zerop
+                         "set-bound() failed: ~a"
+                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
 (make-interface-function ndb-transaction-get-ndb-index-scan-operation
                          (ndbapi.ffi::ndb-transaction-get-ndb-index-scan-operation/swig-2 transaction an-index)
                          #'valid-object-p

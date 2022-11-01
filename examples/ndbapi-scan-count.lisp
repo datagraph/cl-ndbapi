@@ -55,27 +55,44 @@
                        (index (ndbapi:dictionary-get-index dict
                                                            index-name
                                                            (ndbapi:table-get-name table)))
-                       (index-default-record (ndbapi:index-get-default-record index))
-                       (table-default-record (ndbapi:table-get-default-record table))
                        (scan-flags '(:+SF-ORDER-BY+ :+SF-MULTI-RANGE+)))
                   (ndbapi:with-ndb-transaction-get-ndb-index-scan-operation (scan (transaction index)
                                                                              ())
                     (ndbapi:ndb-index-scan-operation-read-tuples scan :+LM-READ+ scan-flags)
-                    (ndbapi:ndb-scan-operation-set-interpreted-code scan code)
+                    ;;(ndbapi:ndb-scan-operation-set-interpreted-code scan code)
 
                     ;; set bounds for scan
                     (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
                       (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
-                        (ndbapi:with-foreign-struct (bound (list :low-key low-quad
-                                                                 :low-key-count (length low)
-                                                                 :low-inclusive low-inclusive
-                                                                 :high-key high-quad
-                                                                 :high-key-count (length high)
-                                                                 :high-inclusive high-inclusive
-                                                                 :range-no 0)
-                                                           '(:struct ndbapi:index-bound))
-                          ;;(ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
-                          (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
+                        ;; set lower bound with old setBound api
+                        (loop with max = (1- (length low))
+                              for i from 0 to max
+                              ;; for value in low
+                              for value-ptr = (cffi:mem-aptr low-quad :unsigned-int i)
+                              for attr = (subseq index-name i (1+ i))
+                              for type = (if (< i max)
+                                             ;; "all but possibly the last bound must be nonstrict"
+                                             :+BOUND-LE+
+                                             (if low-inclusive
+                                                 :+BOUND-LE+
+                                                 :+BOUND-LT+))
+                              do #+(or)(print (list 'low i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
+                                 (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
+                        ;; set upper bound with old setBound api
+                        (loop with max = (1- (length high))
+                              for i from 0 to max
+                              ;; for value in high
+                              for value-ptr = (cffi:mem-aptr high-quad :unsigned-int i)
+                              for attr = (subseq index-name i (1+ i))
+                              for type = (if (< i max)
+                                             ;; "all but possibly the last bound must be nonstrict"
+                                             :+BOUND-GE+
+                                             (if high-inclusive
+                                                 :+BOUND-GE+
+                                                 :+BOUND-GT+))
+                              do #+(or)(print (list 'high i attr type (cffi:mem-ref value-ptr :unsigned-int)) t)
+                                 (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
+                        (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
                     ;; // Check rc anyway
 

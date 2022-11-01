@@ -20,6 +20,7 @@
                 :dictionary-get-index
                 :ndb-transaction-scan-index
                 :ndb-index-scan-operation-set-bound
+                :ndb-index-scan-operation-set-bound/recattr
                 :ndb-transaction-get-ndb-index-scan-operation
                 :ndb-index-scan-operation-read-tuples
                 :ndb-transaction-execute
@@ -70,6 +71,7 @@
            :dictionary-get-index
            :ndb-transaction-scan-index
            :ndb-index-scan-operation-set-bound
+           :ndb-index-scan-operation-set-bound/recattr
            :ndb-transaction-get-ndb-index-scan-operation
            :ndb-index-scan-operation-read-tuples
            :ndb-transaction-execute

@@ -4187,27 +4187,27 @@
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_setBound/SWIG-0" 'function)) :int
   (self :pointer)
   (attr :string)
-  (type :int)
+  (type #.(swig-lispify "BoundType" 'enumname))
   (value :pointer)
   (len :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_1" #.(swig-lispify "NdbIndexScanOperation_setBound/SWIG-1" 'function)) :int
   (self :pointer)
   (attr :string)
-  (type :int)
+  (type #.(swig-lispify "BoundType" 'enumname))
   (value :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_2" #.(swig-lispify "NdbIndexScanOperation_setBound/SWIG-2" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
-  (type :int)
+  (type #.(swig-lispify "BoundType" 'enumname))
   (aValue :pointer)
   (len :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_setBound__SWIG_3" #.(swig-lispify "NdbIndexScanOperation_setBound/SWIG-3" 'function)) :int
   (self :pointer)
   (anAttrId :unsigned-int)
-  (type :int)
+  (type #.(swig-lispify "BoundType" 'enumname))
   (aValue :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexScanOperation_end_of_bound__SWIG_0" #.(swig-lispify "NdbIndexScanOperation_end_of_bound/SWIG-0" 'function)) :int
