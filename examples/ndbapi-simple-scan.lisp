@@ -86,7 +86,7 @@
                 ;; do scan and print
                 (format t "~&table: ~a" table-name)
                 (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
-                (cffi:with-foreign-pointer (row-data (cffi:foreign-type-size :pointer))
+                (cffi:with-foreign-object (row-data :pointer)
                   (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
                         for j from 0
                         while (zerop rc)
