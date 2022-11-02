@@ -2538,6 +2538,15 @@ EXPORT void _wrap_Column_setAutoIncrementInitialValue (NdbDictionary::Column *la
 }
 
 
+/* Note: The pseudo columns as NdbDictionary::Column::ROW_COUNT
+ * are created by NdbColumnImpl::create_pseudo_columns()
+ * which is called when making a cluster connection (specificly in
+ * function Ndb_cluster_connection_impl::Ndb_cluster_connection_impl()).
+ * So it is only available in the context of a closter connection.
+ * Sadly, there is no accessor function so we define our own here.
+ * One would never want to change its value from the outside,
+ * so this direction suffices.
+ */
 EXPORT NdbDictionary::Column *Column_ROW_COUNT () {
   NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
   NdbDictionary::Column *result = 0 ;

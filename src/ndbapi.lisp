@@ -900,10 +900,8 @@
 (cffi:defcvar ("Column_FRAGMENT_VARSIZED_MEMORY" #.(swig-lispify "Column_FRAGMENT_VARSIZED_MEMORY" 'variable))
  :pointer)
 
-#+(or)
-(cffi:defcvar ("Column_ROW_COUNT" #.(swig-lispify "Column_ROW_COUNT" 'variable))
- :pointer)
-
+;; replaced the defcvar for Column_ROW_COUNT by a defcfun,
+;; see long comment for Column_ROW_COUNT in ndbapi_wrap.cxx
 (cffi:defcfun ("Column_ROW_COUNT" #.(swig-lispify "Column_ROW_COUNT" 'function)) :pointer)
 
 (cffi:defcvar ("Column_COMMIT_COUNT" #.(swig-lispify "Column_COMMIT_COUNT" 'variable))
