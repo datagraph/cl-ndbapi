@@ -56,7 +56,7 @@
                        (index (ndbapi:dictionary-get-index dict
                                                            index-name
                                                            (ndbapi:table-get-name table)))
-                       (scan-flags '(:+SF-ORDER-BY+ :+SF-MULTI-RANGE+)))
+                       (scan-flags '(:+SF-MULTI-RANGE+)))
                   (ndbapi:with-ndb-transaction-get-ndb-index-scan-operation (scan (transaction index)
                                                                              ())
                     (ndbapi:ndb-index-scan-operation-read-tuples scan :+LM-READ+ scan-flags)
