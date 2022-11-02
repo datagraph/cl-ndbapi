@@ -86,16 +86,19 @@
                 ;; do scan and print
                 (format t "~&table: ~a" table-name)
                 (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
-                (cffi:with-foreign-object (row-data :pointer)
-                  (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
-                        for j from 0
-                        while (zerop rc)
-                        for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
-                        do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
-                        finally (assert (= rc 1)
-                                        ()
-                                        "scan-operation-next-result() failed: ~a"
-                                        (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))))))))))
+                (let ((total-row-count 0))
+                  (cffi:with-foreign-object (row-data :pointer)
+                    (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
+                          for j from 0
+                          while (zerop rc)
+                          for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
+                          do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
+                             (incf total-row-count)
+                          finally (assert (= rc 1)
+                                          ()
+                                          "scan-operation-next-result() failed: ~a"
+                                          (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
+                  total-row-count)))))))))
 
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
