@@ -95,8 +95,6 @@
                                    (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
 
                           ;; configure to get row count
-                          ;;(ndbapi:ndb-operation-get-value scan (ndbapi:pseudo-columns.+row-count+) count-ptr)
-                          ;;(ndbapi:ndb-operation-get-value scan (ndbapi.ffi::TABLE-GET-COLUMN/SWIG-0 table "NDB$ROW_COUNT") count-ptr)
                           (ndbapi:ndb-operation-get-value scan (ndbapi.ffi::column-row-count) count-ptr)
 
                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))

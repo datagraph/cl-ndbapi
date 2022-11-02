@@ -3365,12 +3365,12 @@
 
 (cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_4" #.(swig-lispify "NdbOperation_getValue/SWIG-4" 'function)) :pointer
   (self :pointer)
-  (arg1 :pointer)
+  (aColumn :pointer)
   (val :string))
 
 (cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_5" #.(swig-lispify "NdbOperation_getValue/SWIG-5" 'function)) :pointer
   (self :pointer)
-  (arg1 :pointer))
+  (aColumn :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_setValue__SWIG_0" #.(swig-lispify "NdbOperation_setValue/SWIG-0" 'function)) :int
   (self :pointer)
