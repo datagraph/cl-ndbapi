@@ -2538,6 +2538,20 @@ EXPORT void _wrap_Column_setAutoIncrementInitialValue (NdbDictionary::Column *la
 }
 
 
+EXPORT NdbDictionary::Column *Column_ROW_COUNT () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROW_COUNT;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+
 EXPORT int _wrap_Column_getSizeInBytes (NdbDictionary::Column *larg1) {
   int lresult = (int)0 ;
   NdbDictionary::Column *arg1 = (NdbDictionary::Column *) 0 ;

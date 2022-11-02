@@ -190,7 +190,8 @@
 
 
 (make-interface-function ndb-operation-get-value
-                         (ndbapi.ffi::ndb-operation-get-value/swig-2 ndb-operation an-attr-id a-value)
+                         ;;(ndbapi.ffi::ndb-operation-get-value/swig-2 ndb-operation an-attr-id a-value)
+                         (ndbapi.ffi::ndb-operation-get-value/swig-4 ndb-operation a-column a-value)
                          #'valid-object-p
                          "ndb-scan-operation-set-interpreted-code() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
