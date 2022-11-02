@@ -24,8 +24,9 @@
 |#
 
 (defun scan-count (&key connection-string database-name table-name index-name
-                         low (low-inclusive t)
-                         high (high-inclusive t))
+                        low (low-inclusive t)
+                        high (high-inclusive t)
+                        debug)
   (ndbapi:with-ndb-init (ndb-init)
     (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
       (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
@@ -103,19 +104,19 @@
 
                       ;; do scan and print
                       (format t "~&table: ~a" table-name)
-                      (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
-                      (cffi:with-foreign-object (row-data :pointer)
-                        (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
+                      (let ((total-row-count 0))
+                        (loop for rc = (ndbapi:ndb-scan-operation-next-result scan t)
                               for j from 0
                               while (zerop rc)
                               for count = (cffi:mem-ref count-ptr :uint64)
-                              for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
-                              do (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
-                                 (format t "~&count: ~8d" count)
+                              do (when debug
+                                   (format t "~&~tcount: ~8d" count))
+                                 (incf total-row-count count)
                               finally (assert (= rc 1)
                                               ()
                                               "scan-operation-next-result() failed: ~a"
-                                              (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))))))))))))))
+                                              (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))
+                        total-row-count))))))))))))
 
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
