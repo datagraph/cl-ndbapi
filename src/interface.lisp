@@ -42,27 +42,7 @@
                 :with-ndb-transaction
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
-                :with-ndb-interpreted-code
-                :pseudo-columns.+fragment+
-                :pseudo-columns.+fragment-fixed-memory+
-                :pseudo-columns.+fragment-varsized-memory+
-                :pseudo-columns.+row-count+
-                :pseudo-columns.+commit-count+
-                :pseudo-columns.+row-size+
-                :pseudo-columns.+range-no+
-                :pseudo-columns.+disk-ref+
-                :pseudo-columns.+records-in-range+
-                :pseudo-columns.+rowid+
-                :pseudo-columns.+row-gci+
-                :pseudo-columns.+row-gci-64-nn+
-                :pseudo-columns.+row-author+
-                :pseudo-columns.+any-value+
-                :pseudo-columns.+copy-rowid+
-                :pseudo-columns.+lock-ref+
-                :pseudo-columns.+op-id+
-                :pseudo-columns.+optimize+
-                :pseudo-columns.+fragment-extent-space+
-                :pseudo-columns.+fragment-free-extent-space+)
+                :with-ndb-interpreted-code)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -112,26 +92,6 @@
            :with-ndb-transaction-scan-index
            :with-ndb-transaction-get-ndb-index-scan-operation
            :with-ndb-interpreted-code
-           :pseudo-columns.+fragment+
-           :pseudo-columns.+fragment-fixed-memory+
-           :pseudo-columns.+fragment-varsized-memory+
-           :pseudo-columns.+row-count+
-           :pseudo-columns.+commit-count+
-           :pseudo-columns.+row-size+
-           :pseudo-columns.+range-no+
-           :pseudo-columns.+disk-ref+
-           :pseudo-columns.+records-in-range+
-           :pseudo-columns.+rowid+
-           :pseudo-columns.+row-gci+
-           :pseudo-columns.+row-gci-64-nn+
-           :pseudo-columns.+row-author+
-           :pseudo-columns.+any-value+
-           :pseudo-columns.+copy-rowid+
-           :pseudo-columns.+lock-ref+
-           :pseudo-columns.+op-id+
-           :pseudo-columns.+optimize+
-           :pseudo-columns.+fragment-extent-space+
-           :pseudo-columns.+fragment-free-extent-space+
            ;; from :ndbapi.ffi
            :ndb-get-dictionary
            :dictionary-get-ndb-error
@@ -142,7 +102,6 @@
            :index-bound
            :index-get-name
            :ndb-scan-operation-get-ndb-transaction
-           :ndb-operation-get-ndb-transaction
            :ndb-close-transaction
            :scan-options
            ;; from :ndbapi.types

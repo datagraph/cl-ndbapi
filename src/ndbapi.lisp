@@ -3345,35 +3345,6 @@
   (anAttrId :unsigned-int)
   (aValue :unsigned-long-long))
 
-;; add values of "Pseudo Columns" listed in class Column
-;;   in rondb/storage/ndb/include/ndbapi/NdbDictionary.hpp
-;; get values from class AttributeHeader
-;;   in rondb/storage/ndb/include/kernel/AttributeHeader.hpp
-;; There are more constants defined in class AttributeHeader
-;;   but these are the ones also exported by class Column:
-(cffi:defcenum (#.(swig-lispify "PseudoColumns" 'enumname) :unsigned-int)
-	(#.(swig-lispify "PC_FRAGMENT" 'enumvalue :keyword) #.#xFFFE ); // Read fragment no
-	(#.(swig-lispify "PC_FRAGMENT_FIXED_MEMORY" 'enumvalue :keyword) #.#xFFF9 );
-	(#.(swig-lispify "PC_FRAGMENT_VARSIZED_MEMORY" 'enumvalue :keyword) #.#xFFF4 );
-	(#.(swig-lispify "PC_ROW_COUNT" 'enumvalue :keyword) #.#xFFFD ); // Read row count (committed)
-	(#.(swig-lispify "PC_COMMIT_COUNT" 'enumvalue :keyword) #.#xFFFC ); // Read commit count
-	(#.(swig-lispify "PC_ROW_SIZE" 'enumvalue :keyword) #.#xFFFA );
-	(#.(swig-lispify "PC_RANGE_NO" 'enumvalue :keyword) #.#xFFFB ); // Read range no (when batched ranges)
-	(#.(swig-lispify "PC_DISK_REF" 'enumvalue :keyword) #.#xFFF7 );
-	(#.(swig-lispify "PC_RECORDS_IN_RANGE" 'enumvalue :keyword) #.#xFFF8 );
-	(#.(swig-lispify "PC_ROWID" 'enumvalue :keyword) #.#xFFF6 );
-	(#.(swig-lispify "PC_ROW_GCI" 'enumvalue :keyword) #.#xFFF5 );
-	(#.(swig-lispify "PC_ROW_GCI64" 'enumvalue :keyword) #.#xFFE7); 64-bit row gci (extending lower if not sufficient bits) - read-only
-	(#.(swig-lispify "PC_ROW_AUTHOR" 'enumvalue :keyword) #.#xFFE6); Row author... autoset to 0, can be over written
-	(#.(swig-lispify "PC_ANY_VALUE" 'enumvalue :keyword) #.#xFFF2 );
-	(#.(swig-lispify "PC_COPY_ROWID" 'enumvalue :keyword) #.#xFFF1 );
-	(#.(swig-lispify "PC_LOCK_REF" 'enumvalue :keyword) #.#xFFEE ); // Operation lock reference
-	(#.(swig-lispify "PC_OP_ID" 'enumvalue :keyword) #.#xFFED ); // Operation runtime identity
-	(#.(swig-lispify "PC_OPTIMIZE" 'enumvalue :keyword) #.#xFFE0 );	//pseudo column id to optimize
-	(#.(swig-lispify "PC_FRAGMENT_EXTENT_SPACE" 'enumvalue :keyword) #.#xFFEC ); Extents * sizeof(Extent) allocated to fragment
-	(#.(swig-lispify "PC_FRAGMENT_FREE_EXTENT_SPACE" 'enumvalue :keyword) #.#xFFEB ); Free but allocated DD extent space
-)
-
 (cffi:defcfun ("_wrap_NdbOperation_getValue__SWIG_0" #.(swig-lispify "NdbOperation_getValue/SWIG-0" 'function)) :pointer
   (self :pointer)
   (anAttrName :string)
