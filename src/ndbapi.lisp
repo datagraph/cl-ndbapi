@@ -891,65 +891,65 @@
   (self column-type)
   (val :unsigned-long-long))
 
-(cffi:defcvar ("Column_FRAGMENT" #.(swig-lispify "Column_FRAGMENT" 'variable))
+(cffi:defcfun ("Column_FRAGMENT" #.(swig-lispify "Column_FRAGMENT" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_FRAGMENT_FIXED_MEMORY" #.(swig-lispify "Column_FRAGMENT_FIXED_MEMORY" 'variable))
+(cffi:defcfun ("Column_FRAGMENT_FIXED_MEMORY" #.(swig-lispify "Column_FRAGMENT_FIXED_MEMORY" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_FRAGMENT_VARSIZED_MEMORY" #.(swig-lispify "Column_FRAGMENT_VARSIZED_MEMORY" 'variable))
+(cffi:defcfun ("Column_FRAGMENT_VARSIZED_MEMORY" #.(swig-lispify "Column_FRAGMENT_VARSIZED_MEMORY" 'function))
  :pointer)
 
 ;; replaced the defcvar for Column_ROW_COUNT by a defcfun,
 ;; see long comment for Column_ROW_COUNT in ndbapi_wrap.cxx
 (cffi:defcfun ("Column_ROW_COUNT" #.(swig-lispify "Column_ROW_COUNT" 'function)) :pointer)
 
-(cffi:defcvar ("Column_COMMIT_COUNT" #.(swig-lispify "Column_COMMIT_COUNT" 'variable))
+(cffi:defcfun ("Column_COMMIT_COUNT" #.(swig-lispify "Column_COMMIT_COUNT" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ROW_SIZE" #.(swig-lispify "Column_ROW_SIZE" 'variable))
+(cffi:defcfun ("Column_ROW_SIZE" #.(swig-lispify "Column_ROW_SIZE" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_RANGE_NO" #.(swig-lispify "Column_RANGE_NO" 'variable))
+(cffi:defcfun ("Column_RANGE_NO" #.(swig-lispify "Column_RANGE_NO" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_DISK_REF" #.(swig-lispify "Column_DISK_REF" 'variable))
+(cffi:defcfun ("Column_DISK_REF" #.(swig-lispify "Column_DISK_REF" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_RECORDS_IN_RANGE" #.(swig-lispify "Column_RECORDS_IN_RANGE" 'variable))
+(cffi:defcfun ("Column_RECORDS_IN_RANGE" #.(swig-lispify "Column_RECORDS_IN_RANGE" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ROWID" #.(swig-lispify "Column_ROWID" 'variable))
+(cffi:defcfun ("Column_ROWID" #.(swig-lispify "Column_ROWID" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ROW_GCI" #.(swig-lispify "Column_ROW_GCI" 'variable))
+(cffi:defcfun ("Column_ROW_GCI" #.(swig-lispify "Column_ROW_GCI" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ROW_GCI64" #.(swig-lispify "Column_ROW_GCI64" 'variable))
+(cffi:defcfun ("Column_ROW_GCI64" #.(swig-lispify "Column_ROW_GCI64" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ROW_AUTHOR" #.(swig-lispify "Column_ROW_AUTHOR" 'variable))
+(cffi:defcfun ("Column_ROW_AUTHOR" #.(swig-lispify "Column_ROW_AUTHOR" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_ANY_VALUE" #.(swig-lispify "Column_ANY_VALUE" 'variable))
+(cffi:defcfun ("Column_ANY_VALUE" #.(swig-lispify "Column_ANY_VALUE" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_COPY_ROWID" #.(swig-lispify "Column_COPY_ROWID" 'variable))
+(cffi:defcfun ("Column_COPY_ROWID" #.(swig-lispify "Column_COPY_ROWID" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_LOCK_REF" #.(swig-lispify "Column_LOCK_REF" 'variable))
+(cffi:defcfun ("Column_LOCK_REF" #.(swig-lispify "Column_LOCK_REF" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_OP_ID" #.(swig-lispify "Column_OP_ID" 'variable))
+(cffi:defcfun ("Column_OP_ID" #.(swig-lispify "Column_OP_ID" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_OPTIMIZE" #.(swig-lispify "Column_OPTIMIZE" 'variable))
+(cffi:defcfun ("Column_OPTIMIZE" #.(swig-lispify "Column_OPTIMIZE" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_FRAGMENT_EXTENT_SPACE" #.(swig-lispify "Column_FRAGMENT_EXTENT_SPACE" 'variable))
+(cffi:defcfun ("Column_FRAGMENT_EXTENT_SPACE" #.(swig-lispify "Column_FRAGMENT_EXTENT_SPACE" 'function))
  :pointer)
 
-(cffi:defcvar ("Column_FRAGMENT_FREE_EXTENT_SPACE" #.(swig-lispify "Column_FRAGMENT_FREE_EXTENT_SPACE" 'variable))
+(cffi:defcfun ("Column_FRAGMENT_FREE_EXTENT_SPACE" #.(swig-lispify "Column_FRAGMENT_FREE_EXTENT_SPACE" 'function))
  :pointer)
 
 (cffi:defcfun ("_wrap_Column_getSizeInBytes" #.(swig-lispify "Column_getSizeInBytes" 'function)) :int

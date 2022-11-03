@@ -2547,6 +2547,46 @@ EXPORT void _wrap_Column_setAutoIncrementInitialValue (NdbDictionary::Column *la
  * One would never want to change its value from the outside,
  * so this direction suffices.
  */
+
+EXPORT NdbDictionary::Column *Column_FRAGMENT () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::FRAGMENT;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_FRAGMENT_FIXED_MEMORY () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::FRAGMENT_FIXED_MEMORY;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_FRAGMENT_VARSIZED_MEMORY () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::FRAGMENT_VARSIZED_MEMORY;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
 EXPORT NdbDictionary::Column *Column_ROW_COUNT () {
   NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
   NdbDictionary::Column *result = 0 ;
@@ -2560,6 +2600,213 @@ EXPORT NdbDictionary::Column *Column_ROW_COUNT () {
   }
 }
 
+EXPORT NdbDictionary::Column *Column_COMMIT_COUNT () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::COMMIT_COUNT;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ROW_SIZE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROW_SIZE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_RANGE_NO () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::RANGE_NO;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_DISK_REF () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::DISK_REF;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_RECORDS_IN_RANGE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::RECORDS_IN_RANGE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ROWID () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROWID;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ROW_GCI () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROW_GCI;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ROW_GCI64 () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROW_GCI64;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ROW_AUTHOR () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ROW_AUTHOR;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_ANY_VALUE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::ANY_VALUE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_COPY_ROWID () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::COPY_ROWID;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_LOCK_REF () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::LOCK_REF;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_OP_ID () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::OP_ID;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_OPTIMIZE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::OPTIMIZE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_FRAGMENT_EXTENT_SPACE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::FRAGMENT_EXTENT_SPACE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
+
+EXPORT NdbDictionary::Column *Column_FRAGMENT_FREE_EXTENT_SPACE () {
+  NdbDictionary::Column * lresult = (NdbDictionary::Column *)0 ;
+  NdbDictionary::Column *result = 0 ;
+
+  try {
+    result = (NdbDictionary::Column *)NdbDictionary::Column::FRAGMENT_FREE_EXTENT_SPACE;
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbDictionary::Column *)0;
+  }
+}
 
 EXPORT int _wrap_Column_getSizeInBytes (NdbDictionary::Column *larg1) {
   int lresult = (int)0 ;

@@ -23,7 +23,15 @@
            :ndb-operation-get-ndb-transaction
            :ndb-close-transaction
            :ndb-transaction-get-ndb
-           :ndb-interpreted-code-get-ndb-error)
+           :ndb-interpreted-code-get-ndb-error
+           ;; pseudo columns
+           :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
+           :column-row-count :column-commit-count :column-row-size
+           :column-range-no :column-disk-ref :column-records-in-range
+           :column-rowid :column-row-gci :column-row-gci-64
+           :column-row-author :column-any-value :column-copy-rowid
+           :column-lock-ref :column-op-id :column-optimize
+           :column-fragment-extent-space :column-fragment-free-extent-space)
   (:documentation "The low-level C++ NDB API interface (for RonDB)."))
 
 (defpackage :ndbapi.ffi.overloading
