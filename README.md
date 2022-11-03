@@ -70,6 +70,13 @@ It is based on other examples of ndb cluster but does not use a MySQL node.
 The example uses a secondary index as a scan index to iterate over columns
 in an example database observing bounds. See both files for details.
 
+A second example application is in file
+[`examples/ndbapi-scan-count.lisp`](examples/ndbapi-scan-count.lisp),
+which gives an estimated count of the rows matching a bound of lower
+and upper limits. This example uses a number of more advanced features
+compared to the first example to make the count efficient. Please
+read the long comment at the beginning of the file
+[`examples/ndbapi-scan-count.lisp`](examples/ndbapi-scan-count.lisp).
 
 ## Installation
 
