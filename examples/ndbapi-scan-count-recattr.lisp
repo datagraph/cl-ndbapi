@@ -23,10 +23,10 @@
     load data infile '/path/to/data.tsv' into table test;
 |#
 
-(defun scan-count (&key connection-string database-name table-name index-name
-                        low (low-inclusive t)
-                        high (high-inclusive t)
-                        debug)
+(defun scan-count/recattr (&key connection-string database-name table-name index-name
+                                low (low-inclusive t)
+                                high (high-inclusive t)
+                                debug)
   (ndbapi:with-ndb-init (ndb-init)
     (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
       (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
@@ -50,6 +50,7 @@
             (ndbapi:with-ndb-interpreted-code (code ndb-init (cffi:null-pointer) code-space code-words)
               (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
               (ndbapi:ndb-interpreted-code-finalise code)
+
               (ndbapi:with-ndb-transaction (transaction ndb)
                 (let* ((dict (ndbapi:ndb-get-dictionary ndb))
                        (table (ndbapi:dictionary-get-table dict table-name))
