@@ -189,6 +189,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :index-name "gspo")))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.simple-scan:simple-scan :just-count t args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
@@ -200,6 +201,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :high (list 1109 1105 1106 1108) :high-inclusive t)))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.simple-scan:simple-scan :just-count t args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
@@ -211,6 +213,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :high (list 662743 2200000) :high-inclusive t)))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.simple-scan:simple-scan :just-count t args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
@@ -222,4 +225,5 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :high (list 2108202 1106 603481) :high-inclusive t)))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.simple-scan:simple-scan :just-count t args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
