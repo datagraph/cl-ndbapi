@@ -132,7 +132,7 @@
 (let ((args (list :connection-string "nl3:1186,nl3:1187"
                   :database-name "mgr"
                   :table-name "test"
-                  :index-name "gpos")))
+                  :index-name "gspo")))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
@@ -141,7 +141,7 @@
 (let ((args (list :connection-string "nl3:1186,nl3:1187"
                   :database-name "mgr"
                   :table-name "test"
-                  :index-name "gpos"
+                  :index-name "gspo"
                   :low (list 1106 1105 1105 638) :low-inclusive t
                   :high (list 1109 1105 1106 1108) :high-inclusive t)))
   (list
