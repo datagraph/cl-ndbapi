@@ -115,7 +115,7 @@
                     (ndbapi:with-foreign-struct (extra-get-values (list :column (ndbapi:column-records-in-range)
                                                                         :app-storage records-in-range-ptr)
                                                                   '(:struct ndbapi.ffi::get-value-spec))
-                      
+
                       (ndbapi:with-foreign-struct (scan-options (list :options-present '(:+SO-SCANFLAGS+
                                                                                          :+SO-GETVALUE+
                                                                                          :+SO-INTERPRETED+)
@@ -186,7 +186,7 @@
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
-           
+
 #+(or)
 (let ((args (list :connection-string "nl3:1186,nl3:1187"
                   :database-name "mgr"

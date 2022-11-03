@@ -134,7 +134,7 @@
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.scan-count:scan-count :debug t args)))
-           
+
 #+(or)
 (let ((args (list :connection-string "nl3:1186,nl3:1187"
                   :database-name "mgr"
