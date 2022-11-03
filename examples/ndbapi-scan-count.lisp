@@ -57,6 +57,8 @@
 ;; still extract no colums and just add up 1 per round of
 ;; ndbapi:ndb-scan-operation-next-result. Without interpret-exit-last-row
 ;; next-result will not be called once per partition but once per column.
+;; This is actually implemented in simple-scan.lisp when calling
+;; simple-scan:simple-scan with :just-count t in the argument list.
 
 #+(or)
 (asdf:oos 'asdf:load-op :ndbapi)
@@ -77,6 +79,8 @@
                         low (low-inclusive t)
                         high (high-inclusive t)
                         debug)
+  "WARNING: scan-count just gives an estimation of the matching rows.
+If you need an exact count call simple-scan instead with :just-count t"
   (ndbapi:with-ndb-init (ndb-init)
     (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
       (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
