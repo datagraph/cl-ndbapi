@@ -124,22 +124,43 @@
                         total-row-count))))))))))))
 
 #+(or)
-(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
-                             :database-name "mgr"
-                             :table-name "test"
-                             :index-name "gspo")
+(let ((args (list :connection-string "nl3:1186,nl3:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "gpos")))
+  (list
+   (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count :debug t args)))
            
 #+(or)
-(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
-                             :database-name "mgr"
-                             :table-name "test"
-                             :index-name "gspo"
-                             :low (list 1106 1105 1105 638) :low-inclusive t
-                             :high (list 1109 1105 1106 1108) :high-inclusive t)
+(let ((args (list :connection-string "nl3:1186,nl3:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "gpos"
+                  :low (list 1106 1105 1105 638) :low-inclusive t
+                  :high (list 1109 1105 1106 1108) :high-inclusive t)))
+  (list
+   (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count :debug t args)))
+
 #+(or)
-(ndb.simple-scan:simple-scan :connection-string "nl3:1186,nl3:1187"
-                             :database-name "mgr"
-                             :table-name "test"
-                             :index-name "gspo"
-                             :low (list 662743 2000000) :low-inclusive t
-                             :high (list 662743 2200000) :high-inclusive t)
+(let ((args (list :connection-string "nl3:1186,nl3:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "gosp"
+                  :low (list 662743 2000000) :low-inclusive t
+                  :high (list 662743 2200000) :high-inclusive t)))
+  (list
+   (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count :debug t args)))
+
+#+(or)
+(let ((args (list :connection-string "nl3:1186,nl3:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "gpos"
+                  :low (list 1109 1106 1137) :low-inclusive t
+                  :high (list 2108202 1106 603481) :high-inclusive t)))
+  (list
+   (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count :debug t args)))
