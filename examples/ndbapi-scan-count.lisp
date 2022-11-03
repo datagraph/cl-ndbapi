@@ -4,9 +4,59 @@
 
 (in-package :ndb.scan-count)
 
-;; Warning: WIP not complete
 ;; based on the NDB cluster command ndb_select_count - Print Row Counts for NDB Tables
 ;; and its implementation in rondb/storage/ndb/tools/select_count.cpp
+;; but modified to the second value column records-in-range, which is the number
+;; of rows in range, instead of colum row-count, as we want to do counts of
+;; bounded scans not full table counts
+
+;; what it does is:
+;; 1. set up a small interpreted code so that for our scanning operation
+;;    each each fragment (or partition) returns only one row (interpret-exit-last-row)
+;; 2. in the scan options specify an extra get value for pseudo column records-in-range
+;;    and give it space for the for uint32 values it will return as app-storage
+;; 3. in the scan index call: specify a result-mask mask of 0 as :unsigned-char
+;;    so that actually no columns of the underlying table will be extracted
+;;    (Note: I hope that actually means that only the index is used and the
+;;     underlying table are not accessed at all. That would be good.)
+;; 4. ndbapi:ndb-scan-operation-next-result will have one round per partition
+;;    now and each round will have the four values of records-in-range set;
+;;    the second value will hold the "number of rows in the range"
+;;    (We still have to call the three arguments version of
+;;     NdbScanOperation::nextResult() with a pointer for the row-data
+;;     as the second value, as the two argument versions are part of the
+;;     recattr API and using those will lead to error: "Error with code 4284:
+;;     Cannot mix NdbRecAttr and NdbRecord methods in one operation".
+;;     So we have to specify the row-data pointer, but as we have configured
+;;     0 as the result-mask nor rows will actually get retrieved.)
+;; 5. we get the number of rows in our range from each partition,
+;;    summing them up will result in the total matching columns
+;;
+;; Warning: This gives only an estimate of the counts!
+;; See rondb/storage/ndb/src/kernel/blocks/dbtux/DbtuxStat.cpp
+;; explaining records-in-range as:
+;;
+;;  // RECORDS_IN_RANGE
+;;
+;;  /*
+;;   * Estimate entries in range.  Scan is at first entry.  Search for last
+;;   * entry i.e. start of descending scan.  Use the 2 positions to estimate
+;;   * entries before and after the range.  Finally get entries in range by
+;;   * subtracting from total.  Errors come from imperfectly balanced tree
+;;   * and from uncommitted entries which differ only in tuple version.
+;;   *
+;;   * Returns 4 Uint32 values: 0) total entries 1) in range 2) before range
+;;   * 3) after range.  1-3) are estimates and need not add up to 0).
+;;   */
+;;
+;; Copyright of this extract of 12 lines of the RonDB source code
+;; in the file rondb/storage/ndb/src/kernel/blocks/dbtux/DbtuxStat.cpp:
+;;   Copyright (c) 2005, 2019, Oracle and/or its affiliates. All rights reserved.
+;;
+;; An exact count could be achieved by not using the interpreted code,
+;; still extract no colums and just add up 1 per round of
+;; ndbapi:ndb-scan-operation-next-result. Without interpret-exit-last-row
+;; next-result will not be called once per partition but once per column.
 
 #+(or)
 (asdf:oos 'asdf:load-op :ndbapi)

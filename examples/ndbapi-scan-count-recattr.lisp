@@ -4,9 +4,11 @@
 
 (in-package :ndb.scan-count)
 
-;; Warning: WIP not complete
 ;; based on the NDB cluster command ndb_select_count - Print Row Counts for NDB Tables
 ;; and its implementation in rondb/storage/ndb/tools/select_count.cpp
+;; but modified to the second value column records-in-range, which is the number
+;; of rows in range, instead of colum row-count, as we want to do counts of
+;; bounded scans not full table counts
 
 #+(or)
 (asdf:oos 'asdf:load-op :ndbapi)
