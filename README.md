@@ -71,12 +71,15 @@ The example uses a secondary index as a scan index to iterate over columns
 in an example database observing bounds. See both files for details.
 
 A second example application is in file
-[`examples/ndbapi-scan-count.lisp`](examples/ndbapi-scan-count.lisp),
-which gives an estimated count of the rows matching a bound of lower
-and upper limits. This example uses a number of more advanced features
-compared to the first example to make the count efficient. Please
-read the long comment at the beginning of the file
 [`examples/ndbapi-scan-count.lisp`](examples/ndbapi-scan-count.lisp).
+It gives an estimated count of the rows matching a bound of lower
+and/or upper limits. This example uses a number of more advanced features
+compared to the first example to make the count efficient, for example,
+[interpreted programs](https://docs.rondb.com/rondb_ndb_api/#interpreter-commands-as-part-of-ndb-api-operations) to limit the row access to just one per partition (or fragment),
+[accessing special values (or pseudo columns)[https://docs.rondb.com/rondb_ndb_api/#get-special-values], and [masking of columns](https://docs.rondb.com/rondb_ndb_api/#operation-options).
+Please read the long comment at the beginning of the file
+[`examples/ndbapi-scan-count.lisp`](examples/ndbapi-scan-count.lisp)
+for a more detailed explanation.
 
 ## Installation
 
