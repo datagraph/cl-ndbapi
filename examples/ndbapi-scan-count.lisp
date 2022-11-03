@@ -108,7 +108,6 @@
                             ;; do scan and print
                             (when debug
                               (format t "~&table: ~a" table-name))
-                            (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph))
                             (let ((total-row-count 0))
                               (cffi:with-foreign-object (row-data :pointer)
                                 (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
@@ -120,7 +119,6 @@
                                            (let ((partition-count (cffi:mem-aref records-in-range-ptr :uint32 0))
                                                  (before-count (cffi:mem-aref records-in-range-ptr :uint32 2))
                                                  (after-count (cffi:mem-aref records-in-range-ptr :uint32 3)))
-                                             (format t "~&row ~5d: ~{~12d~^, ~}" j (ndb.quads:quad-to-list row))
                                              (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
                                                      partition-count range-count before-count after-count)))
                                          (incf total-row-count range-count)
