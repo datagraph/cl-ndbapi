@@ -109,13 +109,13 @@
                         (loop for rc = (ndbapi:ndb-scan-operation-next-result scan t)
                               for j from 0
                               while (zerop rc)
-                              for partition-count = (cffi:mem-aref records-in-range-ptr :uint32 0)
                               for range-count = (cffi:mem-aref records-in-range-ptr :uint32 1)
-                              for before-count = (cffi:mem-aref records-in-range-ptr :uint32 2)
-                              for after-count = (cffi:mem-aref records-in-range-ptr :uint32 3)
                               do (when debug
-                                   (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
-                                           partition-count range-count before-count after-count))
+                                   (let ((partition-count (cffi:mem-aref records-in-range-ptr :uint32 0))
+                                         (before-count (cffi:mem-aref records-in-range-ptr :uint32 2))
+                                         (after-count (cffi:mem-aref records-in-range-ptr :uint32 3)))
+                                     (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
+                                               partition-count range-count before-count after-count)))
                                  (incf total-row-count range-count)
                               finally (assert (= rc 1)
                                               ()
