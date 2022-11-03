@@ -4,7 +4,11 @@
 
 (in-package :ndbapi.types)
 
-(defvar *ndbapi-verbose* t)
+(defvar *ndbapi-verbose* nil
+  "show debug output for:
+    - CFFI type translations
+    - calling of C++ destructors and freeing of memory and thin wrapping classes
+    - calling of functions of the NDB API by dispatching on the arity")
 
 (defun debug-print (object foreign-pointer do-free &optional (verbose *ndbapi-verbose*))
   (when verbose
