@@ -4,7 +4,8 @@
 
 (in-package :ndbapi.implementation)
 
-;; errors
+
+;;; errors
 
 (defun %get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
   (let ((pointer (if (typep  object 'ndbapi.types::garbage-collected-class)
@@ -21,7 +22,8 @@
 (defun get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
   (error-string (%get-ndb-error object getter)))
 
-;; test :ndbapi.types for validity
+
+;;; test :ndbapi.types for validity
 
 (defun valid-object-p (object)
   (let ((pointer (if (typep object 'ndbapi.types::garbage-collected-class)
@@ -30,7 +32,8 @@
     (and pointer
          (not (cffi:null-pointer-p pointer)))))
 
-;; interface
+
+;;; interface
 
 (defmacro make-interface-function (name call &optional test datum &rest arguments)
   (let ((translated-call (if (find '&rest call)
@@ -195,12 +198,157 @@
                          "ndb-scan-operation-set-interpreted-code() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+;; begin of pseudo-columns
 
-;; low-level free
+(make-interface-function column-fragment
+                         (ndbapi.ffi:column-fragment)
+                         #'valid-object-p
+                         "column-fragment(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-fragment-fixed-memory
+                         (ndbapi.ffi:column-fragment-fixed-memory)
+                         #'valid-object-p
+                         "column-fragment-fixed-memory(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-fragment-varsized-memory
+                         (ndbapi.ffi:column-fragment-varsized-memory)
+                         #'valid-object-p
+                         "column-fragment-varsized-memory(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-row-count
+                         (ndbapi.ffi:column-row-count)
+                         #'valid-object-p
+                         "column-row-count(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-commit-count
+                         (ndbapi.ffi:column-commit-count)
+                         #'valid-object-p
+                         "column-commit-count(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-row-size
+                         (ndbapi.ffi:column-row-size)
+                         #'valid-object-p
+                         "column-row-size(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-range-no
+                         (ndbapi.ffi:column-range-no)
+                         #'valid-object-p
+                         "column-range-no(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-disk-ref
+                         (ndbapi.ffi:column-disk-ref)
+                         #'valid-object-p
+                         "column-disk-ref(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-records-in-range
+                         (ndbapi.ffi:column-records-in-range)
+                         #'valid-object-p
+                         "column-records-in-range(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-rowid
+                         (ndbapi.ffi:column-rowid)
+                         #'valid-object-p
+                         "column-rowid(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-row-gci
+                         (ndbapi.ffi:column-row-gci)
+                         #'valid-object-p
+                         "column-row-gci(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-row-gci-64
+                         (ndbapi.ffi:column-row-gci-64)
+                         #'valid-object-p
+                         "column-row-gci-64(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-row-author
+                         (ndbapi.ffi:column-row-author)
+                         #'valid-object-p
+                         "column-row-author(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-any-value
+                         (ndbapi.ffi:column-any-value)
+                         #'valid-object-p
+                         "column-any-value(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-copy-rowid
+                         (ndbapi.ffi:column-copy-rowid)
+                         #'valid-object-p
+                         "column-copy-rowid(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-lock-ref
+                         (ndbapi.ffi:column-lock-ref)
+                         #'valid-object-p
+                         "column-lock-ref(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-op-id
+                         (ndbapi.ffi:column-op-id)
+                         #'valid-object-p
+                         "column-op-id(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-optimize
+                         (ndbapi.ffi:column-optimize)
+                         #'valid-object-p
+                         "column-optimize(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-fragment-extent-space
+                         (ndbapi.ffi:column-fragment-extent-space)
+                         #'valid-object-p
+                         "column-fragment-extent-space(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+(make-interface-function column-fragment-free-extent-space
+                         (ndbapi.ffi:column-fragment-free-extent-space)
+                         #'valid-object-p
+                         "column-fragment-free-extent-space(): null pointer returned.
+Note: The pseudo columns are only available in the context of a cluster connection,
+as they are created as a side-effect of making the cluster connection.")
+
+;; end of pseudo-columns
+
+
+;;; low-level free
 
 (setf (fdefinition 'ndb-free-object) (fdefinition 'ndbapi.types:free-foreign-object))
 
-;; with- macros
+
+;;; with- macros
 
 (defmacro with-ndb-init ((var &rest args) &body body)
   (let ((op (gensym "OP-")))

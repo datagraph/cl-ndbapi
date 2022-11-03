@@ -42,7 +42,15 @@
                 :with-ndb-transaction
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
-                :with-ndb-interpreted-code)
+                :with-ndb-interpreted-code
+                ;; pseudo columns
+                :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
+                :column-row-count :column-commit-count :column-row-size
+                :column-range-no :column-disk-ref :column-records-in-range
+                :column-rowid :column-row-gci :column-row-gci-64
+                :column-row-author :column-any-value :column-copy-rowid
+                :column-lock-ref :column-op-id :column-optimize
+                :column-fragment-extent-space :column-fragment-free-extent-space)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -52,15 +60,7 @@
                 :ndb-scan-operation-get-ndb-transaction
                 :ndb-operation-get-ndb-transaction
                 :ndb-close-transaction
-                :scan-options
-                ;; pseudo columns
-                :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
-                :column-row-count :column-commit-count :column-row-size
-                :column-range-no :column-disk-ref :column-records-in-range
-                :column-rowid :column-row-gci :column-row-gci-64
-                :column-row-author :column-any-value :column-copy-rowid
-                :column-lock-ref :column-op-id :column-optimize
-                :column-fragment-extent-space :column-fragment-free-extent-space)
+                :scan-options)
   (:import-from :ndbapi.types
                 :*ndbapi-verbose*
                 :initialized
