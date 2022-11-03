@@ -62,7 +62,7 @@
                     (ndbapi:ndb-index-scan-operation-read-tuples scan :+LM-READ+ scan-flags)
                     (ndbapi:ndb-scan-operation-set-interpreted-code scan code)
 
-                    (cffi:with-foreign-object (count-ptr :uint64)
+                    (cffi:with-foreign-object (records-in-range-ptr :uint32 4)
                       ;; set bounds for scan
                       (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
                         (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
@@ -96,22 +96,27 @@
                                    (ndbapi:ndb-index-scan-operation-set-bound/recattr scan attr type value-ptr))
 
                           ;; configure to get row count
-                          (ndbapi:ndb-operation-get-value scan (ndbapi.ffi::column-row-count) count-ptr)
+                          (ndbapi:ndb-operation-get-value scan (ndbapi:column-records-in-range) records-in-range-ptr)
 
                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
                       ;; // Check rc anyway
 
                       ;; do scan and print
-                      (format t "~&table: ~a" table-name)
+                      (when debug
+                        (format t "~&table: ~a" table-name))
                       (let ((total-row-count 0))
                         (loop for rc = (ndbapi:ndb-scan-operation-next-result scan t)
                               for j from 0
                               while (zerop rc)
-                              for count = (cffi:mem-ref count-ptr :uint64)
+                              for partition-count = (cffi:mem-aref records-in-range-ptr :uint32 0)
+                              for range-count = (cffi:mem-aref records-in-range-ptr :uint32 1)
+                              for before-count = (cffi:mem-aref records-in-range-ptr :uint32 2)
+                              for after-count = (cffi:mem-aref records-in-range-ptr :uint32 3)
                               do (when debug
-                                   (format t "~&~tcount: ~8d" count))
-                                 (incf total-row-count count)
+                                   (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
+                                           partition-count range-count before-count after-count))
+                                 (incf total-row-count range-count)
                               finally (assert (= rc 1)
                                               ()
                                               "scan-operation-next-result() failed: ~a"
