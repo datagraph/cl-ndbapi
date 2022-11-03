@@ -21,5 +21,5 @@
 
 (defpackage :ndb.scan-count
   (:use :cl)
-  (:export :scan-count)
+  (:export :scan-count :scan-count/recattr)
   (:documentation "Simple example using scan"))

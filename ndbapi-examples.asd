@@ -9,4 +9,6 @@
   :components ((:module "examples"
                 :components ((:file "package")
                              (:file "ndb-quads" :depends-on ("package"))
-                             (:file "ndbapi-simple-scan" :depends-on ("ndb-quads"))))))
+                             (:file "ndbapi-simple-scan" :depends-on ("ndb-quads"))
+                             (:file "ndbapi-scan-count-recattr" :depends-on ("ndb-quads"))
+                             (:file "ndbapi-scan-count" :depends-on ("ndb-quads"))))))
