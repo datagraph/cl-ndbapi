@@ -53,7 +53,11 @@
                 :column-rowid :column-row-gci :column-row-gci-64
                 :column-row-author :column-any-value :column-copy-rowid
                 :column-lock-ref :column-op-id :column-optimize
-                :column-fragment-extent-space :column-fragment-free-extent-space)
+                :column-fragment-extent-space :column-fragment-free-extent-space
+                ;; simple connection interace
+                :*connection*
+                :connect
+                :disconnect)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -106,6 +110,10 @@
            :with-ndb-transaction-scan-index
            :with-ndb-transaction-get-ndb-index-scan-operation
            :with-ndb-interpreted-code
+           ;; simple connection interace
+           :*connection*
+           :connect
+           :disconnect
            ;; from :ndbapi.ffi
            :ndb-get-dictionary
            :dictionary-get-ndb-error
