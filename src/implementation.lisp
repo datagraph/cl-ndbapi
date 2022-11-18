@@ -370,14 +370,15 @@ as they are created as a side-effect of making the cluster connection.")
   (when (initialized-ndb-init-p *ndb-init*)
     (ndb-free-object *ndb-init*)))
 
-(defmacro with-ndb-init (() &body body)
-  "better just call ENSURE-NDB-INIT once and do not use WITH-NDB-INIT"
+(defmacro with-ndb-init ((&key there-is-only-one) &body body)
+  "better just call ENSURE-NDB-INIT once and do not use WITH-NDB-INIT
+If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init defined *ndb-init*"
   (let ((op (gensym "OP-")))
     `(flet ((,op () ,@body))
        (declare (dynamic-extent #',op))
-       (call-with-ndb-init #',op))))
+       (call-with-ndb-init #',op :there-is-only-one ,there-is-only-one))))
 
-(defun call-with-ndb-init (op)
+(defun call-with-ndb-init (op &key there-is-only-one)
   ;;(print 'ndb-begin *trace-output*) (time)
   (if (initialized-ndb-init-p *ndb-init*)
       (funcall op)
@@ -392,8 +393,15 @@ as they are created as a side-effect of making the cluster connection.")
           ;; Better use WITH-NDB-INIT just in simple example with one thread only,
           ;; and use ensure-ndb-init in all other cases. Call NDB-END then
           ;; at a time when the NDB API is not used at all, e.g. at program exit.
+          ;;
+          ;; Update: now you have to call as (with-ndb-init (:there-is-only-one t) ...)
+          ;;   to get this behavior at all.
           ;;(print 'free/ndb-begin *trace-output*) (time)
-          (ndb-end)))))
+          (when there-is-only-one
+            (when ndbapi:*ndbapi-verbose*
+              (format *trace-output* "~&WITH-NDB-INIT: force freeing of *ndb-init* as :THERE-IS-ONLY-ONE ~a"
+                      there-is-only-one))
+            (ndb-end))))))
 
 (defmacro with-ndb-cluster-connection ((var connection-string
                                         &key name
