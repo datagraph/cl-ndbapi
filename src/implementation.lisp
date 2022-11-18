@@ -371,7 +371,7 @@ as they are created as a side-effect of making the cluster connection.")
     (ndb-free-object *ndb-init*)))
 
 (defmacro with-ndb-init (() &body body)
-  "better just call ENSURE-NDB-INIT once"
+  "better just call ENSURE-NDB-INIT once and do not use WITH-NDB-INIT"
   (let ((op (gensym "OP-")))
     `(flet ((,op () ,@body))
        (declare (dynamic-extent #',op))
@@ -384,21 +384,14 @@ as they are created as a side-effect of making the cluster connection.")
       (progn
         (setf *ndb-init* (ndb-begin%))
         (unwind-protect (funcall op)
-          ;; explicit free of ndb-init possible (WRONG!) but also not that important.
-          ;; (freeing of ndb-init not that important as it does not bind any remote resources)
-          ;; freeing the ndb-init will call ndb-end.
-          ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
-          ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
-          ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
-          ;; if you free it, you should make a new object in each of your tasks,
-          ;; as only that prevents that there ndb is still initialized as long as you use it.
-          ;; update 2: THIS IS WRONG! I did not read the code in
-          ;;   rondb/storage/ndb/src/common/util/ndb_init.cpp carefully enough. The counting
-          ;;   in ndb_init_internal serves a different purpose, it will not help here. Calling
-          ;;   ndb_init() multiple times will only initialize once. Calling ndb_end() will
-          ;;   multiple times will also only deinitialize once but on the first call! There
-          ;;   is not nested couting. So it is not allowed to call ndb_end while other ndb
-          ;;   objects, cluster connecttion etc. are still used!
+          ;; explicit free of ndb-init object IFF we have introduced it,
+          ;; that is *ndb-init* was previously unbound or not initialized.
+          ;; Still this is quite unsafe. E.g., when two threads interleave with-ndb-init,
+          ;; and the second thread uses the ndb-init of the first thread.
+          ;;
+          ;; Better use WITH-NDB-INIT just in simple example with one thread only,
+          ;; and use ensure-ndb-init in all other cases. Call NDB-END then
+          ;; at a time when the NDB API is not used at all, e.g. at program exit.
           ;;(print 'free/ndb-begin *trace-output*) (time)
           (ndb-end)))))
 
