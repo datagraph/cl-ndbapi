@@ -415,10 +415,7 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
        (call-with-ndb-cluster-connection #',op
-                                         (when (boundp ',var)
-                                           (let ((value (symbol-value ',var)))
-                                             (when (ndbapi:valid-object-p value)
-                                               value)))
+                                         (when (boundp ',var) (symbol-value ',var))
                                          (list ,connection-string)
                                          ,name
                                          (list ,@connect-args)
@@ -427,7 +424,7 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
 (defun call-with-ndb-cluster-connection (op value args name connect-args wait-until-ready-args)
   (declare (dynamic-extent args))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
-  (if value
+  (if (ndbapi:valid-object-p value)
       (funcall op value)
       (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
         (unwind-protect
