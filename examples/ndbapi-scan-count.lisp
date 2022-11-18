@@ -82,104 +82,104 @@
                         debug)
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
-  (ndbapi:with-ndb-init ()
-    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string
-                                         :name "ndbapi-scan-count"
-                                         :connect-args (;; retries:
-                                                        4
-                                                        ;; delay between retries:
-                                                        5
-                                                        ;; verbose:
-                                                        1)
-                                         :wait-until-ready-args (;; timeout for first alive:
-                                                                 30
-                                                                 ;; timeout after first alive:
-                                                                 0))
-      (ndbapi:with-ndb (ndb cluster-connection database-name)
-        (ndbapi:ndb-init ndb)
+  (ndbapi:ensure-ndb-init)
+  (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string
+                                       :name "ndbapi-scan-count"
+                                       :connect-args (;; retries:
+                                                      4
+                                                      ;; delay between retries:
+                                                      5
+                                                      ;; verbose:
+                                                      1)
+                                       :wait-until-ready-args (;; timeout for first alive:
+                                                               30
+                                                               ;; timeout after first alive:
+                                                               0))
+    (ndbapi:with-ndb (ndb cluster-connection database-name)
+      (ndbapi:ndb-init ndb)
 
-        (let ((code-words 1))
-          (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-            (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
-              (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
-              (ndbapi:ndb-interpreted-code-finalise code)
+      (let ((code-words 1))
+        (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
+          (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
+            (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
+            (ndbapi:ndb-interpreted-code-finalise code)
 
-              (ndbapi:with-ndb-transaction (transaction ndb)
-                (let* ((dict (ndbapi:ndb-get-dictionary ndb))
-                       (table (ndbapi:dictionary-get-table dict table-name))
-                       (index (ndbapi:dictionary-get-index dict
-                                                           index-name
-                                                           (ndbapi:table-get-name table)))
-                       (index-default-record (ndbapi:index-get-default-record index))
-                       (table-default-record (ndbapi:table-get-default-record table))
-                       (scan-flags '(:+SF-MULTI-RANGE+)))
+            (ndbapi:with-ndb-transaction (transaction ndb)
+              (let* ((dict (ndbapi:ndb-get-dictionary ndb))
+                     (table (ndbapi:dictionary-get-table dict table-name))
+                     (index (ndbapi:dictionary-get-index dict
+                                                         index-name
+                                                         (ndbapi:table-get-name table)))
+                     (index-default-record (ndbapi:index-get-default-record index))
+                     (table-default-record (ndbapi:table-get-default-record table))
+                     (scan-flags '(:+SF-MULTI-RANGE+)))
 
-                  (cffi:with-foreign-object (records-in-range-ptr :uint32 4)
-                    (ndbapi:with-foreign-struct (extra-get-values (list :column (ndbapi:column-records-in-range)
-                                                                        :app-storage records-in-range-ptr)
-                                                                  '(:struct ndbapi.ffi::get-value-spec))
+                (cffi:with-foreign-object (records-in-range-ptr :uint32 4)
+                  (ndbapi:with-foreign-struct (extra-get-values (list :column (ndbapi:column-records-in-range)
+                                                                      :app-storage records-in-range-ptr)
+                                                                '(:struct ndbapi.ffi::get-value-spec))
 
-                      (ndbapi:with-foreign-struct (scan-options (list :options-present '(:+SO-SCANFLAGS+
-                                                                                         :+SO-GETVALUE+
-                                                                                         :+SO-INTERPRETED+)
-                                                                      :scan-flags scan-flags
-                                                                      :extra-get-values extra-get-values
-                                                                      :num-extra-get-values 1
-                                                                      :interpreted-code (ndbapi.types::foreign-pointer code))
-                                                                '(:struct ndbapi:scan-options))
-                        ;;(break "~a" (cffi:convert-from-foreign scan-options '(:struct ndbapi:scan-options)))
-                        (cffi:with-foreign-object (result-mask :unsigned-char)
-                          (setf (cffi:mem-ref result-mask :unsigned-char) #b00000000)
+                    (ndbapi:with-foreign-struct (scan-options (list :options-present '(:+SO-SCANFLAGS+
+                                                                                       :+SO-GETVALUE+
+                                                                                       :+SO-INTERPRETED+)
+                                                                    :scan-flags scan-flags
+                                                                    :extra-get-values extra-get-values
+                                                                    :num-extra-get-values 1
+                                                                    :interpreted-code (ndbapi.types::foreign-pointer code))
+                                                              '(:struct ndbapi:scan-options))
+                      ;;(break "~a" (cffi:convert-from-foreign scan-options '(:struct ndbapi:scan-options)))
+                      (cffi:with-foreign-object (result-mask :unsigned-char)
+                        (setf (cffi:mem-ref result-mask :unsigned-char) #b00000000)
 
-                          (ndbapi:with-ndb-transaction-scan-index (scan (transaction
-                                                                            index-default-record
-                                                                            table-default-record
-                                                                            :+LM-READ+
-                                                                            result-mask
-                                                                            (cffi:null-pointer)
-                                                                            scan-options
-                                                                            (cffi:foreign-type-size
-                                                                             '(:struct ndbapi:scan-options)))
-                                                                   (t))
+                        (ndbapi:with-ndb-transaction-scan-index (scan (transaction
+                                                                          index-default-record
+                                                                          table-default-record
+                                                                          :+LM-READ+
+                                                                          result-mask
+                                                                          (cffi:null-pointer)
+                                                                          scan-options
+                                                                          (cffi:foreign-type-size
+                                                                           '(:struct ndbapi:scan-options)))
+                                                                 (t))
 
-                            ;; set bounds for scan
-                            (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
-                              (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
-                                (ndbapi:with-foreign-struct (bound (list :low-key low-quad
-                                                                         :low-key-count (length low)
-                                                                         :low-inclusive low-inclusive
-                                                                         :high-key high-quad
-                                                                         :high-key-count (length high)
-                                                                         :high-inclusive high-inclusive
-                                                                         :range-no 0)
-                                                                   '(:struct ndbapi:index-bound))
-                                  (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
-                                  (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
+                          ;; set bounds for scan
+                          (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
+                            (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
+                              (ndbapi:with-foreign-struct (bound (list :low-key low-quad
+                                                                       :low-key-count (length low)
+                                                                       :low-inclusive low-inclusive
+                                                                       :high-key high-quad
+                                                                       :high-key-count (length high)
+                                                                       :high-inclusive high-inclusive
+                                                                       :range-no 0)
+                                                                 '(:struct ndbapi:index-bound))
+                                (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
+                                (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
 
-                            ;; // Check rc anyway
+                          ;; // Check rc anyway
 
-                            ;; do scan and print
-                            (when debug
-                              (format t "~&table: ~a" table-name))
-                            (let ((total-row-count 0))
-                              (cffi:with-foreign-object (row-data :pointer)
-                                (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
-                                      for j from 0
-                                      while (zerop rc)
-                                      for range-count = (cffi:mem-aref records-in-range-ptr :uint32 1)
-                                      for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
-                                      do (when debug
-                                           (let ((partition-count (cffi:mem-aref records-in-range-ptr :uint32 0))
-                                                 (before-count (cffi:mem-aref records-in-range-ptr :uint32 2))
-                                                 (after-count (cffi:mem-aref records-in-range-ptr :uint32 3)))
-                                             (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
-                                                     partition-count range-count before-count after-count)))
-                                         (incf total-row-count range-count)
-                                      finally (assert (= rc 1)
-                                                      ()
-                                                      "scan-operation-next-result() failed: ~a"
-                                                      (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
-                              total-row-count)))))))))))))))
+                          ;; do scan and print
+                          (when debug
+                            (format t "~&table: ~a" table-name))
+                          (let ((total-row-count 0))
+                            (cffi:with-foreign-object (row-data :pointer)
+                              (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
+                                    for j from 0
+                                    while (zerop rc)
+                                    for range-count = (cffi:mem-aref records-in-range-ptr :uint32 1)
+                                    for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
+                                    do (when debug
+                                         (let ((partition-count (cffi:mem-aref records-in-range-ptr :uint32 0))
+                                               (before-count (cffi:mem-aref records-in-range-ptr :uint32 2))
+                                               (after-count (cffi:mem-aref records-in-range-ptr :uint32 3)))
+                                           (format t "~&~t#partition: ~8d~t#range: ~8d~t#before: ~8d~t#after: ~8d"
+                                                   partition-count range-count before-count after-count)))
+                                       (incf total-row-count range-count)
+                                    finally (assert (= rc 1)
+                                                    ()
+                                                    "scan-operation-next-result() failed: ~a"
+                                                    (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
+                            total-row-count))))))))))))))
 
 #+(or)
 (let ((args (list :connection-string "nl3:1186,nl3:1187"
