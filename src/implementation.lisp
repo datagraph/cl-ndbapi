@@ -402,6 +402,48 @@ as they are created as a side-effect of making the cluster connection.")
       ;;(print 'free/new-ndb-cluster-connection *trace-output*) (time)
       (ndb-free-object value))))
 
+
+;;; connection object - begin
+
+(defclass connection ()
+  ((ndb-init :initarg :ndb-init :reader connection-ndb-init)
+   (cluster-connection :initarg :cluster-connection :reader connection-cluster-connection)
+   (open-p :initform t :accessor connection-open-p)))
+
+(defvar *connection* nil)
+
+(defun cluster-connect (ndb-init connection-string &key name
+                                                        connect-args
+                                                        wait-until-ready-args)
+  (let ((value (new-ndb-cluster-connection ndb-init connection-string)))
+    (when name
+      (ndbapi.ffi::ndb-cluster-connection-set-name value name))
+    (when connect-args
+      (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
+    (when wait-until-ready-args
+      (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
+    value))
+
+(defun connect (connection-string &key name
+                                       connect-args
+                                       wait-until-ready-args)
+  (let* ((ndb-init (ndb-begin)))
+    (make-instance 'connection
+                   :ndb-init ndb-init
+                   :cluster-connection (cluster-connect ndb-init connection-string
+                                                        :name name
+                                                        :connect-args connect-args
+                                                        :wait-until-ready-args wait-until-ready-args))))
+
+(defun disconnect (connection)
+  (when (connection-open-p connection)
+    (prog1
+        (ndb-free-object (connection-cluster-connection connection))
+      (ndb-free-object (connection-ndb-init connection))
+      (setf (connection-open-p connection) nil))))
+
+;;; connection object - end
+
 (defmacro with-ndb ((var &rest args) &body body)
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
