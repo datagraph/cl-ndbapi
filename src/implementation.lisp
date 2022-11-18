@@ -408,30 +408,39 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
                                              connect-args
                                              wait-until-ready-args)
                                        &body body)
+  "If VAR is bound, it will be reused;
+(This only works for dynamic (special) variables, not for lexical ones.
+ If the variable is just lexical, a new connection will be made.)"
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
        (call-with-ndb-cluster-connection #',op
+                                         (when (boundp ',var)
+                                           (let ((value (symbol-value ',var)))
+                                             (when (ndbapi:valid-object-p value)
+                                               value)))
                                          (list ,connection-string)
                                          ,name
                                          (list ,@connect-args)
                                          (list ,@wait-until-ready-args)))))
 
-(defun call-with-ndb-cluster-connection (op args name connect-args wait-until-ready-args)
+(defun call-with-ndb-cluster-connection (op value args name connect-args wait-until-ready-args)
   (declare (dynamic-extent args))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
-  (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
-    (unwind-protect
-         (progn
-           (when name
-             (ndbapi.ffi::ndb-cluster-connection-set-name value name))
-           (when connect-args
-             (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
-           (when wait-until-ready-args
-             (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
-           (funcall op value))
-      ;;(print 'free/new-ndb-cluster-connection *trace-output*) (time)
-      (ndb-free-object value))))
+  (if value
+      (funcall op value)
+      (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
+        (unwind-protect
+             (progn
+               (when name
+                 (ndbapi.ffi::ndb-cluster-connection-set-name value name))
+               (when connect-args
+                 (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
+               (when wait-until-ready-args
+                 (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
+               (funcall op value))
+          ;;(print 'free/new-ndb-cluster-connection *trace-output*) (time)
+          (ndb-free-object value)))))
 
 
 ;;; simple connection interace - begin

@@ -28,7 +28,7 @@
                          high (high-inclusive t)
                          just-count)
   (ndbapi:ensure-ndb-init)
-  (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string
+  (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* connection-string
                                        :name "ndbapi-scan-count"
                                        :connect-args (;; retries:
                                                       4
@@ -40,7 +40,7 @@
                                                                30
                                                                ;; timeout after first alive:
                                                                0))
-    (ndbapi:with-ndb (ndb cluster-connection database-name)
+    (ndbapi:with-ndb (ndb ndbapi:*connection* database-name)
       (ndbapi:ndb-init ndb)
 
       (cffi:with-foreign-object (result-mask :unsigned-char)
