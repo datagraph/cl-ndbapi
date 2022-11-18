@@ -179,6 +179,14 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 ;; as a pointer but ndb_init and ndb_end are just c functions. ndb_init returns nothing
 ;; and ndb_init either 0 (= success) or 1 (= failed).
 
+;; There should always be only one ndb_init! Calling ndb_init() will initialize
+;; the NDB API and calling ndb_end(0) will clean it up again. Additional ndb_init()
+;; calls after the first do nothing, as additional ndb_end(0) do nothing.
+;; That means, the first ndb_end(0) call will clean everything up!
+;; Any old instance will have to be freed before a new one is created.
+;; So better make sure, there is always only one! And it is only freed when the
+;; NDB API is not used at all.
+
 (cffi:define-foreign-type ndbapi.ffi::ndb-init-type (garbage-collected-type)
   ((lisp-class :allocation :class :initform 'ndbapi.ffi::ndb-init))
   (:actual-type :int)
@@ -191,9 +199,9 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (defmethod delete-foreign-object ((class (eql 'ndbapi.ffi::ndb-init)) initialized)
   (declare (ignore initialized))
   (when *ndbapi-verbose*
-    (format *trace-output* "~&Calling ~a" 'ndbapi.ffi::ndb-end)
+    (format *trace-output* "~&Calling ~a" 'ndbapi.ffi::ndb-end%)
     (force-output *trace-output*))
-  (ndbapi.ffi:ndb-end 0))
+  (ndbapi.ffi::ndb-end% 0))
 
 (defmethod free-foreign-object% ((class (eql 'ndbapi.ffi::ndb-init)) initialized valid-cons)
   (let ((do-free (and initialized

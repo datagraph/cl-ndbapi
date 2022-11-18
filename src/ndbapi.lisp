@@ -13,7 +13,7 @@
 ;; ndb_init is not really part of the other ndb_init methods but fits
 (cffi:defcfun ("_wrap_ndb_init" #.(swig-lispify "ndb_init%" 'function)) (ndb-init-type :garbage-collect t))
 
-(cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end" 'function)) :void
+(cffi:defcfun ("_wrap_ndb_end" #.(swig-lispify "ndb_end%" 'function)) :void
   (arg0 :int))
 
 (cl:defconstant #.(swig-lispify "NDB_SIZEOF_CHARP" 'constant) 8)

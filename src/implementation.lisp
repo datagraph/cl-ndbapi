@@ -32,6 +32,11 @@
     (and pointer
          (not (cffi:null-pointer-p pointer)))))
 
+(defun initialized-ndb-init-p (object)
+  (and object
+       (typep object 'ndbapi.ffi::ndb-init)
+       (ndbapi.types::initialized object)))
+
 
 ;;; interface
 
@@ -49,10 +54,10 @@
                value)
             translated-call))))
 
-(make-interface-function ndb-begin ;; rename ndb-init to ndb-begin to avoid conflict
-                                   ;; also this fits to the complimentary function ndb-end
+(make-interface-function ndb-begin% ;; rename ndb-init to ndb-begin to avoid conflict
+                                    ;; also this fits to the complimentary function ndb-end
                          (ndbapi.ffi::ndb-init%)
-                         #'ndbapi.types:initialized
+                         #'initialized-ndb-init-p
                          "ndb-init failed")
 
 (make-interface-function new-ndb-cluster-connection
@@ -350,27 +355,51 @@ as they are created as a side-effect of making the cluster connection.")
 
 ;;; with- macros
 
-(defmacro with-ndb-init ((var &rest args) &body body)
-  (let ((op (gensym "OP-")))
-    `(flet ((,op (,var) ,@body))
-       (declare (dynamic-extent #',op))
-       (call-with-ndb-init #',op ,@args))))
+(defvar *ndb-init* nil)
 
-(defun call-with-ndb-init (op &rest args)
-  (declare (dynamic-extent args))
+(defun ndb-begin ()
+  "safely initializes NDB API (that is, only once)"
+  (if (initialized-ndb-init-p *ndb-init*)
+      *ndb-init*
+      (setf *ndb-init* (ndb-begin%))))
+
+(setf (fdefinition 'ensure-ndb-init) (fdefinition 'ndb-begin))
+
+(defun ndb-end ()
+  "WARNING: only call when you are sure that the NDB API is not used anymore at all"
+  (when (initialized-ndb-init-p *ndb-init*)
+    (ndb-free-object *ndb-init*)))
+
+(defmacro with-ndb-init (() &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op () ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-init #',op))))
+
+(defun call-with-ndb-init (op)
   ;;(print 'ndb-begin *trace-output*) (time)
-  (let ((value (apply #'ndb-begin args)))
-    (unwind-protect (funcall op value)
-      ;; explicit free of ndb-init possible but also not that important.
-      ;; (freeing of ndb-init not that important as it does not bind any remote resources)
-      ;; freeing the ndb-init will call ndb-end.
-      ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
-      ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
-      ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
-      ;; if you free it, you should make a new object in each of your tasks,
-      ;; as only that prevents that there ndb is still initialized as long as you use it.
-      ;;(print 'free/ndb-begin *trace-output*) (time)
-      (ndb-free-object value))))
+  (if (initialized-ndb-init-p *ndb-init*)
+      (funcall op)
+      (progn
+        (setf *ndb-init* (ndb-begin%))
+        (unwind-protect (funcall op)
+          ;; explicit free of ndb-init possible (WRONG!) but also not that important.
+          ;; (freeing of ndb-init not that important as it does not bind any remote resources)
+          ;; freeing the ndb-init will call ndb-end.
+          ;; update: ndb-end has some internal counting (by counter ndb_init_called in ndb_end_interal)
+          ;;   so it is okay to call ndb-init multiple times, and ndb-end as well. Only the very last
+          ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
+          ;; if you free it, you should make a new object in each of your tasks,
+          ;; as only that prevents that there ndb is still initialized as long as you use it.
+          ;; update 2: THIS IS WRONG! I did not read the code in
+          ;;   rondb/storage/ndb/src/common/util/ndb_init.cpp carefully enough. The counting
+          ;;   in ndb_init_internal serves a different purpose, it will not help here. Calling
+          ;;   ndb_init() multiple times will only initialize once. Calling ndb_end() will
+          ;;   multiple times will also only deinitialize once but on the first call! There
+          ;;   is not nested couting. So it is not allowed to call ndb_end while other ndb
+          ;;   objects, cluster connecttion etc. are still used!
+          ;;(print 'free/ndb-begin *trace-output*) (time)
+          (ndb-end)))))
 
 (defmacro with-ndb-cluster-connection ((var ndb-init connection-string
                                         &key name
