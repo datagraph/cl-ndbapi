@@ -358,6 +358,7 @@ as they are created as a side-effect of making the cluster connection.")
 
 (defun call-with-ndb-init (op &rest args)
   (declare (dynamic-extent args))
+  ;;(print 'ndb-begin *trace-output*) (time)
   (let ((value (apply #'ndb-begin args)))
     (unwind-protect (funcall op value)
       ;; explicit free of ndb-init possible but also not that important.
@@ -368,18 +369,37 @@ as they are created as a side-effect of making the cluster connection.")
       ;;   ndb-end call, that reduces ndb_init_called to 0, actually cleans up.
       ;; if you free it, you should make a new object in each of your tasks,
       ;; as only that prevents that there ndb is still initialized as long as you use it.
+      ;;(print 'free/ndb-begin *trace-output*) (time)
       (ndb-free-object value))))
 
-(defmacro with-ndb-cluster-connection ((var &rest args) &body body)
+(defmacro with-ndb-cluster-connection ((var ndb-init connection-string
+                                        &key name
+                                             connect-args
+                                             wait-until-ready-args)
+                                       &body body)
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
-       (call-with-ndb-cluster-connection #',op ,@args))))
+       (call-with-ndb-cluster-connection #',op
+                                         (list ,ndb-init ,connection-string)
+                                         ,name
+                                         (list ,@connect-args)
+                                         (list ,@wait-until-ready-args)))))
 
-(defun call-with-ndb-cluster-connection (op &rest args)
+(defun call-with-ndb-cluster-connection (op args name connect-args wait-until-ready-args)
   (declare (dynamic-extent args))
+  ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
   (let ((value (apply #'new-ndb-cluster-connection args)))
-    (unwind-protect (funcall op value)
+    (unwind-protect
+         (progn
+           (when name
+             (ndbapi.ffi::ndb-cluster-connection-set-name value name))
+           (when connect-args
+             (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
+           (when wait-until-ready-args
+             (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
+           (funcall op value))
+      ;;(print 'free/new-ndb-cluster-connection *trace-output*) (time)
       (ndb-free-object value))))
 
 (defmacro with-ndb ((var &rest args) &body body)
@@ -390,8 +410,10 @@ as they are created as a side-effect of making the cluster connection.")
 
 (defun call-with-ndb (op &rest args)
   (declare (dynamic-extent args))
+  ;;(print 'new-ndb *trace-output*) (time)
   (let ((value (apply #'new-ndb args)))
     (unwind-protect (funcall op value)
+      ;;;;(print 'free/new-ndb *trace-output*) (time)
       (ndb-free-object value))))
 
 (defmacro with-ndb-transaction ((var &rest args) &body body)
