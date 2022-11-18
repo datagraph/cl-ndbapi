@@ -83,7 +83,7 @@
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
   (ndbapi:with-ndb-init ()
-    (ndbapi:with-ndb-cluster-connection (cluster-connection ndbapi:*ndb-init* connection-string
+    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string
                                          :name "ndbapi-scan-count"
                                          :connect-args (;; retries:
                                                         4
@@ -100,7 +100,7 @@ If you need an exact count call simple-scan instead with :just-count t"
 
         (let ((code-words 1))
           (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-            (ndbapi:with-ndb-interpreted-code (code ndbapi:*ndb-init* (cffi:null-pointer) code-space code-words)
+            (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
               (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
               (ndbapi:ndb-interpreted-code-finalise code)
 

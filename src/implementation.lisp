@@ -371,6 +371,7 @@ as they are created as a side-effect of making the cluster connection.")
     (ndb-free-object *ndb-init*)))
 
 (defmacro with-ndb-init (() &body body)
+  "better just call ENSURE-NDB-INIT once"
   (let ((op (gensym "OP-")))
     `(flet ((,op () ,@body))
        (declare (dynamic-extent #',op))
@@ -401,7 +402,7 @@ as they are created as a side-effect of making the cluster connection.")
           ;;(print 'free/ndb-begin *trace-output*) (time)
           (ndb-end)))))
 
-(defmacro with-ndb-cluster-connection ((var ndb-init connection-string
+(defmacro with-ndb-cluster-connection ((var connection-string
                                         &key name
                                              connect-args
                                              wait-until-ready-args)
@@ -410,7 +411,7 @@ as they are created as a side-effect of making the cluster connection.")
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
        (call-with-ndb-cluster-connection #',op
-                                         (list ,ndb-init ,connection-string)
+                                         (list ,connection-string)
                                          ,name
                                          (list ,@connect-args)
                                          (list ,@wait-until-ready-args)))))
@@ -418,7 +419,7 @@ as they are created as a side-effect of making the cluster connection.")
 (defun call-with-ndb-cluster-connection (op args name connect-args wait-until-ready-args)
   (declare (dynamic-extent args))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
-  (let ((value (apply #'new-ndb-cluster-connection args)))
+  (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
     (unwind-protect
          (progn
            (when name
@@ -441,10 +442,10 @@ as they are created as a side-effect of making the cluster connection.")
 
 (defvar *connection* nil)
 
-(defun cluster-connect (ndb-init connection-string &key name
-                                                        connect-args
-                                                        wait-until-ready-args)
-  (let ((value (new-ndb-cluster-connection ndb-init connection-string)))
+(defun cluster-connect (connection-string &key name
+                                               connect-args
+                                               wait-until-ready-args)
+  (let ((value (new-ndb-cluster-connection *ndb-init* connection-string)))
     (when name
       (ndbapi.ffi::ndb-cluster-connection-set-name value name))
     (when connect-args
@@ -459,7 +460,7 @@ as they are created as a side-effect of making the cluster connection.")
   (let* ((ndb-init (ndb-begin)))
     (make-instance 'connection
                    :ndb-init ndb-init
-                   :cluster-connection (cluster-connect ndb-init connection-string
+                   :cluster-connection (cluster-connect connection-string
                                                         :name name
                                                         :connect-args connect-args
                                                         :wait-until-ready-args wait-until-ready-args))))
@@ -538,6 +539,6 @@ as they are created as a side-effect of making the cluster connection.")
 
 (defun call-with-ndb-interpreted-code (op &rest args)
   (declare (dynamic-extent args))
-  (let ((value (apply #'new-ndb-interpreted-code args)))
+  (let ((value (apply #'new-ndb-interpreted-code *ndb-init* args)))
     (unwind-protect (funcall op value)
       (ndb-free-object value))))

@@ -28,7 +28,7 @@
                          high (high-inclusive t)
                          just-count)
   (ndbapi:with-ndb-init ()
-    (ndbapi:with-ndb-cluster-connection (cluster-connection ndbapi:*ndb-init* connection-string
+    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string
                                          :name "ndbapi-scan-count"
                                          :connect-args (;; retries:
                                                         4

@@ -32,6 +32,7 @@
                 :ndb-scan-operation-set-interpreted-code
                 :ndb-operation-get-value
                 :ndb-begin ;; this ndb-init renamed to :ndb-begin to avoid conflict
+                :ensure-ndb-init
                 :*ndb-init*
                 :ndb-end
                 :ndb-get-dictionary
@@ -77,6 +78,7 @@
            :new-ndb
            :ndb-init ;; renamed to avoid conflict
            :ndb-begin
+           :ensure-ndb-init
            :*ndb-init*
            :ndb-end
            :ndb-get-ndb-error
