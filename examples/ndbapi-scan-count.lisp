@@ -82,20 +82,18 @@
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
   (ndbapi:with-ndb-init (ndb-init)
-    (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
-      (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
-      (ndbapi:ndb-cluster-connection-connect cluster-connection
-                                             ;; retries:
-                                             4
-                                             ;; delay between retries:
-                                             5
-                                             ;; verbose:
-                                             1)
-      (ndbapi:ndb-cluster-connection-wait-until-ready cluster-connection
-                                                      ;; timeout for first alive:
-                                                      30
-                                                      ;; timeout after first alive:
-                                                      0)
+    (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string
+                                         :name "ndbapi-scan-count"
+                                         :connect-args (;; retries:
+                                                        4
+                                                        ;; delay between retries:
+                                                        5
+                                                        ;; verbose:
+                                                        1)
+                                         :wait-until-ready-args (;; timeout for first alive:
+                                                                 30
+                                                                 ;; timeout after first alive:
+                                                                 0))
       (ndbapi:with-ndb (ndb cluster-connection database-name)
         (ndbapi:ndb-init ndb)
 
