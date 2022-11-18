@@ -29,8 +29,8 @@
                                 low (low-inclusive t)
                                 high (high-inclusive t)
                                 debug)
-  (ndbapi:with-ndb-init (ndb-init)
-    (ndbapi:with-ndb-cluster-connection (cluster-connection ndb-init connection-string)
+  (ndbapi:with-ndb-init ()
+    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string)
       (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
       (ndbapi:ndb-cluster-connection-connect cluster-connection
                                              ;; retries:
@@ -49,7 +49,7 @@
 
         (let ((code-words 1))
           (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-            (ndbapi:with-ndb-interpreted-code (code ndb-init (cffi:null-pointer) code-space code-words)
+            (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
               (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
               (ndbapi:ndb-interpreted-code-finalise code)
 
