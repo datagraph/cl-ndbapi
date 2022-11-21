@@ -28,8 +28,8 @@
                          high (high-inclusive t)
                          just-count)
   (ndbapi:ensure-ndb-init)
-  (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* connection-string
-                                       :name "ndbapi-scan-count")
+  (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* (connection-string)
+                                                           :name "ndbapi-scan-count")
     (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
 
       (cffi:with-foreign-object (result-mask :unsigned-char)

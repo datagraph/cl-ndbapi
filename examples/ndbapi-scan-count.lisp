@@ -83,7 +83,8 @@
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
   (ndbapi:ensure-ndb-init)
-  (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* connection-string
+  (ndbapi:with-ndb-cluster-connection (ndbapi:*connection*
+                                       (connection-string)
                                        :name "ndbapi-scan-count"
                                        :connect-args (;; retries:
                                                       4

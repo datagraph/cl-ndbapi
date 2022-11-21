@@ -61,7 +61,7 @@
                          "ndb-init failed")
 
 (make-interface-function new-ndb-cluster-connection
-                         (ndbapi.ffi::new-ndb-cluster-connection/swig-0 ndb-init connectstring)
+                         (ndbapi.ffi::new-ndb-cluster-connection/swig-0 ndb-init connection-string) ;; no unique arity (extension of RonDB)
                          #'valid-object-p
                          "Create new ndb-cluster-connection object failed")
 
@@ -418,7 +418,9 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
                       there-is-only-one))
             (ndb-end))))))
 
-(defmacro with-ndb-cluster-connection ((var connection-string
+(defmacro with-ndb-cluster-connection ((var (connection-string) ;; do not support more args for now,
+                                                                ;;; as new-ndb-cluster-connection has
+                                                                ;;; no unique arity (extension of RonDB)
                                         &key name
                                              connect-args
                                              wait-until-ready-args
