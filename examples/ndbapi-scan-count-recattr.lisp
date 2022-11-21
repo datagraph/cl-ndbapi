@@ -30,8 +30,8 @@
                                 high (high-inclusive t)
                                 debug)
   (ndbapi:with-ndb-init ()
-    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string)
-      (ndbapi.ffi::ndb-cluster-connection-set-name cluster-connection "ndbapi-simple-scan")
+    (ndbapi:with-ndb-cluster-connection (cluster-connection connection-string :connect-and-wait-p nil)
+      (ndbapi:ndb-cluster-connection-set-name cluster-connection "ndbapi-scan-count/recattr")
       (ndbapi:ndb-cluster-connection-connect cluster-connection
                                              ;; retries:
                                              4

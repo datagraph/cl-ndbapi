@@ -226,7 +226,7 @@
   (self ndb-cluster-connection-type)
   (neighbour_node :unsigned-int))
 
-(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_name" #.(swig-lispify "Ndb_cluster_connection_set_name" 'function)) :void
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_set_name" #.(swig-lispify "Ndb_cluster_connection_set_name%" 'function)) :void
   (self ndb-cluster-connection-type)
   (name :string))
 

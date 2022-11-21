@@ -10,6 +10,7 @@
                 :get-ndb-error
                 :valid-object-p
                 :new-ndb-cluster-connection
+                :ndb-cluster-connection-set-name
                 :ndb-cluster-connection-connect
                 :ndb-cluster-connection-wait-until-ready
                 :new-ndb
@@ -67,16 +68,19 @@
                 :ndb-scan-operation-get-ndb-transaction
                 :ndb-operation-get-ndb-transaction
                 :ndb-close-transaction
-                :scan-options)
+                :scan-options
+                :get-value-spec)
   (:import-from :ndbapi.types
                 :*ndbapi-verbose*
                 :initialized
                 :with-foreign-struct
-                :free-foreign-object)
+                :free-foreign-object
+                :foreign-pointer)
   (:export ;; from :ndbapi.implementation
            :get-ndb-error
            :valid-object-p
            :new-ndb-cluster-connection
+           :ndb-cluster-connection-set-name
            :ndb-cluster-connection-connect
            :ndb-cluster-connection-wait-until-ready
            :new-ndb
@@ -134,9 +138,11 @@
            :ndb-scan-operation-get-ndb-transaction
            :ndb-close-transaction
            :scan-options
+           :get-value-spec
            ;; from :ndbapi.types
            :*ndbapi-verbose*
            :initialized
            :with-foreign-struct
-           :free-foreign-object)
+           :free-foreign-object
+           :foreign-pointer)
   (:documentation "A higher level NDB API interface (for RonDB)."))

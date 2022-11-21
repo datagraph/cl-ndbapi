@@ -65,15 +65,30 @@
                          #'valid-object-p
                          "Create new ndb-cluster-connection object failed")
 
-(make-interface-function ndb-cluster-connection-connect
-                         (ndbapi.ffi::ndb-cluster-connection-connect/swig-0 self no-retries retry-delay-in-seconds verbose)
+(defvar *default-connection-name* "cl-ndbapi" "default 2nd argument for ndb-cluster-connection-set-name")
+
+(defun ndb-cluster-connection-set-name (cluster-connection &optional name) ;; do not use default value here as name might be nil explicitly
+  ;; returns void
+  (ndbapi.ffi::ndb-cluster-connection-set-name% cluster-connection (or name *default-connection-name*)))
+
+(make-interface-function ndb-cluster-connection-connect ;; defaults are specified in C++: no-retries=30 retry-delay-in-seconds=1 verbose=0
+                         (ndbapi.ffi.o::ndb-cluster-connection-connect cluster-connection &rest args) ;; no-retries retry-delay-in-seconds verbose
                          #'zerop
                          "Cluster management server was not ready within 30 secs")
 
-(make-interface-function ndb-cluster-connection-wait-until-ready
-                         (ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0 self timeout-for-first-alive timeout-after-first-alive)
+(make-interface-function ndb-cluster-connection-wait-until-ready%
+                         (ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0 cluster-connection timeout-for-first-alive timeout-after-first-alive)
                          #'zerop
                          "Cluster was not ready within 30 secs.")
+
+(defvar *timeout-for-first-alive* 30 "default for 2nd argument of ndb-cluster-connection-wait-until-ready ")
+(defvar *timeout-after-first-alive* 0 "default for 3rd argument of ndb-cluster-connection-wait-until-ready ")
+
+(defun ndb-cluster-connection-wait-until-ready (cluster-connection &optional timeout-for-first-alive timeout-after-first-alive) ;; do not use default value here
+  ;; returns void
+  (ndb-cluster-connection-wait-until-ready% cluster-connection
+                                            (or timeout-for-first-alive *timeout-for-first-alive*)
+                                            (or timeout-after-first-alive *timeout-after-first-alive*)))
 
 (make-interface-function new-ndb
                          (ndbapi.ffi::new-ndb/swig-1 cluster-connection database-name)
@@ -398,7 +413,7 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
           ;;   to get this behavior at all.
           ;;(print 'free/ndb-begin *trace-output*) (time)
           (when there-is-only-one
-            (when ndbapi:*ndbapi-verbose*
+            (when ndbapi.types:*ndbapi-verbose*
               (format *trace-output* "~&WITH-NDB-INIT: force freeing of *ndb-init* as :THERE-IS-ONLY-ONE ~a"
                       there-is-only-one))
             (ndb-end))))))
@@ -406,7 +421,8 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
 (defmacro with-ndb-cluster-connection ((var connection-string
                                         &key name
                                              connect-args
-                                             wait-until-ready-args)
+                                             wait-until-ready-args
+                                             (connect-and-wait-p t))
                                        &body body)
   "If VAR is bound, it will be reused;
 (This only works for dynamic (special) variables, not for lexical ones.
@@ -419,22 +435,21 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
                                          (list ,connection-string)
                                          ,name
                                          (list ,@connect-args)
-                                         (list ,@wait-until-ready-args)))))
+                                         (list ,@wait-until-ready-args)
+                                         ,connect-and-wait-p))))
 
-(defun call-with-ndb-cluster-connection (op value args name connect-args wait-until-ready-args)
+(defun call-with-ndb-cluster-connection (op value args &optional name connect-args wait-until-ready-args (connect-and-wait-p t))
   (declare (dynamic-extent args))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
-  (if (ndbapi:valid-object-p value)
+  (if (valid-object-p value)
       (funcall op value)
       (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
         (unwind-protect
              (progn
-               (when name
-                 (ndbapi.ffi::ndb-cluster-connection-set-name value name))
-               (when connect-args
-                 (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
-               (when wait-until-ready-args
-                 (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
+               (ndb-cluster-connection-set-name value name)
+               (when connect-and-wait-p
+                 (apply #'ndb-cluster-connection-connect value connect-args)
+                 (apply #'ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
                (funcall op value))
           ;;(print 'free/new-ndb-cluster-connection *trace-output*) (time)
           (ndb-free-object value)))))
@@ -449,12 +464,9 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
                                        wait-until-ready-args)
   (ensure-ndb-init)
   (let ((value (new-ndb-cluster-connection *ndb-init* connection-string)))
-    (when name
-      (ndbapi.ffi::ndb-cluster-connection-set-name value name))
-    (when connect-args
-      (apply #'ndbapi:ndb-cluster-connection-connect value connect-args))
-    (when wait-until-ready-args
-      (apply #'ndbapi:ndb-cluster-connection-wait-until-ready value wait-until-ready-args))
+    (ndb-cluster-connection-set-name value name)
+    (apply #'ndb-cluster-connection-connect value connect-args)
+    (apply #'ndb-cluster-connection-wait-until-ready value wait-until-ready-args)
     value))
 
 (defun disconnect (connection)
