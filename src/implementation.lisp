@@ -40,6 +40,9 @@
        (typep object 'ndbapi.ffi::ndb-init)
        (ndbapi.types::initialized object)))
 
+(defun valid-connection-p (object)
+  (when (typep object 'ndbapi.ffi::ndb-cluster-connection)
+    (valid-object-p object)))
 
 ;;; interface
 
@@ -468,8 +471,6 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
 
 ;;; simple connection interace - begin
 
-(defvar *connection* nil)
-
 (defun connect (connection-string &key name
                                        connect-args
                                        wait-until-ready-args)
@@ -482,6 +483,18 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
 
 (defun disconnect (connection)
   (ndb-free-object connection))
+
+(defvar *connection* nil)
+
+(defun ensure-connection (connection-string &rest args
+                                            &key name
+                                                 connect-args
+                                                 wait-until-ready-args)
+  "safely initializes NDB API (that is, only once)"
+  (declare (ignorable name connect-args wait-until-ready-args))
+  (if (ndbapi.i::valid-connection-p *connection*)
+      *connection*
+      (setf *connection* (apply #'connect connection-string args))))
 
 ;;; simple connection interace - end
 

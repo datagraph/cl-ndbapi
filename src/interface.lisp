@@ -58,7 +58,9 @@
                 ;; simple connection interace
                 :*connection*
                 :connect
-                :disconnect)
+                :disconnect
+                :valid-connection-p
+                :ensure-connection)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -126,6 +128,8 @@
            :*connection*
            :connect
            :disconnect
+           :valid-connection-p
+           :ensure-connection
            ;; from :ndbapi.ffi
            :ndb-get-dictionary
            :dictionary-get-ndb-error
