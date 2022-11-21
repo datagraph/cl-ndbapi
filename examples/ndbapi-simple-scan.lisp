@@ -29,17 +29,7 @@
                          just-count)
   (ndbapi:ensure-ndb-init)
   (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* connection-string
-                                       :name "ndbapi-scan-count"
-                                       :connect-args (;; retries:
-                                                      4
-                                                      ;; delay between retries:
-                                                      5
-                                                      ;; verbose:
-                                                      1)
-                                       :wait-until-ready-args (;; timeout for first alive:
-                                                               30
-                                                               ;; timeout after first alive:
-                                                               0))
+                                       :name "ndbapi-scan-count")
     (ndbapi:with-ndb (ndb ndbapi:*connection* database-name)
       (ndbapi:ndb-init ndb)
 
