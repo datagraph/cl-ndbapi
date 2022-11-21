@@ -12,7 +12,7 @@
 
 (defun debug-print (object foreign-pointer do-free &optional (verbose *ndbapi-verbose*))
   (when verbose
-    (format *trace-output* "~&Destructor called for ~a object: ~8,'0x (~:[do NOT free~;do free~])"
+    (format *trace-output* "~&Destructor called for ~a object: #x~8,'0x (~:[do NOT free~;do free~])"
                object
                foreign-pointer
                do-free)
@@ -28,15 +28,22 @@
   ((foreign-pointer :reader foreign-pointer :initarg :foreign-pointer)
    (valid-cons :reader valid-cons :initarg :valid-cons)))
 
+(defmethod print-object ((instance garbage-collected-class) stream)
+  (print-unreadable-object (instance stream :type t :identity t)
+    (format stream "SAP: #x~8,'0x, ~:[invalid~;valid~]"
+            (cffi:pointer-address (foreign-pointer instance))
+            (let ((valid-cons (valid-cons instance)))
+              (and valid-cons
+                   (car valid-cons))))))
 
 (defgeneric delete-foreign-object (class pointer))
 
 (defmethod delete-foreign-object (class pointer)
-  (error "Do not how to delete ~a object on pointer: ~8,'0x" class pointer))
+  (error "Do not how to delete ~a object on pointer: #x~8,'0x" class pointer))
 
 (defmethod delete-foreign-object :before (class pointer)
   (when *ndbapi-verbose*
-    (format *trace-output* "~&Calling DELETE for ~a object on pointer: ~8,'0x"
+    (format *trace-output* "~&Calling DELETE for ~a object on pointer: #x~8,'0x"
                class
                pointer)
     (force-output *trace-output*)))
@@ -83,7 +90,7 @@
          (lisp-object (make-instance class :foreign-pointer foreign-pointer
                                            :valid-cons valid-cons)))
     (when *ndbapi-verbose*
-      (format *trace-output* "~&Translate ~a to ~a: ~8,'0x"
+      (format *trace-output* "~&Translate ~a to ~a: #x~8,'0x"
                  (class-name (class-of foreign-type))
                  class
                  foreign-pointer))
@@ -195,6 +202,14 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (defclass ndbapi.ffi::ndb-init ()
   ((initialized :reader initialized :initarg :initialized)
    (valid-cons :reader valid-cons :initarg :valid-cons)))
+
+(defmethod print-object ((instance ndbapi.ffi::ndb-init) stream)
+  (print-unreadable-object (instance stream :type t :identity t)
+    (format stream "initialized: ~a, ~:[invalid~;valid~]"
+            (ndbapi.types::initialized instance)
+            (let ((valid-cons (valid-cons instance)))
+              (and valid-cons
+                   (car valid-cons))))))
 
 (defmethod delete-foreign-object ((class (eql 'ndbapi.ffi::ndb-init)) initialized)
   (declare (ignore initialized))
