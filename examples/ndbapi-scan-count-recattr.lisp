@@ -44,7 +44,7 @@
                                                       30
                                                       ;; timeout after first alive:
                                                       0)
-      (ndbapi:with-ndb (ndb cluster-connection database-name)
+      (ndbapi:with-ndb (ndb (cluster-connection database-name) :ndb-init-p nil)
         (ndbapi:ndb-init ndb)
 
         (let ((code-words 1))

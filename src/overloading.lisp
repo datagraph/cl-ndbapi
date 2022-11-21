@@ -57,3 +57,4 @@ WARNING: this only works when there are no multiple functions with the same arit
 ;; no unique arity for:
 ;; (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbIndexScanOperation_readTuples" 'function))
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "Ndb_cluster_connection_connect" 'function))
+(overload-function-by-arity #.(ndbapi.ffi::swig-lispify "new_Ndb" 'function))

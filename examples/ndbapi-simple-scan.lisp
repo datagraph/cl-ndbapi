@@ -30,8 +30,7 @@
   (ndbapi:ensure-ndb-init)
   (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* connection-string
                                        :name "ndbapi-scan-count")
-    (ndbapi:with-ndb (ndb ndbapi:*connection* database-name)
-      (ndbapi:ndb-init ndb)
+    (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
 
       (cffi:with-foreign-object (result-mask :unsigned-char)
         (setf (cffi:mem-ref result-mask :unsigned-char) #b00000000)

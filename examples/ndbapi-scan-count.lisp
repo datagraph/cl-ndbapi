@@ -95,8 +95,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                                                                30
                                                                ;; timeout after first alive:
                                                                0))
-    (ndbapi:with-ndb (ndb ndbapi:*connection* database-name)
-      (ndbapi:ndb-init ndb)
+    (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
 
       (let ((code-words 1))
         (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))

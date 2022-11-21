@@ -91,7 +91,7 @@
                                             (or timeout-after-first-alive *timeout-after-first-alive*)))
 
 (make-interface-function new-ndb
-                         (ndbapi.ffi::new-ndb/swig-1 cluster-connection database-name)
+                         (ndbapi.ffi.o::new-ndb cluster-connection &rest args)
                          #'valid-object-p
                          "Create new NDB object failed")
 
@@ -100,7 +100,7 @@
                          (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb))
 
 (make-interface-function ndb-init ;; other ndb-init already renamed to ndb-begin to avoid conflict
-                         (ndbapi.ffi.o::ndb-init ndb)
+                         (ndbapi.ffi.o::ndb-init ndb &rest args)
                          #'zerop
                          "Ndb.init() failed: ~a"
                          (get-ndb-error ndb #'ndb-get-ndb-error))
@@ -445,7 +445,7 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
                                          ,connect-and-wait-p))))
 
 (defun call-with-ndb-cluster-connection (op value args &optional name connect-args wait-until-ready-args (connect-and-wait-p t))
-  (declare (dynamic-extent args))
+  (declare (dynamic-extent value args name connect-args wait-until-ready-args connect-and-wait-p))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
   (if (valid-object-p value)
       (funcall op value)
@@ -480,17 +480,26 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
 
 ;;; simple connection interace - end
 
-(defmacro with-ndb ((var &rest args) &body body)
+(defmacro with-ndb ((var (cluster-connection &rest more-new-ndb-args) &key max-no-of-transactions (ndb-init-p t)) &body body)
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
-       (call-with-ndb #',op ,@args))))
+       (call-with-ndb #',op
+                      ,cluster-connection
+                      (list ,@more-new-ndb-args) ;; need to convert (foo), a call form, to (list foo), a list form
+                      ,max-no-of-transactions
+                      ,ndb-init-p))))
 
-(defun call-with-ndb (op &rest args)
-  (declare (dynamic-extent args))
+(defun call-with-ndb (op cluster-connection &optional more-new-ndb-args max-no-of-transactions (ndb-init-p t))
+  (declare (dynamic-extent cluster-connection more-new-ndb-args max-no-of-transactions ndb-init-p))
   ;;(print 'new-ndb *trace-output*) (time)
-  (let ((value (apply #'new-ndb args)))
-    (unwind-protect (funcall op value)
+  (let ((value (apply #'new-ndb cluster-connection more-new-ndb-args)))
+    (unwind-protect
+         (progn
+           (when ndb-init-p
+             (apply #'ndb-init value (when max-no-of-transactions
+                                       (list max-no-of-transactions))))
+           (funcall op value))
       ;;;;(print 'free/new-ndb *trace-output*) (time)
       (ndb-free-object value))))
 
