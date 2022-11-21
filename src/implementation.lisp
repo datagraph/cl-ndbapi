@@ -426,7 +426,13 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
                                        &body body)
   "If VAR is bound, it will be reused;
 (This only works for dynamic (special) variables, not for lexical ones.
- If the variable is just lexical, a new connection will be made.)"
+ If the variable is just lexical, a new connection will be made.)
+It is suggested to use the special variable ndbapi:*connection* in most cases.
+
+Also sets up the cluster connection with a name
+(using *default-connection-name* when not explicitly specified),
+and also calling connect and wait-until-ready
+unless CONNECT-AND-WAIT-P is explicitly set to NIL"
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
