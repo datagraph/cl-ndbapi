@@ -84,7 +84,7 @@ int main(int argc, char** argv)
 				   5 /* delay between retries */,
 				   1 /* verbose               */))
     {
-      std::cout << "Cluster management server was not ready within 30 secs.\n";
+      std::cout << "Cluster management server was not ready within expected time.\n";
       exit(-1);
     }
 

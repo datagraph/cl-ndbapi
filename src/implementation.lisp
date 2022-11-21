@@ -74,7 +74,7 @@
 (make-interface-function ndb-cluster-connection-connect ;; defaults are specified in C++: no-retries=30 retry-delay-in-seconds=1 verbose=0
                          (ndbapi.ffi.o::ndb-cluster-connection-connect cluster-connection &rest args) ;; no-retries retry-delay-in-seconds verbose
                          #'zerop
-                         "Cluster management server was not ready within 30 secs")
+                         "Cluster management server was not ready within expected time")
 
 (make-interface-function ndb-cluster-connection-wait-until-ready%
                          (ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0 cluster-connection timeout-for-first-alive timeout-after-first-alive)
