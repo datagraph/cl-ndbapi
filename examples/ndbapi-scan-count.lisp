@@ -117,7 +117,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                 (cffi:with-foreign-object (records-in-range-ptr :uint32 4)
                   (ndbapi:with-foreign-struct (extra-get-values (list :column (ndbapi:column-records-in-range)
                                                                       :app-storage records-in-range-ptr)
-                                                                '(:struct ndbapi.ffi::get-value-spec))
+                                                                '(:struct ndbapi:get-value-spec))
 
                     (ndbapi:with-foreign-struct (scan-options (list :options-present '(:+SO-SCANFLAGS+
                                                                                        :+SO-GETVALUE+
@@ -125,7 +125,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                                                                     :scan-flags scan-flags
                                                                     :extra-get-values extra-get-values
                                                                     :num-extra-get-values 1
-                                                                    :interpreted-code (ndbapi.types::foreign-pointer code))
+                                                                    :interpreted-code (ndbapi:foreign-pointer code))
                                                               '(:struct ndbapi:scan-options))
                       ;;(break "~a" (cffi:convert-from-foreign scan-options '(:struct ndbapi:scan-options)))
                       (cffi:with-foreign-object (result-mask :unsigned-char)
