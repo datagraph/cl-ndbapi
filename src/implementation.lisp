@@ -27,7 +27,10 @@
 
 (defun valid-object-p (object)
   (let ((pointer (if (typep object 'ndbapi.types::garbage-collected-class)
-                     (ndbapi.types::foreign-pointer object)
+                     (let ((valid-cons (ndbapi.types::valid-cons object)))
+                       (when (and valid-cons
+                                  (car valid-cons))
+                         (ndbapi.types::foreign-pointer object)))
                      object)))
     (and pointer
          (not (cffi:null-pointer-p pointer)))))
