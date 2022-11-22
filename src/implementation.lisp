@@ -493,6 +493,7 @@ if it refers to an existing and valid connection, it will be passed-through."
         value)))
 
 (defun disconnect (connection)
+  "it is safe to be called repeatedly"
   (ndb-free-object connection))
 
 (defvar *connection* nil)
