@@ -46,9 +46,9 @@ mysql> show indexes from test where Key_name = "s";
 
         (ndbapi.ffi::dictionary-list-indexes/swig-1 (ndbapi::ndb-get-dictionary ndb) list table-name)
 
-        (let ((count (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :count))
-              (elements (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :elements)))
-          (loop for i below count
-                for element = (cffi:mem-aptr elements '(:struct ndbapi.ffi::element) i)
-                collect (loop for field in '(:id :name :schema :database :type)
-                              nconc (list field (cffi:foreign-slot-value element '(:struct ndbapi.ffi::element) field)))))))))
+        (loop with count = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :count)
+              with elements = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :elements)
+              for i below count
+              for element = (cffi:mem-aptr elements '(:struct ndbapi.ffi::element) i)
+              collect (loop for field in '(:id :name :schema :database :type)
+                            nconc (list field (cffi:foreign-slot-value element '(:struct ndbapi.ffi::element) field))))))))
