@@ -61,7 +61,9 @@
                 :connect
                 :disconnect
                 :valid-connection-p
-                :ensure-connection)
+                :ensure-connection
+                ;; more advanced commands
+                :get-index-names)
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
@@ -132,6 +134,8 @@
            :disconnect
            :valid-connection-p
            :ensure-connection
+           ;; more advanced commands
+           :get-index-names
            ;; from :ndbapi.ffi
            :ndb-get-dictionary
            :dictionary-get-ndb-error

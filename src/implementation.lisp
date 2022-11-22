@@ -598,3 +598,19 @@ pass-through an existing connection with the keyword argument :connection."
   (let ((value (apply #'new-ndb-interpreted-code *ndb-init* args)))
     (unwind-protect (funcall op value)
       (ndb-free-object value))))
+
+
+;;; more advanced commands
+
+(defun get-index-names ( database-name table-name)
+  (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
+    (ndbapi.types::with-foreign-struct (list (list :count 0) '(:struct ndbapi.ffi::list))
+
+      (ndbapi.ffi::dictionary-list-indexes/swig-1 (ndbapi::ndb-get-dictionary ndb) list table-name)
+
+      (loop with count = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :count)
+            with elements = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :elements)
+            with field = :name
+            for i below count
+            for element = (cffi:mem-aptr elements '(:struct ndbapi.ffi::element) i)
+            collect (cffi:foreign-slot-value element '(:struct ndbapi.ffi::element) field)))))
