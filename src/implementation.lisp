@@ -393,8 +393,8 @@ as they are created as a side-effect of making the cluster connection.")
 (defun ndb-end ()
   "WARNING: only call when you are sure that the NDB API is not used anymore at all"
   (bt:with-lock-held (*ndb-init-lock*)
-    (when (initialized-ndb-init-p *ndb-init*)
-      (ndb-free-object *ndb-init*))))
+    ;; no need to check with INITIALIZED-NDB-INIT-P as NDB-FREE-OBJECT is safe to be called repeatedly
+    (ndb-free-object *ndb-init*)))
 
 (defmacro with-ndb-init ((&key there-is-only-one) &body body)
   "better just call ENSURE-NDB-INIT once and do not use WITH-NDB-INIT
