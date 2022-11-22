@@ -473,13 +473,19 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
 
 (defun connect (connection-string &key name
                                        connect-args
-                                       wait-until-ready-args)
+                                       wait-until-ready-args
+                                       connection)
+  "create new cluster connection and initialize it with name, connect and wait-until-ready;
+optionally you can specify an existing connection with the keyword argument :connection,
+if it refers to an existing and valid connection, it will be passed-through."
   (ensure-ndb-init)
-  (let ((value (new-ndb-cluster-connection *ndb-init* connection-string)))
-    (ndb-cluster-connection-set-name value name)
-    (apply #'ndb-cluster-connection-connect value connect-args)
-    (apply #'ndb-cluster-connection-wait-until-ready value wait-until-ready-args)
-    value))
+  (if (ndbapi.i::valid-connection-p connection)
+      connection
+      (let ((value (new-ndb-cluster-connection *ndb-init* connection-string)))
+        (ndb-cluster-connection-set-name value name)
+        (apply #'ndb-cluster-connection-connect value connect-args)
+        (apply #'ndb-cluster-connection-wait-until-ready value wait-until-ready-args)
+        value)))
 
 (defun disconnect (connection)
   (ndb-free-object connection))
@@ -490,7 +496,10 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
                                             &key name
                                                  connect-args
                                                  wait-until-ready-args)
-  "safely initializes NDB API (that is, only once)"
+  "safely initializes NDB API (that is, only once)
+Works only with one connection in ndbapi:*connection* in total,
+if you need more then one, use ndbapi:connect, which can also
+pass-through an existing connection with the keyword argument :connection."
   (declare (ignorable name connect-args wait-until-ready-args))
   (if (ndbapi.i::valid-connection-p *connection*)
       *connection*
