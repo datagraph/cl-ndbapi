@@ -129,7 +129,7 @@
                         total-row-count))))))))))))
 
 #+(or)
-(let ((args (list :connection-string "nl3:1186,nl3:1187"
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gspo")))
@@ -138,7 +138,7 @@
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
-(let ((args (list :connection-string "nl3:1186,nl3:1187"
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gspo"
@@ -149,7 +149,7 @@
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
-(let ((args (list :connection-string "nl3:1186,nl3:1187"
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gosp"
@@ -160,7 +160,7 @@
    (apply #'ndb.scan-count:scan-count :debug t args)))
 
 #+(or)
-(let ((args (list :connection-string "nl3:1186,nl3:1187"
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gpos"

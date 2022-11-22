@@ -9,7 +9,7 @@
 Given the database as defined in the beginning commet of the
 file ndbapi-simple-scan.lisp, here is a example session:
 
-CL-USER> (ndb.list-indexes:list-indexes :connection-string "nl3:1186,nl3:1187" :database-name "mgr" :table-name "test")
+CL-USER> (ndb.list-indexes:list-indexes :connection-string "localhost:1186,localhost:1187" :database-name "mgr" :table-name "test")
 ((:ID 26 :NAME "spog" :SCHEMA "def" :DATABASE "sys" :TYPE :+OTY-ORDERED-INDEX+)
  (:ID 25 :NAME "gosp" :SCHEMA "def" :DATABASE "sys" :TYPE :+OTY-ORDERED-INDEX+)
  (:ID 23 :NAME "gspo" :SCHEMA "def" :DATABASE "sys" :TYPE :+OTY-ORDERED-INDEX+)
