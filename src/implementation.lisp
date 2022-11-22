@@ -38,7 +38,10 @@
 (defun initialized-ndb-init-p (object)
   (and object
        (typep object 'ndbapi.ffi::ndb-init)
-       (ndbapi.types::initialized object)))
+       (let ((valid-cons (ndbapi.types::valid-cons object)))
+         (when (and valid-cons
+                    (car valid-cons))
+           (ndbapi.types::initialized object)))))
 
 (defun valid-connection-p (object)
   (when (typep object 'ndbapi.ffi::ndb-cluster-connection)
