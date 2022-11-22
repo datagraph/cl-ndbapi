@@ -23,3 +23,8 @@
   (:use :cl)
   (:export :scan-count :scan-count/recattr)
   (:documentation "Simple example using scan"))
+
+(defpackage :ndb.list-indexes
+  (:use :cl)
+  (:export :list-indexes)
+  (:documentation "Simple example to list indexes and extract information on them"))
