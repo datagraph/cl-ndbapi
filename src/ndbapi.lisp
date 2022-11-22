@@ -2592,23 +2592,28 @@
   (self ndb-data-print-format-type))
 
 (cffi:defcstruct #.(swig-lispify "List" 'classname)
-	(#.(swig-lispify "__assign__" 'slotname :keyword) :pointer)
+        ;; the assign operator is not part of the struct
+        ;; (#.(swig-lispify "__assign__" 'slotname :keyword) :pointer)
 	(#.(swig-lispify "count" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "elements" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "sortById" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "sortByName" 'slotname :keyword) :pointer))
+        ;; the methods sortById and sortByName are not part of the struct
+	;;(#.(swig-lispify "sortById" 'slotname :keyword) :pointer)
+	;;(#.(swig-lispify "sortByName" 'slotname :keyword) :pointer)
+  )
 
 (cffi:defcstruct #.(swig-lispify "Element" 'classname)
 	(#.(swig-lispify "id" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "type" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "state" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "store" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "temp" 'slotname :keyword) :unsigned-int)
+	(#.(swig-lispify "type" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::Type
+	(#.(swig-lispify "state" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::State
+	(#.(swig-lispify "store" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::Store
+        (#.(swig-lispify "temp" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "database" 'slotname :keyword) :string)
 	(#.(swig-lispify "schema" 'slotname :keyword) :string)
 	(#.(swig-lispify "name" 'slotname :keyword) :string)
-	(#.(swig-lispify "compareByName" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "compareById" 'slotname :keyword) :pointer))
+        ;; the functions compareByName and compareById are static and actually not part of the struct
+	;;(#.(swig-lispify "compareByName" 'slotname :keyword) :pointer)
+	;;(#.(swig-lispify "compareById" 'slotname :keyword) :pointer)
+  )
 
 (cl:defconstant #.(swig-lispify "WAITFOR_RESPONSE_TIMEOUT" 'constant) 120000)
 
