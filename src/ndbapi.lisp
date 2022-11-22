@@ -2601,11 +2601,47 @@
 	;;(#.(swig-lispify "sortByName" 'slotname :keyword) :pointer)
   )
 
+(cffi:defcenum #.(swig-lispify "ObjectType" 'enumname)
+        (#. (swig-lispify "OTY_TypeUndefined" 'enumvalue :keyword) 0)       ;; < Undefined
+        (#. (swig-lispify "OTY_SystemTable" 'enumvalue :keyword) 1)         ;; < System table
+        (#. (swig-lispify "OTY_UserTable" 'enumvalue :keyword) 2)           ;; < User table (may be temporary)
+        (#. (swig-lispify "OTY_UniqueHashIndex" 'enumvalue :keyword) 3)     ;; < Unique un-ordered hash index
+        (#. (swig-lispify "OTY_OrderedIndex" 'enumvalue :keyword) 6)        ;; < Non-unique ordered index
+        (#. (swig-lispify "OTY_HashIndexTrigger" 'enumvalue :keyword) 7)    ;; < Index maintenance, internal
+        (#. (swig-lispify "OTY_IndexTrigger" 'enumvalue :keyword) 8)        ;; < Index maintenance, internal
+        (#. (swig-lispify "OTY_SubscriptionTrigger" 'enumvalue :keyword) 9) ;; < Backup or replication, internal
+        (#. (swig-lispify "OTY_ReadOnlyConstraint" 'enumvalue :keyword) 10) ;; < Trigger, internal
+        (#. (swig-lispify "OTY_TableEvent" 'enumvalue :keyword) 11)         ;; < Table event
+        (#. (swig-lispify "OTY_Tablespace" 'enumvalue :keyword) 20)         ;; < Tablespace
+        (#. (swig-lispify "OTY_LogfileGroup" 'enumvalue :keyword) 21)       ;; < Logfile group
+        (#. (swig-lispify "OTY_Datafile" 'enumvalue :keyword) 22)           ;; < Datafile
+        (#. (swig-lispify "OTY_Undofile" 'enumvalue :keyword) 23)           ;; < Undofile
+        (#. (swig-lispify "OTY_ReorgTrigger" 'enumvalue :keyword) 19)
+        (#. (swig-lispify "OTY_HashMap" 'enumvalue :keyword) 24)
+        (#. (swig-lispify "OTY_ForeignKey" 'enumvalue :keyword) 25)
+        (#. (swig-lispify "OTY_FKParentTrigger" 'enumvalue :keyword) 26)
+        (#. (swig-lispify "OTY_FKChildTrigger" 'enumvalue :keyword) 27)
+        (#. (swig-lispify "OTY_FullyReplicatedTrigger" 'enumvalue :keyword) 28)})
+
+(cffi:defcenum #.(swig-lispify "ObjectState" 'enumname)
+	(#.(swig-lispify "OSA_StateUndefined" 'enumvalue :keyword) 0)      ;; < Undefined
+        (#.(swig-lispify "OSA_StateOffline" 'enumvalue :keyword) 1)        ;; < Offline, not usable
+	(#.(swig-lispify "OSA_StateBuilding" 'enumvalue :keyword) 2)       ;; < Building, not yet usable
+	(#.(swig-lispify "OSA_StateDropping" 'enumvalue :keyword) 3)       ;; < Offlining or dropping, not usable
+	(#.(swig-lispify "OSA_StateOnline" 'enumvalue :keyword) 4)         ;; < Online, usable
+	(#.(swig-lispify "OSA_ObsoleteStateBackup" 'enumvalue :keyword) 5) ;; < Online, being backed-up, usable
+        (#.(swig-lispify "OSA_StateBroken" 'enumvalue :keyword) 9))        ;; < Broken, should be dropped and re-created
+
+(cffi:defcenum #.(swig-lispify "ObjectStore" 'enumname)
+	(#.(swig-lispify "OSO_StoreUndefined" 'enumvalue :keyword) 0)      ;; < Undefined
+        (#.(swig-lispify "OSA_StoreNotLogged" 'enumvalue :keyword) 1)        ;; < Object or data deleted on system restart
+	(#.(swig-lispify "OSA_StorePermanent" 'enumvalue :keyword) 2))      ;; < Permanent. logged to disk
+
 (cffi:defcstruct #.(swig-lispify "Element" 'classname)
 	(#.(swig-lispify "id" 'slotname :keyword) :unsigned-int)
-	(#.(swig-lispify "type" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::Type
-	(#.(swig-lispify "state" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::State
-	(#.(swig-lispify "store" 'slotname :keyword) :unsigned-int) ;; this is enum NdbDictionary::Object::Store
+	(#.(swig-lispify "type" 'slotname :keyword) #.(swig-lispify "ObjectType" 'enumname))
+	(#.(swig-lispify "state" 'slotname :keyword) #.(swig-lispify "ObjectState" 'enumname))
+	(#.(swig-lispify "store" 'slotname :keyword) #.(swig-lispify "ObjectStore" 'enumname))
         (#.(swig-lispify "temp" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "database" 'slotname :keyword) :string)
 	(#.(swig-lispify "schema" 'slotname :keyword) :string)
