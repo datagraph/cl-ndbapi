@@ -377,19 +377,24 @@ as they are created as a side-effect of making the cluster connection.")
 ;;; with- macros
 
 (defvar *ndb-init* nil)
+(defvar *ndb-init-lock* (bt:make-lock "*ndb-init* lock"))
 
 (defun ndb-begin ()
   "safely initializes NDB API (that is, only once)"
-  (if (initialized-ndb-init-p *ndb-init*)
-      *ndb-init*
-      (setf *ndb-init* (ndb-begin%))))
+  (bt:with-lock-held (*ndb-init-lock*)
+    (if (initialized-ndb-init-p *ndb-init*)
+        *ndb-init*
+        (setf *ndb-init* (ndb-begin%)))))
 
+;; NDB-BEGIN and ENSURE-NDB-INIT are identical, as there really should be only one
+;; ndb-init object for the whole application. The NDB API must to be initialized once only.
 (setf (fdefinition 'ensure-ndb-init) (fdefinition 'ndb-begin))
 
 (defun ndb-end ()
   "WARNING: only call when you are sure that the NDB API is not used anymore at all"
-  (when (initialized-ndb-init-p *ndb-init*)
-    (ndb-free-object *ndb-init*)))
+  (bt:with-lock-held (*ndb-init-lock*)
+    (when (initialized-ndb-init-p *ndb-init*)
+      (ndb-free-object *ndb-init*))))
 
 (defmacro with-ndb-init ((&key there-is-only-one) &body body)
   "better just call ENSURE-NDB-INIT once and do not use WITH-NDB-INIT
@@ -404,7 +409,7 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
   (if (initialized-ndb-init-p *ndb-init*)
       (funcall op)
       (progn
-        (setf *ndb-init* (ndb-begin%))
+        (ndb-begin)
         (unwind-protect (funcall op)
           ;; explicit free of ndb-init object IFF we have introduced it,
           ;; that is *ndb-init* was previously unbound or not initialized.
@@ -491,6 +496,10 @@ if it refers to an existing and valid connection, it will be passed-through."
   (ndb-free-object connection))
 
 (defvar *connection* nil)
+(defvar *connection-lock* (bt:make-lock "*connection* lock"))
+
+;; DISCONNECT doesn't hold the lock as it only invalidates the connection object,
+;; but does not change the value of the *connection* variable.
 
 (defun ensure-connection (connection-string &rest args
                                             &key name
@@ -501,9 +510,10 @@ Works only with one connection in ndbapi:*connection* in total,
 if you need more then one, use ndbapi:connect, which can also
 pass-through an existing connection with the keyword argument :connection."
   (declare (ignorable name connect-args wait-until-ready-args))
-  (if (ndbapi.i::valid-connection-p *connection*)
-      *connection*
-      (setf *connection* (apply #'connect connection-string args))))
+  (bt:with-lock-held (*connection-lock*)
+    (if (ndbapi.i::valid-connection-p *connection*)
+        *connection*
+        (setf *connection* (apply #'connect connection-string args)))))
 
 ;;; simple connection interace - end
 
