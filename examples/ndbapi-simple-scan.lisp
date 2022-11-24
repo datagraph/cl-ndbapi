@@ -24,8 +24,7 @@
 |#
 
 (defun simple-scan (&key connection-string database-name table-name index-name
-                         low (low-inclusive t)
-                         high (high-inclusive t)
+                         bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
                          just-count)
   (ndbapi:ensure-ndb-init)
   (ndbapi:with-ndb-cluster-connection (ndbapi:*connection* (connection-string)
@@ -64,18 +63,28 @@
                                                        (t))
 
                 ;; set bounds for scan
-                (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
-                  (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
-                    (ndbapi:with-foreign-struct (bound (list :low-key low-quad
-                                                             :low-key-count (length low)
-                                                             :low-inclusive low-inclusive
-                                                             :high-key high-quad
-                                                             :high-key-count (length high)
-                                                             :high-inclusive high-inclusive
-                                                             :range-no 0)
-                                                       '(:struct ndbapi:index-bound))
-                      (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
-                      (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
+                (let ((bounds-count (length bound-specs)))
+                  (cffi:with-foreign-objects ((low-quads '(:struct ndb.quads:quad) bounds-count)
+                                              (high-quads '(:struct ndb.quads:quad) bounds-count)
+                                              (bounds '(:struct ndbapi:index-bound) bounds-count))
+                    (loop for bound-spec in bound-specs
+                          for i from 0
+                          do (destructuring-bind (&key low high (low-inclusive t) (high-inclusive t))
+                                 bound-spec
+                               (setf (cffi:mem-aref low-quads '(:struct ndb.quads:quad) i) (ndb.quads:list-to-quad low)
+                                     (cffi:mem-aref high-quads '(:struct ndb.quads:quad) i) (ndb.quads:list-to-quad high)
+                                     (cffi:mem-aref bounds '(:struct ndbapi:index-bound) i)
+                                     (list :low-key (cffi:mem-aptr low-quads '(:struct ndb.quads:quad) i)
+                                           :low-key-count (length low)
+                                           :low-inclusive low-inclusive
+                                           :high-key (cffi:mem-aptr high-quads '(:struct ndb.quads:quad) i)
+                                           :high-key-count (length high)
+                                           :high-inclusive high-inclusive
+                                           :range-no i))
+                               (let ((bound (cffi:mem-aptr bounds '(:struct ndbapi:index-bound) i)))
+                                 (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))))
+                    ;; execute transaction
+                    (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
                 ;; // Check rc anyway
 
@@ -110,12 +119,22 @@
                              :database-name "mgr"
                              :table-name "test"
                              :index-name "gspo"
-                             :low (list 1106 1105 1105 638) :low-inclusive t
-                             :high (list 1109 1105 1106 1108) :high-inclusive t)
+                             :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
+                                             :high (1109 1105 1106 1108) :high-inclusive t)))
+#+(or)
+(ndb.simple-scan:simple-scan :connection-string "localhost:1186,localhost:1187"
+                             :database-name "mgr"
+                             :table-name "test"
+                             :index-name "gosp"
+                             :bound-specs '((:low (662743 2000000) :low-inclusive t
+                                             :high (662743 2200000) :high-inclusive t)))
+
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "localhost:1186,localhost:1187"
                              :database-name "mgr"
                              :table-name "test"
                              :index-name "gspo"
-                             :low (list 662743 2000000) :low-inclusive t
-                             :high (list 662743 2200000) :high-inclusive t)
+                             :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
+                                             :high (1109 1105 1106 1108) :high-inclusive t)
+                                            (:low  (600000) :low-inclusive nil
+                                             :high (662743) :high-inclusive t)))

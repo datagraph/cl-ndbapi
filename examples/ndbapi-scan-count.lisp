@@ -77,8 +77,7 @@
 |#
 
 (defun scan-count (&key connection-string database-name table-name index-name
-                        low (low-inclusive t)
-                        high (high-inclusive t)
+                        bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
                         debug)
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
@@ -143,18 +142,28 @@ If you need an exact count call simple-scan instead with :just-count t"
                                                                  (t))
 
                           ;; set bounds for scan
-                          (ndb.quads:with-foreign-quad (low-quad (ndb.quads:list-to-quad low))
-                            (ndb.quads:with-foreign-quad (high-quad (ndb.quads:list-to-quad high))
-                              (ndbapi:with-foreign-struct (bound (list :low-key low-quad
-                                                                       :low-key-count (length low)
-                                                                       :low-inclusive low-inclusive
-                                                                       :high-key high-quad
-                                                                       :high-key-count (length high)
-                                                                       :high-inclusive high-inclusive
-                                                                       :range-no 0)
-                                                                 '(:struct ndbapi:index-bound))
-                                (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound)
-                                (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+))))
+                          (let ((bounds-count (length bound-specs)))
+                            (cffi:with-foreign-objects ((low-quads '(:struct ndb.quads:quad) bounds-count)
+                                                        (high-quads '(:struct ndb.quads:quad) bounds-count)
+                                                        (bounds '(:struct ndbapi:index-bound) bounds-count))
+                              (loop for bound-spec in bound-specs
+                                    for i from 0
+                                    do (destructuring-bind (&key low high (low-inclusive t) (high-inclusive t))
+                                           bound-spec
+                                         (setf (cffi:mem-aref low-quads '(:struct ndb.quads:quad) i) (ndb.quads:list-to-quad low)
+                                               (cffi:mem-aref high-quads '(:struct ndb.quads:quad) i) (ndb.quads:list-to-quad high)
+                                               (cffi:mem-aref bounds '(:struct ndbapi:index-bound) i)
+                                               (list :low-key (cffi:mem-aptr low-quads '(:struct ndb.quads:quad) i)
+                                                     :low-key-count (length low)
+                                                     :low-inclusive low-inclusive
+                                                     :high-key (cffi:mem-aptr high-quads '(:struct ndb.quads:quad) i)
+                                                     :high-key-count (length high)
+                                                     :high-inclusive high-inclusive
+                                                     :range-no i))
+                                         (let ((bound (cffi:mem-aptr bounds '(:struct ndbapi:index-bound) i)))
+                                           (ndbapi:ndb-index-scan-operation-set-bound scan index-default-record bound))))
+                              ;; execute transaction
+                              (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
                           ;; // Check rc anyway
 
@@ -196,8 +205,8 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gspo"
-                  :low (list 1106 1105 1105 638) :low-inclusive t
-                  :high (list 1109 1105 1106 1108) :high-inclusive t)))
+                  :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
+                                  :high (1109 1105 1106 1108) :high-inclusive t)))))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.simple-scan:simple-scan :just-count t args)
@@ -208,8 +217,8 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gosp"
-                  :low (list 662743 2000000) :low-inclusive t
-                  :high (list 662743 2200000) :high-inclusive t)))
+                  :bound-specs '((:low (662743 2000000) :low-inclusive t
+                                  :high (662743 2200000) :high-inclusive t)))))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.simple-scan:simple-scan :just-count t args)
@@ -220,8 +229,22 @@ If you need an exact count call simple-scan instead with :just-count t"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gpos"
-                  :low (list 1109 1106 1137) :low-inclusive t
-                  :high (list 2108202 1106 603481) :high-inclusive t)))
+                  :bound-specs '((:low (1109 1106 1137) :low-inclusive t
+                                  :high (2108202 1106 603481) :high-inclusive t)))))
+  (list
+   (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.simple-scan:simple-scan :just-count t args)
+   (apply #'ndb.scan-count:scan-count :debug t args)))
+
+#+(or)
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "gspo"
+                  :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
+                                             :high (1109 1105 1106 1108) :high-inclusive t)
+                                 (:low  (600000) :low-inclusive t
+                                  :high (662743) :high-inclusive t)))))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
    (apply #'ndb.simple-scan:simple-scan :just-count t args)
