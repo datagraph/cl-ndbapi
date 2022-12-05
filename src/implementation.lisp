@@ -520,6 +520,9 @@ pass-through an existing connection with the keyword argument :connection."
         *connection*
         (setf *connection* (apply #'connect connection-string args)))))
 
+(setf (macro-function 'with-connection)
+      (macro-function 'with-ndb-cluster-connection))
+
 ;;; simple connection interace - end
 
 (defmacro with-ndb ((var (cluster-connection &rest more-new-ndb-args) &key max-no-of-transactions (ndb-init-p t)) &body body)

@@ -62,6 +62,7 @@
                 :disconnect
                 :valid-connection-p
                 :ensure-connection
+                :with-connection
                 ;; more advanced commands
                 :get-index-names)
   (:import-from :ndbapi.ffi
@@ -134,6 +135,7 @@
            :disconnect
            :valid-connection-p
            :ensure-connection
+           :with-connection
            ;; more advanced commands
            :get-index-names
            ;; from :ndbapi.ffi
