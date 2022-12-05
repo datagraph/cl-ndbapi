@@ -7,20 +7,21 @@
 #|
  create table as:
    create table test
-          (s int unsigned not null, p int unsigned not null,
-           o int unsigned not null, g int unsigned not null,
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
            index gspo (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
-           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g));
+           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
+           unique (g,s,p,o));
 
  load data with:
     load data infile '/path/to/data.tsv' into table test;
 |#
 
 (cffi:defcstruct quad
+  (:g :unsigned-int)
   (:s :unsigned-int)
   (:p :unsigned-int)
-  (:o :unsigned-int)
-  (:g :unsigned-int))
+  (:o :unsigned-int))
 
 (cffi:defcstruct triple
   (:s :unsigned-int)
@@ -76,16 +77,16 @@
 
 (defun list-to-quad (list)
   "take spog list and return as quad (given as property list)"
-  (destructuring-bind (&optional (s 0) (p 0) (o 0) (g 0)) list
-    (list :s s :p p :o o :g g)))
+  (destructuring-bind (&optional (g 0) (s 0) (p 0) (o 0)) list
+    (list :g g :s s :p p :o o)))
 
 (defun list-to-quad* (&rest list)
   (list-to-quad list))
 
 (defun quad-to-list (quad)
   "deconstruct quad (given as property list) and return as spog list"
-  (destructuring-bind (&key (s 0) (p 0) (o 0) (g 0)) quad
-    (list s p o g)))
+  (destructuring-bind (&key (g 0) (s 0) (p 0) (o 0)) quad
+    (list g s p o)))
 
 (defun quad-to-list* (&rest quad)
   (quad-to-list quad))

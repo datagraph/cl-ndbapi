@@ -16,10 +16,11 @@
 #|
  create table as:
    create table test
-          (s int unsigned not null, p int unsigned not null,
-           o int unsigned not null, g int unsigned not null,
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
            index gspo (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
-           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g));
+           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
+           unique (g,s,p,o));
 
  load data with:
     load data infile '/path/to/data.tsv' into table test;

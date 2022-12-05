@@ -13,11 +13,11 @@
 #|
  create table as:
    create table test
-          (s int unsigned not null, p int unsigned not null,
-           o int unsigned not null, g int unsigned not null,
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
            index gspo (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
-           unique (s,p,o,g));
+           unique (g,s,p,o));
 
  load data with:
     load data infile '/path/to/data.tsv' into table test;
@@ -91,7 +91,7 @@
                 ;; do scan and print
                 (unless just-count
                   (format t "~&table: ~a" table-name)
-                  (format t "~&columns:   ~{~12@a~^, ~}" (list :subject :predicate :object :graph)))
+                  (format t "~&columns:   ~{~12@a~^, ~}" (list :graph :subject :predicate :object)))
                 (let ((total-row-count 0))
                   (cffi:with-foreign-object (row-data :pointer)
                     (loop for rc = (ndbapi:ndb-scan-operation-next-result scan row-data t nil)
