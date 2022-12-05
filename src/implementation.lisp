@@ -463,7 +463,8 @@ unless CONNECT-AND-WAIT-P is explicitly set to NIL"
 (defun call-with-ndb-cluster-connection (op value args &optional name connect-args wait-until-ready-args (connect-and-wait-p t))
   (declare (dynamic-extent value args name connect-args wait-until-ready-args connect-and-wait-p))
   ;;(print 'new-ndb-cluster-connection *trace-output*) (time)
-  (if (valid-object-p value)
+  (ensure-ndb-init)
+  (if (valid-connection-p value)
       (funcall op value)
       (let ((value (apply #'new-ndb-cluster-connection *ndb-init* args)))
         (unwind-protect
