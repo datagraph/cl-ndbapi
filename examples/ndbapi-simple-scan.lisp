@@ -118,23 +118,23 @@
 (ndb.simple-scan:simple-scan :connection-string "localhost:1186,localhost:1187"
                              :database-name "mgr"
                              :table-name "test"
-                             :index-name "gspo"
-                             :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
-                                             :high (1109 1105 1106 1108) :high-inclusive t)))
+                             :index-name "ospg"
+                             :bound-specs '((:low (1106 1105 638 1105) :low-inclusive t
+                                             :high (1109 1106 1108 1105) :high-inclusive t)))
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "localhost:1186,localhost:1187"
                              :database-name "mgr"
                              :table-name "test"
-                             :index-name "gosp"
-                             :bound-specs '((:low (662743 2000000) :low-inclusive t
-                                             :high (662743 2200000) :high-inclusive t)))
+                             :index-name "gpos"
+                             :bound-specs '((:low (1105 2000000) :low-inclusive t
+                                             :high (1105 2200000) :high-inclusive t)))
 
 #+(or)
 (ndb.simple-scan:simple-scan :connection-string "localhost:1186,localhost:1187"
                              :database-name "mgr"
                              :table-name "test"
-                             :index-name "gspo"
-                             :bound-specs '((:low (1106 1105 1105 638) :low-inclusive t
-                                             :high (1109 1105 1106 1108) :high-inclusive t)
+                             :index-name "ospg"
+                             :bound-specs '((:low (1106 1105 638 1105) :low-inclusive t
+                                             :high (1109 1106 1108 1105 ) :high-inclusive t)
                                             (:low  (600000) :low-inclusive nil
                                              :high (662743) :high-inclusive t)))

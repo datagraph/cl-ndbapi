@@ -129,6 +129,7 @@
                                               (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error)))
                         total-row-count))))))))))))
 
+;;; same examples as in file ndbapi-scan-count.lisp
 #+(or)
 (let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
@@ -136,37 +137,37 @@
                   :index-name "gspo")))
   (list
    (apply #'ndb.simple-scan:simple-scan args)
-   (apply #'ndb.scan-count:scan-count :debug t args)))
+   (apply #'ndb.scan-count:scan-count/recattr :debug t args)))
 
 #+(or)
 (let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
-                  :index-name "gspo"
-                  :low (list 1106 1105 1105 638) :low-inclusive t
-                  :high (list 1109 1105 1106 1108) :high-inclusive t)))
+                  :index-name "ospg"
+                  :low (list 1106 1105 638 1105) :low-inclusive t
+                  :high (list 1109 1106 1108 1105) :high-inclusive t)))
   (list
-   (apply #'ndb.simple-scan:simple-scan args)
-   (apply #'ndb.scan-count:scan-count :debug t args)))
-
-#+(or)
-(let ((args (list :connection-string "localhost:1186,localhost:1187"
-                  :database-name "mgr"
-                  :table-name "test"
-                  :index-name "gosp"
-                  :low (list 662743 2000000) :low-inclusive t
-                  :high (list 662743 2200000) :high-inclusive t)))
-  (list
-   (apply #'ndb.simple-scan:simple-scan args)
-   (apply #'ndb.scan-count:scan-count :debug t args)))
+   ;; (apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count/recattr :debug t args)))
 
 #+(or)
 (let ((args (list :connection-string "localhost:1186,localhost:1187"
                   :database-name "mgr"
                   :table-name "test"
                   :index-name "gpos"
+                  :low (list 1105 2000000) :low-inclusive t
+                  :high (list 1105 2200000) :high-inclusive t)))
+  (list
+   ;;(apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count/recattr :debug t args)))
+
+#+(or)
+(let ((args (list :connection-string "localhost:1186,localhost:1187"
+                  :database-name "mgr"
+                  :table-name "test"
+                  :index-name "ospg"
                   :low (list 1109 1106 1137) :low-inclusive t
                   :high (list 2108202 1106 603481) :high-inclusive t)))
   (list
-   (apply #'ndb.simple-scan:simple-scan args)
-   (apply #'ndb.scan-count:scan-count :debug t args)))
+   ;;(apply #'ndb.simple-scan:simple-scan args)
+   (apply #'ndb.scan-count:scan-count/recattr :debug t args)))
