@@ -28,3 +28,8 @@
   (:use :cl)
   (:export :list-indexes)
   (:documentation "Simple example to list indexes and extract information on them"))
+
+(defpackage :ndb.decode-columns
+  (:use :cl)
+  (:export :get-column-info :get-attribute-info :get-column-and-attribute-info)
+  (:documentation "decode column and attribute information about a table's record"))
