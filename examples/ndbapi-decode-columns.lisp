@@ -383,4 +383,132 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28023
               :ATTR-ID 6 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 2))))
 
+
+7.
+   create database ron024;
+   use ron024;
+   create table quads
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
+           stupid int,
+           visibility varbinary(28000),
+           another int,
+           foo int,
+           bar int,
+           baz int,
+           qux int,
+           quux int);
+
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron024")
+=>
+
+(:ROW-LENGTH 28055
+ :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 1
+              :ATTR-ID 0 :NULLABLE NIL)
+           (1 :NAME "s" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN>-BYTES 4 :OFFSET 5
+              :ATTR-ID 1 :NULLABLE NIL)
+           (2 :NAME "p" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 9
+              :ATTR-ID 2 :NULLABLE NIL)
+           (3 :NAME "o" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 13
+              :ATTR-ID 3 :NULLABLE NIL)
+           (4 :NAME "stupid" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 17
+              :ATTR-ID 4 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 0))
+           (5 :NAME "visibility" :COLUMN-TYPE :+LONGVARBINARY+
+              :ARRAY-TYPE :+ARRAY-TYPE-MEDIUM-VAR+ :LENGTH 28000 :SIZE 1 :SIZE-IN-BYTES 28002 :OFFSET 21
+              :ATTR-ID 5 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 1))
+           (6 :NAME "another" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28023
+              :ATTR-ID 6 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 2))
+           (7 :NAME "foo" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28027
+              :ATTR-ID 7 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 3))
+           (8 :NAME "bar" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28031
+              :ATTR-ID 8 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 4))
+           (9 :NAME "baz" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28035
+              :ATTR-ID 9 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 5))
+           (10 :NAME "qux" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28039
+               :ATTR-ID 10 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 6))
+           (11 :NAME "quux" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28043
+               :ATTR-ID 11 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 7))
+           (12 :NAME "$PK" :COLUMN-TYPE :+BIGUNSIGNED+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 8 :SIZE-IN-BYTES 8 :OFFSET 28047
+               :ATTR-ID 12 :NULLABLE NIL)))
+
+
+8.
+   create database ron025;
+   use ron025;
+   create table quads
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
+           stupid int,
+           visibility varbinary(28000),
+           another int,
+           foo int,
+           bar int,
+           baz int,
+           qux int,
+           quux int,
+           quox int,
+           quoox int);
+
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron025")
+=>
+
+(:ROW-LENGTH 28064
+ :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 2
+              :ATTR-ID 0 :NULLABLE NIL)
+           (1 :NAME "s" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 6
+              :ATTR-ID 1 :NULLABLE NIL)
+           (2 :NAME "p" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 10
+              :ATTR-ID 2 :NULLABLE NIL)
+           (3 :NAME "o" :COLUMN-TYPE :+UNSIGNED+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 14
+              :ATTR-ID 3 :NULLABLE NIL)
+           (4 :NAME "stupid" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 18
+              :ATTR-ID 4 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 0))
+           (5 :NAME "visibility" :COLUMN-TYPE :+LONGVARBINARY+
+              :ARRAY-TYPE :+ARRAY-TYPE-MEDIUM-VAR+ :LENGTH 28000 :SIZE 1 :SIZE-IN-BYTES 28002 :OFFSET 22
+              :ATTR-ID 5 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 1))
+           (6 :NAME "another" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28024
+              :ATTR-ID 6 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 2))
+           (7 :NAME "foo" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28028
+              :ATTR-ID 7 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 3))
+           (8 :NAME "bar" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28032
+              :ATTR-ID 8 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 4))
+           (9 :NAME "baz" :COLUMN-TYPE :+INT+
+              :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28036
+              :ATTR-ID 9 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 5))
+           (10 :NAME "qux" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28040
+               :ATTR-ID 10 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 6))
+           (11 :NAME "quux" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28044
+               :ATTR-ID 11 :NULLABLE (:NULLBIT-BYTE-OFFSET 0 :NULLBIT-BIT-IN-BYTE 7))
+           (12 :NAME "quox" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28048
+               :ATTR-ID 12 :NULLABLE (:NULLBIT-BYTE-OFFSET 1 :NULLBIT-BIT-IN-BYTE 0))
+           (13 :NAME "quoox" :COLUMN-TYPE :+INT+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 4 :SIZE-IN-BYTES 4 :OFFSET 28052
+               :ATTR-ID 13 :NULLABLE (:NULLBIT-BYTE-OFFSET 1 :NULLBIT-BIT-IN-BYTE 1))
+           (14 :NAME "$PK" :COLUMN-TYPE :+BIGUNSIGNED+
+               :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :LENGTH 1 :SIZE 8 :SIZE-IN-BYTES 8 :OFFSET 28056
+               :ATTR-ID 14 :NULLABLE NIL)))
+
 |#
