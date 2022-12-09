@@ -523,11 +523,11 @@
 (cffi:defcfun ("_wrap_NdbDictionary_getRecordIndexName" #.(swig-lispify "NdbDictionary_getRecordIndexName" 'function)) :string
   (record ndb-dictionary-type))
 
-(cffi:defcfun ("_wrap_NdbDictionary_getFirstAttrId" #.(swig-lispify "NdbDictionary_getFirstAttrId" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbDictionary_getFirstAttrId" #.(swig-lispify "NdbDictionary_getFirstAttrId" 'function)) :bool
   (record ndb-dictionary-type)
   (firstAttrId :pointer))
 
-(cffi:defcfun ("_wrap_NdbDictionary_getNextAttrId" #.(swig-lispify "NdbDictionary_getNextAttrId" 'function)) :pointer
+(cffi:defcfun ("_wrap_NdbDictionary_getNextAttrId" #.(swig-lispify "NdbDictionary_getNextAttrId" 'function)) :bool
   (record ndb-dictionary-type)
   (attrId :pointer))
 
@@ -719,7 +719,7 @@
 (cffi:defcfun ("_wrap_Column_getName" #.(swig-lispify "Column_getName" 'function)) :string
   (self column-type))
 
-(cffi:defcfun ("_wrap_Column_getNullable" #.(swig-lispify "Column_getNullable" 'function)) :pointer
+(cffi:defcfun ("_wrap_Column_getNullable" #.(swig-lispify "Column_getNullable" 'function)) :bool
   (self column-type))
 
 (cffi:defcfun ("_wrap_Column_getPrimaryKey" #.(swig-lispify "Column_getPrimaryKey" 'function)) :pointer
