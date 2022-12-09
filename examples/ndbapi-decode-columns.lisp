@@ -13,8 +13,7 @@
 (defun get-column-info (&key (connection-string *connection-string*)
                              (connection-name *connection-name*)
                              database-name
-                             (table-name "quads")
-                             (index-name "gspo"))
+                             (table-name "quads"))
   "This function just uses the Column class of the ndbapi to gather information on the column,
 see: https://dev.mysql.com/doc/ndbapi/en/ndb-column.html"
   (ndbapi:with-connection (ndbapi:*connection* (connection-string)
@@ -28,13 +27,10 @@ see: https://dev.mysql.com/doc/ndbapi/en/ndb-column.html"
           (declare (ignorable transaction))
           (let* ((dict (ndbapi:ndb-get-dictionary ndb))
                  (table (ndbapi:dictionary-get-table dict table-name))
-                 (index (ndbapi:dictionary-get-index dict
-                                                     index-name
-                                                     (ndbapi:table-get-name table)))
-                 (index-default-record (ndbapi:index-get-default-record index))
                  (table-default-record (ndbapi:table-get-default-record table))
                  (columns (ndbapi.ffi::table-get-no-of-columns table)))
-            (declare (ignorable index-default-record table-default-record))
+            (declare (ignorable table-default-record))
+
             (loop for c from 0 below columns
                   for column = (ndbapi.ffi::table-get-column/swig-1 table c)
                   collect (list c
@@ -53,7 +49,7 @@ see: https://dev.mysql.com/doc/ndbapi/en/ndb-column.html"
 #|
 Note: See beginning of last comment in this file on how to create database ron019.
 
-(ndb.decode-columns:get-column-info :database-name "ron019" :index-name "ospg")
+(ndb.decode-columns:get-column-info :database-name "ron019")
 =>
 ((0 :NAME "g" :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :SIZE 4 :LENGTH 1 :SIZE-IN-BYTES 4 :COLUMN-TYPE :+UNSIGNED+ :NULLABLE NIL :ATTR-ID 0)
  (1 :NAME "s" :ARRAY-TYPE :+ARRAY-TYPE-FIXED+ :SIZE 4 :LENGTH 1 :SIZE-IN-BYTES 4 :COLUMN-TYPE :+UNSIGNED+ :NULLABLE NIL :ATTR-ID 1)
@@ -65,8 +61,7 @@ Note: See beginning of last comment in this file on how to create database ron01
 (defun get-attribute-info (&key (connection-string *connection-string*)
                                 (connection-name *connection-name*)
                                 database-name
-                                (table-name "quads")
-                                (index-name "gspo"))
+                                (table-name "quads"))
   "This function just uses the NdbDictionary class of the ndbapi
 to gather information on the table's default-record,
 see: https://dev.mysql.com/doc/ndbapi/en/ndb-ndbdictionary.html"
@@ -81,13 +76,9 @@ see: https://dev.mysql.com/doc/ndbapi/en/ndb-ndbdictionary.html"
           (declare (ignorable transaction))
           (let* ((dict (ndbapi:ndb-get-dictionary ndb))
                  (table (ndbapi:dictionary-get-table dict table-name))
-                 (index (ndbapi:dictionary-get-index dict
-                                                     index-name
-                                                     (ndbapi:table-get-name table)))
-                 (index-default-record (ndbapi:index-get-default-record index))
                  (table-default-record (ndbapi:table-get-default-record table))
                  (columns (ndbapi.ffi::table-get-no-of-columns table)))
-            (declare (ignorable index-default-record columns))
+            (declare (ignorable columns))
 
             (let* ((attr-ids
                      (cffi:with-foreign-object (id :uint32)
@@ -120,7 +111,7 @@ see: https://dev.mysql.com/doc/ndbapi/en/ndb-ndbdictionary.html"
 #|
 Note: See beginning of last comment in this file on how to create database ron019.
 
-(ndb.decode-columns:get-attribute-info :database-name "ron019" :index-name "ospg")
+(ndb.decode-columns:get-attribute-info :database-name "ron019")
 =>
 (:ROW-LENGTH 28019
  :ATTR-IDS (0 1 2 3 4)
@@ -137,8 +128,7 @@ Note: See beginning of last comment in this file on how to create database ron01
 (defun get-column-and-attribute-info (&key (connection-string *connection-string*)
                                            (connection-name *connection-name*)
                                            database-name
-                                           (table-name "quads")
-                                           (index-name "gspo"))
+                                           (table-name "quads"))
   "This function combines the functions get-column-info and get-attribute-info,
 and thus uses the ndbapi classes Column and NdbDictionary to collect
 information on each column together with its offset in the table record
@@ -163,13 +153,9 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
           (declare (ignorable transaction))
           (let* ((dict (ndbapi:ndb-get-dictionary ndb))
                  (table (ndbapi:dictionary-get-table dict table-name))
-                 (index (ndbapi:dictionary-get-index dict
-                                                     index-name
-                                                     (ndbapi:table-get-name table)))
-                 (index-default-record (ndbapi:index-get-default-record index))
                  (table-default-record (ndbapi:table-get-default-record table))
                  (columns (ndbapi.ffi::table-get-no-of-columns table)))
-            (declare (ignorable index-default-record))
+
             (list :row-length
                   (ndbapi.ffi::ndb-dictionary-get-record-row-length table-default-record)
                   :columns
@@ -212,7 +198,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron018" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron018")
 =>
 (:ROW-LENGTH 16
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
@@ -240,7 +226,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron019" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron019")
 =>
 (:ROW-LENGTH 28019
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
@@ -271,7 +257,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron020" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron020")
 =>
 (:ROW-LENGTH 28018
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
@@ -303,7 +289,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron021" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron021")
 =>
 (:ROW-LENGTH 28023
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
@@ -339,7 +325,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron022" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron022")
 =>
 (:ROW-LENGTH 28027
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
@@ -379,7 +365,7 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
            index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g),
            unique (g,s,p,o));
 
-(ndb.decode-columns:get-column-and-attribute-info :database-name "ron023" :index-name "ospg")
+(ndb.decode-columns:get-column-and-attribute-info :database-name "ron023")
 =>
 (:ROW-LENGTH 28027
  :COLUMNS ((0 :NAME "g" :COLUMN-TYPE :+UNSIGNED+
