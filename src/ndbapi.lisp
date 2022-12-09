@@ -735,7 +735,7 @@
   (self column-type)
   (column :pointer))
 
-(cffi:defcfun ("_wrap_Column_getType" #.(swig-lispify "Column_getType" 'function)) :pointer
+(cffi:defcfun ("_wrap_Column_getType" #.(swig-lispify "Column_getType" 'function)) #.(swig-lispify "ColumnCType" 'enumname)
   (self column-type))
 
 (cffi:defcfun ("_wrap_Column_getPrecision" #.(swig-lispify "Column_getPrecision" 'function)) :int
@@ -774,7 +774,7 @@
 (cffi:defcfun ("_wrap_Column_getDistributionKey" #.(swig-lispify "Column_getDistributionKey" 'function)) :pointer
   (self column-type))
 
-(cffi:defcfun ("_wrap_Column_getArrayType" #.(swig-lispify "Column_getArrayType" 'function)) :pointer
+(cffi:defcfun ("_wrap_Column_getArrayType" #.(swig-lispify "Column_getArrayType" 'function)) #.(swig-lispify "ArrayType" 'enumname)
   (self column-type))
 
 (cffi:defcfun ("_wrap_Column_getStorageType" #.(swig-lispify "Column_getStorageType" 'function)) :pointer

@@ -35,15 +35,11 @@ see: https://dev.mysql.com/doc/ndbapi/en/ndb-column.html"
                   for column = (ndbapi.ffi::table-get-column/swig-1 table c)
                   collect (list c
                                 :name (ndbapi.ffi::column-get-name column)
-                                :array-type (cffi:foreign-enum-keyword 'ndbapi.ffi::array-type
-                                                                       (cffi::pointer-address
-                                                                        (ndbapi.ffi::column-get-array-type column)))
+                                :array-type (ndbapi.ffi::column-get-array-type column)
                                 :size (ndbapi.ffi::column-get-size column)
                                 :length (ndbapi.ffi::column-get-length column)
                                 :size-in-bytes (ndbapi.ffi::column-get-size-in-bytes column)
-                                :column-type (cffi:foreign-enum-keyword 'ndbapi.ffi::column-ctype
-                                                                        (cffi::pointer-address
-                                                                         (ndbapi.ffi::column-get-type column)))
+                                :column-type (ndbapi.ffi::column-get-type column)
                                 :nullable (ndbapi.ffi::column-get-nullable column)
                                 :attr-id (ndbapi.ffi::column-get-attr-id column)))))))))
 #|
@@ -164,12 +160,8 @@ see https://dev.mysql.com/doc/ndbapi/en/ndb-examples.html"
                         collect (let ((attr-id (ndbapi.ffi::column-get-attr-id column)))
                                   (list c
                                         :name (ndbapi.ffi::column-get-name column)
-                                        :column-type (cffi:foreign-enum-keyword 'ndbapi.ffi::column-ctype
-                                                                                (cffi::pointer-address
-                                                                                 (ndbapi.ffi::column-get-type column)))
-                                        :array-type (cffi:foreign-enum-keyword 'ndbapi.ffi::array-type
-                                                                               (cffi::pointer-address
-                                                                                (ndbapi.ffi::column-get-array-type column)))
+                                        :column-type (ndbapi.ffi::column-get-type column)
+                                        :array-type (ndbapi.ffi::column-get-array-type column)
                                         :length (ndbapi.ffi::column-get-length column)
                                         :size (ndbapi.ffi::column-get-size column)
                                         :size-in-bytes (ndbapi.ffi::column-get-size-in-bytes column)
