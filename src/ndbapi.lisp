@@ -670,7 +670,7 @@
 (cffi:defcfun ("_wrap_ObjectId_getObjectId" #.(swig-lispify "ObjectId_getObjectId" 'function)) :int
   (self :pointer))
 
-(cffi:defcenum #.(swig-lispify "Type" 'enumname)
+(cffi:defcenum #.(swig-lispify "ColumnCType" 'enumname)
 	(#.(swig-lispify "Undefined" 'enumvalue :keyword) #.0)
 	(#.(swig-lispify "Tinyint" 'enumvalue :keyword) #.1)
 	(#.(swig-lispify "Tinyunsigned" 'enumvalue :keyword) #.2)
