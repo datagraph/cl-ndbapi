@@ -48,6 +48,8 @@
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
                 :with-ndb-interpreted-code
+                :ndb-transaction-update-tuple
+                :ndb-transaction-insert-tuple
                 ;; pseudo columns
                 :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
                 :column-row-count :column-commit-count :column-row-size
@@ -121,6 +123,8 @@
            :with-ndb-transaction-scan-index
            :with-ndb-transaction-get-ndb-index-scan-operation
            :with-ndb-interpreted-code
+           :ndb-transaction-update-tuple
+           :ndb-transaction-insert-tuple
            ;; pseudo columns
            :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
            :column-row-count :column-commit-count :column-row-size

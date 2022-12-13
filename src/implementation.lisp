@@ -227,6 +227,30 @@
                          "ndb-operation-get-value() failed: ~a"
                          (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+(make-interface-function ndb-transaction-update-tuple
+                         (ndbapi.ffi.o::ndb-transaction-update-tuple transaction key-record key-row attribute-record attribute-row &rest args)
+                         #'valid-object-p
+                         "ndb-transaction-update-tuple() failed: ~a"
+                         ;; all examples do this:
+                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+                         ;; but the documentation seems to imply:
+                         ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
+                         ;; this, howewer, must be wrong as in this case an erroneous value,
+                         ;; even a null-pointer, would be used for error checking!
+                         )
+
+(make-interface-function ndb-transaction-insert-tuple
+                         ;; as an insert needs all fields for us, we never need the mask,
+                         ;; and to insert with the combined-row/record is easiest, so this variant is enough:
+                         (ndbapi.ffi::ndb-transaction-insert-tuple/swig-7 transaction combined-record combined-row)
+                         #'valid-object-p
+                         "ndb-transaction-insert-tuple() failed: ~a"
+                         ;; all examples do this:
+                         ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+                         ;; but the documentation seems to imply:
+                         (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error))
+
+
 ;; begin of pseudo-columns
 
 (make-interface-function column-fragment
