@@ -16,6 +16,8 @@
                 :new-ndb
                 :ndb-init ;; other ndb-init renamed to :ndb-begin to avoid conflict
                 :ndb-get-ndb-error
+                :explicitly-check-for-error
+                :explicitly-check-for-transaction-error
                 :ndb-start-transaction
                 :dictionary-get-table
                 :dictionary-get-index
@@ -99,6 +101,8 @@
            :*ndb-init*
            :ndb-end
            :ndb-get-ndb-error
+           :explicitly-check-for-error
+           :explicitly-check-for-transaction-error
            :ndb-start-transaction
            :dictionary-get-table
            :dictionary-get-index

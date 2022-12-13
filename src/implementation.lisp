@@ -22,6 +22,27 @@
 (defun get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
   (error-string (%get-ndb-error object getter)))
 
+(defun explicitly-check-for-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
+  (let ((error-plist (%get-ndb-error object getter)))
+    (assert (eq (getf error-plist :status) :+NDBERROR-ST-SUCCESS+)
+            nil
+            "explicitly-check-for-error() reports: ~a"
+            (error-string error-plist))))
+
+(defun explicitly-check-for-transaction-error (transaction)
+  "The MySQL NDB Cluster API Developer Guide says on
+NdbTransaction::execute() that it returns 0 on success and -1 on
+failure. But it reports failure \"if and only if the transaction was
+aborted\". That is, NdbTransaction::execute() returning 0 mains only
+that the transaction was not aborted, some operations might still have
+not been successful.
+
+In such cases, the transaction's error information will be set and this
+is for what this function checks.
+
+See https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransaction-execute"
+  (explicitly-check-for-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+
 
 ;;; test :ndbapi.types for validity
 
