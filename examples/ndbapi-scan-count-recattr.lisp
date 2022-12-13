@@ -108,7 +108,8 @@
 
                       ;; explicitly check for errors
                       ;; as there might still be errors even though the execute call itself was successful
-                      (ndbapi:explicitly-check-for-transaction-error transaction)
+                      ;; Update: this is done by ndbapi:ndb-transaction-execute already now (20221213 mgr).
+                      ;;   (ndbapi:explicitly-check-for-transaction-error transaction)
 
                       ;; do scan and print
                       (when debug
