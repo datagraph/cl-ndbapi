@@ -106,7 +106,9 @@
 
                           (ndbapi:ndb-transaction-execute transaction :+NO-COMMIT+)))
 
-                      ;; // Check rc anyway
+                      ;; explicitly check for errors
+                      ;; as there might still be errors even though the execute call itself was successful
+                      (ndbapi:explicitly-check-for-transaction-error transaction)
 
                       ;; do scan and print
                       (when debug

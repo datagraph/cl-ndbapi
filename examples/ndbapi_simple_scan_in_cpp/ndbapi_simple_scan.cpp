@@ -282,7 +282,7 @@ static void do_scan(Ndb &myNdb)
   if(myTransaction->execute( NdbTransaction::NoCommit ) != 0)
     APIERROR(myTransaction->getNdbError());
 
-  // Check rc anyway
+  // Check rc anyway as there might be some operation not successful
   if (myTransaction->getNdbError().status != NdbError::Success)
     APIERROR(myTransaction->getNdbError());
 
