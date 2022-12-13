@@ -40,7 +40,10 @@ not been successful.
 In such cases, the transaction's error information will be set and this
 is for what this function checks.
 
-See https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransaction-execute"
+See https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransaction-execute
+
+Note: ndbapi:ndb-transaction-execute already does this extra call,
+so you do not need to repeat it."
   (explicitly-check-for-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
 
@@ -70,46 +73,47 @@ See https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransacti
 
 ;;; interface
 
-(defmacro make-interface-function (name call &optional test datum &rest arguments)
+(defmacro make-interface-function (name call (&optional test datum &rest arguments) &body more-calls)
   (let ((translated-call (if (find '&rest call)
                              (cons 'apply (cons `(symbol-function ',(car call)) (cdr (remove '&rest call))))
                              call)))
     `(defun ,name ,(cdr call)
-       ,(if test
-            `(let ((value ,translated-call))
-               (assert (funcall ,test value)
-                       ()
-                       ,datum
-                       ,@arguments)
-               value)
-            translated-call))))
+       ,`(let ((value ,translated-call))
+           ,@(if test
+                 `((assert (funcall ,test value)
+                            ()
+                            ,datum
+                            ,@arguments)))
+           ,@more-calls
+           value))))
 
 (make-interface-function ndb-begin% ;; rename ndb-init to ndb-begin to avoid conflict
                                     ;; also this fits to the complimentary function ndb-end
-                         (ndbapi.ffi::ndb-init%)
-                         #'initialized-ndb-init-p
-                         "ndb-init failed")
+    (ndbapi.ffi::ndb-init%)
+    (#'initialized-ndb-init-p
+     "ndb-init failed"))
 
 (make-interface-function new-ndb-cluster-connection
-                         (ndbapi.ffi::new-ndb-cluster-connection/swig-0 ndb-init connection-string) ;; no unique arity (extension of RonDB)
-                         #'valid-object-p
-                         "Create new ndb-cluster-connection object failed")
+    (ndbapi.ffi::new-ndb-cluster-connection/swig-0 ndb-init connection-string) ;; no unique arity (extension of RonDB)
+    (#'valid-object-p
+     "Create new ndb-cluster-connection object failed"))
 
 (defvar *default-connection-name* "cl-ndbapi" "default 2nd argument for ndb-cluster-connection-set-name")
 
 (defun ndb-cluster-connection-set-name (cluster-connection &optional name) ;; do not use default value here as name might be nil explicitly
-  ;; returns void
-  (ndbapi.ffi::ndb-cluster-connection-set-name% cluster-connection (or name *default-connection-name*)))
+  (ndbapi.ffi::ndb-cluster-connection-set-name% cluster-connection (or name *default-connection-name*))
+  ;; returns void -> no test
+  )
 
 (make-interface-function ndb-cluster-connection-connect ;; defaults are specified in C++: no-retries=30 retry-delay-in-seconds=1 verbose=0
-                         (ndbapi.ffi.o::ndb-cluster-connection-connect cluster-connection &rest args) ;; no-retries retry-delay-in-seconds verbose
-                         #'zerop
-                         "Cluster management server was not ready within expected time")
+    (ndbapi.ffi.o::ndb-cluster-connection-connect cluster-connection &rest args) ;; no-retries retry-delay-in-seconds verbose
+    (#'zerop
+     "Cluster management server was not ready within expected time"))
 
 (make-interface-function ndb-cluster-connection-wait-until-ready%
-                         (ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0 cluster-connection timeout-for-first-alive timeout-after-first-alive)
-                         #'zerop
-                         "Cluster was not ready within 30 secs.")
+    (ndbapi.ffi::ndb-cluster-connection-wait-until-ready/swig-0 cluster-connection timeout-for-first-alive timeout-after-first-alive)
+    (#'zerop
+     "Cluster was not ready within 30 secs."))
 
 (defvar *timeout-for-first-alive* 30 "default for 2nd argument of ndb-cluster-connection-wait-until-ready ")
 (defvar *timeout-after-first-alive* 0 "default for 3rd argument of ndb-cluster-connection-wait-until-ready ")
@@ -121,298 +125,303 @@ See https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransacti
                                             (or timeout-after-first-alive *timeout-after-first-alive*)))
 
 (make-interface-function new-ndb
-                         (ndbapi.ffi.o::new-ndb cluster-connection &rest args)
-                         #'valid-object-p
-                         "Create new NDB object failed")
+    (ndbapi.ffi.o::new-ndb cluster-connection &rest args)
+    (#'valid-object-p
+     "Create new NDB object failed"))
 
 (make-interface-function ndb-get-ndb-error
-                         ;; no error handling
-                         (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb))
+    (ndbapi.ffi::ndb-get-ndb-error/swig-0 ndb)
+    ;; no error handling
+    ())
 
 (make-interface-function ndb-init ;; other ndb-init already renamed to ndb-begin to avoid conflict
-                         (ndbapi.ffi.o::ndb-init ndb &rest args)
-                         #'zerop
-                         "Ndb.init() failed: ~a"
-                         (get-ndb-error ndb #'ndb-get-ndb-error))
+    (ndbapi.ffi.o::ndb-init ndb &rest args)
+    (#'zerop
+     "Ndb.init() failed: ~a"
+     (get-ndb-error ndb #'ndb-get-ndb-error)))
 
 (make-interface-function ndb-start-transaction
-                         (ndbapi.ffi::ndb-start-transaction/swig-3 ndb)
-                         #'valid-object-p
-                         "start-transaction() failed: ~a"
-                         (get-ndb-error ndb))
+    (ndbapi.ffi::ndb-start-transaction/swig-3 ndb)
+    (#'valid-object-p
+     "start-transaction() failed: ~a"
+     (get-ndb-error ndb)))
 
 (make-interface-function ndb-get-dictionary
-                         (ndbapi.ffi::ndb-get-dictionary% ndb)
-                         #'valid-object-p
-                         "get-dictionary() failed: ~a"
-                         (get-ndb-error ndb))
+    (ndbapi.ffi::ndb-get-dictionary% ndb)
+    (#'valid-object-p
+     "get-dictionary() failed: ~a"
+     (get-ndb-error ndb)))
 
 (make-interface-function dictionary-get-table
-                         (ndbapi.ffi::dictionary-get-table/swig-0 dictionary name)
-                         #'valid-object-p
-                         "get-table() failed: ~a"
-                         (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error))
+    (ndbapi.ffi::dictionary-get-table/swig-0 dictionary name)
+    (#'valid-object-p
+     "get-table() failed: ~a"
+     (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error)))
 
 (make-interface-function dictionary-get-index
-                         (ndbapi.ffi::dictionary-get-index/swig-0 dictionary index-name table-name)
-                         #'valid-object-p
-                         "get-index() failed: ~a"
-                         (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error))
+    (ndbapi.ffi::dictionary-get-index/swig-0 dictionary index-name table-name)
+    (#'valid-object-p
+     "get-index() failed: ~a"
+     (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error)))
 
 (make-interface-function index-get-default-record
-                         (ndbapi.ffi::index-get-default-record% index)
-                         #'valid-object-p
-                         "get-default-record() of index ~a failed"
-                         (ndbapi.ffi:index-get-name index))
+    (ndbapi.ffi::index-get-default-record% index)
+    (#'valid-object-p
+     "get-default-record() of index ~a failed"
+     (ndbapi.ffi:index-get-name index)))
 
 (make-interface-function table-get-default-record
-                         (ndbapi.ffi::table-get-default-record% table)
-                         #'valid-object-p
-                         "get-default-record() of table ~a failed"
-                         (ndbapi.ffi:table-get-name table))
+    (ndbapi.ffi::table-get-default-record% table)
+    (#'valid-object-p
+     "get-default-record() of table ~a failed"
+     (ndbapi.ffi:table-get-name table)))
 
 (make-interface-function ndb-transaction-scan-index
-                          ;; all variants have the named three parameters
-                         (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
-                         #'valid-object-p
-                         "transaction-scan-index() failed: ~a"
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    ;; all variants have the named three parameters
+    (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
+    (#'valid-object-p
+     "transaction-scan-index() failed: ~a"
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-index-scan-operation-set-bound
-                         (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-6 index-scan key-record bound)
-                         #'zerop
-                         "set-bound() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-6 index-scan key-record bound)
+    (#'zerop
+     "set-bound() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-index-scan-operation-set-bound/recattr
-                         (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-1 index-scan attr type value)
-                         #'zerop
-                         "set-bound() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-1 index-scan attr type value)
+    (#'zerop
+     "set-bound() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-transaction-get-ndb-index-scan-operation
-                         (ndbapi.ffi::ndb-transaction-get-ndb-index-scan-operation/swig-2 transaction an-index)
-                         #'valid-object-p
-                         "transaction-get-ndb-index-scan-operation() failed: ~a"
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-transaction-get-ndb-index-scan-operation/swig-2 transaction an-index)
+    (#'valid-object-p
+     "transaction-get-ndb-index-scan-operation() failed: ~a"
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-index-scan-operation-read-tuples
-                         (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
-                         #'zerop
-                         "transaction-scan-index() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-index-scan-operation-read-tuples/swig-2 index-scan lock-mode scan-flags)
+    (#'zerop
+     "transaction-scan-index() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-transaction-execute
-                         (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
-                         #'zerop
-                         "transaction-execute() failed: ~a"
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
+    (#'zerop
+     "transaction-execute() failed: ~a"
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+  ;; need to explicitly check that there were no errors in addition to the ZEROP assert above
+  ;; see documentation string on explicitly-check-for-transaction-error for details
+  (explicitly-check-for-transaction-error transaction))
 
 (make-interface-function ndb-scan-operation-next-result
-                         (ndbapi.ffi.o::ndb-scan-operation-next-result scan &rest args) ;; out-row-ptr fetch-allowed force-send
-                         (lambda (rc) (>= rc 0)) ;; only -1 indicates error, 0, 1, and 2 are valid and indicate different situations
-                         "scan-operation-next-result() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi.o::ndb-scan-operation-next-result scan &rest args) ;; out-row-ptr fetch-allowed force-send
+    ((lambda (rc) (>= rc 0)) ;; only -1 indicates error, 0, 1, and 2 are valid and indicate different situations
+     "scan-operation-next-result() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-scan-operation-close
-                         ;; returns void
-                         (ndbapi.ffi.o::ndb-scan-operation-close scan &rest args))
+    (ndbapi.ffi.o::ndb-scan-operation-close scan &rest args)
+    ;; returns void
+    ())
 
 (make-interface-function new-ndb-interpreted-code
-                         (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
-                         #'valid-object-p
-                         "Create new ndb-interpreted-code object failed")
+    (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
+    (#'valid-object-p
+     "Create new ndb-interpreted-code object failed"))
 
 (make-interface-function ndb-interpreted-code-interpret-exit-last-row
-                         (ndbapi.ffi::ndb-interpreted-code-interpret-exit-last-row code)
-                         #'zerop
-                         "interpret-exit-last-row() failed: ~a"
-                         (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error))
+    (ndbapi.ffi::ndb-interpreted-code-interpret-exit-last-row code)
+    (#'zerop
+     "interpret-exit-last-row() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-interpreted-code-finalise
-                         (ndbapi.ffi::ndb-interpreted-code-finalise code)
-                         #'zerop
-                         "finalize() failed: ~a"
-                         (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error))
+    (ndbapi.ffi::ndb-interpreted-code-finalise code)
+    (#'zerop
+     "finalize() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-scan-operation-set-interpreted-code
-                         (ndbapi.ffi::ndb-scan-operation-set-interpreted-code scan code)
-                         #'zerop
-                         "ndb-scan-operation-set-interpreted-code() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-scan-operation-set-interpreted-code scan code)
+    (#'zerop
+     "ndb-scan-operation-set-interpreted-code() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 
 (make-interface-function ndb-operation-get-value
-                         (ndbapi.ffi::ndb-operation-get-value/swig-4 ndb-operation a-column a-value)
-                         #'valid-object-p
-                         "ndb-operation-get-value() failed: ~a"
-                         (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error))
+    (ndbapi.ffi::ndb-operation-get-value/swig-4 ndb-operation a-column a-value)
+    (#'valid-object-p
+     "ndb-operation-get-value() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-operation-get-ndb-transaction ndb-operation) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
 (make-interface-function ndb-transaction-update-tuple
-                         (ndbapi.ffi.o::ndb-transaction-update-tuple transaction key-record key-row attribute-record attribute-row &rest args)
-                         #'valid-object-p
-                         "ndb-transaction-update-tuple() failed: ~a"
-                         ;; all examples do this:
-                         (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
-                         ;; but the documentation seems to imply:
-                         ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
-                         ;; this, howewer, must be wrong as in this case an erroneous value,
-                         ;; even a null-pointer, would be used for error checking!
-                         )
+    (ndbapi.ffi.o::ndb-transaction-update-tuple transaction key-record key-row attribute-record attribute-row &rest args)
+    (#'valid-object-p
+     "ndb-transaction-update-tuple() failed: ~a"
+     ;; all examples do this:
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     ;; but the documentation seems to imply:
+     ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
+     ;; this, howewer, must be wrong as in this case an erroneous value,
+     ;; even a null-pointer, would be used for error checking!
+     ))
 
 (make-interface-function ndb-transaction-insert-tuple
-                         ;; as an insert needs all fields for us, we never need the mask,
-                         ;; and to insert with the combined-row/record is easiest, so this variant is enough:
-                         (ndbapi.ffi::ndb-transaction-insert-tuple/swig-7 transaction combined-record combined-row)
-                         #'valid-object-p
-                         "ndb-transaction-insert-tuple() failed: ~a"
-                         ;; all examples do this:
-                         ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
-                         ;; but the documentation seems to imply:
-                         (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error))
+    ;; as an insert needs all fields for us, we never need the mask,
+    ;; and to insert with the combined-row/record is easiest, so this variant is enough:
+    (ndbapi.ffi::ndb-transaction-insert-tuple/swig-7 transaction combined-record combined-row)
+    (#'valid-object-p
+     "ndb-transaction-insert-tuple() failed: ~a"
+     ;; all examples do this:
+     ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     ;; but the documentation seems to imply:
+     (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)))
 
 
 ;; begin of pseudo-columns
 
 (make-interface-function column-fragment
-                         (ndbapi.ffi:column-fragment)
-                         #'valid-object-p
-                         "column-fragment(): null pointer returned.
+    (ndbapi.ffi:column-fragment)
+    (#'valid-object-p
+     "column-fragment(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-fragment-fixed-memory
-                         (ndbapi.ffi:column-fragment-fixed-memory)
-                         #'valid-object-p
-                         "column-fragment-fixed-memory(): null pointer returned.
+    (ndbapi.ffi:column-fragment-fixed-memory)
+    (#'valid-object-p
+     "column-fragment-fixed-memory(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-fragment-varsized-memory
-                         (ndbapi.ffi:column-fragment-varsized-memory)
-                         #'valid-object-p
-                         "column-fragment-varsized-memory(): null pointer returned.
+    (ndbapi.ffi:column-fragment-varsized-memory)
+    (#'valid-object-p
+     "column-fragment-varsized-memory(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-row-count
-                         (ndbapi.ffi:column-row-count)
-                         #'valid-object-p
-                         "column-row-count(): null pointer returned.
+    (ndbapi.ffi:column-row-count)
+    (#'valid-object-p
+     "column-row-count(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-commit-count
-                         (ndbapi.ffi:column-commit-count)
-                         #'valid-object-p
-                         "column-commit-count(): null pointer returned.
+    (ndbapi.ffi:column-commit-count)
+    (#'valid-object-p
+     "column-commit-count(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-row-size
-                         (ndbapi.ffi:column-row-size)
-                         #'valid-object-p
-                         "column-row-size(): null pointer returned.
+    (ndbapi.ffi:column-row-size)
+    (#'valid-object-p
+     "column-row-size(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-range-no
-                         (ndbapi.ffi:column-range-no)
-                         #'valid-object-p
-                         "column-range-no(): null pointer returned.
+    (ndbapi.ffi:column-range-no)
+    (#'valid-object-p
+     "column-range-no(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-disk-ref
-                         (ndbapi.ffi:column-disk-ref)
-                         #'valid-object-p
-                         "column-disk-ref(): null pointer returned.
+    (ndbapi.ffi:column-disk-ref)
+    (#'valid-object-p
+     "column-disk-ref(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-records-in-range
-                         (ndbapi.ffi:column-records-in-range)
-                         #'valid-object-p
-                         "column-records-in-range(): null pointer returned.
+    (ndbapi.ffi:column-records-in-range)
+    (#'valid-object-p
+     "column-records-in-range(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-rowid
-                         (ndbapi.ffi:column-rowid)
-                         #'valid-object-p
-                         "column-rowid(): null pointer returned.
+    (ndbapi.ffi:column-rowid)
+    (#'valid-object-p
+     "column-rowid(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-row-gci
-                         (ndbapi.ffi:column-row-gci)
-                         #'valid-object-p
-                         "column-row-gci(): null pointer returned.
+    (ndbapi.ffi:column-row-gci)
+    (#'valid-object-p
+     "column-row-gci(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-row-gci-64
-                         (ndbapi.ffi:column-row-gci-64)
-                         #'valid-object-p
-                         "column-row-gci-64(): null pointer returned.
+    (ndbapi.ffi:column-row-gci-64)
+    (#'valid-object-p
+     "column-row-gci-64(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-row-author
-                         (ndbapi.ffi:column-row-author)
-                         #'valid-object-p
-                         "column-row-author(): null pointer returned.
+    (ndbapi.ffi:column-row-author)
+    (#'valid-object-p
+     "column-row-author(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-any-value
-                         (ndbapi.ffi:column-any-value)
-                         #'valid-object-p
-                         "column-any-value(): null pointer returned.
+    (ndbapi.ffi:column-any-value)
+    (#'valid-object-p
+     "column-any-value(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-copy-rowid
-                         (ndbapi.ffi:column-copy-rowid)
-                         #'valid-object-p
-                         "column-copy-rowid(): null pointer returned.
+    (ndbapi.ffi:column-copy-rowid)
+    (#'valid-object-p
+     "column-copy-rowid(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-lock-ref
-                         (ndbapi.ffi:column-lock-ref)
-                         #'valid-object-p
-                         "column-lock-ref(): null pointer returned.
+    (ndbapi.ffi:column-lock-ref)
+    (#'valid-object-p
+     "column-lock-ref(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-op-id
-                         (ndbapi.ffi:column-op-id)
-                         #'valid-object-p
-                         "column-op-id(): null pointer returned.
+    (ndbapi.ffi:column-op-id)
+    (#'valid-object-p
+     "column-op-id(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-optimize
-                         (ndbapi.ffi:column-optimize)
-                         #'valid-object-p
-                         "column-optimize(): null pointer returned.
+    (ndbapi.ffi:column-optimize)
+    (#'valid-object-p
+     "column-optimize(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-fragment-extent-space
-                         (ndbapi.ffi:column-fragment-extent-space)
-                         #'valid-object-p
-                         "column-fragment-extent-space(): null pointer returned.
+    (ndbapi.ffi:column-fragment-extent-space)
+    (#'valid-object-p
+     "column-fragment-extent-space(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 (make-interface-function column-fragment-free-extent-space
-                         (ndbapi.ffi:column-fragment-free-extent-space)
-                         #'valid-object-p
-                         "column-fragment-free-extent-space(): null pointer returned.
+    (ndbapi.ffi:column-fragment-free-extent-space)
+    (#'valid-object-p
+     "column-fragment-free-extent-space(): null pointer returned.
 Note: The pseudo columns are only available in the context of a cluster connection,
-as they are created as a side-effect of making the cluster connection.")
+as they are created as a side-effect of making the cluster connection."))
 
 ;; end of pseudo-columns
 
