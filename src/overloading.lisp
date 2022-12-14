@@ -63,3 +63,4 @@ WARNING: this only works when there are no multiple functions with the same arit
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_updateTuple" 'function))
 ;; no unique arity for:
 ;; (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_insertTuple" 'function))
+(overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_deleteTuple" 'function))

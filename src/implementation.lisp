@@ -280,6 +280,15 @@ so you do not need to repeat it."
      ;; but the documentation seems to imply:
      (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)))
 
+(make-interface-function ndb-transaction-delete-tuple
+    (ndbapi.ffi.o::ndb-transaction-delete-tuple transaction key-record key-row result-record &rest args)
+    (#'valid-object-p
+     "ndb-transaction-delete-tuple() failed: ~a"
+     ;; all examples do this:
+     ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     ;; but the documentation seems to imply:
+     (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)))
+
 
 ;; begin of pseudo-columns
 
