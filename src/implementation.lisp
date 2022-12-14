@@ -670,10 +670,10 @@ pass-through an existing connection with the keyword argument :connection."
 ;;; more advanced commands
 
 (defun get-index-names ( database-name table-name)
-  (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
+  (with-ndb (ndb (*connection* database-name))
     (ndbapi.types::with-foreign-struct (list (list :count 0) '(:struct ndbapi.ffi::list))
 
-      (ndbapi.ffi::dictionary-list-indexes/swig-1 (ndbapi::ndb-get-dictionary ndb) list table-name)
+      (ndbapi.ffi::dictionary-list-indexes/swig-1 (ndb-get-dictionary ndb) list table-name)
 
       (loop with count = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :count)
             with elements = (cffi:foreign-slot-value list '(:struct ndbapi.ffi::list) :elements)
