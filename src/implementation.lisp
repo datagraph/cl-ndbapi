@@ -55,8 +55,14 @@ so you do not need to repeat it."
                       (getf error-plist :classification)
                       (getf error-plist :message) ;; "Tuple did not exist"
                       error-plist))
-    (and (eq (getf error-plist :code) 626)
-         (eq (getf error-plist :classification) :+NDBERROR-CL-NO-DATA-FOUND+))))
+    (and ;; the documentation of ndb cluster on NdbTransaction::execute()
+         ;; seems to imply that checking for:
+         ;;   (myTransaction->getNdbError().classification == NdbError:NoDataFound)
+         ;; is enough; see:
+         ;;   https://dev.mysql.com/doc/ndbapi/en/ndb-ndbtransaction.html#ndb-ndbtransaction-execute
+         (eq (getf error-plist :classification) :+NDBERROR-CL-NO-DATA-FOUND+)
+         ;; but lets check the error :code as well to be extra sure:
+         (eq (getf error-plist :code) 626))))
 
 ;;; test :ndbapi.types for validity
 
