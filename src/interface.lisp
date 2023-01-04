@@ -18,6 +18,7 @@
                 :ndb-get-ndb-error
                 :explicitly-check-for-error
                 :explicitly-check-for-transaction-error
+                :check-for-tuple-not-found-error
                 :ndb-start-transaction
                 :dictionary-get-table
                 :dictionary-get-index
@@ -106,6 +107,7 @@
            :ndb-get-ndb-error
            :explicitly-check-for-error
            :explicitly-check-for-transaction-error
+           :check-for-tuple-not-found-error
            :ndb-start-transaction
            :dictionary-get-table
            :dictionary-get-index

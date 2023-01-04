@@ -48,6 +48,15 @@ Note: ndbapi:ndb-transaction-execute already does this extra call,
 so you do not need to repeat it."
   (explicitly-check-for-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error))
 
+(defun check-for-tuple-not-found-error (transaction)
+  (let ((error-plist (%get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+    #+(or)
+    (break "~a" (list (getf error-plist :code)
+                      (getf error-plist :classification)
+                      (getf error-plist :message) ;; "Tuple did not exist"
+                      error-plist))
+    (and (eq (getf error-plist :code) 626)
+         (eq (getf error-plist :classification) :+NDBERROR-CL-NO-DATA-FOUND+))))
 
 ;;; test :ndbapi.types for validity
 
