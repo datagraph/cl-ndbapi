@@ -27,6 +27,7 @@
                 :ndb-transaction-get-ndb-index-scan-operation
                 :ndb-index-scan-operation-read-tuples
                 :ndb-transaction-execute
+                :ndb-transaction-execute/no-explicit-check
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
                 :new-ndb-interpreted-code
@@ -114,6 +115,7 @@
            :ndb-transaction-get-ndb-index-scan-operation
            :ndb-index-scan-operation-read-tuples
            :ndb-transaction-execute
+           :ndb-transaction-execute/no-explicit-check
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
            :new-ndb-interpreted-code

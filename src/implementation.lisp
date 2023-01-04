@@ -209,6 +209,12 @@ so you do not need to repeat it."
      "transaction-scan-index() failed: ~a"
      (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
+(make-interface-function ndb-transaction-execute/no-explicit-check
+    (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
+    (#'zerop
+     "transaction-execute() failed: ~a"
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+
 (make-interface-function ndb-transaction-execute
     (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
     (#'zerop
