@@ -53,6 +53,7 @@
                 :ndb-transaction-update-tuple
                 :ndb-transaction-insert-tuple
                 :ndb-transaction-delete-tuple
+                :ndb-transaction-read-tuple
                 ;; pseudo columns
                 :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
                 :column-row-count :column-commit-count :column-row-size
@@ -131,6 +132,7 @@
            :ndb-transaction-update-tuple
            :ndb-transaction-insert-tuple
            :ndb-transaction-delete-tuple
+           :ndb-transaction-read-tuple
            ;; pseudo columns
            :column-fragment :column-fragment-fixed-memory :column-fragment-varsized-memory
            :column-row-count :column-commit-count :column-row-size

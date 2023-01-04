@@ -297,6 +297,18 @@ so you do not need to repeat it."
      ;; even a null-pointer, would be used for error checking!
      ))
 
+(make-interface-function ndb-transaction-read-tuple
+    (ndbapi.ffi.o::ndb-transaction-read-tuple transaction key-record key-row result-record result-row &rest args)
+    (#'valid-object-p
+     "ndb-transaction-read-tuple() failed: ~a"
+     ;; all examples do this:
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     ;; but the documentation seems to imply:
+     ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
+     ;; this, howewer, must be wrong as in this case an erroneous value,
+     ;; even a null-pointer, would be used for error checking!
+     ))
+
 
 ;; begin of pseudo-columns
 
