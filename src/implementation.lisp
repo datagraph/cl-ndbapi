@@ -20,7 +20,9 @@
           (getf error-plist :message)))
 
 (defun get-ndb-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
-  (error-string (%get-ndb-error object getter)))
+  (let ((error-plist (%get-ndb-error object getter)))
+    (values (error-string error-plist)
+            error-plist)))
 
 (defun explicitly-check-for-error (object &optional (getter #'ndbapi.ffi::ndb-get-ndb-error/swig-0))
   (let ((error-plist (%get-ndb-error object getter)))
