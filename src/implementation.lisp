@@ -278,18 +278,24 @@ so you do not need to repeat it."
     (#'valid-object-p
      "ndb-transaction-insert-tuple() failed: ~a"
      ;; all examples do this:
-     ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
      ;; but the documentation seems to imply:
-     (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)))
+     ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
+     ;; this, howewer, must be wrong as in this case an erroneous value,
+     ;; even a null-pointer, would be used for error checking!
+     ))
 
 (make-interface-function ndb-transaction-delete-tuple
     (ndbapi.ffi.o::ndb-transaction-delete-tuple transaction key-record key-row result-record &rest args)
     (#'valid-object-p
      "ndb-transaction-delete-tuple() failed: ~a"
      ;; all examples do this:
-     ;;   (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)
      ;; but the documentation seems to imply:
-     (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)))
+     ;;   (get-ndb-error value #'ndbapi.ffi::ndb-operation-get-ndb-error)
+     ;; this, howewer, must be wrong as in this case an erroneous value,
+     ;; even a null-pointer, would be used for error checking!
+     ))
 
 
 ;; begin of pseudo-columns
