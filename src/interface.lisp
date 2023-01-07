@@ -49,6 +49,7 @@
                 :with-ndb-cluster-connection
                 :with-ndb
                 :with-ndb-transaction
+                :*transaction*
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
                 :with-ndb-interpreted-code
@@ -130,6 +131,7 @@
            :with-ndb-cluster-connection
            :with-ndb
            :with-ndb-transaction
+           :*transaction*
            :with-ndb-transaction-scan-index
            :with-ndb-transaction-get-ndb-index-scan-operation
            :with-ndb-interpreted-code

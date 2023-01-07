@@ -652,18 +652,27 @@ pass-through an existing connection with the keyword argument :connection."
       ;;;;(print 'free/new-ndb *trace-output*) (time)
       (ndb-free-object value))))
 
+(defvar *transaction* nil)
+
 (defmacro with-ndb-transaction ((var &rest args) &body body)
+  "If VAR is bound, it will be reused;
+(This only works for dynamic (special) variables, not for lexical ones.
+ If the variable is just lexical, a new connection will be made.)
+It is suggested to use the special variable ndbapi:*transaction* in most cases."
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
-       (call-with-ndb-transaction #',op ,@args))))
+       (call-with-ndb-transaction #',op (when (boundp ',var) (symbol-value ',var)) ,@args))))
 
-(defun call-with-ndb-transaction (op &rest args)
+(defun call-with-ndb-transaction (op value &rest args)
   (declare (dynamic-extent args))
-  (let ((value (apply #'ndb-start-transaction args)))
-    (unwind-protect (funcall op value)
-      ;; returns no value
-      (ndbapi.ffi:ndb-close-transaction (ndbapi.ffi:ndb-transaction-get-ndb value) value))))
+  (if (valid-object-p value)
+      (funcall op value)
+      (let ((value (apply #'ndb-start-transaction args)))
+        (unwind-protect
+             (funcall op value)
+          ;; returns no value
+          (ndbapi.ffi:ndb-close-transaction (ndbapi.ffi:ndb-transaction-get-ndb value) value)))))
 
 (defmacro with-ndb-transaction-scan-index ((var (&rest open-args) (&rest close-args)) &body body)
   (let ((op (gensym "OP-")))
