@@ -88,6 +88,10 @@ so you do not need to repeat it."
   (when (typep object 'ndbapi.ffi::ndb-cluster-connection)
     (valid-object-p object)))
 
+(defun valid-ndb-p (object)
+  (when (typep object 'ndbapi.ffi::ndb)
+    (valid-object-p object)))
+
 ;;; interface
 
 (defmacro make-interface-function (name call (&optional test datum &rest arguments) &body more-calls)
@@ -629,28 +633,37 @@ pass-through an existing connection with the keyword argument :connection."
 
 ;;; simple connection interace - end
 
+(defvar *ndb* nil)
+
 (defmacro with-ndb ((var (cluster-connection &rest more-new-ndb-args) &key max-no-of-transactions (ndb-init-p t)) &body body)
+  "If VAR is bound, it will be reused;
+(This only works for dynamic (special) variables, not for lexical ones.
+ If the variable is just lexical, a new connection will be made.)
+It is suggested to use the special variable ndbapi:*transaction* in most cases."
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
        (call-with-ndb #',op
+                      (when (boundp ',var) (symbol-value ',var))
                       ,cluster-connection
                       (list ,@more-new-ndb-args) ;; need to convert (foo), a call form, to (list foo), a list form
                       ,max-no-of-transactions
                       ,ndb-init-p))))
 
-(defun call-with-ndb (op cluster-connection &optional more-new-ndb-args max-no-of-transactions (ndb-init-p t))
-  (declare (dynamic-extent cluster-connection more-new-ndb-args max-no-of-transactions ndb-init-p))
+(defun call-with-ndb (op value cluster-connection &optional more-new-ndb-args max-no-of-transactions (ndb-init-p t))
+  (declare (dynamic-extent value cluster-connection more-new-ndb-args max-no-of-transactions ndb-init-p))
   ;;(print 'new-ndb *trace-output*) (time)
-  (let ((value (apply #'new-ndb cluster-connection more-new-ndb-args)))
-    (unwind-protect
-         (progn
-           (when ndb-init-p
-             (apply #'ndb-init value (when max-no-of-transactions
-                                       (list max-no-of-transactions))))
-           (funcall op value))
-      ;;;;(print 'free/new-ndb *trace-output*) (time)
-      (ndb-free-object value))))
+  (if (valid-ndb-p value)
+      (funcall op value)
+      (let ((value (apply #'new-ndb cluster-connection more-new-ndb-args)))
+        (unwind-protect
+             (progn
+               (when ndb-init-p
+                 (apply #'ndb-init value (when max-no-of-transactions
+                                           (list max-no-of-transactions))))
+               (funcall op value))
+          ;;(print 'free/new-ndb *trace-output*) (time)
+          (ndb-free-object value)))))
 
 (defvar *transaction* nil)
 

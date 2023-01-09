@@ -48,6 +48,7 @@
                 :with-ndb-init
                 :with-ndb-cluster-connection
                 :with-ndb
+                :*ndb*
                 :with-ndb-transaction
                 :*transaction*
                 :with-ndb-transaction-scan-index
@@ -130,6 +131,7 @@
            :with-ndb-init
            :with-ndb-cluster-connection
            :with-ndb
+           :*ndb*
            :with-ndb-transaction
            :*transaction*
            :with-ndb-transaction-scan-index
