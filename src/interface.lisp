@@ -26,6 +26,7 @@
                 :ndb-index-scan-operation-set-bound
                 :ndb-index-scan-operation-set-bound/recattr
                 :ndb-transaction-get-ndb-index-scan-operation
+                :ndb-transaction-scan-table
                 :ndb-index-scan-operation-read-tuples
                 :ndb-transaction-execute
                 :ndb-transaction-execute/no-explicit-check
@@ -53,6 +54,7 @@
                 :*transaction*
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
+                :with-ndb-transaction-scan-table
                 :with-ndb-interpreted-code
                 :ndb-transaction-update-tuple
                 :ndb-transaction-insert-tuple
@@ -117,6 +119,7 @@
            :ndb-index-scan-operation-set-bound
            :ndb-index-scan-operation-set-bound/recattr
            :ndb-transaction-get-ndb-index-scan-operation
+           :ndb-transaction-scan-table
            :ndb-index-scan-operation-read-tuples
            :ndb-transaction-execute
            :ndb-transaction-execute/no-explicit-check
@@ -136,6 +139,7 @@
            :*transaction*
            :with-ndb-transaction-scan-index
            :with-ndb-transaction-get-ndb-index-scan-operation
+           :with-ndb-transaction-scan-table
            :with-ndb-interpreted-code
            :ndb-transaction-update-tuple
            :ndb-transaction-insert-tuple

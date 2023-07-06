@@ -228,6 +228,13 @@ so you do not need to repeat it."
      "transaction-scan-index() failed: ~a"
      (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
+(make-interface-function ndb-transaction-scan-table
+    ;; all variants have the named two parameters
+    (ndbapi.ffi.o::ndb-transaction-scan-table transaction result-record &rest args)
+    (#'valid-object-p
+     "transaction-scan-table() failed: ~a"
+     (get-ndb-error transaction #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+
 (make-interface-function ndb-transaction-execute/no-explicit-check
     (ndbapi.ffi::ndb-transaction-execute/swig-5 transaction exec-type)
     (#'zerop
@@ -713,6 +720,21 @@ It is suggested to use the special variable ndbapi:*transaction* in most cases."
 (defun call-with-ndb-transaction-get-ndb-index-scan-operation (op &key open-args close-args)
   (declare (dynamic-extent open-args close-args))
   (let ((value (apply #'ndb-transaction-get-ndb-index-scan-operation open-args)))
+    (unwind-protect (funcall op value)
+      ;; returns no value
+      (apply #'ndb-scan-operation-close value close-args))))
+
+(defmacro with-ndb-transaction-scan-table ((var (&rest open-args) (&rest close-args)) &body body)
+  (let ((op (gensym "OP-")))
+    `(flet ((,op (,var) ,@body))
+       (declare (dynamic-extent #',op))
+       (call-with-ndb-transaction-scan-table #',op
+                                             :open-args (list ,@open-args)
+                                             :close-args (list ,@close-args)))))
+
+(defun call-with-ndb-transaction-scan-table (op &key open-args close-args)
+  (declare (dynamic-extent open-args close-args))
+  (let ((value (apply #'ndb-transaction-scan-table open-args)))
     (unwind-protect (funcall op value)
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
