@@ -32,6 +32,8 @@
                 :ndb-transaction-execute/no-explicit-check
                 :ndb-scan-operation-next-result
                 :ndb-scan-operation-close
+                :ndb-scan-operation-delete-current-tuple
+                :ndb-scan-operation-update-current-tuple
                 :new-ndb-interpreted-code
                 :ndb-interpreted-code-interpret-exit-last-row
                 :ndb-interpreted-code-finalise
@@ -125,6 +127,8 @@
            :ndb-transaction-execute/no-explicit-check
            :ndb-scan-operation-next-result
            :ndb-scan-operation-close
+           :ndb-scan-operation-delete-current-tuple
+           :ndb-scan-operation-update-current-tuple
            :new-ndb-interpreted-code
            :ndb-interpreted-code-interpret-exit-last-row
            :ndb-interpreted-code-finalise

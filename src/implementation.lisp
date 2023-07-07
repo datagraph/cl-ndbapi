@@ -261,6 +261,20 @@ so you do not need to repeat it."
     ;; returns void
     ())
 
+(make-interface-function ndb-scan-operation-delete-current-tuple
+    (ndbapi.ffi.o::ndb-scan-operation-delete-current-tuple scan &rest args) ;; out-row-ptr fetch-allowed force-send
+    (#'valid-object-p
+     ;; documentation indicates: (lambda (rc) (>= rc 0)) ;; only -1 indicates error, 0 means success
+     ;; but it actually returns a "const NdbOperation*"
+     "scan-operation-delete-current-tuple() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+
+(make-interface-function ndb-scan-operation-update-current-tuple
+    (ndbapi.ffi.o::ndb-scan-operation-update-current-tuple scan &rest args) ;; out-row-ptr fetch-allowed force-send
+    (#'valid-object-p
+     "scan-operation-update-current-tuple() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+
 (make-interface-function new-ndb-interpreted-code
     (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
     (#'valid-object-p
