@@ -133,7 +133,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                         (ndbapi:with-ndb-transaction-scan-index (scan (transaction
                                                                           index-default-record
                                                                           table-default-record
-                                                                          :+LM-READ+
+                                                                          :+LM-COMMITTED-READ+
                                                                           result-mask
                                                                           (cffi:null-pointer)
                                                                           scan-options
