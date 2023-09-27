@@ -12,4 +12,5 @@
                              (:file "ndbapi-simple-scan" :depends-on ("ndb-quads"))
                              (:file "ndbapi-scan-count-recattr" :depends-on ("ndb-quads"))
                              (:file "ndbapi-scan-count" :depends-on ("ndb-quads"))
-                             (:file "ndbapi-decode-columns" :depends-on ("ndb-quads"))))))
+                             (:file "ndbapi-decode-columns" :depends-on ("ndb-quads"))
+                             (:file "ndbapi-list-indexes" :depends-on ("package"))))))

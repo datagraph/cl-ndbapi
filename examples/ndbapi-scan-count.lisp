@@ -78,7 +78,9 @@
 
 (defun scan-count (&key connection-string database-name table-name index-name
                         bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
-                        debug)
+                        debug
+                        (lock-mode :+LM-READ+) ;; might switch to: :+LM-COMMITTED-READ+ or other modes
+                        )
   "WARNING: scan-count just gives an estimation of the matching rows.
 If you need an exact count call simple-scan instead with :just-count t"
   (ndbapi:ensure-ndb-init)
@@ -133,7 +135,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                         (ndbapi:with-ndb-transaction-scan-index (scan (transaction
                                                                           index-default-record
                                                                           table-default-record
-                                                                          :+LM-COMMITTED-READ+
+                                                                          lock-mode
                                                                           result-mask
                                                                           (cffi:null-pointer)
                                                                           scan-options
