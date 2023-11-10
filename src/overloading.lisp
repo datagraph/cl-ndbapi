@@ -65,6 +65,7 @@ WARNING: this only works when there are no multiple functions with the same arit
 ;; no unique arity for:
 ;; (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "new_Ndb_cluster_connection" 'function))
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_updateTuple" 'function))
+(overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_writeTuple" 'function))
 ;; no unique arity for:
 ;; (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_insertTuple" 'function))
 (overload-function-by-arity #.(ndbapi.ffi::swig-lispify "NdbTransaction_deleteTuple" 'function))

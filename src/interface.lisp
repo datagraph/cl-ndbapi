@@ -60,6 +60,7 @@
                 :with-ndb-interpreted-code
                 :ndb-transaction-update-tuple
                 :ndb-transaction-insert-tuple
+                :ndb-transaction-write-tuple
                 :ndb-transaction-delete-tuple
                 :ndb-transaction-read-tuple
                 ;; pseudo columns
@@ -147,6 +148,7 @@
            :with-ndb-interpreted-code
            :ndb-transaction-update-tuple
            :ndb-transaction-insert-tuple
+           :ndb-transaction-write-tuple
            :ndb-transaction-delete-tuple
            :ndb-transaction-read-tuple
            ;; pseudo columns
