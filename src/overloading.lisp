@@ -46,6 +46,7 @@ WARNING: this only works when there are no multiple functions with the same arit
        (assert fn
                (fn)
                "no variant of function ~a with arity ~a: ~a" ',name arity args)
+       #+ndbapi-verbose
        (when *ndbapi-verbose*
          (format *trace-output* "~&Calling ~a with arity ~a: ~a" ',name arity fn))
        (apply (symbol-function fn) args))))

@@ -4,6 +4,10 @@
 
 (in-package :ndbapi.types)
 
+#+(or)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (pushnew :spocq *features*))
+
 (defvar *ndbapi-verbose* nil
   "show debug output for:
     - CFFI type translations
@@ -42,6 +46,7 @@
   (error "Do not how to delete ~a object on pointer: #x~8,'0x" class pointer))
 
 (defmethod delete-foreign-object :before (class pointer)
+  #+ndbapi-verbose
   (when *ndbapi-verbose*
     (format *trace-output* "~&Calling DELETE for ~a object on pointer: #x~8,'0x"
                class
@@ -50,6 +55,7 @@
 
 (defmethod cffi:translate-to-foreign ((lisp-object garbage-collected-class)
                                       (foreign-type garbage-collected-type))
+  #+ndbapi-verbose
   (when *ndbapi-verbose*
     (format *trace-output* "~&Translate ~a to ~a"
                (class-name (class-of lisp-object))
@@ -61,6 +67,7 @@
 (defmethod free-foreign-object% ((class t) foreign-pointer valid-cons)
   (let ((do-free (and (not (cffi:null-pointer-p foreign-pointer))
                       (car valid-cons))))
+    #+ndbapi-verbose
     (debug-print class foreign-pointer do-free)
     (values (when do-free
                  (setf (car valid-cons) nil) ;; prevent double-free
@@ -70,6 +77,7 @@
 (defgeneric free-foreign-object (object))
 
 (defmethod free-foreign-object ((object null))
+  #+ndbapi-verbose
   (when *ndbapi-verbose*
       (format *trace-output* "~&Nothing to free for class ~a"
               (class-name (class-of object)))))
@@ -89,6 +97,7 @@
                                ;; that can be accessed from the finalizer
          (lisp-object (make-instance class :foreign-pointer foreign-pointer
                                            :valid-cons valid-cons)))
+    #+ndbapi-verbose
     (when *ndbapi-verbose*
       (format *trace-output* "~&Translate ~a to ~a: #x~8,'0x"
                  (class-name (class-of foreign-type))
@@ -110,6 +119,7 @@
        ())
 
      (defmethod delete-foreign-object ((class (eql ',class)) pointer)
+       #+ndbapi-verbose
        (when *ndbapi-verbose*
          (format *trace-output* "~&Calling ~a" ',delete-fn)
          (force-output *trace-output*))
@@ -213,6 +223,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 
 (defmethod delete-foreign-object ((class (eql 'ndbapi.ffi::ndb-init)) initialized)
   (declare (ignore initialized))
+  #+ndbapi-verbose
   (when *ndbapi-verbose*
     (format *trace-output* "~&Calling ~a" 'ndbapi.ffi::ndb-end%)
     (force-output *trace-output*))
@@ -221,6 +232,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 (defmethod free-foreign-object% ((class (eql 'ndbapi.ffi::ndb-init)) initialized valid-cons)
   (let ((do-free (and initialized
                       (car valid-cons))))
+    #+ndbapi-verbose
     (debug-print class initialized do-free)
     (values (when do-free
                  (setf (car valid-cons) nil) ;; prevent double-free
@@ -238,6 +250,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
 
 (defmethod cffi:translate-to-foreign ((lisp-object ndbapi.ffi::ndb-init)
                                       (foreign-type ndbapi.ffi::ndb-init-type))
+  #+ndbapi-verbose
   (when *ndbapi-verbose*
     (format *trace-output* "~&Translate ~a to ~a"
                (class-name (class-of lisp-object))
@@ -257,6 +270,7 @@ calling DELETE for NDB object on pointer: #.(SB-SYS:INT-SAP #X7FD1CC0011E0)
     (assert initialized
             ()
             "ndb-init failed")
+    #+ndbapi-verbose
     (when *ndbapi-verbose*
       (format *trace-output* "~&Translate ~a to ~a: ~a"
                  (class-name (class-of foreign-type))

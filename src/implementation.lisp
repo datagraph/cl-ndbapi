@@ -556,6 +556,7 @@ If THERE-IS-ONLY-ONE is t, ndb-end is called at the end IFF with-ndb-init define
           ;;   to get this behavior at all.
           ;;(print 'free/ndb-begin *trace-output*) (time)
           (when there-is-only-one
+            #+ndbapi-verbose
             (when ndbapi.types:*ndbapi-verbose*
               (format *trace-output* "~&WITH-NDB-INIT: force freeing of *ndb-init* as :THERE-IS-ONLY-ONE ~a"
                       there-is-only-one))
