@@ -6,7 +6,7 @@
 
 #+(or)
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (pushnew :spocq *features*))
+  (pushnew :ndbapi-verbose *features*))
 
 (defvar *ndbapi-verbose* nil
   "show debug output for:
