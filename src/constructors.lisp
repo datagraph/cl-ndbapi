@@ -5,6 +5,7 @@
 (cl:in-package :ndbapi.types)
 
 (defun debug-free-thing (type instance)
+  (values instance type) ;; use instance
   #+ndbapi-verbose
   (when *ndbapi-verbose*
     (format *trace-output* "~&Remove reference to ~a: ~a (~8,'0x)"
