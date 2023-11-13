@@ -104,7 +104,13 @@
                  class
                  foreign-pointer))
     (when (garbage-collect foreign-type)
-      (sb-ext:finalize lisp-object (lambda () (free-foreign-object% class foreign-pointer valid-cons))))
+      (sb-ext:finalize lisp-object (lambda ()
+                                     ;; (format *trace-output* "~&Finalize for ~a object: #x~8,'0x (~:[invalid~;valid~])~%"
+                                     ;;         class
+                                     ;;         foreign-pointer
+                                     ;;         (car valid-cons))
+                                     ;; (force-output *trace-output*)
+                                     (free-foreign-object% class foreign-pointer valid-cons))))
     lisp-object))
 
 ;; macro
