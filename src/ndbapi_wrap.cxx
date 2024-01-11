@@ -11584,32 +11584,32 @@ EXPORT char *_wrap_Ndb_getClientStatName (Ndb *larg1, Uint32 larg2) {
   }
 }
 
-/*
-EXPORT int _wrap_compare_ndbrecord (NdbReceiver *larg1, NdbReceiver *larg2, NdbRecord *larg3, NdbRecord *larg4, int larg5, int larg6) {
+EXPORT int _wrap_compare_ndbrecord (NdbReceiver *larg1, NdbReceiver *larg2, NdbRecord *larg3, NdbRecord *larg4, unsigned char *larg5, int larg6, int larg7) {
   int lresult = (int)0 ;
   NdbReceiver *arg1 = (NdbReceiver *) 0 ;
   NdbReceiver *arg2 = (NdbReceiver *) 0 ;
   NdbRecord *arg3 = (NdbRecord *) 0 ;
   NdbRecord *arg4 = (NdbRecord *) 0 ;
-  bool arg5 ;
+  unsigned char *arg5 = (unsigned char *) 0 ;
   bool arg6 ;
+  bool arg7 ;
   int result;
   
   arg1 = larg1;
   arg2 = larg2;
   arg3 = larg3;
   arg4 = larg4;
-  arg5 = (bool)larg5;
+  arg5 = larg5;
   arg6 = (bool)larg6;
+  arg7 = (bool)larg7;
   try {
-    result = (int)compare_ndbrecord((NdbReceiver const *)arg1,(NdbReceiver const *)arg2,(NdbRecord const *)arg3,(NdbRecord const *)arg4,arg5,arg6);
+    result = (int)compare_ndbrecord((NdbReceiver const *)arg1,(NdbReceiver const *)arg2,(NdbRecord const *)arg3,(NdbRecord const *)arg4,(unsigned char const *)arg5,arg6,arg7);
     lresult = result;
     return lresult;
   } catch (...) {
     return (int)0;
   }
 }
-*/
 
 EXPORT NdbReceiver *_wrap_new_NdbReceiver (Ndb *larg1) {
   NdbReceiver * lresult = (NdbReceiver *)0 ;
