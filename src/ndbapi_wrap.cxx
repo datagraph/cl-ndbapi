@@ -9929,7 +9929,6 @@ EXPORT int _wrap_Ndb_init__SWIG_1 (Ndb *larg1) {
 }
 
 
-/*
 EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
   Ndb *arg1 = (Ndb *) 0 ;
   unsigned int arg2 ;
@@ -9943,7 +9942,6 @@ EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
     
   }
 }
-*/
 
 EXPORT unsigned int _wrap_Ndb_get_eventbuf_max_alloc (Ndb *larg1) {
   unsigned int lresult = (unsigned int)0 ;
