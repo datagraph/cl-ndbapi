@@ -21,7 +21,11 @@
                 :check-for-tuple-not-found-error
                 :ndb-start-transaction
                 :dictionary-get-table
+                :dictionary-invalidate-table
+                :dictionary-remove-cached-table
                 :dictionary-get-index
+                :dictionary-invalidate-index
+                :dictionary-remove-cached-index
                 :ndb-transaction-scan-index
                 :ndb-index-scan-operation-set-bound
                 :ndb-index-scan-operation-set-bound/recattr
@@ -117,7 +121,11 @@
            :check-for-tuple-not-found-error
            :ndb-start-transaction
            :dictionary-get-table
+           :dictionary-invalidate-table
+           :dictionary-remove-cached-table
            :dictionary-get-index
+           :dictionary-invalidate-index
+           :dictionary-remove-cached-index
            :ndb-transaction-scan-index
            :ndb-index-scan-operation-set-bound
            :ndb-index-scan-operation-set-bound/recattr

@@ -179,11 +179,31 @@ so you do not need to repeat it."
      "get-table() failed: ~a"
      (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error)))
 
+(make-interface-function dictionary-invalidate-table
+    (ndbapi.ffi::dictionary-invalidate-table/swig-0 dictionary name)
+    ;; returns void
+    ())
+
+(make-interface-function dictionary-remove-cached-table
+    (ndbapi.ffi::dictionary-remove-cached-table/swig-0 dictionary name)
+    ;; returns void
+    ())
+
 (make-interface-function dictionary-get-index
     (ndbapi.ffi::dictionary-get-index/swig-0 dictionary index-name table-name)
     (#'valid-object-p
      "get-index() failed: ~a"
      (get-ndb-error dictionary #'ndbapi.ffi:dictionary-get-ndb-error)))
+
+(make-interface-function dictionary-invalidate-index
+    (ndbapi.ffi::dictionary-invalidate-index/swig-0 dictionary index-name table-name)
+    ;; returns void
+    ())
+
+(make-interface-function dictionary-remove-cached-index
+    (ndbapi.ffi::dictionary-remove-cached-index/swig-0 dictionary index-name table-name)
+    ;; returns void
+    ())
 
 (make-interface-function index-get-default-record
     (ndbapi.ffi::index-get-default-record% index)
@@ -781,7 +801,7 @@ It is suggested to use the special variable ndbapi:*transaction* in most cases."
 
 ;;; more advanced commands
 
-(defun get-index-names ( database-name table-name)
+(defun get-index-names (database-name table-name)
   (with-ndb (ndb (*connection* database-name))
     (ndbapi.types::with-foreign-struct (list (list :count 0) '(:struct ndbapi.ffi::list))
 
