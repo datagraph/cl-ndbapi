@@ -9929,6 +9929,7 @@ EXPORT int _wrap_Ndb_init__SWIG_1 (Ndb *larg1) {
 }
 
 
+/*
 EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
   Ndb *arg1 = (Ndb *) 0 ;
   unsigned int arg2 ;
@@ -9942,7 +9943,7 @@ EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
     
   }
 }
-
+*/
 
 EXPORT unsigned int _wrap_Ndb_get_eventbuf_max_alloc (Ndb *larg1) {
   unsigned int lresult = (unsigned int)0 ;
@@ -11585,7 +11586,7 @@ EXPORT char *_wrap_Ndb_getClientStatName (Ndb *larg1, Uint32 larg2) {
   }
 }
 
-
+/*
 EXPORT int _wrap_compare_ndbrecord (NdbReceiver *larg1, NdbReceiver *larg2, NdbRecord *larg3, NdbRecord *larg4, int larg5, int larg6) {
   int lresult = (int)0 ;
   NdbReceiver *arg1 = (NdbReceiver *) 0 ;
@@ -11610,7 +11611,7 @@ EXPORT int _wrap_compare_ndbrecord (NdbReceiver *larg1, NdbReceiver *larg2, NdbR
     return (int)0;
   }
 }
-
+*/
 
 EXPORT NdbReceiver *_wrap_new_NdbReceiver (Ndb *larg1) {
   NdbReceiver * lresult = (NdbReceiver *)0 ;
