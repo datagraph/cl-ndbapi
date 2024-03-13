@@ -12,19 +12,24 @@
          cffi:*foreign-library-directories*)
 
 
-;; load libndbapi / libndbclient library
+;; libndbapi / libndbclient library
 
 (cffi:define-foreign-library :libndbapi
   (:unix  (:or "libndbclient.so" "libndbclient.so.6.1.0"))
   (t (:default "libndbclient")))
 
-(cffi:use-foreign-library :libndbapi)
 
-
-;; load ndbapi wrapper library
+;; ndbapi wrapper library
 
 (cffi:define-foreign-library :ndbapi-wrap
   (:unix  (:or "ndbapi_wrap.so"))
   (t (:default "ndbapi_wrap")))
 
-(cffi:use-foreign-library :ndbapi-wrap)
+
+(defvar *ndbapi-loaded* nil)
+
+(defun load-ndbapi ()
+  (unless *ndbapi-loaded*
+    (cffi:use-foreign-library :libndbapi)
+    (cffi:use-foreign-library :ndbapi-wrap)
+    (setf *ndbapi-loaded* t)))

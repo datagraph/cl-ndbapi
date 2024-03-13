@@ -548,7 +548,9 @@ as they are created as a side-effect of making the cluster connection."))
   (bt:with-lock-held (*ndb-init-lock*)
     (if (initialized-ndb-init-p *ndb-init*)
         *ndb-init*
-        (setf *ndb-init* (ndb-begin%)))))
+        (progn
+          (load-ndbapi)
+          (setf *ndb-init* (ndb-begin%))))))
 
 ;; NDB-BEGIN and ENSURE-NDB-INIT are identical, as there really should be only one
 ;; ndb-init object for the whole application. The NDB API must to be initialized once only.
