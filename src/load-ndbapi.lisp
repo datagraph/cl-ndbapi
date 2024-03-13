@@ -4,13 +4,6 @@
 
 (in-package :ndbapi.implementation)
 
-;; Push the directory of the ndbapi.asd to cffi's load path.
-;; The ndbapi_wrap.so library will be created in that directory and
-;; I also put a link to "libndbclient.so.6.1.0" there so that that
-;; library is found easily as well.
-(pushnew (asdf:system-source-directory (asdf:find-system :ndbapi))
-         cffi:*foreign-library-directories*)
-
 
 ;; libndbapi / libndbclient library
 
@@ -26,10 +19,20 @@
   (t (:default "ndbapi_wrap")))
 
 
+;; load ndbapi libraries
+
 (defvar *ndbapi-loaded* nil)
 
-(defun load-ndbapi ()
+;; The ndbapi_wrap.so library will be created in the ndbapi directory
+;; and  I also put a link to "libndbclient.so.6.1.0" there so that that
+;; library is found easily as well. The library can be found via:
+;;   (asdf:system-source-directory (asdf:find-system :ndbapi))
+
+(defun load-ndbapi (&key (search-path (asdf:system-source-directory (asdf:find-system :ndbapi))))
   (unless *ndbapi-loaded*
-    (cffi:use-foreign-library :libndbapi)
-    (cffi:use-foreign-library :ndbapi-wrap)
+    (cffi:load-foreign-library :libndbapi :search-path search-path)
+    (cffi:load-foreign-library :ndbapi-wrap :search-path search-path)
     (setf *ndbapi-loaded* t)))
+
+;; to ensure early loading, you could add to your image:
+;; #+sbcl(pushnew 'load-ndbapi sb-ext:*init-hooks*)
