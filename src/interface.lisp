@@ -4,6 +4,9 @@
 
 (in-package :cl-user)
 
+(eval-when (:load-toplevel :compile-toplevel :execute)
+  (pushnew :ndbapi *features*))
+
 (defpackage :ndbapi
   (:use :cl)
   (:import-from :ndbapi.implementation
