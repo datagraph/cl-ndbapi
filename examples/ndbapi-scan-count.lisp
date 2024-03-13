@@ -28,7 +28,7 @@
 ;;     recattr API and using those will lead to error: "Error with code 4284:
 ;;     Cannot mix NdbRecAttr and NdbRecord methods in one operation".
 ;;     So we have to specify the row-data pointer, but as we have configured
-;;     0 as the result-mask nor rows will actually get retrieved.)
+;;     0 as the result-mask no rows will actually get retrieved.)
 ;; 5. we get the number of rows in our range from each partition,
 ;;    summing them up will result in the total matching columns
 ;;
@@ -182,7 +182,7 @@ If you need an exact count call simple-scan instead with :just-count t"
                                     for j from 0
                                     while (zerop rc)
                                     for range-count = (cffi:mem-aref records-in-range-ptr :uint32 1)
-                                    for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
+                                    ;;for row = (ndb.quads:convert-foreign-quad (cffi:mem-aref row-data :pointer))
                                     do (when debug
                                          (let ((partition-count (cffi:mem-aref records-in-range-ptr :uint32 0))
                                                (before-count (cffi:mem-aref records-in-range-ptr :uint32 2))
