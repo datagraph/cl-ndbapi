@@ -7,6 +7,7 @@
 (defpackage :ndbapi
   (:use :cl)
   (:import-from :ndbapi.implementation
+                :load-ndbapi
                 :get-ndb-error
                 :valid-object-p
                 :new-ndb-cluster-connection
@@ -102,6 +103,7 @@
                 :free-foreign-object
                 :foreign-pointer)
   (:export ;; from :ndbapi.implementation
+           :load-ndbapi
            :get-ndb-error
            :valid-object-p
            :new-ndb-cluster-connection
