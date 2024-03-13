@@ -5,7 +5,7 @@
 (asdf:defsystem :ndbapi
   :description "A high level and a low-level C++ NDB API interface (for RonDB)."
   :author "Max-Gerd Retzlaff <mgr@matroid.org>"
-  :depends-on (:cffi :bordeaux-threads)
+  :depends-on (:cffi :bordeaux-threads :sb-introspect)
   :components ((:module "src"
                 :components ((:file "package")
                              (:file "load-ndbapi" :depends-on ("package"))
