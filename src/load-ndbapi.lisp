@@ -28,10 +28,11 @@
 ;; library is found easily as well. The library can be found via:
 ;;   (asdf:system-source-directory (asdf:find-system :ndbapi))
 
-(defun load-ndbapi (&key (search-path (asdf:system-source-directory (asdf:find-system :ndbapi))))
+(defun load-ndbapi (&key search-path)
   (unless *ndbapi-loaded*
-    (cffi:load-foreign-library :libndbapi :search-path search-path)
-    (cffi:load-foreign-library :ndbapi-wrap :search-path search-path)
+    (let ((search-path (or search-path (asdf:system-source-directory (asdf:find-system :ndbapi)))))
+      (cffi:load-foreign-library :libndbapi :search-path search-path)
+      (cffi:load-foreign-library :ndbapi-wrap :search-path search-path))
     (setf *ndbapi-loaded* t)))
 
 ;; to ensure early loading, you could add to your image:
