@@ -3173,12 +3173,42 @@
 	(#.(swig-lispify "ptr" 'slotname :keyword) :pointer)
 	(#.(swig-lispify "len" 'slotname :keyword) :unsigned-int))
 
+(cffi:defcenum #.(swig-lispify "PartitionSpecType" 'enumname)
+	(#.(swig-lispify "PS_NONE" 'enumvalue :keyword) 0)
+	(#.(swig-lispify "PS_USER_DEFINED" 'enumvalue :keyword) 1)
+        (#.(swig-lispify "PS_DISTR_KEY_PART_PTR" 'enumvalue :keyword) 2)
+        (#.(swig-lispify "PS_DISTR_KEY_RECORD" 'enumvalue :keyword) 3))
+
+(cffi:defcstruct #.(swig-lispify "PS_UserDefined" 'classname)
+  (#.(swig-lispify "partitionId" 'slotname :keyword) :unsigned-int))
+
+(cffi:defcstruct #.(swig-lispify "PS_KeyPartPtr" 'classname)
+  (#.(swig-lispify "tableKeyParts" 'slotname :keyword) :pointer) ;; pointer to: (:struct #.(swig-lispify "Key_part_ptr" 'classname))
+  (#.(swig-lispify "xfrmbuf" 'slotname :keyword) :pointer)
+  (#.(swig-lispify "xfrmbuflen" 'slotname :keyword) :unsigned-int))
+
+(cffi:defcstruct #.(swig-lispify "PS_KeyRecord" 'classname)
+  (#.(swig-lispify "keyRecord" 'slotname :keyword) :pointer)
+  (#.(swig-lispify "keyRow" 'slotname :keyword) :pointer)
+  (#.(swig-lispify "xfrmbuf" 'slotname :keyword) :pointer)
+  (#.(swig-lispify "xfrmbuflen" 'slotname :keyword) :unsigned-int))
+
+(cffi:defcunion #.(swig-lispify "PS_Union" 'classname)
+  (#.(swig-lispify "UserDefined" 'slotname :keyword) (:struct #.(swig-lispify "PS_UserDefined" 'classname)))
+  (#.(swig-lispify "KeyPartPtr" 'slotname :keyword) (:struct #.(swig-lispify "PS_KeyPartPtr" 'classname)))
+  (#.(swig-lispify "KeyRecord" 'slotname :keyword) (:struct #.(swig-lispify "PS_KeyRecord" 'classname))))
+
 (cffi:defcstruct #.(swig-lispify "PartitionSpec" 'classname)
-	(#.(swig-lispify "size" 'slotname :keyword) :pointer)
-	(#.(swig-lispify "type" 'slotname :keyword) :unsigned-int))
+        ;; 20240510 mgr: I think this is wrong, type is supped to be a function
+        ;;   static inline Uint32 size() { return sizeof(PartitionSpec); }
+        ;; see below at ScanOptions, that also has this wrong
+        ;; (#.(swig-lispify "size" 'slotname :keyword) :pointer)
+	(#.(swig-lispify "type" 'slotname :keyword) #.(swig-lispify "PartitionSpecType" 'enumname))
+        (#.(swig-lispify "Union" 'slotname :keyword) (:union #.(swig-lispify "PS_Union" 'classname))
+))
 
 (cffi:defcstruct #.(swig-lispify "PartitionSpec_v1" 'classname)
-	(#.(swig-lispify "type" 'slotname :keyword) :unsigned-int))
+	(#.(swig-lispify "type" 'slotname :keyword) #.(swig-lispify "PartitionSpecType" 'enumname)))
 
 (cffi:defcstruct #.(swig-lispify "TupleIdRange" 'classname)
 	(#.(swig-lispify "m_first_tuple_id" 'slotname :keyword) :unsigned-long-long)

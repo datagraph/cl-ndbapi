@@ -230,6 +230,12 @@ so you do not need to repeat it."
      "set-bound() failed: ~a"
      (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
+(make-interface-function ndb-index-scan-operation-set-bound/partition-pruned
+    (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-4 index-scan key-record bound partition-info size-of-partition-info)
+    (#'zerop
+     "set-bound() failed: ~a"
+     (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction index-scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
+
 (make-interface-function ndb-index-scan-operation-set-bound/recattr
     (ndbapi.ffi::ndb-index-scan-operation-set-bound/swig-1 index-scan attr type value)
     (#'zerop
