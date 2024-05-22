@@ -44,6 +44,19 @@
                 :ndb-scan-operation-update-current-tuple
                 :new-ndb-interpreted-code
                 :ndb-interpreted-code-interpret-exit-last-row
+                :ndb-interpreted-code-interpret-exit-ok
+                :ndb-interpreted-code-interpret-exit-nok
+                :ndb-interpreted-code-read-attr
+                :ndb-interpreted-code-load-const-u32
+                :ndb-interpreted-code-def-label
+                :ndb-interpreted-code-branch-label
+                :ndb-interpreted-code-branch-ge
+                :ndb-interpreted-code-branch-gt
+                :ndb-interpreted-code-branch-le
+                :ndb-interpreted-code-branch-lt
+                :ndb-interpreted-code-branch-eq
+                :ndb-interpreted-code-branch-ne
+                :ndb-interpreted-code-branch-ne-null
                 :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
                 :ndb-operation-get-value
@@ -55,6 +68,7 @@
                 :ndb-get-dictionary
                 :index-get-default-record
                 :table-get-default-record
+                :table-get-column
                 :ndb-free-object
                 :with-ndb-init
                 :with-ndb-cluster-connection
@@ -91,6 +105,7 @@
   (:import-from :ndbapi.ffi
                 :dictionary-get-ndb-error
                 :table-get-name
+                :column-get-attr-id
                 :ndb-transaction-get-ndb-error
                 :index-bound
                 :index-get-name
@@ -145,6 +160,19 @@
            :ndb-scan-operation-update-current-tuple
            :new-ndb-interpreted-code
            :ndb-interpreted-code-interpret-exit-last-row
+           :ndb-interpreted-code-interpret-exit-ok
+           :ndb-interpreted-code-interpret-exit-nok
+           :ndb-interpreted-code-read-attr
+           :ndb-interpreted-code-load-const-u32
+           :ndb-interpreted-code-def-label
+           :ndb-interpreted-code-branch-label
+           :ndb-interpreted-code-branch-ge
+           :ndb-interpreted-code-branch-gt
+           :ndb-interpreted-code-branch-le
+           :ndb-interpreted-code-branch-lt
+           :ndb-interpreted-code-branch-eq
+           :ndb-interpreted-code-branch-ne
+           :ndb-interpreted-code-branch-ne-null
            :ndb-interpreted-code-finalise
            :ndb-scan-operation-set-interpreted-code
            :ndb-operation-get-value
@@ -185,8 +213,10 @@
            :ndb-get-dictionary
            :dictionary-get-ndb-error
            :table-get-name
+           :column-get-attr-id
            :index-get-default-record
            :table-get-default-record
+           :table-get-column
            :ndb-transaction-get-ndb-error
            :index-bound
            :index-get-name
