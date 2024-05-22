@@ -17,6 +17,16 @@
     load data infile '/path/to/data.tsv' into table test;
 |#
 
+(cffi:defcstruct quad-vis
+  (:g :unsigned-int)
+  (:s :unsigned-int)
+  (:p :unsigned-int)
+  (:o :unsigned-int)
+  (:vis-size :uint16) ;; two bytes contain size of varbinary
+  (:visibility :uint8 :count #.(/ 28000 (cffi:foreign-type-size :uint8)))
+  ;;(:visibility :uint32 :count #.(/ 28000 (cffi:foreign-type-size :uint32)))
+  )
+
 (cffi:defcstruct quad
   (:g :unsigned-int)
   (:s :unsigned-int)
@@ -77,19 +87,28 @@
 
 (defun list-to-quad (list)
   "take spog list and return as quad (given as property list)"
-  (destructuring-bind (&optional (g 0) (s 0) (p 0) (o 0)) list
-    (list :g g :s s :p p :o o)))
+  (destructuring-bind (&optional (g 0) (s 0) (p 0) (o 0) (visibility nil) (vis-size 0)) list
+    (list :g g :s s :p p :o o :visibility visibility :vis-size vis-size)))
 
 (defun list-to-quad* (&rest list)
   (list-to-quad list))
 
-(defun quad-to-list (quad)
+(defun decode-visibility (visibility vis-size &key (word-size :uint8))
+  (let* ((count (floor vis-size (cffi:foreign-type-size word-size)))
+         (vector (make-array count)))
+    (dotimes (index count)
+      (setf (aref vector index) (cffi:mem-aref visibility word-size index)))
+    vector))
+
+(defun quad-to-list (quad &key (decode-visibility t))
   "deconstruct quad (given as property list) and return as spog list"
-  (destructuring-bind (&key (g 0) (s 0) (p 0) (o 0)) quad
-    (list g s p o)))
+  (destructuring-bind (&key (g 0) (s 0) (p 0) (o 0) (visibility nil) (vis-size 0)) quad
+    (if visibility
+        (list g s p o vis-size (if decode-visibility (decode-visibility visibility vis-size) visibility))
+        (list g s p o))))
 
 (defun quad-to-list* (&rest quad)
   (quad-to-list quad))
 
 (defun convert-foreign-quad (sap)
-  (cffi:convert-from-foreign sap '(:struct ndb.quads:quad)))
+  (cffi:convert-from-foreign sap '(:struct ndb.quads::quad-vis)))
