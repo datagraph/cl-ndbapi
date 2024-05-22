@@ -312,6 +312,24 @@ so you do not need to repeat it."
      "interpret-exit-last-row() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
+(make-interface-function ndb-interpreted-code-interpret-exit-ok
+    (ndbapi.ffi::ndb-interpreted-code-interpret-exit-ok code)
+    (#'zerop
+     "interpret-exit-last-row() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-read-attr
+    (ndbapi.ffi::ndb-interpreted-code-read-attr/swig-1 code reg-dest column)
+    (#'zerop
+     "interpret-exit-last-row() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-interpret-exit-nok
+    (ndbapi.ffi::ndb-interpreted-code-interpret-exit-nok/swig-1 code)
+    (#'zerop
+     "interpret-exit-last-row() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
 (make-interface-function ndb-interpreted-code-finalise
     (ndbapi.ffi::ndb-interpreted-code-finalise code)
     (#'zerop
