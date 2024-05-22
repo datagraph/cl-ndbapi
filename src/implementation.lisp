@@ -217,6 +217,12 @@ so you do not need to repeat it."
      "get-default-record() of table ~a failed"
      (ndbapi.ffi:table-get-name table)))
 
+(make-interface-function table-get-column
+    (ndbapi.ffi::table-get-column/swig-2 table name)
+    (#'valid-object-p
+     "get-column(\"~a\") of table ~a failed"
+     name (ndbapi.ffi:table-get-name table)))
+
 (make-interface-function ndb-transaction-scan-index
     ;; all variants have the named three parameters
     (ndbapi.ffi.o::ndb-transaction-scan-index transaction key-record result-record &rest args)
@@ -315,19 +321,85 @@ so you do not need to repeat it."
 (make-interface-function ndb-interpreted-code-interpret-exit-ok
     (ndbapi.ffi::ndb-interpreted-code-interpret-exit-ok code)
     (#'zerop
-     "interpret-exit-last-row() failed: ~a"
-     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
-
-(make-interface-function ndb-interpreted-code-read-attr
-    (ndbapi.ffi::ndb-interpreted-code-read-attr/swig-1 code reg-dest column)
-    (#'zerop
-     "interpret-exit-last-row() failed: ~a"
+     "exit-ok() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-interpreted-code-interpret-exit-nok
     (ndbapi.ffi::ndb-interpreted-code-interpret-exit-nok/swig-1 code)
     (#'zerop
-     "interpret-exit-last-row() failed: ~a"
+     "exit-nok() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-read-attr
+    (ndbapi.ffi::ndb-interpreted-code-read-attr/swig-1 code reg-dest column)
+    (#'zerop
+     "read-attr() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-load-const-u32
+    (ndbapi.ffi::ndb-interpreted-code-load-const-u-32 code reg-dest constant)
+    (#'zerop
+     "load-const-u32() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-def-label
+    (ndbapi.ffi::ndb-interpreted-code-def-label code label)
+    (#'zerop
+     "def-label() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-label
+    (ndbapi.ffi::ndb-interpreted-code-branch-label code label)
+    (#'zerop
+     "branch-label() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-ge
+    (ndbapi.ffi::ndb-interpreted-code-branch-ge code reg-l reg-r label)
+    (#'zerop
+     "branch-ge() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-gt
+    (ndbapi.ffi::ndb-interpreted-code-branch-gt code reg-l reg-r label)
+    (#'zerop
+     "branch-gt() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-le
+    (ndbapi.ffi::ndb-interpreted-code-branch-le code reg-l reg-r label)
+    (#'zerop
+     "branch-le() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-lt
+    (ndbapi.ffi::ndb-interpreted-code-branch-lt code reg-l reg-r label)
+    (#'zerop
+     "branch-lt() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-eq
+    (ndbapi.ffi::ndb-interpreted-code-branch-eq code reg-l reg-r label)
+    (#'zerop
+     "branch-eq() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-ne
+    (ndbapi.ffi::ndb-interpreted-code-branch-ne code reg-l reg-r label)
+    (#'zerop
+     "branch-ne() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-ne-null
+    (ndbapi.ffi::ndb-interpreted-code-branch-ne-null code reg-l label)
+    (#'zerop
+     "branch-ne-null() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-branch-eq-null
+    (ndbapi.ffi::ndb-interpreted-code-branch-eq-null code reg-l label)
+    (#'zerop
+     "branch-eq-null() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-interpreted-code-finalise

@@ -91,16 +91,23 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
 
       (ndbapi:with-ndb-transaction (transaction ndb)
         
-        (cffi:with-foreign-objects ((result-mask :unsigned-char)
-                                    (reg-1 :unsigned-int))
+        (cffi:with-foreign-objects ((result-mask :unsigned-char))
           (setf (cffi:mem-ref result-mask :unsigned-char) #b00000000)
-          (setf (cffi:mem-ref reg-1 :unsigned-int) 1)
 
           (let* ((dict (ndbapi:ndb-get-dictionary ndb))
                  (table (ndbapi:dictionary-get-table dict table-name))
-                 (code-words 1))
+                 (column (ndbapi.implementation::table-get-column table "o"))
+                 ;;(attr-id (ndbapi.ffi::column-get-attr-id column))
+                 (code-words 8)
+                 (reg-1 1)
+                 (reg-2 2))
             (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-              (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
+              (ndbapi:with-ndb-interpreted-code (code table code-space code-words)
+                (ndbapi.implementation::ndb-interpreted-code-load-const-u32 code reg-2 745897446)
+                (ndbapi.implementation::ndb-interpreted-code-read-attr code reg-1 column)
+                (ndbapi.implementation::ndb-interpreted-code-branch-eq code reg-1 reg-2 0)
+                (ndbapi.implementation::ndb-interpreted-code-interpret-exit-nok code)
+                (ndbapi.implementation::ndb-interpreted-code-def-label code 0)
                 (ndbapi.implementation::ndb-interpreted-code-interpret-exit-ok code)
                 (ndbapi:ndb-interpreted-code-finalise code)
 
