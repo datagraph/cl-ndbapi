@@ -42,6 +42,13 @@ or via graph store protocol to spocq:
           -u :${TOKEN} \
           "http://localhost:8101/mgr/scantest/service"
 
+  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "default object" .' | \
+    curl --ipv4 -X PUT \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
   echo '<http://example.com/default-subject> <http://example.com/default-predicate> "named object" <http://dydra.com/named-graph> .' | \
     curl --ipv4 -X PUT \
           -H "Content-Type: application/n-quads" \
@@ -62,6 +69,27 @@ or via graph store protocol to spocq:
           --data-binary @- \
           -u :${TOKEN} \
           "http://localhost:8101/mgr/scantest/service"
+
+  results in:
+
+    (ndb.simple-scan::simple-scan :connection-string "localhost"
+                                  :database-name "mgr°scantest"
+                                  :table-name "quads"
+                                  :index-name "PRIMARY" )
+    =>
+    table: quads
+    columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
+    row     0:    104850320,     37518711,     37518704,     37518716,            8, #(4 0 0 0 5 0 0 0)
+    row     1:    104850320,     37518711,    104850321,    104850322,            4, #(5 0 0 0)
+    row     2:   4294967295,     37518711,     37518704,     37518712,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
+    row     3:   4294967295,     37518711,     37518704,    104850323,            4, #(6 0 0 0)
+    4
+
+  delete again with:
+    curl --ipv4 --http1.1 -k -X DELETE \
+         -H Content-Type:application/json -H Accept:application/n-quads \
+         -u :${ADMIN_TOKEN} \
+         http://localhost:8101/system/accounts/mgr/repositories/scantest
 
 |#
 
@@ -103,7 +131,7 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                  (reg-2 2))
             (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
               (ndbapi:with-ndb-interpreted-code (code table code-space code-words)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-2 745897446)
+                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-2 104850322)
                 (ndbapi:ndb-interpreted-code-read-attr code reg-1 column)
                 (ndbapi:ndb-interpreted-code-branch-eq code reg-1 reg-2 0)
                 (ndbapi:ndb-interpreted-code-interpret-exit-nok code)
