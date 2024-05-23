@@ -57,6 +57,9 @@
                 :ndb-interpreted-code-branch-eq
                 :ndb-interpreted-code-branch-ne
                 :ndb-interpreted-code-branch-ne-null
+                :ndb-interpreted-code-call-sub
+                :ndb-interpreted-code-def-sub
+                :ndb-interpreted-code-ret-sub
                 :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
                 :ndb-operation-get-value
@@ -173,6 +176,9 @@
            :ndb-interpreted-code-branch-eq
            :ndb-interpreted-code-branch-ne
            :ndb-interpreted-code-branch-ne-null
+           :ndb-interpreted-code-call-sub
+           :ndb-interpreted-code-def-sub
+           :ndb-interpreted-code-ret-sub
            :ndb-interpreted-code-finalise
            :ndb-scan-operation-set-interpreted-code
            :ndb-operation-get-value
