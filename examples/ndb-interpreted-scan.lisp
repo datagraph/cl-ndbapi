@@ -128,33 +128,36 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                  ;;(subject-column (ndbapi:table-get-column table "s"))
                  ;;(subject-attr-id (ndbapi:column-get-attr-id subject-column))
                  (code-words 30)
-                 (reg-1 1)
-                 (reg-2 2)
-                 (reg-3 3)
-                 (reg-4 4)
-                 (reg-5 5)
-                 (label-0 0)
-                 (label-1 1)
-                 (label-2 2)
-                 (sub-0 0))
+                 ;; registers
+                 (reg-graph-column 1)
+                 (reg-default-graph 2)
+                 (loop-max 3)
+                 (reg-one 4)
+                 (reg-zero 5)
+                 ;; labels
+                 (label-exit-ok 0)
+                 (label-sub-test-begin 1)
+                 (label-sub-test-end 2)
+                 ;; subroutines
+                 (sub-test 0))
             (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
               (ndbapi:with-ndb-interpreted-code (code table code-space code-words)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-2 #xffffffff) ;; default graph
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-5 0)
-                (ndbapi:ndb-interpreted-code-read-attr code reg-1 graph-column)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-3 31)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-4 1)
-                (ndbapi:ndb-interpreted-code-call-sub code sub-0)
-                (ndbapi:ndb-interpreted-code-branch-eq code reg-1 reg-2 label-0)
+                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-default-graph #xffffffff) ;; default graph
+                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-zero 0)
+                (ndbapi:ndb-interpreted-code-read-attr code reg-graph-column graph-column)
+                (ndbapi:ndb-interpreted-code-load-const-u32 code loop-max 31)
+                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-one 1)
+                (ndbapi:ndb-interpreted-code-call-sub code sub-test)
+                (ndbapi:ndb-interpreted-code-branch-eq code reg-graph-column reg-default-graph label-exit-ok)
                 (ndbapi:ndb-interpreted-code-interpret-exit-nok code)
-                (ndbapi:ndb-interpreted-code-def-label code label-0)
+                (ndbapi:ndb-interpreted-code-def-label code label-exit-ok)
                 (ndbapi:ndb-interpreted-code-interpret-exit-ok code)
                 ;; subroutine 0
-                (ndbapi:ndb-interpreted-code-def-sub code sub-0)
-                (ndbapi:ndb-interpreted-code-def-label code label-1)
-                (ndbapi:ndb-interpreted-code-sub-reg code reg-3 reg-3 reg-4)
+                (ndbapi:ndb-interpreted-code-def-sub code sub-test)
+                (ndbapi:ndb-interpreted-code-def-label code label-sub-test-begin)
+                (ndbapi:ndb-interpreted-code-sub-reg code loop-max loop-max reg-one)
                 ;; write not allowed in scan it seems, even not with :+LM-EXCLUSIVE+
-                ;;(ndbapi:ndb-interpreted-code-write-attr code subject reg-4)
+                ;;(ndbapi:ndb-interpreted-code-write-attr code subject reg-one)
                 ;;(ndbapi:ndb-interpreted-code-sub-val-u32 code subject-attr-id 1)
 
                 ;; recursion supported but:
@@ -162,15 +165,15 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                 ;; from: https://dev.mysql.com/doc/ndbapi/en/overview-ndbinterpretedcode-using.html#overview-ndbinterpretedcode-subroutines
                 ;; For more iterations then 32 one gets:
                 ;;   Error with code 884: Stack overflow in interpreter
-                (ndbapi:ndb-interpreted-code-branch-eq code reg-3 reg-5 label-2)
-                (ndbapi:ndb-interpreted-code-call-sub code sub-0)
+                (ndbapi:ndb-interpreted-code-branch-eq code loop-max reg-zero label-sub-test-end)
+                (ndbapi:ndb-interpreted-code-call-sub code sub-test)
                 ;; use unconditional jump instead
-                ;;(ndbapi:ndb-interpreted-code-branch-label code label-1)
+                ;;(ndbapi:ndb-interpreted-code-branch-label code label-sub-test-begin)
 
                 ;; or combine branch-eq + branch-label into one branch-ne:
-                ;;(ndbapi:ndb-interpreted-code-branch-ne code reg-3 reg-5 label-1)
+                ;;(ndbapi:ndb-interpreted-code-branch-ne code loop-max reg-zero label-sub-test-begin)
 
-                (ndbapi:ndb-interpreted-code-def-label code label-2)
+                (ndbapi:ndb-interpreted-code-def-label code label-sub-test-end)
                 (ndbapi:ndb-interpreted-code-ret-sub code)
                 (ndbapi:ndb-interpreted-code-finalise code)
 
