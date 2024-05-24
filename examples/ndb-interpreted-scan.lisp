@@ -142,7 +142,7 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                 (ndbapi:ndb-interpreted-code-load-const-u32 code reg-2 #xffffffff) ;; default graph
                 (ndbapi:ndb-interpreted-code-load-const-u32 code reg-5 0)
                 (ndbapi:ndb-interpreted-code-read-attr code reg-1 graph-column)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-3 3000)
+                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-3 31)
                 (ndbapi:ndb-interpreted-code-load-const-u32 code reg-4 1)
                 (ndbapi:ndb-interpreted-code-call-sub code sub-0)
                 (ndbapi:ndb-interpreted-code-branch-eq code reg-1 reg-2 label-0)
@@ -157,12 +157,18 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                 ;;(ndbapi:ndb-interpreted-code-write-attr code subject reg-4)
                 ;;(ndbapi:ndb-interpreted-code-sub-val-u32 code subject-attr-id 1)
 
-                ;;(ndbapi:ndb-interpreted-code-load-const-u32 code reg-3 0)
-                ;;(ndbapi:ndb-interpreted-code-branch-ne-null code reg-3 label-1)
-                (ndbapi:ndb-interpreted-code-branch-ne code reg-3 reg-5 label-1)
+                ;; recursion supported but:
+                ;;   "currently, the maximum subroutine stack depth is 32."
+                ;; from: https://dev.mysql.com/doc/ndbapi/en/overview-ndbinterpretedcode-using.html#overview-ndbinterpretedcode-subroutines
+                ;; For more iterations then 32 one gets:
+                ;;   Error with code 884: Stack overflow in interpreter
+                (ndbapi:ndb-interpreted-code-branch-eq code reg-3 reg-5 label-2)
+                (ndbapi:ndb-interpreted-code-call-sub code sub-0)
+                ;; use unconditional jump instead
+                ;;(ndbapi:ndb-interpreted-code-branch-label code label-1)
 
-                ;;(ndbapi:ndb-interpreted-code-branch-eq code reg-3 reg-5 label-2)
-                ;;(ndbapi:ndb-interpreted-code-call-sub code sub-0)
+                ;; or combine branch-eq + branch-label into one branch-ne:
+                ;;(ndbapi:ndb-interpreted-code-branch-ne code reg-3 reg-5 label-1)
 
                 (ndbapi:ndb-interpreted-code-def-label code label-2)
                 (ndbapi:ndb-interpreted-code-ret-sub code)
