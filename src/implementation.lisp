@@ -336,6 +336,12 @@ so you do not need to repeat it."
      "ndb-interpreted-code-read-attr() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
+(make-interface-function ndb-interpreted-code-write-attr
+    (ndbapi.ffi::ndb-interpreted-code-write-attr/swig-1 code column reg-source)
+    (#'zerop
+     "ndb-interpreted-code-write-attr() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
 (make-interface-function ndb-interpreted-code-load-const-u32
     (ndbapi.ffi::ndb-interpreted-code-load-const-u-32 code reg-dest constant)
     (#'zerop
@@ -418,6 +424,42 @@ so you do not need to repeat it."
     (ndbapi.ffi::ndb-interpreted-code-ret-sub code)
     (#'zerop
      "ndb-interpreted-code-ret-sub() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-sub-val-u32
+    (ndbapi.ffi::ndb-interpreted-code-sub-val/swig-0 code attribute-id value)
+    (#'zerop
+     "ndb-interpreted-code-sub-val-u32() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-sub-val-u64
+    (ndbapi.ffi::ndb-interpreted-code-sub-val/swig-1 code attribute-id value)
+    (#'zerop
+     "ndb-interpreted-code-sub-val-u64() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-add-val-u32
+    (ndbapi.ffi::ndb-interpreted-code-add-val/swig-0 code attribute-id value)
+    (#'zerop
+     "ndb-interpreted-code-add-val-u32() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-add-val-u64
+    (ndbapi.ffi::ndb-interpreted-code-add-val/swig-1 code attribute-id value)
+    (#'zerop
+     "ndb-interpreted-code-add-val-u64() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-add-reg
+    (ndbapi.ffi::ndb-interpreted-code-add-reg code reg-dest reg-source-1 reg-source-2)
+    (#'zerop
+     "ndb-interpreted-code-add-reg() failed: ~a"
+     (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
+
+(make-interface-function ndb-interpreted-code-sub-reg
+    (ndbapi.ffi::ndb-interpreted-code-sub-reg code reg-dest reg-source-1 reg-source-2)
+    (#'zerop
+     "ndb-interpreted-code-sub-reg() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-interpreted-code-finalise

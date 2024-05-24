@@ -47,6 +47,7 @@
                 :ndb-interpreted-code-interpret-exit-ok
                 :ndb-interpreted-code-interpret-exit-nok
                 :ndb-interpreted-code-read-attr
+                :ndb-interpreted-code-write-attr
                 :ndb-interpreted-code-load-const-u32
                 :ndb-interpreted-code-def-label
                 :ndb-interpreted-code-branch-label
@@ -55,11 +56,18 @@
                 :ndb-interpreted-code-branch-le
                 :ndb-interpreted-code-branch-lt
                 :ndb-interpreted-code-branch-eq
+                :ndb-interpreted-code-branch-eq-null
                 :ndb-interpreted-code-branch-ne
                 :ndb-interpreted-code-branch-ne-null
                 :ndb-interpreted-code-call-sub
                 :ndb-interpreted-code-def-sub
                 :ndb-interpreted-code-ret-sub
+                :ndb-interpreted-code-sub-val-u32
+                :ndb-interpreted-code-sub-val-u64
+                :ndb-interpreted-code-add-val-u32
+                :ndb-interpreted-code-add-val-u64
+                :ndb-interpreted-code-sub-reg
+                :ndb-interpreted-code-add-reg
                 :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
                 :ndb-operation-get-value
@@ -166,6 +174,7 @@
            :ndb-interpreted-code-interpret-exit-ok
            :ndb-interpreted-code-interpret-exit-nok
            :ndb-interpreted-code-read-attr
+           :ndb-interpreted-code-write-attr
            :ndb-interpreted-code-load-const-u32
            :ndb-interpreted-code-def-label
            :ndb-interpreted-code-branch-label
@@ -174,11 +183,18 @@
            :ndb-interpreted-code-branch-le
            :ndb-interpreted-code-branch-lt
            :ndb-interpreted-code-branch-eq
+           :ndb-interpreted-code-branch-eq-null
            :ndb-interpreted-code-branch-ne
            :ndb-interpreted-code-branch-ne-null
            :ndb-interpreted-code-call-sub
            :ndb-interpreted-code-def-sub
            :ndb-interpreted-code-ret-sub
+           :ndb-interpreted-code-sub-val-u32
+           :ndb-interpreted-code-sub-val-u64
+           :ndb-interpreted-code-add-val-u32
+           :ndb-interpreted-code-add-val-u64
+           :ndb-interpreted-code-sub-reg
+           :ndb-interpreted-code-add-reg
            :ndb-interpreted-code-finalise
            :ndb-scan-operation-set-interpreted-code
            :ndb-operation-get-value
