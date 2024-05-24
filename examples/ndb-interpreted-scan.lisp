@@ -4,8 +4,13 @@
 
 (in-package :ndb.simple-scan)
 
-;; translation of the example ndbapi_simple_scan that I created
-;; on the basis of my ndbapi_simple_scan example (in c++)
+;; a little example for running a scan with an interpreted code
+;; based on the simple-scan example. This example is not really
+;; useful but it shows how to write an a little bit longer
+;; interpreted code with loops, subroutines and access to
+;; columns. It does a full scan but then filters for columns
+;; that are in the default graph, that is, the term-id stored
+;; in column "g" is #xffffffff.
 
 #+(or)
 (asdf:oos 'asdf:load-op :ndbapi)
