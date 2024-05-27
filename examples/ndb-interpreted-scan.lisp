@@ -15,104 +15,8 @@
 #+(or)
 (asdf:oos 'asdf:load-op :ndbapi)
 
-#|
-create table as:
-   create table quads
-          (g int unsigned not null, s int unsigned not null,
-           p int unsigned not null, o int unsigned not null,
-           visibility varbinary(28000) NOT NULL,
-           primary key (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
-           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g));
-
-or via graph store protocol to spocq:
-  curl --ipv4 --http1.1 -k -X POST \
-     -H Content-Type:application/json -H Accept:application/n-quads \
-     --data-binary @- \
-     -u :${ADMIN_TOKEN} \
-     http://localhost:8101/system/accounts/mgr/repositories <<EOF
-  {"repository": {"name": "scantest", "class": "rondb-revisioned-repository" } }
-  EOF
-
- echo '{"repository": {"name": "scantest", "class": "rondb-revisioned-repository" }}' | \
-   curl --ipv4 --http1.1 -k -X POST \
-        -H Content-Type:application/json -H Accept:application/n-quads \
-        --data-binary @- \
-        -u :${ADMIN_TOKEN} \
-        http://localhost:8101/system/accounts/mgr/repositories
-
-  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "default object" .' | \
-    curl --ipv4 -X PUT \
-          -H "Content-Type: application/n-quads" \
-          --data-binary @- \
-          -u :${TOKEN} \
-          "http://localhost:8101/mgr/scantest/service"
-
-  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "default object" .' | \
-    curl --ipv4 -X PUT \
-          -H "Content-Type: application/n-quads" \
-          --data-binary @- \
-          -u :${TOKEN} \
-          "http://localhost:8101/mgr/scantest/service"
-
-  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "named object" <http://dydra.com/named-graph> .' | \
-    curl --ipv4 -X PUT \
-          -H "Content-Type: application/n-quads" \
-          --data-binary @- \
-          -u :${TOKEN} \
-          "http://localhost:8101/mgr/scantest/service"
-
-  echo '<http://example.com/default-subject> <http://example.com/special-predicate> "another named object" <http://dydra.com/named-graph> .' | \
-    curl --ipv4 -X PUT \
-          -H "Content-Type: application/n-quads" \
-          --data-binary @- \
-          -u :${TOKEN} \
-          "http://localhost:8101/mgr/scantest/service"
-
-  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "second object" .' | \
-    curl --ipv4 -X POST \
-          -H "Content-Type: application/n-quads" \
-          --data-binary @- \
-          -u :${TOKEN} \
-          "http://localhost:8101/mgr/scantest/service"
-
-  results in:
-
-    (ndb.simple-scan::simple-scan :connection-string "localhost"
-                                  :database-name "mgr°scantest"
-                                  :table-name "quads"
-                                  :index-name "PRIMARY" )
-    =>
-    table: quads
-    columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
-    row     0:    104850320,     37518711,     37518704,     37518716,            8, #(4 0 0 0 5 0 0 0)
-    row     1:    104850320,     37518711,    104850321,    104850322,            4, #(5 0 0 0)
-    row     2:   4294967295,     37518711,     37518704,     37518712,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
-    row     3:   4294967295,     37518711,     37518704,    104850323,            4, #(6 0 0 0)
-    4
-
-  delete again with:
-    curl --ipv4 --http1.1 -k -X DELETE \
-         -H Content-Type:application/json -H Accept:application/n-quads \
-         -u :${ADMIN_TOKEN} \
-         http://localhost:8101/system/accounts/mgr/repositories/scantest
-
-|#
-
-#+(or)
-(ndb.simple-scan::interpreted-scan :connection-string "localhost"
-                                   :database-name "mgr°scantest"
-                                   :table-name "quads"
-                                   :index-name "PRIMARY" )
-
-#|
-table: quads
-columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
-row     0:    745897444,    745897440,    745897441,    745897443,            8, #(4 0 0 0 5 0 0 0)
-row     1:    745897444,    745897440,    745897445,    745897446,            4, #(5 0 0 0)
-row     2:   4294967295,    745897440,    745897441,    745897442,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
-row     3:   4294967295,    745897440,    745897441,    745897447,            4, #(6 0 0 0)
-4
-|#
+;; information about creation of necessary table, loading of test data
+;; and example output at the end of this file
 
 (defun interpreted-scan (&key connection-string database-name table-name index-name
                          bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
@@ -268,3 +172,104 @@ row     3:   4294967295,    745897440,    745897441,    745897447,            4,
                                                 "scan-operation-next-result() failed: ~a"
                                                 (ndbapi:get-ndb-error transaction #'ndbapi:ndb-transaction-get-ndb-error))))
                         total-row-count))))))))))))
+
+
+#|
+create table as:
+   create table quads
+          (g int unsigned not null, s int unsigned not null,
+           p int unsigned not null, o int unsigned not null,
+           visibility varbinary(28000) NOT NULL,
+           primary key (g,s,p,o), index gpos (g,p,o,s), index gosp (g,o,s,p),
+           index spog (s,p,o,g), index posg (p,o,s,g), index ospg (o,s,p,g));
+
+or via graph store protocol to spocq:
+  curl --ipv4 --http1.1 -k -X POST \
+     -H Content-Type:application/json -H Accept:application/n-quads \
+     --data-binary @- \
+     -u :${ADMIN_TOKEN} \
+     http://localhost:8101/system/accounts/mgr/repositories <<EOF
+  {"repository": {"name": "scantest", "class": "rondb-revisioned-repository" } }
+  EOF
+
+ echo '{"repository": {"name": "scantest", "class": "rondb-revisioned-repository" }}' | \
+   curl --ipv4 --http1.1 -k -X POST \
+        -H Content-Type:application/json -H Accept:application/n-quads \
+        --data-binary @- \
+        -u :${ADMIN_TOKEN} \
+        http://localhost:8101/system/accounts/mgr/repositories
+
+  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "default object" .' | \
+    curl --ipv4 -X PUT \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
+  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "default object" .' | \
+    curl --ipv4 -X PUT \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
+  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "named object" <http://dydra.com/named-graph> .' | \
+    curl --ipv4 -X PUT \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
+  echo '<http://example.com/default-subject> <http://example.com/special-predicate> "another named object" <http://dydra.com/named-graph> .' | \
+    curl --ipv4 -X PUT \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
+  echo '<http://example.com/default-subject> <http://example.com/default-predicate> "second object" .' | \
+    curl --ipv4 -X POST \
+          -H "Content-Type: application/n-quads" \
+          --data-binary @- \
+          -u :${TOKEN} \
+          "http://localhost:8101/mgr/scantest/service"
+
+  results in:
+
+    (ndb.simple-scan::simple-scan :connection-string "localhost"
+                                  :database-name "mgr°scantest"
+                                  :table-name "quads"
+                                  :index-name "PRIMARY" )
+    =>
+    table: quads
+    columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
+    row     0:    104850320,     37518711,     37518704,     37518716,            8, #(4 0 0 0 5 0 0 0)
+    row     1:    104850320,     37518711,    104850321,    104850322,            4, #(5 0 0 0)
+    row     2:   4294967295,     37518711,     37518704,     37518712,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
+    row     3:   4294967295,     37518711,     37518704,    104850323,            4, #(6 0 0 0)
+    4
+
+  delete again with:
+    curl --ipv4 --http1.1 -k -X DELETE \
+         -H Content-Type:application/json -H Accept:application/n-quads \
+         -u :${ADMIN_TOKEN} \
+         http://localhost:8101/system/accounts/mgr/repositories/scantest
+
+|#
+
+#+(or)
+(ndb.simple-scan::interpreted-scan :connection-string "localhost"
+                                   :database-name "mgr°scantest"
+                                   :table-name "quads"
+                                   :index-name "PRIMARY" )
+
+#|
+table: quads
+columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
+row     0:    745897444,    745897440,    745897441,    745897443,            8, #(4 0 0 0 5 0 0 0)
+row     1:    745897444,    745897440,    745897445,    745897446,            4, #(5 0 0 0)
+row     2:   4294967295,    745897440,    745897441,    745897442,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
+row     3:   4294967295,    745897440,    745897441,    745897447,            4, #(6 0 0 0)
+4
+|#
+
