@@ -42,33 +42,6 @@
                 :ndb-scan-operation-close
                 :ndb-scan-operation-delete-current-tuple
                 :ndb-scan-operation-update-current-tuple
-                :new-ndb-interpreted-code
-                :ndb-interpreted-code-interpret-exit-last-row
-                :ndb-interpreted-code-interpret-exit-ok
-                :ndb-interpreted-code-interpret-exit-nok
-                :ndb-interpreted-code-read-attr
-                :ndb-interpreted-code-write-attr
-                :ndb-interpreted-code-load-const-u32
-                :ndb-interpreted-code-def-label
-                :ndb-interpreted-code-branch-label
-                :ndb-interpreted-code-branch-ge
-                :ndb-interpreted-code-branch-gt
-                :ndb-interpreted-code-branch-le
-                :ndb-interpreted-code-branch-lt
-                :ndb-interpreted-code-branch-eq
-                :ndb-interpreted-code-branch-eq-null
-                :ndb-interpreted-code-branch-ne
-                :ndb-interpreted-code-branch-ne-null
-                :ndb-interpreted-code-call-sub
-                :ndb-interpreted-code-def-sub
-                :ndb-interpreted-code-ret-sub
-                :ndb-interpreted-code-sub-val-u32
-                :ndb-interpreted-code-sub-val-u64
-                :ndb-interpreted-code-add-val-u32
-                :ndb-interpreted-code-add-val-u64
-                :ndb-interpreted-code-sub-reg
-                :ndb-interpreted-code-add-reg
-                :ndb-interpreted-code-finalise
                 :ndb-scan-operation-set-interpreted-code
                 :ndb-operation-get-value
                 :ndb-begin ;; this ndb-init renamed to :ndb-begin to avoid conflict
@@ -90,7 +63,6 @@
                 :with-ndb-transaction-scan-index
                 :with-ndb-transaction-get-ndb-index-scan-operation
                 :with-ndb-transaction-scan-table
-                :with-ndb-interpreted-code
                 :ndb-transaction-update-tuple
                 :ndb-transaction-insert-tuple
                 :ndb-transaction-write-tuple
@@ -253,3 +225,34 @@
            :free-foreign-object
            :foreign-pointer)
   (:documentation "A higher level NDB API interface (for RonDB)."))
+
+(defpackage :ndbapi.ic
+  (:nicknames :ndbapi.interpreted-code)
+  (:export :new
+           :interpret-exit-last-row
+           :interpret-exit-ok
+           :interpret-exit-nok
+           :read-attr
+           :write-attr
+           :load-const-u32
+           :def-label
+           :branch-label
+           :branch-ge
+           :branch-gt
+           :branch-le
+           :branch-lt
+           :branch-eq
+           :branch-eq-null
+           :branch-ne
+           :branch-ne-null
+           :call-sub
+           :def-sub
+           :ret-sub
+           :sub-val-u32
+           :sub-val-u64
+           :add-val-u32
+           :add-val-u64
+           :sub-reg
+           :add-reg
+           :finalise
+           :with-code))

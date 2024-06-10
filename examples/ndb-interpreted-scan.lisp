@@ -50,52 +50,52 @@
                  ;; subroutines
                  (sub-test 0))
             (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-              (ndbapi:with-ndb-interpreted-code (code table code-space code-words)
+              (ndbapi.ic:with-code (code table code-space code-words)
                 ;; init registers for subroutine test
                 ;; (cannot do that inside the subroutine as that re-init for the recursion case)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-zero 0)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-one 1)
-                (ndbapi:ndb-interpreted-code-load-const-u32 code loop-max 31)
+                (ndbapi.ic:load-const-u32 code reg-zero 0)
+                (ndbapi.ic:load-const-u32 code reg-one 1)
+                (ndbapi.ic:load-const-u32 code loop-max 31)
                 ;; call subroutine test
-                (ndbapi:ndb-interpreted-code-call-sub code sub-test)
+                (ndbapi.ic:call-sub code sub-test)
 
                 ;; filter out all statements that are not in the default graph
-                (ndbapi:ndb-interpreted-code-load-const-u32 code reg-default-graph #xffffffff) ;; default graph
-                (ndbapi:ndb-interpreted-code-read-attr code reg-graph-column graph-column)
-                (ndbapi:ndb-interpreted-code-branch-eq code reg-graph-column reg-default-graph label-exit-ok)
-                (ndbapi:ndb-interpreted-code-interpret-exit-nok code)
-                (ndbapi:ndb-interpreted-code-def-label code label-exit-ok)
-                (ndbapi:ndb-interpreted-code-interpret-exit-ok code)
+                (ndbapi.ic:load-const-u32 code reg-default-graph #xffffffff) ;; default graph
+                (ndbapi.ic:read-attr code reg-graph-column graph-column)
+                (ndbapi.ic:branch-eq code reg-graph-column reg-default-graph label-exit-ok)
+                (ndbapi.ic:interpret-exit-nok code)
+                (ndbapi.ic:def-label code label-exit-ok)
+                (ndbapi.ic:interpret-exit-ok code)
 
                 ;; subroutine test: a simple loop test that doesn't really do any work
-                (ndbapi:ndb-interpreted-code-def-sub code sub-test)
+                (ndbapi.ic:def-sub code sub-test)
 
                 ;; begin of loop
-                (ndbapi:ndb-interpreted-code-def-label code label-sub-test-loop-begin)
-                (ndbapi:ndb-interpreted-code-sub-reg code loop-max loop-max reg-one)
+                (ndbapi.ic:def-label code label-sub-test-loop-begin)
+                (ndbapi.ic:sub-reg code loop-max loop-max reg-one)
                 ;; write not allowed in scan it seems, even not with :+LM-EXCLUSIVE+
-                ;;(ndbapi:ndb-interpreted-code-write-attr code subject reg-one)
-                ;;(ndbapi:ndb-interpreted-code-sub-val-u32 code subject-attr-id 1)
+                ;;(ndbapi.ic:write-attr code subject reg-one)
+                ;;(ndbapi.ic:sub-val-u32 code subject-attr-id 1)
 
                 ;; recursion supported but:
                 ;;   "currently, the maximum subroutine stack depth is 32."
                 ;; from: https://dev.mysql.com/doc/ndbapi/en/overview-ndbinterpretedcode-using.html#overview-ndbinterpretedcode-subroutines
                 ;; For more iterations then 32 one gets:
                 ;;   Error with code 884: Stack overflow in interpreter
-                (ndbapi:ndb-interpreted-code-branch-eq code loop-max reg-zero label-sub-test-loop-end)
-                (ndbapi:ndb-interpreted-code-call-sub code sub-test)
+                (ndbapi.ic:branch-eq code loop-max reg-zero label-sub-test-loop-end)
+                (ndbapi.ic:call-sub code sub-test)
                 ;; use unconditional jump instead
-                ;;(ndbapi:ndb-interpreted-code-branch-label code label-sub-test-loop-begin)
+                ;;(ndbapi.ic:branch-label code label-sub-test-loop-begin)
 
                 ;; or combine branch-eq + branch-label into one branch-ne:
-                ;;(ndbapi:ndb-interpreted-code-branch-ne code loop-max reg-zero label-sub-test-loop-begin)
+                ;;(ndbapi.ic:branch-ne code loop-max reg-zero label-sub-test-loop-begin)
 
-                (ndbapi:ndb-interpreted-code-def-label code label-sub-test-loop-end)
-                (ndbapi:ndb-interpreted-code-ret-sub code)
+                (ndbapi.ic:def-label code label-sub-test-loop-end)
+                (ndbapi.ic:ret-sub code)
                 ;; end of subroutine test
 
                 ;; finalize code
-                (ndbapi:ndb-interpreted-code-finalise code)
+                (ndbapi.ic:finalise code)
 
                 (let* ((index (ndbapi:dictionary-get-index dict
                                                            index-name

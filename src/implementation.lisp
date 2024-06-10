@@ -307,165 +307,165 @@ so you do not need to repeat it."
      "scan-operation-update-current-tuple() failed: ~a"
      (get-ndb-error (ndbapi.ffi:ndb-scan-operation-get-ndb-transaction scan) #'ndbapi.ffi:ndb-transaction-get-ndb-error)))
 
-(make-interface-function new-ndb-interpreted-code
+(make-interface-function ndbapi.ic:new
     (ndbapi.ffi::new-ndb-interpreted-code/swig-0 ndb-init table buffer buffer-word-size)
     (#'valid-object-p
      "Create new ndb-interpreted-code object failed"))
 
-(make-interface-function ndb-interpreted-code-interpret-exit-last-row
+(make-interface-function ndbapi.ic:interpret-exit-last-row
     (ndbapi.ffi::ndb-interpreted-code-interpret-exit-last-row code)
     (#'zerop
-     "ndb-interpreted-code-interpret-exit-last-row() failed: ~a"
+     "ndbapi.ic:interpret-exit-last-row() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-interpret-exit-ok
+(make-interface-function ndbapi.ic:interpret-exit-ok
     (ndbapi.ffi::ndb-interpreted-code-interpret-exit-ok code)
     (#'zerop
-     "ndb-interpreted-code-exit-ok() failed: ~a"
+     "ndbapi.ic:exit-ok() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-interpret-exit-nok
+(make-interface-function ndbapi.ic:interpret-exit-nok
     (ndbapi.ffi::ndb-interpreted-code-interpret-exit-nok/swig-1 code)
     (#'zerop
-     "ndb-interpreted-code-exit-nok() failed: ~a"
+     "ndbapi.ic:exit-nok() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-read-attr
+(make-interface-function ndbapi.ic:read-attr
     (ndbapi.ffi::ndb-interpreted-code-read-attr/swig-1 code reg-dest column)
     (#'zerop
-     "ndb-interpreted-code-read-attr() failed: ~a"
+     "ndbapi.ic:read-attr() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-write-attr
+(make-interface-function ndbapi.ic:write-attr
     (ndbapi.ffi::ndb-interpreted-code-write-attr/swig-1 code column reg-source)
     (#'zerop
-     "ndb-interpreted-code-write-attr() failed: ~a"
+     "ndbapi.ic:write-attr() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-load-const-u32
+(make-interface-function ndbapi.ic:load-const-u32
     (ndbapi.ffi::ndb-interpreted-code-load-const-u-32 code reg-dest constant)
     (#'zerop
-     "ndb-interpreted-code-load-const-u32() failed: ~a"
+     "ndbapi.ic:load-const-u32() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-def-label
+(make-interface-function ndbapi.ic:def-label
     (ndbapi.ffi::ndb-interpreted-code-def-label code label)
     (#'zerop
-     "ndb-interpreted-code-def-label() failed: ~a"
+     "ndbapi.ic:def-label() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-label
+(make-interface-function ndbapi.ic:branch-label
     (ndbapi.ffi::ndb-interpreted-code-branch-label code label)
     (#'zerop
-     "ndb-interpreted-code-branch-label() failed: ~a"
+     "ndbapi.ic:branch-label() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-ge
+(make-interface-function ndbapi.ic:branch-ge
     (ndbapi.ffi::ndb-interpreted-code-branch-ge code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-ge() failed: ~a"
+     "ndbapi.ic:branch-ge() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-gt
+(make-interface-function ndbapi.ic:branch-gt
     (ndbapi.ffi::ndb-interpreted-code-branch-gt code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-gt() failed: ~a"
+     "ndbapi.ic:branch-gt() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-le
+(make-interface-function ndbapi.ic:branch-le
     (ndbapi.ffi::ndb-interpreted-code-branch-le code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-le() failed: ~a"
+     "ndbapi.ic:branch-le() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-lt
+(make-interface-function ndbapi.ic:branch-lt
     (ndbapi.ffi::ndb-interpreted-code-branch-lt code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-lt() failed: ~a"
+     "ndbapi.ic:branch-lt() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-eq
+(make-interface-function ndbapi.ic:branch-eq
     (ndbapi.ffi::ndb-interpreted-code-branch-eq code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-eq() failed: ~a"
+     "ndbapi.ic:branch-eq() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-ne
+(make-interface-function ndbapi.ic:branch-ne
     (ndbapi.ffi::ndb-interpreted-code-branch-ne code reg-l reg-r label)
     (#'zerop
-     "ndb-interpreted-code-branch-ne() failed: ~a"
+     "ndbapi.ic:branch-ne() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-ne-null
+(make-interface-function ndbapi.ic:branch-ne-null
     (ndbapi.ffi::ndb-interpreted-code-branch-ne-null code reg-l label)
     (#'zerop
-     "ndb-interpreted-code-branch-ne-null() failed: ~a"
+     "ndbapi.ic:branch-ne-null() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-branch-eq-null
+(make-interface-function ndbapi.ic:branch-eq-null
     (ndbapi.ffi::ndb-interpreted-code-branch-eq-null code reg-l label)
     (#'zerop
-     "ndb-interpreted-code-branch-eq-null() failed: ~a"
+     "ndbapi.ic:branch-eq-null() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-call-sub
+(make-interface-function ndbapi.ic:call-sub
     (ndbapi.ffi::ndb-interpreted-code-call-sub code subroutine-number)
     (#'zerop
-     "ndb-interpreted-code-call-sub() failed: ~a"
+     "ndbapi.ic:call-sub() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-def-sub
+(make-interface-function ndbapi.ic:def-sub
     (ndbapi.ffi::ndb-interpreted-code-def-sub code subroutine-number)
     (#'zerop
-     "ndb-interpreted-code-def-sub() failed: ~a"
+     "ndbapi.ic:def-sub() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-ret-sub
+(make-interface-function ndbapi.ic:ret-sub
     (ndbapi.ffi::ndb-interpreted-code-ret-sub code)
     (#'zerop
-     "ndb-interpreted-code-ret-sub() failed: ~a"
+     "ndbapi.ic:ret-sub() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-sub-val-u32
+(make-interface-function ndbapi.ic:sub-val-u32
     (ndbapi.ffi::ndb-interpreted-code-sub-val/swig-0 code attribute-id value)
     (#'zerop
-     "ndb-interpreted-code-sub-val-u32() failed: ~a"
+     "ndbapi.ic:sub-val-u32() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-sub-val-u64
+(make-interface-function ndbapi.ic:sub-val-u64
     (ndbapi.ffi::ndb-interpreted-code-sub-val/swig-1 code attribute-id value)
     (#'zerop
-     "ndb-interpreted-code-sub-val-u64() failed: ~a"
+     "ndbapi.ic:sub-val-u64() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-add-val-u32
+(make-interface-function ndbapi.ic:add-val-u32
     (ndbapi.ffi::ndb-interpreted-code-add-val/swig-0 code attribute-id value)
     (#'zerop
-     "ndb-interpreted-code-add-val-u32() failed: ~a"
+     "ndbapi.ic:add-val-u32() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-add-val-u64
+(make-interface-function ndbapi.ic:add-val-u64
     (ndbapi.ffi::ndb-interpreted-code-add-val/swig-1 code attribute-id value)
     (#'zerop
-     "ndb-interpreted-code-add-val-u64() failed: ~a"
+     "ndbapi.ic:add-val-u64() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-add-reg
+(make-interface-function ndbapi.ic:add-reg
     (ndbapi.ffi::ndb-interpreted-code-add-reg code reg-dest reg-source-1 reg-source-2)
     (#'zerop
-     "ndb-interpreted-code-add-reg() failed: ~a"
+     "ndbapi.ic:add-reg() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-sub-reg
+(make-interface-function ndbapi.ic:sub-reg
     (ndbapi.ffi::ndb-interpreted-code-sub-reg code reg-dest reg-source-1 reg-source-2)
     (#'zerop
-     "ndb-interpreted-code-sub-reg() failed: ~a"
+     "ndbapi.ic:sub-reg() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
-(make-interface-function ndb-interpreted-code-finalise
+(make-interface-function ndbapi.ic:finalise
     (ndbapi.ffi::ndb-interpreted-code-finalise code)
     (#'zerop
-     "finalize() failed: ~a"
+     "ndbapi.ic:finalise() failed: ~a"
      (get-ndb-error code  #'ndbapi.ffi:ndb-interpreted-code-get-ndb-error)))
 
 (make-interface-function ndb-scan-operation-set-interpreted-code
@@ -944,15 +944,15 @@ It is suggested to use the special variable ndbapi:*transaction* in most cases."
       ;; returns no value
       (apply #'ndb-scan-operation-close value close-args))))
 
-(defmacro with-ndb-interpreted-code ((var &rest args) &body body)
+(defmacro ndbapi.ic:with-code ((var &rest args) &body body)
   (let ((op (gensym "OP-")))
     `(flet ((,op (,var) ,@body))
        (declare (dynamic-extent #',op))
-       (call-with-ndb-interpreted-code #',op ,@args))))
+       (ndbapi.ic::call-with-code #',op ,@args))))
 
-(defun call-with-ndb-interpreted-code (op &rest args)
+(defun ndbapi.ic::call-with-code (op &rest args)
   (declare (dynamic-extent args))
-  (let ((value (apply #'new-ndb-interpreted-code *ndb-init* args)))
+  (let ((value (apply #'ndbapi.ic:new *ndb-init* args)))
     (unwind-protect (funcall op value)
       (ndb-free-object value))))
 
