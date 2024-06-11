@@ -360,6 +360,9 @@
 (cffi:defcfun ("_wrap_Ndb_cluster_connection_get_connected_host" #.(swig-lispify "Ndb_cluster_connection_get_connected_host" 'function)) :string
   (self ndb-cluster-connection-type))
 
+(cffi:defcfun ("_wrap_Ndb_cluster_connection_get_config_generation" #.(swig-lispify "Ndb_cluster_connection_get_config_generation" 'function)) :unsigned-int
+  (self ndb-cluster-connection-type))
+
 (cffi:defcfun ("_wrap_Ndb_cluster_connection_set_optimized_node_selection" #.(swig-lispify "Ndb_cluster_connection_set_optimized_node_selection" 'function)) :void
   (self ndb-cluster-connection-type)
   (val :int))
@@ -574,6 +577,10 @@
   (c :pointer)
   (val :pointer))
 
+(cffi:defcfun ("_wrap_NdbDictionary_printColumnTypeDescription" #.(swig-lispify "NdbDictionary_printColumnTypeDescription" 'function)) :pointer
+  (arg0 :pointer)
+  (arg1 :pointer))
+
 (cffi:defcfun ("_wrap_delete_NdbDictionary" #.(swig-lispify "delete_NdbDictionary" 'function)) :void
   (self ndb-dictionary-type))
 
@@ -651,6 +658,11 @@
 	(#.(swig-lispify "PartitionBalance_ForRAByLDMx2" 'enumvalue :keyword) #.(cl:logxor 5 #xffffffff)) ;; #.~Uint32(5))
 	(#.(swig-lispify "PartitionBalance_ForRAByLDMx3" 'enumvalue :keyword) #.(cl:logxor 6 #xffffffff)) ;; #.~Uint32(6))
 	(#.(swig-lispify "PartitionBalance_ForRAByLDMx4" 'enumvalue :keyword) #.(cl:logxor 7 #xffffffff)) ;; #.~Uint32(7))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDMx2" 'enumvalue :keyword) #.(cl:logxor 8 #xffffffff)) ;; #.~Uint32(8))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDMx4" 'enumvalue :keyword) #.(cl:logxor 9 #xffffffff)) ;; #.~Uint32(9))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDMx6" 'enumvalue :keyword) #.(cl:logxor 10 #xffffffff)) ;; #.~Uint32(10))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDMx8" 'enumvalue :keyword) #.(cl:logxor 11 #xffffffff)) ;; #.~Uint32(11))
+	(#.(swig-lispify "PartitionBalance_ForRPByLDMx16" 'enumvalue :keyword) #.(cl:logxor 12 #xffffffff)) ;; #.~Uint32(12))
 	(#.(swig-lispify "PartitionBalance_ForRAByLDM" 'enumvalue :keyword) #.(cl:logxor 2 #xffffffff)) ;; #.~Uint32(2))
 	(#.(swig-lispify "PartitionBalance_ForRPByNode" 'enumvalue :keyword) #.(cl:logxor 3 #xffffffff)) ;; #.~Uint32(3))
 	(#.(swig-lispify "PartitionBalance_ForRAByNode" 'enumvalue :keyword) #.(cl:logxor 4 #xffffffff)) ;; #.~Uint32(4))
@@ -1024,6 +1036,9 @@
 (cffi:defcfun ("_wrap_Table_equal" #.(swig-lispify "Table_equal" 'function)) :pointer
   (self table-type)
   (arg1 :pointer))
+
+(cffi:defcfun ("_wrap_Table_use_new_hash_function" #.(swig-lispify "Table_use_new_hash_function" 'function)) :pointer
+  (self table-type))
 
 (cffi:defcfun ("_wrap_Table_getFrmData" #.(swig-lispify "Table_getFrmData" 'function)) :pointer
   (self table-type))
@@ -1583,7 +1598,14 @@
   (self event-type)
   (arg1 :pointer))
 
+(cffi:defcfun ("_wrap_Event_setReportOptions" #.(swig-lispify "Event_setReportOptions" 'function)) :void
+  (self event-type)
+  (report_options :unsigned-int))
+
 (cffi:defcfun ("_wrap_Event_getReport" #.(swig-lispify "Event_getReport" 'function)) :pointer
+  (self event-type))
+
+(cffi:defcfun ("_wrap_Event_getReportOptions" #.(swig-lispify "Event_getReportOptions" 'function)) :unsigned-int
   (self event-type))
 
 (cffi:defcfun ("_wrap_Event_addColumn" #.(swig-lispify "Event_addColumn" 'function)) :void
@@ -2076,6 +2098,9 @@
 (cffi:defcfun ("_wrap_Dictionary_getEvent" #.(swig-lispify "Dictionary_getEvent" 'function)) :pointer
   (self :pointer)
   (eventName :string))
+
+(cffi:defcfun ("_wrap_Dictionary_releaseEvent" #.(swig-lispify "Dictionary_releaseEvent" 'function)) :void
+  (event :pointer))
 
 (cffi:defcfun ("_wrap_Dictionary_listEvents__SWIG_0" #.(swig-lispify "Dictionary_listEvents/SWIG-0" 'function)) :int
   (self :pointer)
@@ -2596,6 +2621,8 @@
         ;; (#.(swig-lispify "__assign__" 'slotname :keyword) :pointer)
 	(#.(swig-lispify "count" 'slotname :keyword) :unsigned-int)
 	(#.(swig-lispify "elements" 'slotname :keyword) :pointer)
+        ;; clear is also a function, added in 22.10.1
+        ;; (#.(swig-lispify "clear" 'slotname) :pointer)
         ;; the methods sortById and sortByName are not part of the struct
 	;;(#.(swig-lispify "sortById" 'slotname :keyword) :pointer)
 	;;(#.(swig-lispify "sortByName" 'slotname :keyword) :pointer)
@@ -2727,9 +2754,9 @@
 
 (cffi:defcfun ("_wrap_Ndb_set_eventbuf_max_alloc" #.(swig-lispify "Ndb_set_eventbuf_max_alloc" 'function)) :void
   (self ndb-type)
-  (sz :unsigned-int))
+  (sz :unsigned-long-long))
 
-(cffi:defcfun ("_wrap_Ndb_get_eventbuf_max_alloc" #.(swig-lispify "Ndb_get_eventbuf_max_alloc" 'function)) :unsigned-int
+(cffi:defcfun ("_wrap_Ndb_get_eventbuf_max_alloc" #.(swig-lispify "Ndb_get_eventbuf_max_alloc" 'function)) :unsigned-long-long
   (self ndb-type))
 
 (cffi:defcfun ("_wrap_Ndb_set_eventbuffer_free_percent" #.(swig-lispify "Ndb_set_eventbuffer_free_percent" 'function)) :int
@@ -3227,6 +3254,7 @@
   (r2 :pointer)
   (key_record :pointer)
   (result_record :pointer)
+  (result_mask :pointer)
   (descending :pointer)
   (read_range_no :pointer))
 
@@ -3349,6 +3377,9 @@
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_interpretedUpdateTuple" #.(swig-lispify "NdbOperation_interpretedUpdateTuple" 'function)) :int
+  (self :pointer))
+
+(cffi:defcfun ("_wrap_NdbOperation_interpretedWriteTuple" #.(swig-lispify "NdbOperation_interpretedWriteTuple" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbOperation_interpretedDeleteTuple" #.(swig-lispify "NdbOperation_interpretedDeleteTuple" 'function)) :int
@@ -3766,7 +3797,7 @@
 (cffi:defcfun ("_wrap_NdbOperation_branch_col_and_mask_eq_mask" #.(swig-lispify "NdbOperation_branch_col_and_mask_eq_mask" 'function)) :int
   (self :pointer)
   (ColId :unsigned-int)
-  (arg2 :pointer)
+  (mask :pointer)
   (len :unsigned-int)
   (nopad :pointer)
   (Label :unsigned-int))
@@ -3774,7 +3805,7 @@
 (cffi:defcfun ("_wrap_NdbOperation_branch_col_and_mask_ne_mask" #.(swig-lispify "NdbOperation_branch_col_and_mask_ne_mask" 'function)) :int
   (self :pointer)
   (ColId :unsigned-int)
-  (arg2 :pointer)
+  (mask :pointer)
   (len :unsigned-int)
   (nopad :pointer)
   (Label :unsigned-int))
@@ -3782,7 +3813,7 @@
 (cffi:defcfun ("_wrap_NdbOperation_branch_col_and_mask_eq_zero" #.(swig-lispify "NdbOperation_branch_col_and_mask_eq_zero" 'function)) :int
   (self :pointer)
   (ColId :unsigned-int)
-  (arg2 :pointer)
+  (mask :pointer)
   (len :unsigned-int)
   (nopad :pointer)
   (Label :unsigned-int))
@@ -3790,7 +3821,7 @@
 (cffi:defcfun ("_wrap_NdbOperation_branch_col_and_mask_ne_zero" #.(swig-lispify "NdbOperation_branch_col_and_mask_ne_zero" 'function)) :int
   (self :pointer)
   (ColId :unsigned-int)
-  (arg2 :pointer)
+  (mask :pointer)
   (len :unsigned-int)
   (nopad :pointer)
   (Label :unsigned-int))
@@ -4443,7 +4474,7 @@
   (execType :pointer)
   (callback :pointer)
   (anyObject :pointer)
-  (arg4 :pointer))
+  (nopad :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_executeAsynchPrepare__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynchPrepare/SWIG-1" 'function)) :void
   (self :pointer)
@@ -4469,7 +4500,7 @@
   (aTypeOfExec :pointer)
   (aCallback :pointer)
   (anyObject :pointer)
-  (arg4 :pointer)
+  (nopad :pointer)
   (forceSend :int))
 
 (cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_1" #.(swig-lispify "NdbTransaction_executeAsynch/SWIG-1" 'function)) :void
@@ -4477,7 +4508,7 @@
   (aTypeOfExec :pointer)
   (aCallback :pointer)
   (anyObject :pointer)
-  (arg4 :pointer))
+  (nopad :pointer))
 
 (cffi:defcfun ("_wrap_NdbTransaction_executeAsynch__SWIG_2" #.(swig-lispify "NdbTransaction_executeAsynch/SWIG-2" 'function)) :void
   (self :pointer)
@@ -4915,6 +4946,9 @@
   (self :pointer)
   (bytes :unsigned-int))
 
+(cffi:defcfun ("_wrap_NdbTransaction_releaseCompletedOpsAndQueries" #.(swig-lispify "NdbTransaction_releaseCompletedOpsAndQueries" 'function)) :void
+  (self :pointer))
+
 (cffi:defcfun ("_wrap_NdbIndexOperation_insertTuple" #.(swig-lispify "NdbIndexOperation_insertTuple" 'function)) :int
   (self :pointer))
 
@@ -4947,6 +4981,9 @@
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexOperation_dirtyUpdate" #.(swig-lispify "NdbIndexOperation_dirtyUpdate" 'function)) :int
+  (self :pointer))
+
+(cffi:defcfun ("_wrap_NdbIndexOperation_interpretedWriteTuple" #.(swig-lispify "NdbIndexOperation_interpretedWriteTuple" 'function)) :int
   (self :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexOperation_interpretedUpdateTuple" #.(swig-lispify "NdbIndexOperation_interpretedUpdateTuple" 'function)) :int
@@ -5096,12 +5133,21 @@
   (stat ndb-index-stat-type)
   (empty :pointer))
 
+(cffi:defcfun ("_wrap_NdbIndexStat_get_numrows" #.(swig-lispify "NdbIndexStat_get_numrows" 'function)) :void
+   (stat ndb-index-stat-type)
+  (rows :pointer))
+
 (cffi:defcfun ("_wrap_NdbIndexStat_get_rir" #.(swig-lispify "NdbIndexStat_get_rir" 'function)) :void
   (stat ndb-index-stat-type)
   (rir :pointer))
 
 (cffi:defcfun ("_wrap_NdbIndexStat_get_rpk" #.(swig-lispify "NdbIndexStat_get_rpk" 'function)) :void
   (stat ndb-index-stat-type)
+  (k :unsigned-int)
+  (rpk :pointer))
+
+(cffi:defcfun ("_wrap_NdbIndexStat_get_rpk_pruned" #.(swig-lispify "NdbIndexStat_get_rpk_pruned" 'function)) :void
+  (stat :pointer)
   (k :unsigned-int)
   (rpk :pointer))
 
@@ -5224,6 +5270,16 @@
 (cffi:defcfun ("_wrap_delete_NdbInterpretedCode" #.(swig-lispify "delete_NdbInterpretedCode" 'function)) :void
   (self ndb-interpreted-code-type))
 
+ 
+(cffi:defcenum #.(swig-lispify "UnknownHandling" 'enumname)
+	#.(swig-lispify "CmpHasNoUnknowns" 'enumvalue :keyword)
+	#.(swig-lispify "BranchIfUnknown" 'enumvalue :keyword)
+	#.(swig-lispify "ContinueIfUnknown" 'enumvalue :keyword))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_set_sql_null_semantics" #.(swig-lispify "NdbInterpretedCode_set_sql_null_semantics" 'function)) :void
+  (self ndb-interpreted-code-type)
+  (unknown_action #.(swig-lispify "UnknownHandling" 'enumname)))
+
 (cffi:defcfun ("_wrap_NdbInterpretedCode_reset" #.(swig-lispify "NdbInterpretedCode_reset" 'function)) :void
   (self ndb-interpreted-code-type))
 
@@ -5284,95 +5340,95 @@
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_label" #.(swig-lispify "NdbInterpretedCode_branch_label" 'function)) :int
   (self ndb-interpreted-code-type)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_ge" #.(swig-lispify "NdbInterpretedCode_branch_ge" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_gt" #.(swig-lispify "NdbInterpretedCode_branch_gt" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_le" #.(swig-lispify "NdbInterpretedCode_branch_le" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_lt" #.(swig-lispify "NdbInterpretedCode_branch_lt" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_eq" #.(swig-lispify "NdbInterpretedCode_branch_eq" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_ne" #.(swig-lispify "NdbInterpretedCode_branch_ne" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
   (RegRvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_ne_null" #.(swig-lispify "NdbInterpretedCode_branch_ne_null" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_eq_null" #.(swig-lispify "NdbInterpretedCode_branch_eq_null" 'function)) :int
   (self ndb-interpreted-code-type)
   (RegLvalue :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_eq/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ne/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_lt/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_le/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_gt/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge__SWIG_0" #.(swig-lispify "NdbInterpretedCode_branch_col_ge/SWIG-0" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq__SWIG_1" #.(swig-lispify "NdbInterpretedCode_branch_col_eq/SWIG-1" 'function)) :int
   (self ndb-interpreted-code-type)
@@ -5413,54 +5469,90 @@
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq_null" #.(swig-lispify "NdbInterpretedCode_branch_col_eq_null" 'function)) :int
   (self ndb-interpreted-code-type)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne_null" #.(swig-lispify "NdbInterpretedCode_branch_col_ne_null" 'function)) :int
   (self ndb-interpreted-code-type)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_eq_param" #.(swig-lispify "NdbInterpretedCode_branch_col_eq_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ne_param" #.(swig-lispify "NdbInterpretedCode_branch_col_ne_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_lt_param" #.(swig-lispify "NdbInterpretedCode_branch_col_lt_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_le_param" #.(swig-lispify "NdbInterpretedCode_branch_col_le_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_gt_param" #.(swig-lispify "NdbInterpretedCode_branch_col_gt_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
+
+(cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_ge_param" #.(swig-lispify "NdbInterpretedCode_branch_col_ge_param" 'function)) :int
+  (self ndb-interpreted-code-type)
+  (attrId :unsigned-int)
+  (paramId :unsigned-int)
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_like" #.(swig-lispify "NdbInterpretedCode_branch_col_like" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (len :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_notlike" #.(swig-lispify "NdbInterpretedCode_branch_col_notlike" 'function)) :int
   (self ndb-interpreted-code-type)
   (val :pointer)
   (len :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_and_mask_eq_mask" #.(swig-lispify "NdbInterpretedCode_branch_col_and_mask_eq_mask" 'function)) :int
   (self ndb-interpreted-code-type)
   (mask :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_and_mask_ne_mask" #.(swig-lispify "NdbInterpretedCode_branch_col_and_mask_ne_mask" 'function)) :int
   (self ndb-interpreted-code-type)
   (mask :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_and_mask_eq_zero" #.(swig-lispify "NdbInterpretedCode_branch_col_and_mask_eq_zero" 'function)) :int
   (self ndb-interpreted-code-type)
   (mask :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_branch_col_and_mask_ne_zero" #.(swig-lispify "NdbInterpretedCode_branch_col_and_mask_ne_zero" 'function)) :int
   (self ndb-interpreted-code-type)
   (mask :pointer)
   (unused :unsigned-int)
   (attrId :unsigned-int)
-  (Label :unsigned-int))
+  (label :unsigned-int))
 
 (cffi:defcfun ("_wrap_NdbInterpretedCode_interpret_exit_ok" #.(swig-lispify "NdbInterpretedCode_interpret_exit_ok" 'function)) :int
   (self ndb-interpreted-code-type))
@@ -5531,6 +5623,9 @@
 (cffi:defcfun ("_wrap_delete_NdbScanFilter" #.(swig-lispify "delete_NdbScanFilter" 'function)) :void
   (self ndb-scan-filter-type))
 
+(cffi:defcfun ("_wrap_NdbScanFilter_setSqlCmpSemantics" #.(swig-lispify "NdbScanFilter_setSqlCmpSemantics" 'function)) :void
+  (self ndb-scan-filter-type))
+
 (cffi:defcenum #.(swig-lispify "Group" 'enumname)
 	(#.(swig-lispify "AND" 'enumvalue :keyword) #.1)
 	(#.(swig-lispify "OR" 'enumvalue :keyword) #.2)
@@ -5588,6 +5683,12 @@
   (cond :pointer)
   (ColId1 :int)
   (ColId2 :int))
+
+(cffi:defcfun ("_wrap_NdbScanFilter_cmp_param" #.(swig-lispify "NdbScanFilter_cmp_param" 'function)) :int
+  (self ndb-scan-filter-type)
+  (cond :pointer)
+  (ColId :int)
+  (ParamId :int))
 
 (cffi:defcfun ("_wrap_NdbScanFilter_eq__SWIG_0" #.(swig-lispify "NdbScanFilter_eq/SWIG-0" 'function)) :int
   (self ndb-scan-filter-type)

@@ -952,6 +952,22 @@ EXPORT char *_wrap_Ndb_cluster_connection_get_connected_host (Ndb_cluster_connec
 }
 
 
+EXPORT Uint32 _wrap_Ndb_cluster_connection_get_config_generation (Ndb_cluster_connection *larg1) {
+  Uint32 lresult = (Uint32)0 ;
+  Ndb_cluster_connection *arg1 = (Ndb_cluster_connection *) 0 ;
+  Uint32 result;
+
+  arg1 = larg1;
+  try {
+    result = (Uint32)((Ndb_cluster_connection const *)arg1)->get_config_generation();
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (Uint32)0;
+  }
+}
+
+
 EXPORT void _wrap_Ndb_cluster_connection_set_optimized_node_selection (Ndb_cluster_connection *larg1, int larg2) {
   Ndb_cluster_connection *arg1 = (Ndb_cluster_connection *) 0 ;
   int arg2 ;
@@ -1575,6 +1591,24 @@ EXPORT NdbOut *_wrap_NdbDictionary_printFormattedValue (NdbOut *larg1, NdbDictio
   arg4 = larg4;
   try {
     result = (NdbOut *) &NdbDictionary::printFormattedValue(*arg1,(NdbDictionary::NdbDataPrintFormat const &)*arg2,(NdbDictionary::Column const *)arg3,(void const *)arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (NdbOut *)0;
+  }
+}
+
+
+EXPORT NdbOut *_wrap_NdbDictionary_printColumnTypeDescription (NdbOut *larg1, NdbDictionary::Column *larg2) {
+  NdbOut * lresult = (NdbOut *)0 ;
+  NdbOut *arg1 = 0 ;
+  NdbDictionary::Column *arg2 = 0 ;
+  NdbOut *result = 0 ;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  try {
+    result = (NdbOut *) &NdbDictionary::printColumnTypeDescription(*arg1,(NdbDictionary::Column const &)*arg2);
     lresult = result;
     return lresult;
   } catch (...) {
@@ -3133,6 +3167,22 @@ EXPORT int _wrap_Table_equal (NdbDictionary::Table *larg1, NdbDictionary::Table 
   arg2 = larg2;
   try {
     result = (bool)((NdbDictionary::Table const *)arg1)->equal((NdbDictionary::Table const &)*arg2);
+    lresult = (int)result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_Table_use_new_hash_function (NdbDictionary::Table *larg1) {
+  int lresult = (int)0 ;
+  NdbDictionary::Table *arg1 = (NdbDictionary::Table *) 0 ;
+  bool result;
+
+  arg1 = larg1;
+  try {
+    result = (bool)((NdbDictionary::Table const *)arg1)->use_new_hash_function();
     lresult = (int)result;
     return lresult;
   } catch (...) {
@@ -5441,6 +5491,21 @@ EXPORT void _wrap_Event_setReport (NdbDictionary::Event *larg1, NdbDictionary::E
 }
 
 
+EXPORT void _wrap_Event_setReportOptions (NdbDictionary::Event *larg1, Uint32 larg2) {
+  NdbDictionary::Event *arg1 = (NdbDictionary::Event *) 0 ;
+  Uint32 arg2 ;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  try {
+    (arg1)->setReportOptions(arg2);
+
+  } catch (...) {
+
+  }
+}
+
+
 EXPORT NdbDictionary::Event::EventReport _wrap_Event_getReport (NdbDictionary::Event *larg1) {
   NdbDictionary::Event::EventReport lresult = (NdbDictionary::Event::EventReport)0 ;
   NdbDictionary::Event *arg1 = (NdbDictionary::Event *) 0 ;
@@ -5453,6 +5518,22 @@ EXPORT NdbDictionary::Event::EventReport _wrap_Event_getReport (NdbDictionary::E
     return lresult;
   } catch (...) {
     return (NdbDictionary::Event::EventReport)0;
+  }
+}
+
+
+EXPORT Uint32 _wrap_Event_getReportOptions (NdbDictionary::Event *larg1) {
+  Uint32 lresult = (Uint32)0 ;
+  NdbDictionary::Event *arg1 = (NdbDictionary::Event *) 0 ;
+  Uint32 result;
+
+  arg1 = larg1;
+  try {
+    result = (Uint32)((NdbDictionary::Event const *)arg1)->getReportOptions();
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (Uint32)0;
   }
 }
 
@@ -7551,6 +7632,19 @@ EXPORT NdbDictionary::Event *_wrap_Dictionary_getEvent (NdbDictionary::Dictionar
     return lresult;
   } catch (...) {
     return (NdbDictionary::Event *)0;
+  }
+}
+
+
+EXPORT void _wrap_Dictionary_releaseEvent (NdbDictionary::Event *larg1) {
+  NdbDictionary::Event *arg1 = (NdbDictionary::Event *) 0 ;
+
+  arg1 = larg1;
+  try {
+    NdbDictionary::Dictionary::releaseEvent((NdbDictionary::Event const *)arg1);
+
+  } catch (...) {
+
   }
 }
 
@@ -9929,12 +10023,12 @@ EXPORT int _wrap_Ndb_init__SWIG_1 (Ndb *larg1) {
 }
 
 
-EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
+EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, Uint64 *larg2) {
   Ndb *arg1 = (Ndb *) 0 ;
-  unsigned int arg2 ;
+  Uint64 arg2 ;
   
   arg1 = larg1;
-  arg2 = larg2;
+  arg2 = *larg2;
   try {
     (arg1)->set_eventbuf_max_alloc(arg2);
     
@@ -9943,18 +10037,18 @@ EXPORT void _wrap_Ndb_set_eventbuf_max_alloc (Ndb *larg1, unsigned int larg2) {
   }
 }
 
-EXPORT unsigned int _wrap_Ndb_get_eventbuf_max_alloc (Ndb *larg1) {
-  unsigned int lresult = (unsigned int)0 ;
+EXPORT Uint64 *_wrap_Ndb_get_eventbuf_max_alloc (Ndb *larg1) {
+  Uint64 * lresult = (Uint64 *)0 ;
   Ndb *arg1 = (Ndb *) 0 ;
-  unsigned int result;
+  Uint64 result;
   
   arg1 = larg1;
   try {
-    result = (unsigned int)(arg1)->get_eventbuf_max_alloc();
-    lresult = result;
+    result = (Uint64)(arg1)->get_eventbuf_max_alloc();
+    lresult = new Uint64(result);
     return lresult;
   } catch (...) {
-    return (unsigned int)0;
+    return (Uint64 *)0;
   }
 }
 
@@ -12068,6 +12162,22 @@ EXPORT int _wrap_NdbOperation_interpretedUpdateTuple (NdbOperation *larg1) {
   arg1 = larg1;
   try {
     result = (int)(arg1)->interpretedUpdateTuple();
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbOperation_interpretedWriteTuple (NdbOperation *larg1) {
+  int lresult = (int)0 ;
+  NdbOperation *arg1 = (NdbOperation *) 0 ;
+  int result;
+
+  arg1 = larg1;
+  try {
+    result = (int)(arg1)->interpretedWriteTuple();
     lresult = result;
     return lresult;
   } catch (...) {
@@ -17548,6 +17658,19 @@ EXPORT void _wrap_NdbTransaction_setMaxPendingBlobWriteBytes (NdbTransaction *la
 }
 
 
+EXPORT void _wrap_NdbTransaction_releaseCompletedOpsAndQueries (NdbTransaction *larg1) {
+  NdbTransaction *arg1 = (NdbTransaction *) 0 ;
+
+  arg1 = larg1;
+  try {
+    (arg1)->releaseCompletedOpsAndQueries();
+
+  } catch (...) {
+
+  }
+}
+
+
 EXPORT int _wrap_NdbIndexOperation_insertTuple (NdbIndexOperation *larg1) {
   int lresult = (int)0 ;
   NdbIndexOperation *arg1 = (NdbIndexOperation *) 0 ;
@@ -17718,6 +17841,22 @@ EXPORT int _wrap_NdbIndexOperation_dirtyUpdate (NdbIndexOperation *larg1) {
   arg1 = larg1;
   try {
     result = (int)(arg1)->dirtyUpdate();
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbIndexOperation_interpretedWriteTuple (NdbIndexOperation *larg1) {
+  int lresult = (int)0 ;
+  NdbIndexOperation *arg1 = (NdbIndexOperation *) 0 ;
+  int result;
+
+  arg1 = larg1;
+  try {
+    result = (int)(arg1)->interpretedWriteTuple();
     lresult = result;
     return lresult;
   } catch (...) {
@@ -18210,6 +18349,21 @@ EXPORT void _wrap_NdbIndexStat_get_empty (NdbIndexStat::Stat *larg1, bool *larg2
 }
 
 
+EXPORT void _wrap_NdbIndexStat_get_numrows (NdbIndexStat::Stat *larg1, Uint32 *larg2) {
+  NdbIndexStat::Stat *arg1 = 0 ;
+  Uint32 *arg2 = (Uint32 *) 0 ;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  try {
+    NdbIndexStat::get_numrows((NdbIndexStat::Stat const &)*arg1,arg2);
+
+  } catch (...) {
+
+  }
+}
+
+
 EXPORT void _wrap_NdbIndexStat_get_rir (NdbIndexStat::Stat *larg1, double *larg2) {
   NdbIndexStat::Stat *arg1 = 0 ;
   double *arg2 = (double *) 0 ;
@@ -18238,6 +18392,23 @@ EXPORT void _wrap_NdbIndexStat_get_rpk (NdbIndexStat::Stat *larg1, Uint32 larg2,
     
   } catch (...) {
     
+  }
+}
+
+
+EXPORT void _wrap_NdbIndexStat_get_rpk_pruned (NdbIndexStat::Stat *larg1, Uint32 larg2, double *larg3) {
+  NdbIndexStat::Stat *arg1 = 0 ;
+  Uint32 arg2 ;
+  double *arg3 = (double *) 0 ;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  try {
+    NdbIndexStat::get_rpk_pruned((NdbIndexStat::Stat const &)*arg1,arg2,arg3);
+
+  } catch (...) {
+
   }
 }
 
@@ -18581,6 +18752,21 @@ EXPORT void _wrap_delete_NdbInterpretedCode (NdbInterpretedCode *larg1) {
     
   } catch (...) {
     
+  }
+}
+
+
+EXPORT void _wrap_NdbInterpretedCode_set_sql_null_semantics (NdbInterpretedCode *larg1, NdbInterpretedCode::UnknownHandling larg2) {
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  NdbInterpretedCode::UnknownHandling arg2 ;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  try {
+    (arg1)->set_sql_null_semantics(arg2);
+
+  } catch (...) {
+
   }
 }
 
@@ -19324,6 +19510,138 @@ EXPORT int _wrap_NdbInterpretedCode_branch_col_ne_null (NdbInterpretedCode *larg
 }
 
 
+EXPORT int _wrap_NdbInterpretedCode_branch_col_eq_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_eq_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbInterpretedCode_branch_col_ne_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_ne_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbInterpretedCode_branch_col_lt_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_lt_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbInterpretedCode_branch_col_le_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_le_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbInterpretedCode_branch_col_gt_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_gt_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbInterpretedCode_branch_col_ge_param (NdbInterpretedCode *larg1, Uint32 larg2, Uint32 larg3, Uint32 larg4) {
+  int lresult = (int)0 ;
+  NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
+  Uint32 arg2 ;
+  Uint32 arg3 ;
+  Uint32 arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->branch_col_ge_param(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
 EXPORT int _wrap_NdbInterpretedCode_branch_col_like (NdbInterpretedCode *larg1, void *larg2, Uint32 larg3, Uint32 larg4, Uint32 larg5) {
   int lresult = (int)0 ;
   NdbInterpretedCode *arg1 = (NdbInterpretedCode *) 0 ;
@@ -19793,6 +20111,19 @@ EXPORT void _wrap_delete_NdbScanFilter (NdbScanFilter *larg1) {
 }
 
 
+EXPORT void _wrap_NdbScanFilter_setSqlCmpSemantics (NdbScanFilter *larg1) {
+  NdbScanFilter *arg1 = (NdbScanFilter *) 0 ;
+
+  arg1 = larg1;
+  try {
+    (arg1)->setSqlCmpSemantics();
+
+  } catch (...) {
+
+  }
+}
+
+
 EXPORT int _wrap_NdbScanFilter_begin__SWIG_0 (NdbScanFilter *larg1, NdbScanFilter::Group larg2) {
   int lresult = (int)0 ;
   NdbScanFilter *arg1 = (NdbScanFilter *) 0 ;
@@ -19948,6 +20279,28 @@ EXPORT int _wrap_NdbScanFilter_cmp__SWIG_2 (NdbScanFilter *larg1, NdbScanFilter:
   arg4 = larg4;
   try {
     result = (int)(arg1)->cmp(arg2,arg3,arg4);
+    lresult = result;
+    return lresult;
+  } catch (...) {
+    return (int)0;
+  }
+}
+
+
+EXPORT int _wrap_NdbScanFilter_cmp_param (NdbScanFilter *larg1, NdbScanFilter::BinaryCondition larg2, int larg3, int larg4) {
+  int lresult = (int)0 ;
+  NdbScanFilter *arg1 = (NdbScanFilter *) 0 ;
+  NdbScanFilter::BinaryCondition arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int result;
+
+  arg1 = larg1;
+  arg2 = larg2;
+  arg3 = larg3;
+  arg4 = larg4;
+  try {
+    result = (int)(arg1)->cmp_param(arg2,arg3,arg4);
     lresult = result;
     return lresult;
   } catch (...) {
