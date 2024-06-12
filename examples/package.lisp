@@ -33,3 +33,8 @@
   (:use :cl)
   (:export :get-column-info :get-attribute-info :get-column-and-attribute-info)
   (:documentation "decode column and attribute information about a table's record"))
+
+(defpackage :ndb.interpreted-scan
+  (:use :cl)
+  (:export :interpreted-scan)
+  (:documentation "Interpreted example using scan"))

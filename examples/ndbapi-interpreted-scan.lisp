@@ -18,7 +18,7 @@
 ;; information about creation of necessary table, loading of test data
 ;; and example output at the end of this file
 
-(defun revisioned-scan (&key connection-string database-name table-name index-name
+(defun interpreted-scan (&key connection-string database-name table-name index-name
                          bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
                          just-count)
   (ndbapi:ensure-ndb-init)
@@ -27,7 +27,7 @@
     (ndbapi:with-ndb (ndb (ndbapi:*connection* database-name))
 
       (ndbapi:with-ndb-transaction (transaction ndb)
-        
+
         (cffi:with-foreign-objects ((result-mask :unsigned-char))
           (setf (cffi:mem-ref result-mask :unsigned-char) #b00000000)
 
@@ -258,7 +258,7 @@ or via graph store protocol to spocq:
 |#
 
 #+(or)
-(ndb.simple-scan::interpreted-scan :connection-string "localhost"
+(ndb.interpreted-scan::interpreted-scan :connection-string "localhost"
                                    :database-name "mgr°scantest"
                                    :table-name "quads"
                                    :index-name "PRIMARY" )
@@ -266,10 +266,8 @@ or via graph store protocol to spocq:
 #|
 table: quads
 columns:          GRAPH,      SUBJECT,    PREDICATE,       OBJECT
-row     0:    745897444,    745897440,    745897441,    745897443,            8, #(4 0 0 0 5 0 0 0)
-row     1:    745897444,    745897440,    745897445,    745897446,            4, #(5 0 0 0)
-row     2:   4294967295,    745897440,    745897441,    745897442,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
-row     3:   4294967295,    745897440,    745897441,    745897447,            4, #(6 0 0 0)
-4
+row     0:   4294967295,     37518711,     37518704,     37518712,           16, #(2 0 0 0 3 0 0 0 3 0 0 0 4 0 0 0)
+row     1:   4294967295,     37518711,     37518704,    104850323,            4, #(6 0 0 0)
+2
 |#
 
