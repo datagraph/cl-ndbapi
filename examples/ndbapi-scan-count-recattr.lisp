@@ -52,9 +52,9 @@
 
         (let ((code-words 1))
           (cffi:with-foreign-pointer (code-space (* code-words (cffi:foreign-type-size :unsigned-int)))
-            (ndbapi:with-ndb-interpreted-code (code (cffi:null-pointer) code-space code-words)
-              (ndbapi:ndb-interpreted-code-interpret-exit-last-row code)
-              (ndbapi:ndb-interpreted-code-finalise code)
+            (ndbapi.ic:with-code (code (cffi:null-pointer) code-space code-words)
+              (ndbapi.ic:interpret-exit-last-row code)
+              (ndbapi.ic:finalise code)
 
               (ndbapi:with-ndb-transaction (transaction ndb)
                 (let* ((dict (ndbapi:ndb-get-dictionary ndb))

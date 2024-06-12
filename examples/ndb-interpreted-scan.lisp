@@ -2,7 +2,7 @@
 ;;; Distributed under the terms of the GNU General Public License, Version 2.0,
 ;;; see file LICENSE in the top level directory of this repository.
 
-(in-package :ndb.simple-scan)
+(in-package :ndb.interpreted-scan)
 
 ;; a little example for running a scan with an interpreted code
 ;; based on the simple-scan example. This example is not really
@@ -18,7 +18,7 @@
 ;; information about creation of necessary table, loading of test data
 ;; and example output at the end of this file
 
-(defun interpreted-scan (&key connection-string database-name table-name index-name
+(defun revisioned-scan (&key connection-string database-name table-name index-name
                          bound-specs ;; list of specs: (&key low high (low-inclusive t) (high-inclusive t))
                          just-count)
   (ndbapi:ensure-ndb-init)
