@@ -226,33 +226,4 @@
            :foreign-pointer)
   (:documentation "A higher level NDB API interface (for RonDB)."))
 
-(defpackage :ndbapi.ic
-  (:nicknames :ndbapi.interpreted-code)
-  (:export :new
-           :interpret-exit-last-row
-           :interpret-exit-ok
-           :interpret-exit-nok
-           :read-attr
-           :write-attr
-           :load-const-u32
-           :def-label
-           :branch-label
-           :branch-ge
-           :branch-gt
-           :branch-le
-           :branch-lt
-           :branch-eq
-           :branch-eq-null
-           :branch-ne
-           :branch-ne-null
-           :call-sub
-           :def-sub
-           :ret-sub
-           :sub-val-u32
-           :sub-val-u64
-           :add-val-u32
-           :add-val-u64
-           :sub-reg
-           :add-reg
-           :finalise
-           :with-code))
+;; :ndbapi.ic / :ndbapi.interpreted-code is in package.lisp already

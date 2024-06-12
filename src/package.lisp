@@ -48,3 +48,34 @@
 ;; defpackage :ndbapi in file ndbapi-interface.lisp
 ;; as it needs the implementation files to be loaded
 ;; while those files need the other package definitions already...
+
+(defpackage :ndbapi.ic
+  (:nicknames :ndbapi.interpreted-code)
+  (:export :new
+           :interpret-exit-last-row
+           :interpret-exit-ok
+           :interpret-exit-nok
+           :read-attr
+           :write-attr
+           :load-const-u32
+           :def-label
+           :branch-label
+           :branch-ge
+           :branch-gt
+           :branch-le
+           :branch-lt
+           :branch-eq
+           :branch-eq-null
+           :branch-ne
+           :branch-ne-null
+           :call-sub
+           :def-sub
+           :ret-sub
+           :sub-val-u32
+           :sub-val-u64
+           :add-val-u32
+           :add-val-u64
+           :sub-reg
+           :add-reg
+           :finalise
+           :with-code))
