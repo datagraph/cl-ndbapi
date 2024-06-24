@@ -1,5 +1,5 @@
 g++ -shared -Wall \
-    -L./rondb/prod_build/lib \
+    -L./rondb-build/lib \
     ndbapi_wrap.o \
     -lndbclient \
     -ondbapi_wrap.so
